@@ -891,7 +891,7 @@ export default {
   width: 420px;
   background: rgba(17,24,39,0.98) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 20px;
   box-shadow: 0 16px 50px rgba(0,0,0,0.5);
   display: flex;
@@ -926,7 +926,7 @@ export default {
   width: 420px;
   background: rgba(17,24,39,0.97) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 16px 50px rgba(0,0,0,0.5);
 }
 
@@ -955,4 +955,76 @@ export default {
 .modal-btn-cancel:hover { background: rgba(255,255,255,0.08); }
 .modal-btn-confirm { flex: 2; height: 38px; background: linear-gradient(135deg, #34d399, #059669); color: #fff; font-size: 14px; font-weight: 600; border-radius: 7px; border: none; }
 .modal-btn-confirm:hover { filter: brightness(1.08); }
+
+/* Red-black lobby theme continuation */
+.container {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(135deg, #151515 0%, #242424 56%, #2a1118 100%);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+}
+
+.room-header,
+.panel-section,
+.control-panel,
+.team-card,
+.pool-section,
+.action-sheet,
+.modal-content {
+  border-radius: 0 !important;
+  background: rgba(31, 31, 31, 0.88) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.room-header {
+  border-left: 4px solid #e11d48 !important;
+}
+
+.back-btn,
+.badge-mode,
+.section-badge,
+.random-map-capsule.active {
+  color: #ffffff !important;
+  background: rgba(225, 29, 72, 0.16) !important;
+  border-color: rgba(225, 29, 72, 0.45) !important;
+}
+
+.section-title,
+.form-label,
+.sheet-current-status {
+  color: #f43f5e !important;
+}
+
+.title-indicator,
+.pool-indicator {
+  background: #e11d48 !important;
+}
+
+.mode-card.active,
+.map-capsule.active,
+.team-card.drag-over,
+.pool-section.drag-over,
+.selected-pill {
+  background: rgba(225, 29, 72, 0.16) !important;
+  border-color: rgba(225, 29, 72, 0.55) !important;
+  box-shadow: 0 0 16px rgba(225, 29, 72, 0.28) !important;
+}
+
+.mode-card:hover,
+.map-capsule:hover {
+  background: rgba(225, 29, 72, 0.1) !important;
+  border-color: rgba(225, 29, 72, 0.35) !important;
+}
+
+.btn-random,
+.modal-btn-confirm {
+  background: #e11d48 !important;
+}
+
+.btn-add {
+  color: #fb7185 !important;
+  background: rgba(225, 29, 72, 0.1) !important;
+  border-color: rgba(225, 29, 72, 0.32) !important;
+}
 </style>

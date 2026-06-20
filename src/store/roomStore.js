@@ -221,7 +221,6 @@ export const roomStore = {
       roomObj.teams = tournamentTeams
       roomObj.matches = generateTournamentSchedule(roomObj.tournamentType, roomObj.teamCount, tournamentTeams)
       if (roomObj.tournamentType === 'cashout') syncCashoutTournamentMatches(roomObj)
-      syncCashoutTournamentMatches(roomObj)
     } else {
       roomObj.mode = mode; roomObj.activeMode = activeMode; roomObj.map = map; roomObj.activeMap = activeMap; roomObj.maxMembers = 16
     }

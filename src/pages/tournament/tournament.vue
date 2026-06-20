@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div ref="tournamentRootRef" class="container">
     <!-- HUD Header -->
     <div class="hud-header">
       <div class="header-left">
@@ -602,6 +602,7 @@ import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { roomStore, MAPS, generateTournamentSchedule } from '../../store/roomStore.js'
 import { useToast } from '../../composables/useToast.js'
+import gsap from 'gsap'
 
 export default {
   setup() {
@@ -610,6 +611,7 @@ export default {
     const { showToast, showModal } = useToast()
 
     const roomId = ref('')
+    const tournamentRootRef = ref(null)
     const room = ref({ teams: [], matches: [], slots: [] })
     const isControlPanelVisible = ref(false)
     const currentTab = ref(0)
@@ -631,6 +633,7 @@ export default {
     const editTeamName = ref('')
     const editTeamMembersText = ref('')
     const draggedSlotIdx = ref(null)
+    let entranceTimer = null
 
     // Viewport Centering & Immersive Screenshot Scaling
     const flowchartScrollRef = ref(null)
@@ -707,19 +710,106 @@ export default {
       }
     }
 
+    const shouldReduceMotion = () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+    const getScopedElements = (selector) => {
+      const root = tournamentRootRef.value
+      return root ? root.querySelectorAll(selector) : []
+    }
+
+    const animateActivePaths = () => {
+      nextTick(() => {
+        const activePaths = getScopedElements('.connection-path.active')
+        activePaths.forEach((path) => {
+          if (path.getAttribute('data-drawn') === 'true') return
+          path.setAttribute('data-drawn', 'true')
+          if (shouldReduceMotion()) return
+          try {
+            const length = path.getTotalLength()
+            gsap.killTweensOf(path)
+            gsap.fromTo(path,
+              { strokeDasharray: `${length} ${length}`, strokeDashoffset: length, opacity: 0 },
+              {
+                strokeDashoffset: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                onComplete: () => {
+                  path.style.strokeDasharray = ''
+                  path.style.strokeDashoffset = ''
+                  path.style.opacity = ''
+                }
+              }
+            )
+          } catch (e) {
+            path.style.opacity = '1'
+          }
+        })
+      })
+    }
+
+    const resetInactivePaths = () => {
+      const allPaths = getScopedElements('.connection-path[data-drawn]')
+      allPaths.forEach((path) => {
+        gsap.killTweensOf(path)
+        path.removeAttribute('data-drawn')
+        path.style.strokeDasharray = ''
+        path.style.strokeDashoffset = ''
+        path.style.opacity = ''
+      })
+    }
+
+    const animatePanelEntrance = () => {
+      if (shouldReduceMotion()) return
+      const root = tournamentRootRef.value
+      if (!root) return
+      gsap.killTweensOf(root.querySelectorAll('.hud-header, .tab-item, .cashout-match-node, .team-slot-card, .se-match-col, .standings-section, .matches-list-panel'))
+      gsap.from(root.querySelectorAll('.hud-header'), { y: -30, opacity: 0, duration: 0.65, ease: 'power3.out' })
+      gsap.from(root.querySelectorAll('.tab-item'), { y: -15, opacity: 0, duration: 0.5, stagger: 0.05, delay: 0.1, ease: 'power2.out' })
+      gsap.from(root.querySelectorAll('.cashout-match-node, .team-slot-card, .se-match-col, .standings-section, .matches-list-panel'), {
+        y: 35, opacity: 0, scale: 0.98, duration: 0.6, stagger: 0.04, delay: 0.15, ease: 'power2.out', clearProps: 'transform,opacity'
+      })
+    }
+
+    watch(() => room.value.matches, () => {
+      resetInactivePaths();
+      animateActivePaths();
+    }, { deep: true });
+
     onMounted(() => {
       const id = route.query.id
-      if (id) { roomId.value = id; loadRoomData() }
+      if (id) {
+        roomId.value = id;
+        loadRoomData();
+
+        entranceTimer = setTimeout(() => {
+          animatePanelEntrance()
+          animateActivePaths()
+        }, 80)
+      }
       else { showToast('赛事不存在'); setTimeout(() => goBack(), 1000) }
       window.addEventListener('resize', handleResize)
     })
 
     onUnmounted(() => {
+      if (entranceTimer) clearTimeout(entranceTimer)
+      resetInactivePaths()
+      const root = tournamentRootRef.value
+      if (root) gsap.killTweensOf(root.querySelectorAll('*'))
       window.removeEventListener('resize', handleResize)
     })
 
     const goBack = () => router.go(-1)
-    const switchTab = (index) => { currentTab.value = index }
+    const switchTab = (index) => {
+      currentTab.value = index
+      resetInactivePaths()
+      animateActivePaths()
+      nextTick(() => {
+        if (shouldReduceMotion()) return
+        gsap.from(getScopedElements('.tab-content .cashout-match-node, .tab-content .team-slot-card, .tab-content .standings-section, .tab-content .matches-list-panel'), {
+          y: 25, opacity: 0, scale: 0.99, duration: 0.5, stagger: 0.03, ease: 'power2.out', clearProps: 'transform,opacity'
+        })
+      })
+    }
     const toggleControlPanel = () => { isControlPanelVisible.value = !isControlPanelVisible.value }
     const toggleScreenshotView = () => { isScreenshotViewActive.value = !isScreenshotViewActive.value }
 
@@ -919,7 +1009,7 @@ export default {
     const m3rdMatch = computed(() => { if (!room.value.matches) return null; return room.value.matches.find(m => m.stage === '3rd_place' || m.stage === 'finals_3rd') })
 
     return {
-      roomId, room, tabs, currentTab, MAPS, activeMapDisplay, tournamentTypeLabel, isControlPanelVisible, selectedSlotIdx,
+      roomId, tournamentRootRef, room, tabs, currentTab, MAPS, activeMapDisplay, tournamentTypeLabel, isControlPanelVisible, selectedSlotIdx,
       isScoreModalVisible, activeMatch, inputScoreA, inputScoreB, inputKillsA, inputKillsB, inputWinnerId, inputMap,
       isCashoutScoreModalVisible, activeCashoutMatch, cashoutInputs, isScreenshotViewActive, isEditTeamModalVisible,
       activeTeam, editTeamName, editTeamMembersText, leagueStandings, sortedMatches, qfMatches, sfMatches, gfMatch, m3rdMatch,
@@ -940,9 +1030,13 @@ export default {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  background: linear-gradient(135deg, #f2003c 0%, #a60023 100%);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
   color: #ffffff;
-  font-family: 'Inter', 'Outfit', sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* HUD Header */
@@ -951,41 +1045,43 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
-  background: rgba(0,0,0,0.45);
-  border-left: 6px solid #ffcc00;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--glass-border);
+  border-left: 4px solid var(--accent-gold);
+  box-shadow: var(--shadow-soft);
   flex-shrink: 0;
   gap: 16px;
 }
 .header-left { display: flex; align-items: center; gap: 14px; }
-.back-btn { padding: 6px 14px; background: linear-gradient(135deg, #ffcc00, #ff9900); color: #1a0206; font-size: 12px; font-weight: 800; border-radius: 5px; border: none; text-transform: uppercase; letter-spacing: 0.5px; }
-.back-btn:hover { filter: brightness(1.1); }
+.back-btn { padding: 6px 14px; background: rgba(251,191,36,0.12); color: var(--accent-gold); font-size: 12px; font-weight: 800; border-radius: var(--radius-sm); border: 1px solid rgba(251,191,36,0.28); text-transform: uppercase; letter-spacing: 0; }
+.back-btn:hover { background: rgba(251,191,36,0.18); border-color: rgba(251,191,36,0.45); }
 .room-title-block { display: flex; flex-direction: column; gap: 2px; }
-.room-title-text { font-size: 18px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
-.badge-cashout-hud { font-size: 11px; font-weight: 800; color: #ffcc00; text-transform: uppercase; }
+.room-title-text { font-size: 18px; font-weight: 900; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0; }
+.badge-cashout-hud { font-size: 11px; font-weight: 800; color: var(--accent-gold); text-transform: uppercase; }
 .header-right { display: flex; align-items: center; gap: 16px; }
 .map-hud-info { display: flex; flex-direction: column; align-items: flex-end; }
 .map-label { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.4); text-transform: uppercase; }
 .map-name-val { font-size: 13px; font-weight: 700; color: #ffffff; }
-.gear-btn { padding: 7px 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #ffffff; font-size: 12px; font-weight: 600; border-radius: 7px; }
-.gear-btn:hover { background: rgba(255,255,255,0.18); }
-.gear-btn.active { background: rgba(255,204,0,0.2); border-color: #ffcc00; color: #ffcc00; }
+.gear-btn { padding: 7px 14px; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 12px; font-weight: 600; border-radius: var(--radius-md); }
+.gear-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--glass-border-hover); }
+.gear-btn.active { background: rgba(251,191,36,0.14); border-color: rgba(251,191,36,0.45); color: var(--accent-gold); }
 
 /* Tabs */
-.tabs-bar { display: flex; background: rgba(0,0,0,0.3); padding: 0 16px; flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-.tab-item { padding: 10px 18px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+.tabs-bar { display: flex; background: rgba(16,24,39,0.72); padding: 0 16px; flex-shrink: 0; border-bottom: 1px solid var(--glass-border); }
+.tab-item { padding: 10px 18px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.55); cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease; }
 .tab-item:hover { color: rgba(255,255,255,0.8); }
-.tab-item.active { color: #ffcc00; border-bottom-color: #ffcc00; }
+.tab-item.active { color: var(--accent-gold); border-bottom-color: var(--accent-gold); background: rgba(251,191,36,0.06); }
 
 /* Content */
 .tab-content-wrapper { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
 .tab-content { flex: 1; overflow-y: auto; padding: 16px; }
 
 /* Flowchart */
-.flowchart-section { background: rgba(0,0,0,0.35) !important; border: 1px solid rgba(255,255,255,0.08) !important; padding: 16px; }
+.flowchart-section { background: var(--surface-1) !important; border: 1px solid var(--glass-border) !important; padding: 16px; box-shadow: var(--shadow-panel); }
 .screenshot-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .screenshot-tip { font-size: 12px; color: rgba(255,255,255,0.4); }
-.btn-screenshot { padding: 6px 14px; font-size: 12px; font-weight: 600; background: rgba(255,204,0,0.15); border: 1px solid rgba(255,204,0,0.3); color: #ffcc00; border-radius: 6px; }
-.btn-screenshot.active { background: rgba(255,204,0,0.25); }
+.btn-screenshot { padding: 6px 14px; font-size: 12px; font-weight: 600; background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.3); color: var(--accent-gold); border-radius: var(--radius-sm); }
+.btn-screenshot.active { background: rgba(251,191,36,0.22); }
 
 .flowchart-scroll {
   overflow: auto;
@@ -1003,7 +1099,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 90;
-  background: rgba(12, 2, 4, 0.96); /* High fidelity immersive gradient panel matching deep red theme */
+  background: rgba(9, 13, 22, 0.97);
   backdrop-filter: blur(12px);
   overflow: hidden;
   display: flex;
@@ -1021,25 +1117,25 @@ export default {
   top: 76px;
   right: 24px;
   z-index: 101;
-  background: linear-gradient(135deg, #ffcc00, #ff9900) !important;
-  color: #1a0206 !important;
-  box-shadow: 0 4px 20px rgba(255, 204, 0, 0.4);
+  background: linear-gradient(135deg, var(--accent-gold), var(--brand-warning)) !important;
+  color: #111827 !important;
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.34);
   font-weight: 800;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   padding: 8px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 13px;
 }
 .floating-exit-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 24px rgba(255, 204, 0, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(251, 191, 36, 0.42);
 }
 
 .connections-svg { stroke: rgba(255,255,255,0.12); stroke-width: 2; fill: none; stroke-linecap: round; }
 .connection-path { stroke: rgba(255,255,255,0.12); stroke-width: 2; fill: none; transition: all 0.3s; }
-.connection-path.active { stroke: #ffcc00; filter: drop-shadow(0 0 6px rgba(255,204,0,0.8)); }
+.connection-path.active { stroke: var(--accent-gold); filter: drop-shadow(0 0 6px rgba(251,191,36,0.75)); }
 
 /* Flowchart Tiers */
 .flowchart-tier { position: absolute; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0 20px; box-sizing: border-box; }
@@ -1057,13 +1153,86 @@ export default {
 
 /* Match Node */
 .cashout-match-node {
-  width: 340px; background: rgba(20,4,8,0.9); border: 2px solid rgba(255,255,255,0.08); border-radius: 10px;
+  width: 340px; background: var(--surface-2); border: 1px solid var(--glass-border); border-radius: var(--radius-md);
   padding: 12px; box-shadow: 0 8px 28px rgba(0,0,0,0.6); position: relative; overflow: hidden;
   cursor: pointer; transition: all 0.25s;
 }
-.cashout-match-node:hover { transform: translateY(-3px); border-color: #ff2e93; box-shadow: 0 12px 32px rgba(242,0,60,0.25); }
-.final-match-node { width: 420px; border-color: rgba(255,204,0,0.3); box-shadow: 0 8px 28px rgba(255,204,0,0.12); }
-.final-match-node.node-completed { border-color: #ffcc00; box-shadow: 0 8px 28px rgba(255,204,0,0.4); }
+.cashout-match-node:hover { transform: translateY(-2px); border-color: rgba(251,191,36,0.42); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+.final-match-node {
+  width: 420px;
+  border-color: transparent !important;
+  background: linear-gradient(
+    45deg,
+    #050505 0%,
+    #160000 18%,
+    #4b0005 36%,
+    #b30716 52%,
+    #5f0008 68%,
+    #190002 84%,
+    #050505 100%
+  ) !important;
+  background-size: 280% 280% !important;
+  animation: grandFinalSurfaceFlow 8s ease-in-out infinite !important;
+  box-shadow:
+    0 0 22px rgba(190, 8, 24, 0.22),
+    0 0 44px rgba(80, 0, 8, 0.18),
+    0 8px 28px rgba(0, 0, 0, 0.7) !important;
+  overflow: visible !important;
+  position: relative;
+  z-index: 1;
+}
+.final-match-node.node-completed {
+  border-color: transparent !important;
+  box-shadow:
+    0 0 30px rgba(210, 10, 28, 0.38),
+    0 0 60px rgba(110, 0, 12, 0.24),
+    0 0 82px rgba(20, 0, 3, 0.28),
+    0 16px 45px rgba(0, 0, 0, 0.8) !important;
+}
+/* 冠亚决赛 - 45° 红黑流动渐变 */
+.final-match-node::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: -2px !important;
+  border-radius: 11px !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background: linear-gradient(
+    45deg,
+    #030303 0%,
+    #260003 20%,
+    #8f0712 42%,
+    #e11d35 54%,
+    #6e0009 72%,
+    #0a0a0a 100%
+  ) !important;
+  background-size: 260% 260% !important;
+  animation: grandFinalBorderSweep 5.5s ease-in-out infinite !important;
+}
+/* 完赛后保持红黑体系，仅增强流光亮度 */
+.final-match-node.node-completed::after {
+  background: linear-gradient(
+    45deg,
+    #030303 0%,
+    #340004 18%,
+    #aa0818 40%,
+    #f02a40 52%,
+    #87000e 70%,
+    #080808 100%
+  ) !important;
+  background-size: 260% 260% !important;
+  animation: grandFinalBorderSweep 4.8s ease-in-out infinite !important;
+}
+@keyframes grandFinalSurfaceFlow {
+  0%   { background-position: 0% 100%; }
+  50%  { background-position: 100% 0%; }
+  100% { background-position: 0% 100%; }
+}
+@keyframes grandFinalBorderSweep {
+  0%   { background-position: 100% 0%; }
+  50%  { background-position: 0% 100%; }
+  100% { background-position: 100% 0%; }
+}
 .node-completed { border-color: rgba(0,225,255,0.3) !important; }
 .finals-text-glow { color: #ffcc00 !important; font-weight: 900 !important; text-shadow: 0 0 8px rgba(255,204,0,0.5); }
 .node-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 7px; }
@@ -1192,8 +1361,8 @@ export default {
 .drawer-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90; }
 .control-drawer {
   position: fixed; top: 0; right: -480px; width: 440px; height: 100vh;
-  background: rgba(18,2,6,0.92); backdrop-filter: blur(16px);
-  border-left: 2px solid rgba(255,255,255,0.1); z-index: 100;
+  background: rgba(16,24,39,0.94); backdrop-filter: blur(16px);
+  border-left: 1px solid var(--glass-border); z-index: 100;
   display: flex; flex-direction: column; transition: transform 0.35s cubic-bezier(0.25,0.8,0.25,1);
   box-shadow: -10px 0 40px rgba(0,0,0,0.5);
 }
@@ -1203,7 +1372,7 @@ export default {
 .drawer-close { background: transparent; color: rgba(255,255,255,0.4); font-size: 18px; padding: 4px 8px; border-radius: 4px; }
 .drawer-close:hover { color: #fff; background: rgba(255,255,255,0.08); }
 .drawer-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-.drawer-section { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.drawer-section { background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; gap: 8px; }
 .ds-title { font-size: 11px; font-weight: 900; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 8px; margin-bottom: 4px; }
 .ds-btn { width: 100%; height: 36px; font-size: 13px; font-weight: 700; border-radius: 7px; text-align: center; border: none; }
 .btn-gold { background: linear-gradient(135deg, #ffcc00, #ff9900); color: #1a0206; }
@@ -1219,8 +1388,8 @@ export default {
 .team-manage-name { font-size: 13px; font-weight: 700; color: #fff; text-transform: uppercase; }
 
 /* Modals */
-.modal-mask { position: fixed; inset: 0; background: rgba(18,2,6,0.8); backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; }
-.modal-content { width: 480px; max-height: 85vh; background: rgba(20,3,6,0.97); border: 2px solid #ffcc00; box-shadow: 0 16px 48px rgba(0,0,0,0.8), 0 0 24px rgba(255,204,0,0.12); border-radius: 14px; display: flex; flex-direction: column; overflow: hidden; }
+.modal-mask { position: fixed; inset: 0; background: rgba(9,13,22,0.78); backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; }
+.modal-content { width: 480px; max-height: 85vh; background: rgba(16,24,39,0.98); border: 1px solid rgba(251,191,36,0.36); box-shadow: var(--shadow-panel), 0 0 24px rgba(251,191,36,0.1); border-radius: var(--radius-lg); display: flex; flex-direction: column; overflow: hidden; }
 .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
 .modal-title { font-size: 14px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
 .modal-close { background: transparent; color: rgba(255,255,255,0.4); font-size: 16px; padding: 4px 8px; border-radius: 4px; }

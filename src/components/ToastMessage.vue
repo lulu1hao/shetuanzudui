@@ -108,7 +108,7 @@ export default {
   width: 380px;
   background: rgba(20, 24, 38, 0.97) !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }

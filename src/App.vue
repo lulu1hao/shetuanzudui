@@ -23,8 +23,10 @@ export default {
   height: 100%;
   background-color: #0b0f19;
   background-image:
-    radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(52, 211, 153, 0.05) 0%, transparent 50%);
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(135deg, #08060b 0%, #201f1f 52%, #2a1118 100%);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;

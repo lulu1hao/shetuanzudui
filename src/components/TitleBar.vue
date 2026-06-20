@@ -58,15 +58,15 @@ export default {
   justify-content: space-between;
   height: 36px;
   flex-shrink: 0;
-  background: rgba(11, 15, 25, 0.92);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(8, 6, 11, 0.96);
+  border-bottom: 1px solid rgba(225, 29, 72, 0.22);
   user-select: none;
   -webkit-app-region: drag;
   padding: 0 8px;
 }
 
 .titlebar-left {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 8px;
   padding-left: 8px;
@@ -77,7 +77,7 @@ export default {
 .titlebar-text {
   font-size: 12px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.72);
   letter-spacing: 0.5px;
 }
 

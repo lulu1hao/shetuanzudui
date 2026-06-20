@@ -3,3 +3,9 @@ dist/
 src-tauri/target/
 *.log
 .DS_Store
+.agents/
+.codex/
+.claude/
+.idea/
+*.exe
+社团组队系统/
