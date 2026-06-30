@@ -541,27 +541,41 @@ export default {
 
       pageRoot.value.classList.add('tournament-launching')
       heroTransition?.kill()
+      const shouldShiftProfileDock = !isHeroExpanded.value
+      const expandedHeight = pageRoot.value.clientHeight
+      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
+      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
       const { profileDock, alignmentY } = await prepareDisplayLaunch()
-      if (profileDock) {
-        gsap.set(profileDock, {
-          y: alignmentY,
-          willChange: 'transform'
-        })
-      }
+      const displayLaunchAt = shouldShiftProfileDock ? PROFILE_DOCK_SHIFT_DURATION : 0
 
       tournamentLaunchTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
         .call(() => {
-          beginLuluDisplayTransition(room.id)
+          expandGlobalLulu(
+            heroPanel.value,
+            expandedHeight,
+            expandedViewportHeight,
+            expandedFontSize,
+            { duration: reduceMotion ? 0 : 0.82 }
+          )
         }, null, 0)
+        .to(profileDock ? [profileDock] : [], {
+          y: alignmentY,
+          duration: shouldShiftProfileDock ? PROFILE_DOCK_SHIFT_DURATION : 0,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
         .to(heroPanel.value, {
-          height: pageRoot.value.clientHeight,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          height: expandedHeight,
+          duration: reduceMotion ? 0 : 0.82,
           ease: 'power3.inOut',
           willChange: 'height'
         }, 0)
         .call(() => {
+          beginLuluDisplayTransition(room.id)
+        }, null, displayLaunchAt)
+        .call(() => {
           navigate()
-        }, null, TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
+        }, null, displayLaunchAt + TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
     }
 
     const getRoomModeLabel = (room) => {
