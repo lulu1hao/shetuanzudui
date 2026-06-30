@@ -11,10 +11,10 @@ export const MODES = {
     teamCapacity: 3,
     maxMembers: 12,
     teams: [
-      { id: 1, name: '🌅 烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
-      { id: 2, name: '🌌 极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' },
-      { id: 3, name: '🌿 翡翠绿队', color: '#10b981', gradient: 'linear-gradient(135deg, #10b981, #14b8a6)' },
-      { id: 4, name: '🍇 星云紫队', color: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }
+      { id: 1, name: '烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
+      { id: 2, name: '极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' },
+      { id: 3, name: '翡翠绿队', color: '#10b981', gradient: 'linear-gradient(135deg, #10b981, #14b8a6)' },
+      { id: 4, name: '星云紫队', color: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }
     ]
   },
   quickcash: {
@@ -24,8 +24,8 @@ export const MODES = {
     teamCapacity: 8,
     maxMembers: 16,
     teams: [
-      { id: 1, name: '🌅 烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
-      { id: 2, name: '🌌 极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' }
+      { id: 1, name: '烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
+      { id: 2, name: '极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' }
     ]
   },
   team: {
@@ -35,8 +35,8 @@ export const MODES = {
     teamCapacity: 5,
     maxMembers: 10,
     teams: [
-      { id: 1, name: '🌅 烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
-      { id: 2, name: '🌌 极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' }
+      { id: 1, name: '烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
+      { id: 2, name: '极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' }
     ]
   }
 }
@@ -67,6 +67,49 @@ export const FINALS_TEAMS = [
   { id: 'team_7', name: 'THE MIGHTY', logo: 'TM', color: '#10b981', members: ['Herc', 'Atlas', 'Titan'] },
   { id: 'team_8', name: 'THE POWERHOUSES', logo: 'PH', color: '#ec4899', members: ['Volt', 'Amp', 'Watt'] }
 ]
+
+export const TOURNAMENT_BODY_TYPES = ['大', '中', '小']
+
+const normalizeTournamentMember = (member, teamId, index = 0) => {
+  if (member && typeof member === 'object') {
+    return {
+      id: member.id || `${teamId}_member_${Date.now()}_${index}`,
+      name: String(member.name || '').trim() || `成员 ${index + 1}`,
+      bodyType: TOURNAMENT_BODY_TYPES.includes(member.bodyType) ? member.bodyType : '中'
+    }
+  }
+  return {
+    id: `${teamId}_member_${Date.now()}_${index}`,
+    name: String(member || '').trim() || `成员 ${index + 1}`,
+    bodyType: TOURNAMENT_BODY_TYPES[index % TOURNAMENT_BODY_TYPES.length]
+  }
+}
+
+const normalizeTournamentTeam = (team, index) => {
+  const fallback = FINALS_TEAMS[index]
+  const normalized = team || {
+    id: fallback.id,
+    name: fallback.name,
+    logo: fallback.logo,
+    color: fallback.color,
+    members: fallback.members
+  }
+  normalized.members = (normalized.members || []).map((member, memberIndex) =>
+    normalizeTournamentMember(member, normalized.id, memberIndex)
+  )
+  return normalized
+}
+
+const createTournamentTeam = (index) => {
+  const source = FINALS_TEAMS[index]
+  return normalizeTournamentTeam({
+    id: source.id,
+    name: source.name,
+    logo: source.logo,
+    color: source.color,
+    members: [...source.members]
+  }, index)
+}
 
 export const generateTournamentSchedule = (tournamentType, teamCount, teams) => {
   const matches = []
@@ -158,9 +201,19 @@ const loadRooms = () => {
         if (!room.activeMap || room.activeMap === 'random') {
           room.activeMap = room.map === 'random' ? MAPS[Math.floor(Math.random() * MAPS.length)] : (room.map || MAPS[0])
         }
+        if (!room.finalScore) {
+          room.finalScore = { status: 'pending', entries: [], winnerTeamId: null, note: '', updatedAt: '' }
+        }
       }
       if (room.type === 'tournament') {
         room.tournamentType = 'cashout'
+        room.teamCount = [4, 6, 8].includes(Number(room.teamCount)) ? Number(room.teamCount) : 4
+        room.teams = (room.teams || []).slice(0, room.teamCount).map(normalizeTournamentTeam)
+        while (room.teams.length < room.teamCount) room.teams.push(createTournamentTeam(room.teams.length))
+        room.slots = (room.slots || []).filter(teamId => room.teams.some(team => team.id === teamId))
+        room.teams.forEach(team => {
+          if (!room.slots.includes(team.id)) room.slots.push(team.id)
+        })
       }
     })
     return rooms
@@ -208,13 +261,12 @@ export const roomStore = {
       const tournamentTeams = []
       if (roomObj.tournamentType === 'cashout') {
         for (let i = 1; i <= roomObj.teamCount; i++) {
-          const dt = FINALS_TEAMS[i - 1]
-          tournamentTeams.push({ id: dt.id, name: dt.name, logo: dt.logo, color: dt.color, members: [...dt.members] })
+          tournamentTeams.push(createTournamentTeam(i - 1))
         }
         roomObj.slots = tournamentTeams.map(t => t.id)
       } else {
         for (let i = 1; i <= roomObj.teamCount; i++) {
-          tournamentTeams.push({ id: 'team_' + i, name: `🛡️ 战队 ${i}`, members: [] })
+          tournamentTeams.push({ id: 'team_' + i, name: `战队 ${i}`, members: [] })
         }
         roomObj.slots = tournamentTeams.map(t => t.id)
       }
@@ -223,6 +275,7 @@ export const roomStore = {
       if (roomObj.tournamentType === 'cashout') syncCashoutTournamentMatches(roomObj)
     } else {
       roomObj.mode = mode; roomObj.activeMode = activeMode; roomObj.map = map; roomObj.activeMap = activeMap; roomObj.maxMembers = 16
+      roomObj.finalScore = { status: 'pending', entries: [], winnerTeamId: null, note: '', updatedAt: '' }
     }
 
     roomState.rooms.unshift(roomObj)
@@ -242,8 +295,48 @@ export const roomStore = {
       if (map === 'random') { if (forceReroll) room.activeMap = MAPS[Math.floor(Math.random() * MAPS.length)] }
       else { room.activeMap = map }
     }
-    if (room.activeMode !== previousActiveMode) room.members.forEach(m => { m.teamId = null })
+    if (room.activeMode !== previousActiveMode) {
+      room.members.forEach(m => { m.teamId = null })
+      if (room.type !== 'tournament') {
+        room.finalScore = { status: 'pending', entries: [], winnerTeamId: null, note: '', updatedAt: '' }
+      }
+    }
     return { success: true, activeMode: room.activeMode, activeMap: room.activeMap }
+  },
+
+  updateNormalFinalScore(roomId, payload = {}) {
+    const room = this.getRoom(roomId)
+    if (!room || room.type === 'tournament') return { success: false, msg: '普通房间未找到' }
+    const activeModeKey = room.activeMode || room.mode || 'cashout'
+    const config = MODES[activeModeKey] || MODES.cashout
+    const allowedTeamIds = new Set(config.teams.map(team => String(team.id)))
+    const entries = (payload.entries || [])
+      .filter(entry => allowedTeamIds.has(String(entry.teamId)))
+      .map(entry => ({
+        teamId: entry.teamId,
+        score: Number.isFinite(Number(entry.score)) ? Math.max(0, Math.floor(Number(entry.score))) : 0,
+        kills: Number.isFinite(Number(entry.kills)) ? Math.max(0, Math.floor(Number(entry.kills))) : 0
+      }))
+
+    if (entries.length !== config.teams.length) {
+      return { success: false, msg: '比分队伍数量与当前模式不一致' }
+    }
+
+    room.finalScore = {
+      status: 'completed',
+      entries,
+      winnerTeamId: payload.winnerTeamId,
+      note: String(payload.note || '').trim(),
+      updatedAt: new Date().toLocaleString()
+    }
+    return { success: true }
+  },
+
+  resetNormalFinalScore(roomId) {
+    const room = this.getRoom(roomId)
+    if (!room || room.type === 'tournament') return { success: false, msg: '普通房间未找到' }
+    room.finalScore = { status: 'pending', entries: [], winnerTeamId: null, note: '', updatedAt: '' }
+    return { success: true }
   },
 
   updateTournamentMap(roomId, mapVal, forceReroll = false) {
@@ -261,7 +354,93 @@ export const roomStore = {
     const team = room.teams.find(t => t.id === teamId)
     if (!team) return { success: false, msg: '战队未找到' }
     if (newName) team.name = newName.trim()
-    team.members = membersArray || []
+    team.members = (membersArray || []).map((member, index) => normalizeTournamentMember(member, team.id, index))
+    return { success: true }
+  },
+
+  resizeTournament(roomId, nextTeamCount) {
+    const room = this.getRoom(roomId)
+    const count = Number(nextTeamCount)
+    if (!room || room.type !== 'tournament') return { success: false, msg: '赛事房间未找到' }
+    if (![4, 6, 8].includes(count)) return { success: false, msg: '仅支持 4、6、8 支战队' }
+    if (room.teamCount === count) return { success: true }
+
+    const preservedTeams = (room.teams || []).slice(0, count).map(normalizeTournamentTeam)
+    while (preservedTeams.length < count) preservedTeams.push(createTournamentTeam(preservedTeams.length))
+
+    room.teamCount = count
+    room.teams = preservedTeams
+    room.slots = preservedTeams.map(team => team.id)
+    room.matches = generateTournamentSchedule(room.tournamentType || 'cashout', count, preservedTeams)
+    syncCashoutTournamentMatches(room)
+    return { success: true }
+  },
+
+  addTournamentMember(roomId, teamId, name, bodyType = '中') {
+    const room = this.getRoom(roomId)
+    const team = room?.teams?.find(item => item.id === teamId)
+    const trimmedName = String(name || '').trim()
+    if (!team) return { success: false, msg: '战队未找到' }
+    if (!trimmedName) return { success: false, msg: '请输入成员名称' }
+    if ((team.members || []).length >= 12) return { success: false, msg: '每支战队最多 12 名成员' }
+    if (room.teams.some(item => (item.members || []).some(member => member.name === trimmedName))) {
+      return { success: false, msg: '该成员已存在于赛事房间中' }
+    }
+    team.members.push(normalizeTournamentMember({
+      id: `${teamId}_member_${Date.now()}`,
+      name: trimmedName,
+      bodyType
+    }, teamId, team.members.length))
+    return { success: true }
+  },
+
+  removeTournamentMember(roomId, teamId, memberId) {
+    const room = this.getRoom(roomId)
+    const team = room?.teams?.find(item => item.id === teamId)
+    if (!team) return { success: false, msg: '战队未找到' }
+    const index = (team.members || []).findIndex(member => member.id === memberId)
+    if (index < 0) return { success: false, msg: '成员未找到' }
+    team.members.splice(index, 1)
+    return { success: true }
+  },
+
+  updateTournamentMember(roomId, teamId, memberId, patch = {}) {
+    const room = this.getRoom(roomId)
+    const team = room?.teams?.find(item => item.id === teamId)
+    const member = team?.members?.find(item => item.id === memberId)
+    if (!member) return { success: false, msg: '成员未找到' }
+    if (patch.name !== undefined) member.name = String(patch.name).trim() || member.name
+    if (TOURNAMENT_BODY_TYPES.includes(patch.bodyType)) member.bodyType = patch.bodyType
+    return { success: true }
+  },
+
+  moveTournamentMember(roomId, memberId, fromTeamId, targetTeamId) {
+    const room = this.getRoom(roomId)
+    const fromTeam = room?.teams?.find(team => team.id === fromTeamId)
+    const targetTeam = room?.teams?.find(team => team.id === targetTeamId)
+    if (!fromTeam || !targetTeam) return { success: false, msg: '战队未找到' }
+    if (fromTeamId === targetTeamId) return { success: true }
+    if ((targetTeam.members || []).length >= 12) return { success: false, msg: '目标战队人数已满' }
+    const memberIndex = (fromTeam.members || []).findIndex(member => member.id === memberId)
+    if (memberIndex < 0) return { success: false, msg: '成员未找到' }
+    const [member] = fromTeam.members.splice(memberIndex, 1)
+    targetTeam.members.push(member)
+    return { success: true }
+  },
+
+  randomizeTournamentMembers(roomId) {
+    const room = this.getRoom(roomId)
+    if (!room?.teams?.length) return { success: false, msg: '赛事房间未找到' }
+    const members = room.teams.flatMap(team => team.members || [])
+    if (!members.length) return { success: false, msg: '当前没有可分组的成员' }
+    for (let index = members.length - 1; index > 0; index--) {
+      const randomIndex = Math.floor(Math.random() * (index + 1))
+      ;[members[index], members[randomIndex]] = [members[randomIndex], members[index]]
+    }
+    room.teams.forEach(team => { team.members = [] })
+    members.forEach((member, index) => {
+      room.teams[index % room.teams.length].members.push(member)
+    })
     return { success: true }
   },
 
@@ -385,6 +564,15 @@ export const roomStore = {
       if (m.promoted) m.promoted = []; if (m.rankings) m.rankings = []
       m.scoreA = null; m.scoreB = null; m.killsA = null; m.killsB = null; m.winnerId = null
     })
+    syncCashoutTournamentMatches(room)
+    return { success: true }
+  },
+
+  resetTournamentArrangement(roomId) {
+    const room = this.getRoom(roomId)
+    if (!room || room.type !== 'tournament') return { success: false, msg: '赛事房间未找到' }
+    room.slots = room.teams.map(team => team.id)
+    room.matches = generateTournamentSchedule(room.tournamentType || 'cashout', room.teamCount, room.teams)
     syncCashoutTournamentMatches(room)
     return { success: true }
   },

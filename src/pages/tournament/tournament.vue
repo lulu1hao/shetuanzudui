@@ -1,8 +1,12 @@
 <template>
-  <div ref="tournamentRootRef" class="container">
+  <div ref="tournamentRootRef" class="container" :class="{ 'tournament-arrival': isTournamentArrival }">
     <!-- HUD Header -->
     <div class="hud-header">
       <div class="header-left">
+        <div class="tournament-brand" aria-label="赛事中心">
+          <img :src="tournamentDeerLogo" alt="" aria-hidden="true" />
+          <span>赛事中心</span>
+        </div>
         <button class="back-btn" @click="goBack">← 大厅</button>
         <div class="room-title-block">
           <span class="room-title-text">{{ room.name || '赛事详情' }}</span>
@@ -14,7 +18,7 @@
           <span class="map-label">MAP</span>
           <span class="map-name-val">{{ activeMapDisplay }}</span>
         </div>
-        <button class="gear-btn" :class="{ 'active': isControlPanelVisible }" @click="toggleControlPanel">⚙️ 控制面板</button>
+        <button class="gear-btn" :class="{ 'active': isControlPanelVisible }" @click="toggleControlPanel">赛事设置</button>
       </div>
     </div>
 
@@ -34,9 +38,125 @@
 
       <!-- TAB 0: 晋级大厅 / 积分榜 -->
       <div class="tab-content" v-if="currentTab === 0">
+        <div class="tournament-command-center" v-if="room.tournamentType === 'cashout'">
+          <main class="command-flow-panel">
+            <div class="command-flow-heading">
+              <div>
+                <span class="command-eyebrow">CASHOUT TOURNAMENT</span>
+                <h2>鹿鹿杯 · {{ room.teamCount }}队赛</h2>
+              </div>
+              <div class="live-status"><span></span>{{ room.matches?.some(m => m.status === 'completed') ? '赛程进行中' : '等待开赛' }}</div>
+            </div>
+
+            <div class="command-flow" :class="`command-flow-${room.teamCount}`">
+              <section class="flow-stage opening-stage">
+                <template v-if="room.teamCount === 4">
+                  <article class="command-match-card featured-stage" @click="handleMatchClick(getMatch('semifinal_4'))">
+                    <header class="command-match-header">
+                      <div><h3>4强对决</h3><p>4队同场 · TOP 2 晋级</p></div>
+                      <span :class="{ completed: getMatch('semifinal_4')?.status === 'completed' }">{{ getMatchStatusText(getMatch('semifinal_4')) }}</span>
+                    </header>
+                    <div class="command-team-list">
+                      <div v-for="(teamId, idx) in getMatch('semifinal_4')?.teams || [null, null, null, null]" :key="`sf4-${idx}`" class="command-team-row" :class="getCashoutRowClass(getMatch('semifinal_4'), teamId)" @click.stop="handleMatchTeamClick('semifinal_4', idx)">
+                        <span class="command-logo" :style="{ color: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo || '—' }}</span>
+                        <span class="command-team-name">{{ getTeamById(teamId)?.name || '待定席位' }}</span>
+                        <span class="command-cashout">${{ formatCashout(getMatch('semifinal_4')?.cashouts?.[teamId]) }}</span>
+                        <span class="command-row-state">{{ getCashoutRowStatus(getMatch('semifinal_4'), teamId, idx) }}</span>
+                      </div>
+                    </div>
+                  </article>
+                </template>
+
+                <template v-else>
+                  <article v-for="stage in openingStageDefs" :key="stage.id" class="command-match-card group-stage" @click="handleMatchClick(getMatch(stage.id))">
+                    <header class="command-match-header">
+                      <div><h3>{{ stage.title }}</h3><p>{{ room.teamCount === 6 ? '3队同场' : '4队同场' }} · TOP 2 晋级</p></div>
+                      <span :class="{ completed: getMatch(stage.id)?.status === 'completed' }">{{ getMatchStatusText(getMatch(stage.id)) }}</span>
+                    </header>
+                    <div class="command-team-list">
+                      <div v-for="(teamId, idx) in getMatch(stage.id)?.teams || []" :key="`${stage.id}-${idx}`" class="command-team-row" :class="getCashoutRowClass(getMatch(stage.id), teamId)" @click.stop="handleMatchTeamClick(stage.id, idx)">
+                        <span class="command-logo" :style="{ color: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo || '—' }}</span>
+                        <span class="command-team-name">{{ getTeamById(teamId)?.name || '待定席位' }}</span>
+                        <span class="command-cashout">${{ formatCashout(getMatch(stage.id)?.cashouts?.[teamId]) }}</span>
+                        <span class="command-row-state">{{ getCashoutRowStatus(getMatch(stage.id), teamId, idx) }}</span>
+                      </div>
+                    </div>
+                  </article>
+                </template>
+              </section>
+
+              <div class="flow-connector" :class="room.teamCount === 4 ? 'connector-straight' : 'connector-merge'" aria-hidden="true">
+                <i class="line-in"></i><i class="line-top"></i><i class="line-bottom"></i><i class="line-spine"></i><i class="line-out"></i>
+              </div>
+
+              <section v-if="room.teamCount > 4" class="flow-stage middle-stage">
+                <article class="command-match-card featured-stage" @click="handleMatchClick(getMatch('semifinal_4'))">
+                  <header class="command-match-header">
+                    <div><h3>4强对决</h3><p>4队同场 · TOP 2 晋级</p></div>
+                    <span :class="{ completed: getMatch('semifinal_4')?.status === 'completed' }">{{ getMatchStatusText(getMatch('semifinal_4')) }}</span>
+                  </header>
+                  <div class="command-team-list">
+                    <div v-for="(teamId, idx) in getMatch('semifinal_4')?.teams || [null, null, null, null]" :key="`middle-${idx}`" class="command-team-row" :class="getCashoutRowClass(getMatch('semifinal_4'), teamId)" @click.stop="handleMatchTeamClick('semifinal_4', idx)">
+                      <span class="command-logo" :style="{ color: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo || '—' }}</span>
+                      <span class="command-team-name">{{ getTeamById(teamId)?.name || '待定晋级席位' }}</span>
+                      <span class="command-cashout">${{ formatCashout(getMatch('semifinal_4')?.cashouts?.[teamId]) }}</span>
+                      <span class="command-row-state">{{ getCashoutRowStatus(getMatch('semifinal_4'), teamId, idx) }}</span>
+                    </div>
+                  </div>
+                </article>
+              </section>
+
+              <div v-if="room.teamCount > 4" class="flow-connector connector-split" aria-hidden="true">
+                <i class="line-in"></i><i class="line-top"></i><i class="line-bottom"></i><i class="line-spine"></i><i class="line-out"></i>
+              </div>
+
+              <section class="flow-stage finals-stage">
+                <article v-for="stage in finalStageDefs" :key="stage.id" class="command-match-card final-stage-card" :class="stage.tone" @click="openCashoutScoreModal(getMatch(stage.id))">
+                  <header class="command-match-header">
+                    <div><h3>{{ stage.title }}</h3><p>{{ stage.subtitle }}</p></div>
+                    <span :class="{ completed: getMatch(stage.id)?.status === 'completed' }">{{ getMatchStatusText(getMatch(stage.id)) }}</span>
+                  </header>
+                  <div class="command-team-list">
+                    <div v-for="(teamId, idx) in getMatch(stage.id)?.teams || [null, null]" :key="`${stage.id}-${idx}`" class="command-team-row" :class="getCashoutRowClass(getMatch(stage.id), teamId)">
+                      <span class="command-logo" :style="{ color: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo || 'TBD' }}</span>
+                      <span class="command-team-name">{{ getTeamById(teamId)?.name || '待定' }}</span>
+                      <span class="command-cashout">${{ formatCashout(getMatch(stage.id)?.cashouts?.[teamId]) }}</span>
+                      <span class="command-row-state">{{ getCashoutRowStatus(getMatch(stage.id), teamId, idx) }}</span>
+                    </div>
+                  </div>
+                  <button type="button" class="view-match-button">查看对局</button>
+                </article>
+              </section>
+            </div>
+          </main>
+
+          <aside class="command-sidebar">
+            <section class="command-side-card roster-card">
+              <header><h3>参赛战队（{{ room.teamCount }}支）</h3><span>拖拽调整分组</span></header>
+              <div class="command-roster-list">
+                <div v-for="(teamId, idx) in room.slots || []" :key="teamId || idx" class="command-roster-row" :class="{ selected: selectedSlotIdx === idx }" draggable="true" @dragstart="onDragStart($event, idx)" @dragover.prevent @drop="onDrop($event, idx)" @dragend="draggedSlotIdx = null" @click="onSlotTap(idx)">
+                  <span class="roster-logo" :style="{ color: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo }}</span>
+                  <span class="roster-name">{{ getTeamById(teamId)?.name }}</span>
+                  <span class="roster-group">{{ getSlotGroupLabel(idx) }}</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="command-side-card status-card">
+              <header><h3>赛事状态</h3></header>
+              <div class="status-live-row"><span></span><strong>进行中</strong></div>
+              <p>地图：{{ activeMapDisplay }} · 点击赛程卡片录入提现金额</p>
+            </section>
+
+            <section class="command-side-card champion-card">
+              <div class="trophy-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M20 8h24v12c0 12-5 20-12 20S20 32 20 20zM20 12H9v7c0 8 5 13 13 14M44 12h11v7c0 8-5 13-13 14M32 40v9M22 55h20M26 49h12" /></svg></div>
+              <div><span>冠军之路</span><strong>{{ championTeam?.name || '等待冠军诞生' }}</strong><small>专属冠军奖杯 & 荣誉称号</small></div>
+            </section>
+          </aside>
+        </div>
 
         <!-- 💰 提现锦标赛 -->
-        <div class="flowchart-section glass-panel" v-if="room.tournamentType === 'cashout'">
+        <div class="flowchart-section glass-panel legacy-flowchart" v-else-if="false">
           <div class="screenshot-bar" v-if="!isScreenshotViewActive">
             <span class="screenshot-tip">📸 全景截图模式便于分享</span>
             <button class="btn-screenshot" @click="toggleScreenshotView">
@@ -259,7 +379,9 @@
                         <span class="slot-team-name">{{ getTeamById(teamId)?.name }}</span>
                       </div>
                       <div class="slot-team-members">
-                        <div v-for="(member, mIdx) in getTeamById(teamId)?.members || []" :key="mIdx" class="slot-member-pill">{{ member }}</div>
+                        <div v-for="(member, mIdx) in getTeamById(teamId)?.members || []" :key="member.id || mIdx" class="slot-member-pill">
+                          {{ member.name || member }}<span v-if="member.bodyType"> · {{ member.bodyType }}体型</span>
+                        </div>
                         <span class="no-members-tip" v-if="!getTeamById(teamId)?.members || getTeamById(teamId)?.members.length === 0">无人员</span>
                       </div>
                     </div>
@@ -416,29 +538,112 @@
 
       <!-- TAB 1: 战队管理 -->
       <div class="tab-content" v-if="currentTab === 1">
-        <div class="teams-manager glass-panel">
-          <div class="teams-manager-header">
-            <span class="tm-title">🛡️ 战队席位管理</span>
-            <span class="tm-tip">点击战队名称可编辑战队信息</span>
-          </div>
-          <div class="teams-manager-grid">
-            <div v-for="team in room.teams" :key="team.id" class="team-edit-card glass-panel" @click="openEditTeamModal(team)">
-              <div class="team-color-bar" :style="{ background: team.color || team.gradient || '#6b7280' }"></div>
-              <div class="team-edit-info">
-                <div class="team-edit-header">
-                  <div class="team-color-dot" :style="{ backgroundColor: team.color }"></div>
-                  <span class="team-edit-name">{{ team.name }}</span>
-                  <span class="edit-icon">✏️</span>
-                </div>
-                <div class="team-members-chips">
-                  <span v-for="(member, mIdx) in team.members || []" :key="mIdx" class="member-chip">{{ member }}</span>
-                  <span v-if="!team.members || team.members.length === 0" class="no-members-hint">暂无人员 (点击编辑)</span>
-                </div>
+        <div class="global-team-manager">
+          <section class="global-team-toolbar">
+            <div class="global-team-summary">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              <div>
+                <h2>全局战队编排</h2>
+                <p>{{ room.teamCount }} 支战队 · {{ totalTournamentMembers }} 名成员</p>
               </div>
             </div>
+
+            <div class="team-count-switch" aria-label="赛事战队数量">
+              <button
+                v-for="count in [4, 6, 8]"
+                :key="count"
+                :class="{ active: room.teamCount === count }"
+                @click="handleTeamCountChange(count)"
+              >{{ count }}队</button>
+            </div>
+
+            <div class="global-team-actions">
+              <button class="global-action-btn" @click="handleGlobalRandomMembers">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" /></svg>
+                随机分组
+              </button>
+              <button class="global-action-btn" @click="handleRandomizeSlots">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v5a3 3 0 0 0 0 6v5H4v-5a3 3 0 0 0 0-6V4ZM9 8h6M9 12h6M9 16h4" /></svg>
+                队伍抽签
+              </button>
+              <button class="global-reset-btn" @click="handleResetArrangement">重置编排</button>
+            </div>
+          </section>
+
+          <div class="global-drag-tip">
+            <span aria-hidden="true">⠿</span>
+            拖拽成员可跨队调整；队伍数量变化后，赛制将自动重新生成
+          </div>
+
+          <div class="global-team-grid" :class="`team-grid-${room.teamCount}`">
+            <article
+              v-for="(team, teamIndex) in room.teams"
+              :key="team.id"
+              class="global-team-card"
+              :style="{ '--team-accent': team.color || '#ec1648' }"
+              @dragover.prevent
+              @drop="handleMemberDrop($event, team.id)"
+            >
+              <header class="global-team-card-header">
+                <span class="team-index">队伍 {{ String(teamIndex + 1).padStart(2, '0') }}</span>
+                <label class="team-name-editor">
+                  <span class="sr-only">战队名称</span>
+                  <input v-model="team.name" maxlength="32" placeholder="战队名称" @change="saveInlineTeamName(team)" />
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.5-1L19 8.5 15.5 5 5 15.5 4 20ZM13.5 7l3.5 3.5" /></svg>
+                </label>
+                <span class="team-member-count">{{ team.members?.length || 0 }} / 12</span>
+                <span class="draw-position">签位 {{ getDrawPosition(team.id) }}</span>
+              </header>
+
+              <div class="global-member-list">
+                <div
+                  v-for="member in team.members || []"
+                  :key="member.id"
+                  class="global-member-row"
+                  draggable="true"
+                  @dragstart="handleMemberDragStart($event, team.id, member.id)"
+                >
+                  <span class="member-drag-handle" title="拖拽成员">⠿</span>
+                  <input
+                    class="member-name-input"
+                    :value="member.name"
+                    maxlength="20"
+                    aria-label="成员名称"
+                    @change="updateMemberName(team.id, member, $event.target.value)"
+                  />
+                  <div class="body-type-switch" aria-label="体型配置">
+                    <button
+                      v-for="bodyType in tournamentBodyTypes"
+                      :key="bodyType"
+                      :class="{ active: member.bodyType === bodyType }"
+                      :aria-pressed="member.bodyType === bodyType"
+                      @click="updateMemberBodyType(team.id, member.id, bodyType)"
+                    >{{ bodyType }}</button>
+                  </div>
+                  <button class="remove-member-btn" aria-label="移除成员" @click="removeTournamentMember(team.id, member.id)">×</button>
+                </div>
+                <div v-if="!team.members?.length" class="empty-team-members">暂无成员，可在下方添加或拖入</div>
+              </div>
+
+              <footer class="global-team-card-footer">
+                <input
+                  v-model="teamMemberDrafts[team.id]"
+                  maxlength="20"
+                  placeholder="添加成员"
+                  :aria-label="`为${team.name}添加成员`"
+                  @keyup.enter="addTournamentMember(team.id)"
+                />
+                <select v-model="teamBodyTypeDrafts[team.id]" aria-label="新成员体型">
+                  <option v-for="bodyType in tournamentBodyTypes" :key="bodyType" :value="bodyType">{{ bodyType }}体型</option>
+                </select>
+                <button @click="addTournamentMember(team.id)">添加</button>
+              </footer>
+            </article>
           </div>
         </div>
-      </div>
+              </div>
 
       <!-- TAB 2: 对阵列表 (单败淘汰/循环赛) -->
       <div class="tab-content" v-if="currentTab === 2">
@@ -474,9 +679,9 @@
       <div class="drawer-body">
         <div class="drawer-section">
           <div class="ds-title">⚡ 快速操作</div>
-          <button class="ds-btn btn-gold" @click="handleRandomizeSlots">🎲 随机分组洗牌</button>
+          <button class="ds-btn btn-gold" @click="handleRandomizeSlots">🎟️ 队伍抽签</button>
           <button class="ds-btn btn-red" @click="handleResetAllMatches">🔄 重置全部局分</button>
-          <span class="ds-tip">随机洗牌将清空所有比分和晋级数据；重置局分保留分组。</span>
+          <span class="ds-tip">队伍抽签将重排签位并清空比分和晋级数据；重置局分保留当前签位。</span>
         </div>
         <div class="drawer-section">
           <div class="ds-title">🗺️ 比赛地图</div>
@@ -600,9 +805,18 @@
 <script>
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { roomStore, MAPS, generateTournamentSchedule } from '../../store/roomStore.js'
+import { roomStore, MAPS, TOURNAMENT_BODY_TYPES, generateTournamentSchedule } from '../../store/roomStore.js'
 import { useToast } from '../../composables/useToast.js'
+import tournamentDeerLogo from '../../assets/branding/tournament-deer-logo.png'
 import gsap from 'gsap'
+import {
+  animateDisplayHeaderCopy,
+  beginLobbyReturnTransition,
+  hasLuluDisplayTransition,
+  placeGlobalLuluInDisplayTarget,
+  settleLuluDisplayTransition,
+  TOURNAMENT_DISPLAY_REVEAL_DURATION
+} from '../../utils/globalLuluTransition.js'
 
 export default {
   setup() {
@@ -612,6 +826,9 @@ export default {
 
     const roomId = ref('')
     const tournamentRootRef = ref(null)
+    const isTournamentArrival = ref(
+      hasLuluDisplayTransition(route.query.id)
+    )
     const room = ref({ teams: [], matches: [], slots: [] })
     const isControlPanelVisible = ref(false)
     const currentTab = ref(0)
@@ -633,7 +850,14 @@ export default {
     const editTeamName = ref('')
     const editTeamMembersText = ref('')
     const draggedSlotIdx = ref(null)
+    const draggedTournamentMember = ref(null)
+    const teamMemberDrafts = ref({})
+    const teamBodyTypeDrafts = ref({})
+    const tournamentBodyTypes = TOURNAMENT_BODY_TYPES
     let entranceTimer = null
+    let panelEntranceTimeline = null
+    let lobbyReturnTimeline = null
+    let isReturningToLobby = false
 
     // Viewport Centering & Immersive Screenshot Scaling
     const flowchartScrollRef = ref(null)
@@ -682,8 +906,8 @@ export default {
     })
 
     const tabs = computed(() => {
-      if (!room.value || !room.value.tournamentType) return ['🏆 晋级大厅']
-      return ['🏆 晋级大厅', '🛡️ 战队管理']
+      if (!room.value || !room.value.tournamentType) return ['赛事大厅']
+      return ['赛事大厅', '我的战队']
     })
 
     watch([inputScoreA, inputScoreB], ([valA, valB]) => {
@@ -707,12 +931,153 @@ export default {
           roomStore.syncCashoutMatchesLocal(data)
         }
         room.value = data
+        data.teams.forEach(team => {
+          if (teamMemberDrafts.value[team.id] === undefined) teamMemberDrafts.value[team.id] = ''
+          if (!teamBodyTypeDrafts.value[team.id]) teamBodyTypeDrafts.value[team.id] = '中'
+        })
+      }
+    }
+
+    const totalTournamentMembers = computed(() =>
+      (room.value.teams || []).reduce((total, team) => total + (team.members?.length || 0), 0)
+    )
+
+    const getDrawPosition = (teamId) => {
+      const position = (room.value.slots || []).indexOf(teamId)
+      return position >= 0 ? position + 1 : '—'
+    }
+
+    const saveInlineTeamName = (team) => {
+      const name = String(team.name || '').trim()
+      if (!name) {
+        team.name = `战队 ${String((room.value.teams || []).indexOf(team) + 1).padStart(2, '0')}`
+      }
+      roomStore.updateTournamentTeam(roomId.value, team.id, team.name, team.members)
+    }
+
+    const addTournamentMember = (teamId) => {
+      const result = roomStore.addTournamentMember(
+        roomId.value,
+        teamId,
+        teamMemberDrafts.value[teamId],
+        teamBodyTypeDrafts.value[teamId] || '中'
+      )
+      if (!result.success) return showToast(result.msg)
+      teamMemberDrafts.value[teamId] = ''
+      showToast('成员已添加', 'success')
+    }
+
+    const removeTournamentMember = (teamId, memberId) => {
+      const result = roomStore.removeTournamentMember(roomId.value, teamId, memberId)
+      if (!result.success) showToast(result.msg)
+    }
+
+    const updateMemberName = (teamId, member, name) => {
+      const trimmedName = String(name || '').trim()
+      if (!trimmedName) return
+      roomStore.updateTournamentMember(roomId.value, teamId, member.id, { name: trimmedName })
+    }
+
+    const updateMemberBodyType = (teamId, memberId, bodyType) => {
+      roomStore.updateTournamentMember(roomId.value, teamId, memberId, { bodyType })
+    }
+
+    const handleMemberDragStart = (event, teamId, memberId) => {
+      draggedTournamentMember.value = { teamId, memberId }
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('application/x-tournament-member', JSON.stringify({ teamId, memberId }))
+    }
+
+    const handleMemberDrop = (event, targetTeamId) => {
+      event.preventDefault()
+      let payload = draggedTournamentMember.value
+      const serialized = event.dataTransfer.getData('application/x-tournament-member')
+      if (serialized) {
+        try { payload = JSON.parse(serialized) } catch (error) { /* use local drag state */ }
+      }
+      if (!payload) return
+      const result = roomStore.moveTournamentMember(roomId.value, payload.memberId, payload.teamId, targetTeamId)
+      draggedTournamentMember.value = null
+      if (!result.success) showToast(result.msg)
+    }
+
+    const handleGlobalRandomMembers = async () => {
+      const confirmed = await showModal('随机分组', '将房间内全部成员随机平均分配到当前战队中，是否继续？', '#eb003b')
+      if (!confirmed) return
+      const result = roomStore.randomizeTournamentMembers(roomId.value)
+      if (result.success) showToast('成员随机分组完成', 'success')
+      else showToast(result.msg)
+    }
+
+    const handleTeamCountChange = async (count) => {
+      if (count === room.value.teamCount) return
+      const shrinking = count < room.value.teamCount
+      const message = shrinking
+        ? `切换为 ${count} 队将移除末尾 ${room.value.teamCount - count} 支战队，并重建全部赛程与成绩。是否继续？`
+        : `切换为 ${count} 队将保留现有战队、补充新战队，并按 ${count} 队赛制重建全部赛程。是否继续？`
+      const confirmed = await showModal('修改赛事队伍数量', message, '#eb003b')
+      if (!confirmed) return
+      const result = roomStore.resizeTournament(roomId.value, count)
+      if (!result.success) return showToast(result.msg)
+      loadRoomData()
+      showToast(`已切换为 ${count} 队赛制`, 'success')
+    }
+
+    const handleResetArrangement = async () => {
+      const confirmed = await showModal('重置编排', '恢复默认签位并清空全部比赛成绩，战队名称、成员和体型配置会保留。', '#eb003b')
+      if (!confirmed) return
+      const result = roomStore.resetTournamentArrangement(roomId.value)
+      if (result.success) {
+        loadRoomData()
+        showToast('编排已重置', 'success')
       }
     }
 
     const shouldReduceMotion = () =>
       typeof window !== 'undefined' &&
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+    const playTournamentEntrance = () => {
+      if (shouldReduceMotion()) {
+        isTournamentArrival.value = false
+        placeGlobalLuluInDisplayTarget(tournamentRootRef.value, { target: 'tournament' })
+        animatePanelEntrance()
+        animateActivePaths()
+        return
+      }
+
+      const settled = settleLuluDisplayTransition({
+        id: roomId.value,
+        target: 'tournament',
+        root: tournamentRootRef.value,
+        onComplete: () => {
+          isTournamentArrival.value = false
+          nextTick(() => {
+            const root = tournamentRootRef.value
+            const header = root?.querySelector('.hud-header')
+            if (header) {
+              gsap.set(header, { clearProps: 'height,minHeight,will-change' })
+            }
+            if (root) {
+              gsap.set(root.querySelectorAll('.header-left, .header-right'), {
+                clearProps: 'opacity,visibility,transform,will-change'
+              })
+              placeGlobalLuluInDisplayTarget(root, { target: 'tournament' })
+            }
+            animateActivePaths()
+          })
+        }
+      })
+
+      if (settled) {
+        animatePanelEntrance({ arrival: true })
+      } else {
+        isTournamentArrival.value = false
+        placeGlobalLuluInDisplayTarget(tournamentRootRef.value, { target: 'tournament' })
+        animatePanelEntrance()
+        animateActivePaths()
+      }
+    }
 
     const getScopedElements = (selector) => {
       const root = tournamentRootRef.value
@@ -758,16 +1123,50 @@ export default {
       })
     }
 
-    const animatePanelEntrance = () => {
+    const animatePanelEntrance = ({ arrival = false } = {}) => {
       if (shouldReduceMotion()) return
       const root = tournamentRootRef.value
       if (!root) return
-      gsap.killTweensOf(root.querySelectorAll('.hud-header, .tab-item, .cashout-match-node, .team-slot-card, .se-match-col, .standings-section, .matches-list-panel'))
-      gsap.from(root.querySelectorAll('.hud-header'), { y: -30, opacity: 0, duration: 0.65, ease: 'power3.out' })
-      gsap.from(root.querySelectorAll('.tab-item'), { y: -15, opacity: 0, duration: 0.5, stagger: 0.05, delay: 0.1, ease: 'power2.out' })
-      gsap.from(root.querySelectorAll('.cashout-match-node, .team-slot-card, .se-match-col, .standings-section, .matches-list-panel'), {
-        y: 35, opacity: 0, scale: 0.98, duration: 0.6, stagger: 0.04, delay: 0.15, ease: 'power2.out', clearProps: 'transform,opacity'
-      })
+      const header = root.querySelector('.hud-header')
+      const headerLeft = root.querySelector('.header-left')
+      const headerRight = root.querySelector('.header-right')
+      const contentItems = root.querySelectorAll('.cashout-match-node, .team-slot-card, .se-match-col, .standings-section, .matches-list-panel')
+      gsap.killTweensOf(arrival
+        ? [headerLeft, headerRight].filter(Boolean)
+        : root.querySelectorAll('.hud-header, .header-left, .header-right, .tab-item, .cashout-match-node, .team-slot-card, .se-match-col, .standings-section, .matches-list-panel')
+      )
+      panelEntranceTimeline?.kill()
+      const headerDuration = arrival ? TOURNAMENT_DISPLAY_REVEAL_DURATION : 0.46
+      panelEntranceTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
+      animateDisplayHeaderCopy(root, { arrival, duration: headerDuration })
+      if (!arrival) {
+        panelEntranceTimeline.to(header, {
+          height: 112,
+          minHeight: 112,
+          duration: 0,
+          ease: 'power3.inOut',
+          clearProps: 'height,min-height,will-change'
+        }, 0)
+      }
+      if (!arrival) {
+        panelEntranceTimeline
+          .from(root.querySelectorAll('.tab-item'), {
+            y: -15,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.05,
+            ease: 'power2.out'
+          }, 0.1)
+          .from(contentItems, {
+            y: 35,
+            opacity: 0,
+            scale: 0.98,
+            duration: 0.6,
+            stagger: 0.04,
+            ease: 'power2.out',
+            clearProps: 'transform,opacity'
+          }, 0.15)
+      }
     }
 
     watch(() => room.value.matches, () => {
@@ -781,10 +1180,27 @@ export default {
         roomId.value = id;
         loadRoomData();
 
+        if (isTournamentArrival.value && !shouldReduceMotion()) {
+          const root = tournamentRootRef.value
+          const header = root?.querySelector('.hud-header')
+          if (root && header) {
+            gsap.set(header, {
+              height: root.clientHeight,
+              minHeight: root.clientHeight,
+              willChange: 'height'
+            })
+          }
+        }
+
+        // 先保留完整展示帧，再由全局展示层统一回缩，避免底部提前露出赛事页。
         entranceTimer = setTimeout(() => {
-          animatePanelEntrance()
-          animateActivePaths()
-        }, 80)
+          if (isTournamentArrival.value) playTournamentEntrance()
+          else {
+            placeGlobalLuluInDisplayTarget(tournamentRootRef.value, { target: 'tournament' })
+            animatePanelEntrance()
+            animateActivePaths()
+          }
+        }, 140)
       }
       else { showToast('赛事不存在'); setTimeout(() => goBack(), 1000) }
       window.addEventListener('resize', handleResize)
@@ -792,13 +1208,61 @@ export default {
 
     onUnmounted(() => {
       if (entranceTimer) clearTimeout(entranceTimer)
+      panelEntranceTimeline?.kill()
+      lobbyReturnTimeline?.kill()
       resetInactivePaths()
       const root = tournamentRootRef.value
       if (root) gsap.killTweensOf(root.querySelectorAll('*'))
       window.removeEventListener('resize', handleResize)
     })
 
-    const goBack = () => router.go(-1)
+    const goBack = () => {
+      if (isReturningToLobby) return
+
+      const navigateHome = () => router.push('/')
+      if (shouldReduceMotion()) {
+        navigateHome()
+        return
+      }
+
+      const root = tournamentRootRef.value
+      const header = root?.querySelector('.hud-header')
+      const headerLeft = root?.querySelector('.header-left')
+      const headerRight = root?.querySelector('.header-right')
+      root?.classList.add('tournament-leaving')
+
+      isReturningToLobby = true
+      let transitionStarted = false
+      lobbyReturnTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
+        .call(() => {
+          transitionStarted = beginLobbyReturnTransition(roomId.value)
+          if (!transitionStarted) navigateHome()
+        }, null, 0)
+        .to(headerLeft ? [headerLeft] : [], {
+          xPercent: -105,
+          autoAlpha: 0,
+          duration: 0.4,
+          ease: 'power3.inOut',
+          willChange: 'transform, opacity'
+        }, 0)
+        .to(headerRight ? [headerRight] : [], {
+          xPercent: 105,
+          autoAlpha: 0,
+          duration: 0.4,
+          ease: 'power3.inOut',
+          willChange: 'transform, opacity'
+        }, 0)
+        .to(header ? [header] : [], {
+          height: root?.clientHeight || window.innerHeight,
+          minHeight: root?.clientHeight || window.innerHeight,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'height'
+        }, 0)
+        .call(() => {
+          if (transitionStarted) navigateHome()
+        }, null, TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
+    }
     const switchTab = (index) => {
       currentTab.value = index
       resetInactivePaths()
@@ -825,6 +1289,36 @@ export default {
     const getTeamById = (teamId) => { if (!teamId) return null; return room.value.teams ? room.value.teams.find(t => t.id === teamId) : null }
     const getTeamName = (teamId) => { if (!teamId) return '待定'; if (teamId === 'bye') return '轮空'; const team = getTeamById(teamId); return team ? team.name : '未知战队' }
     const getMatch = (matchId) => { if (!room.value.matches) return null; return room.value.matches.find(m => m.id === matchId) }
+    const openingStageDefs = [
+      { id: 'semifinal_a', title: '半决赛 A组' },
+      { id: 'semifinal_b', title: '半决赛 B组' }
+    ]
+    const finalStageDefs = [
+      { id: 'final_grand', title: '冠亚决赛', subtitle: 'TOP 2 · 冠军之战', tone: 'grand-final-card' },
+      { id: 'final_3rd', title: '季军决赛', subtitle: 'BOTTOM 2 · 季军之战', tone: 'third-final-card' }
+    ]
+    const getMatchStatusText = (match) => {
+      if (!match) return '等待赛程'
+      if (match.status === 'completed') return '已完赛'
+      if (match.teams?.some(teamId => !teamId)) return '等待晋级'
+      return '进行中'
+    }
+    const getCashoutRowStatus = (match, teamId, idx) => {
+      if (!teamId) return '待定'
+      if (match?.status !== 'completed') return `席位 ${idx + 1}`
+      if (Array.isArray(match.promoted)) return match.promoted.includes(teamId) ? '晋级' : '淘汰'
+      return getRankTrophy(match, teamId) || `第 ${idx + 1} 名`
+    }
+    const getCashoutRowClass = (match, teamId) => ({
+      pending: !teamId,
+      promoted: Boolean(teamId && match?.status === 'completed' && Array.isArray(match.promoted) && match.promoted.includes(teamId)),
+      eliminated: Boolean(teamId && match?.status === 'completed' && Array.isArray(match.promoted) && !match.promoted.includes(teamId)),
+      champion: Boolean(teamId && match?.status === 'completed' && Array.isArray(match.rankings) && match.rankings[0] === teamId)
+    })
+    const championTeam = computed(() => {
+      const finalMatch = getMatch('final_grand')
+      return getTeamById(finalMatch?.rankings?.[0])
+    })
     const formatCashout = (val) => { if (val === undefined || val === null) return '0'; return Number(val).toLocaleString() }
     const getRankTrophy = (match, teamId) => {
       if (!match || !match.rankings) return ''
@@ -848,7 +1342,7 @@ export default {
     const getSlotGroupLabel = (idx) => { const tc = room.value.teamCount; if (tc === 4) return '半决赛对阵'; if (tc === 5) return idx < 3 ? '突围组' : '首轮轮空'; if (tc === 6) return idx < 3 ? '半决赛 A组' : '半决赛 B组'; return idx < 4 ? '半决赛 A组' : '半决赛 B组' }
 
     const activeMapDisplay = computed(() => { if (!room.value) return ''; return room.value.map === 'random' ? room.value.activeMap : room.value.map })
-    const tournamentTypeLabel = computed(() => { if (!room.value) return '🏆 赛事详情'; return `💰 提现锦标赛 (${room.value.teamCount}支战队)` })
+    const tournamentTypeLabel = computed(() => { if (!room.value) return '赛事详情'; return `提现锦标赛 · ${room.value.teamCount}支战队` })
 
     const onDragStart = (e, index) => {
       draggedSlotIdx.value = index
@@ -988,11 +1482,20 @@ export default {
       if (res.success) { showToast('比分录入成功', 'success'); closeScoreModal(); loadRoomData() }
     }
 
-    const openEditTeamModal = (team) => { isControlPanelVisible.value = false; activeTeam.value = team; editTeamName.value = team.name; editTeamMembersText.value = team.members ? team.members.join('\n') : ''; isEditTeamModalVisible.value = true }
+    const openEditTeamModal = (team) => { isControlPanelVisible.value = false; activeTeam.value = team; editTeamName.value = team.name; editTeamMembersText.value = team.members ? team.members.map(member => member.name || member).join('\n') : ''; isEditTeamModalVisible.value = true }
     const closeEditTeamModal = () => { isEditTeamModalVisible.value = false; activeTeam.value = null }
     const saveTeamDetails = () => {
       if (!activeTeam.value) return
-      const parsedMembers = editTeamMembersText.value.split(/[\n,，]/).map(m => m.trim()).filter(m => m.length > 0)
+      const existingMembers = activeTeam.value.members || []
+      const parsedMembers = editTeamMembersText.value
+        .split(/[\n,，]/)
+        .map(m => m.trim())
+        .filter(m => m.length > 0)
+        .map((name, index) => ({
+          id: existingMembers[index]?.id,
+          name,
+          bodyType: existingMembers[index]?.bodyType || '中'
+        }))
       const res = roomStore.updateTournamentTeam(roomId.value, activeTeam.value.id, editTeamName.value, parsedMembers)
       if (res.success) { showToast('战队信息已保存', 'success'); closeEditTeamModal(); loadRoomData() }
     }
@@ -1009,16 +1512,21 @@ export default {
     const m3rdMatch = computed(() => { if (!room.value.matches) return null; return room.value.matches.find(m => m.stage === '3rd_place' || m.stage === 'finals_3rd') })
 
     return {
-      roomId, tournamentRootRef, room, tabs, currentTab, MAPS, activeMapDisplay, tournamentTypeLabel, isControlPanelVisible, selectedSlotIdx,
+      roomId, tournamentRootRef, isTournamentArrival, tournamentDeerLogo, room, tabs, currentTab, MAPS, activeMapDisplay, tournamentTypeLabel, isControlPanelVisible, selectedSlotIdx,
+      tournamentBodyTypes, teamMemberDrafts, teamBodyTypeDrafts, totalTournamentMembers,
       isScoreModalVisible, activeMatch, inputScoreA, inputScoreB, inputKillsA, inputKillsB, inputWinnerId, inputMap,
       isCashoutScoreModalVisible, activeCashoutMatch, cashoutInputs, isScreenshotViewActive, isEditTeamModalVisible,
       activeTeam, editTeamName, editTeamMembersText, leagueStandings, sortedMatches, qfMatches, sfMatches, gfMatch, m3rdMatch,
       draggedSlotIdx, flowchartScrollRef, scaleStyle,
       switchTab, toggleControlPanel, toggleScreenshotView, goBack, changeMap, getTeamById, getTeamName, getMatch,
       formatCashout, getRankTrophy, getStageLabel, isSlotInGroupA, isSlotInGroupB, isSlotInBye, getSlotGroupLabel,
+      openingStageDefs, finalStageDefs, getMatchStatusText, getCashoutRowStatus, getCashoutRowClass, championTeam,
       onDragStart, onDrop, onSlotTap, handleRandomizeSlots, handleResetAllMatches, openCashoutScoreModal,
       closeCashoutScoreModal, saveCashoutScore, resetMatchScore, openScoreModal, closeScoreModal, saveMatchDetails,
-      openEditTeamModal, closeEditTeamModal, saveTeamDetails, loadRoomData, handleMatchClick, handleMatchTeamClick
+      openEditTeamModal, closeEditTeamModal, saveTeamDetails, loadRoomData, handleMatchClick, handleMatchTeamClick,
+      getDrawPosition, saveInlineTeamName, addTournamentMember, removeTournamentMember, updateMemberName,
+      updateMemberBodyType, handleMemberDragStart, handleMemberDrop, handleGlobalRandomMembers,
+      handleTeamCountChange, handleResetArrangement
     }
   }
 }
@@ -1030,13 +1538,46 @@ export default {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  background-size: 28px 28px, 28px 28px, 100% 100%;
+  background: transparent;
   color: #ffffff;
   font-family: var(--font-sans);
+}
+
+.container.tournament-arrival {
+  background: transparent;
+}
+
+.tournament-arrival .hud-header {
+  z-index: auto;
+  border-color: transparent;
+  border-left-color: transparent;
+  background: transparent;
+}
+
+.tournament-arrival .header-left {
+  transform: translateX(-105vw);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.tournament-arrival .header-right {
+  transform: translateX(105vw);
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Keep the header copy above the expanding global display layer so its
+   synchronized departure remains visible for the whole transition. */
+.tournament-leaving .header-left,
+.tournament-leaving .header-right {
+  z-index: 80;
+}
+
+.tournament-leaving .hud-header {
+  z-index: auto;
+  border-color: transparent;
+  border-left-color: transparent;
+  background: transparent;
 }
 
 /* HUD Header */
@@ -1052,13 +1593,25 @@ export default {
   flex-shrink: 0;
   gap: 16px;
 }
-.header-left { display: flex; align-items: center; gap: 14px; }
+.header-left {
+  position: relative;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 .back-btn { padding: 6px 14px; background: rgba(251,191,36,0.12); color: var(--accent-gold); font-size: 12px; font-weight: 800; border-radius: var(--radius-sm); border: 1px solid rgba(251,191,36,0.28); text-transform: uppercase; letter-spacing: 0; }
 .back-btn:hover { background: rgba(251,191,36,0.18); border-color: rgba(251,191,36,0.45); }
 .room-title-block { display: flex; flex-direction: column; gap: 2px; }
 .room-title-text { font-size: 18px; font-weight: 900; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0; }
 .badge-cashout-hud { font-size: 11px; font-weight: 800; color: var(--accent-gold); text-transform: uppercase; }
-.header-right { display: flex; align-items: center; gap: 16px; }
+.header-right {
+  position: relative;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 .map-hud-info { display: flex; flex-direction: column; align-items: flex-end; }
 .map-label { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.4); text-transform: uppercase; }
 .map-name-val { font-size: 13px; font-weight: 700; color: #ffffff; }
@@ -1357,6 +1910,171 @@ export default {
 .member-chip { font-size: 11px; color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 3px; }
 .no-members-hint { font-size: 11px; color: rgba(255,255,255,0.2); font-style: italic; }
 
+/* Global tournament team arrangement */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.global-team-manager {
+  min-height: 100%;
+  color: #f7f7f8;
+}
+.global-team-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto minmax(440px, 1fr);
+  align-items: center;
+  gap: 22px;
+  min-height: 72px;
+  padding: 10px 18px;
+  border: 1px solid rgba(236, 22, 72, 0.58);
+  background:
+    linear-gradient(90deg, rgba(236, 22, 72, 0.09), transparent 32%),
+    rgba(13, 13, 15, 0.94);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+.global-team-summary,
+.global-team-actions,
+.global-team-card-header,
+.global-team-card-footer,
+.global-member-row {
+  display: flex;
+  align-items: center;
+}
+.global-team-summary { gap: 12px; min-width: 0; }
+.global-team-summary > svg {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  fill: none;
+  stroke: #ec1648;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.global-team-summary h2 { margin: 0; font-size: 22px; line-height: 1; font-weight: 1000; letter-spacing: 0.03em; }
+.global-team-summary p { margin: 5px 0 0; color: rgba(255,255,255,0.5); font-size: 11px; font-family: monospace; }
+.team-count-switch { display: grid; grid-template-columns: repeat(3, 72px); border: 1px solid rgba(255,255,255,0.14); }
+.team-count-switch button {
+  min-height: 40px;
+  border: 0;
+  border-right: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.025);
+  color: rgba(255,255,255,0.48);
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+.team-count-switch button:last-child { border-right: 0; }
+.team-count-switch button:hover { color: #fff; }
+.team-count-switch button.active { background: linear-gradient(135deg, #9b0a27, #ec1648); color: #fff; }
+.global-team-actions { justify-content: flex-end; gap: 10px; }
+.global-action-btn,
+.global-reset-btn {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid rgba(236, 22, 72, 0.72);
+  background: linear-gradient(135deg, rgba(139, 7, 31, 0.48), rgba(236, 22, 72, 0.12));
+  color: #ff315e;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.global-action-btn { display: inline-flex; align-items: center; gap: 8px; }
+.global-action-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.global-action-btn:hover { color: #fff; background: #b70d34; border-color: #ff315e; }
+.global-reset-btn { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.025); color: rgba(255,255,255,0.5); }
+.global-reset-btn:hover { color: #fff; border-color: rgba(255,255,255,0.34); }
+.global-drag-tip { display: flex; align-items: center; gap: 8px; margin: 10px 4px 8px; color: rgba(255,255,255,0.5); font-size: 11px; }
+.global-drag-tip span { color: #ec1648; font-size: 18px; line-height: 1; }
+.global-team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; padding-bottom: 10px; }
+.global-team-card {
+  position: relative;
+  min-width: 0;
+  padding: 14px 16px 15px 20px;
+  border: 1px solid color-mix(in srgb, var(--team-accent) 78%, #4b101e);
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--team-accent) 7%, transparent), transparent 36%),
+    rgba(17, 15, 16, 0.97);
+  clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.global-team-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 5px;
+  background: var(--team-accent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--team-accent) 58%, transparent);
+}
+.global-team-card-header { gap: 10px; margin-bottom: 11px; }
+.team-index { flex: none; min-width: 112px; color: #fff; font-size: 17px; font-weight: 1000; letter-spacing: 0.03em; }
+.team-name-editor { position: relative; flex: 1; min-width: 120px; }
+.team-name-editor input,
+.member-name-input,
+.global-team-card-footer input,
+.global-team-card-footer select {
+  border: 1px solid rgba(255,255,255,0.14);
+  outline: none;
+  background: rgba(255,255,255,0.025);
+  color: #fff;
+  font-family: inherit;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+.team-name-editor input { width: 100%; height: 36px; padding: 0 38px 0 12px; font-size: 12px; font-weight: 800; }
+.team-name-editor input:focus,
+.member-name-input:focus,
+.global-team-card-footer input:focus,
+.global-team-card-footer select:focus { border-color: var(--team-accent); background: rgba(255,255,255,0.045); }
+.team-name-editor svg { position: absolute; right: 10px; top: 9px; width: 17px; height: 17px; fill: none; stroke: rgba(255,255,255,0.55); stroke-width: 2; pointer-events: none; }
+.team-member-count { min-width: 42px; color: rgba(255,255,255,0.62); font-family: monospace; font-size: 12px; font-weight: 800; text-align: center; }
+.draw-position { flex: none; padding: 7px 11px; border: 1px solid rgba(233,177,55,0.55); color: #e9b137; background: rgba(233,177,55,0.07); font-size: 11px; font-weight: 900; }
+.global-member-list { display: flex; flex-direction: column; gap: 5px; min-height: 102px; }
+.global-member-row { min-height: 37px; padding: 0 8px; gap: 8px; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.025); }
+.global-member-row:hover { border-color: color-mix(in srgb, var(--team-accent) 48%, rgba(255,255,255,0.12)); }
+.member-drag-handle { flex: none; color: rgba(255,255,255,0.42); font-size: 18px; line-height: 1; cursor: grab; user-select: none; }
+.global-member-row:active .member-drag-handle { cursor: grabbing; }
+.member-name-input { flex: 1; min-width: 80px; height: 29px; padding: 0 8px; border-color: transparent; background: transparent; font-size: 12px; font-weight: 800; }
+.body-type-switch { display: grid; grid-template-columns: repeat(3, 31px); border: 1px solid rgba(255,255,255,0.12); }
+.body-type-switch button { height: 27px; border: 0; border-right: 1px solid rgba(255,255,255,0.1); background: transparent; color: rgba(255,255,255,0.4); font-size: 11px; font-weight: 900; cursor: pointer; }
+.body-type-switch button:last-child { border-right: 0; }
+.body-type-switch button:hover { color: #fff; }
+.body-type-switch button.active { background: var(--team-accent); color: #09090b; }
+.remove-member-btn { width: 30px; height: 30px; border: 0; background: transparent; color: #ff315e; font-size: 20px; line-height: 1; cursor: pointer; }
+.remove-member-btn:hover { background: rgba(236,22,72,0.12); }
+.empty-team-members { display: grid; place-items: center; min-height: 102px; border: 1px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.28); font-size: 11px; }
+.global-team-card-footer { gap: 8px; margin-top: 9px; }
+.global-team-card-footer input { flex: 1; min-width: 100px; height: 36px; padding: 0 11px; font-size: 12px; }
+.global-team-card-footer select { width: 82px; height: 36px; padding: 0 8px; font-size: 11px; cursor: pointer; }
+.global-team-card-footer select option { background: #151517; color: #fff; }
+.global-team-card-footer > button { width: 70px; height: 36px; border: 1px solid #ff315e; background: linear-gradient(135deg, #9b0a27, #ec1648); color: #fff; font-size: 12px; font-weight: 900; cursor: pointer; }
+.global-team-card-footer > button:hover { filter: brightness(1.12); }
+
+@media (max-width: 1180px) {
+  .global-team-toolbar { grid-template-columns: 1fr auto; }
+  .global-team-actions { grid-column: 1 / -1; justify-content: stretch; }
+  .global-team-actions > button { flex: 1; justify-content: center; }
+  .global-team-card-header { flex-wrap: wrap; }
+  .team-name-editor { order: 4; flex-basis: 100%; }
+}
+
+@media (max-width: 820px) {
+  .global-team-grid { grid-template-columns: 1fr; }
+  .global-team-toolbar { grid-template-columns: 1fr; }
+  .global-team-actions { grid-column: auto; flex-wrap: wrap; }
+  .team-count-switch { grid-template-columns: repeat(3, 1fr); }
+}
+
 /* Drawer */
 .drawer-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 90; }
 .control-drawer {
@@ -1469,5 +2187,255 @@ export default {
   color: #ffcc00;
   background: rgba(255, 204, 0, 0.12);
   border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+/* Tournament command center — shared 4 / 6 / 8 team visual system */
+.hud-header {
+  position: relative;
+  min-height: 112px;
+  padding: 0 28px;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  background: transparent;
+  box-shadow: none;
+}
+.hud-header .header-left,
+.hud-header .header-right { position: relative; z-index: 70; }
+.header-left { gap: 18px; }
+.tournament-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: #ffffff;
+}
+.tournament-brand img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex: none;
+  filter: drop-shadow(0 0 8px rgba(255, 18, 62, 0.34));
+}
+.tournament-brand span {
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: 0.04em;
+  text-shadow: 0 3px 0 rgba(67, 0, 15, 0.5);
+}
+.back-btn {
+  min-height: 40px;
+  padding: 0 14px;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(13, 10, 12, 0.3);
+  color: #ffffff;
+}
+.back-btn:hover { border-color: rgba(255, 255, 255, 0.72); background: rgba(13, 10, 12, 0.48); }
+.room-title-block {
+  padding-left: 16px;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+.room-title-text { color: #ffffff; font-size: 15px; }
+.badge-cashout-hud { color: rgba(255, 255, 255, 0.68); }
+.map-label { color: rgba(255, 255, 255, 0.62); }
+.gear-btn { min-height: 40px; background: rgba(13, 10, 12, 0.36); border-color: rgba(255, 255, 255, 0.22); color: #fff; }
+.gear-btn.active { background: rgba(17, 12, 14, 0.62); border-color: rgba(255, 255, 255, 0.58); color: #fff; }
+
+.tabs-bar {
+  min-height: 48px;
+  padding: 0 28px;
+  background: #101010;
+  border-bottom-color: rgba(232, 20, 70, 0.4);
+}
+.tab-item { padding: 14px 22px 12px; font-size: 14px; font-weight: 800; }
+.tab-item.active { color: #f0224f; border-bottom-color: #f0224f; background: transparent; }
+.tab-content { padding: 14px 18px 18px; background: #101112; }
+
+.tournament-command-center {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 304px;
+  gap: 14px;
+  min-height: 100%;
+}
+.command-flow-panel,
+.command-side-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, #171819 0%, #101112 100%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+}
+.command-flow-panel {
+  min-width: 0;
+  padding: 16px;
+  overflow-x: auto;
+}
+.command-flow-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  min-width: 880px;
+  padding: 0 2px 13px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(232, 20, 70, 0.38);
+}
+.command-eyebrow { display: block; margin-bottom: 3px; color: rgba(255, 255, 255, 0.36); font: 700 10px/1.2 monospace; letter-spacing: 0.16em; }
+.command-flow-heading h2 { margin: 0; color: #fff; font-size: 22px; line-height: 1.1; font-weight: 1000; letter-spacing: 0.02em; }
+.live-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid rgba(232, 20, 70, 0.35);
+  color: #ff315d;
+  font-size: 12px;
+  font-weight: 800;
+}
+.live-status span,
+.status-live-row span { width: 8px; height: 8px; border-radius: 50%; background: #ed1747; box-shadow: 0 0 12px rgba(237, 23, 71, 0.75); }
+
+.command-flow {
+  display: grid;
+  align-items: stretch;
+  min-width: 880px;
+  min-height: 560px;
+}
+.command-flow-4 { grid-template-columns: minmax(330px, 1.05fr) 64px minmax(290px, 0.92fr); }
+.command-flow-6,
+.command-flow-8 { grid-template-columns: minmax(286px, 1fr) 48px minmax(286px, 0.98fr) 48px minmax(260px, 0.88fr); }
+.flow-stage { display: flex; flex-direction: column; justify-content: center; gap: 14px; min-width: 0; }
+.opening-stage { justify-content: space-around; }
+.finals-stage { justify-content: center; gap: 16px; }
+
+.command-match-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(145deg, #1a1b1c, #121314);
+  cursor: pointer;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+.command-match-card:hover { border-color: rgba(232, 20, 70, 0.72); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); }
+.command-match-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 13px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.command-match-header h3 { margin: 0 0 4px; color: #f0224f; font-size: 18px; line-height: 1; font-weight: 1000; }
+.command-match-header p { margin: 0; color: rgba(255, 255, 255, 0.46); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+.command-match-header > span {
+  flex-shrink: 0;
+  padding: 3px 7px;
+  border: 1px solid rgba(240, 34, 79, 0.32);
+  background: rgba(240, 34, 79, 0.1);
+  color: #ff315d;
+  font-size: 9px;
+  font-weight: 900;
+}
+.command-match-header > span.completed { border-color: rgba(255, 255, 255, 0.18); background: rgba(255, 255, 255, 0.07); color: rgba(255, 255, 255, 0.7); }
+.command-team-list { display: flex; flex-direction: column; }
+.command-team-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto 48px;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.012);
+}
+.command-team-row:last-child { border-bottom: 0; }
+.command-team-row.promoted { background: linear-gradient(90deg, rgba(232, 20, 70, 0.16), rgba(232, 20, 70, 0.03)); }
+.command-team-row.eliminated { opacity: 0.48; }
+.command-team-row.champion { background: linear-gradient(90deg, rgba(235, 177, 55, 0.18), rgba(235, 177, 55, 0.02)); }
+.command-team-row.pending { color: rgba(255, 255, 255, 0.35); }
+.command-logo { font-size: 18px; font-weight: 1000; font-style: italic; }
+.command-team-name { overflow: hidden; color: #f6f6f6; font-size: 11px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+.command-cashout { margin-left: 8px; color: #fff; font: 800 11px/1 monospace; }
+.command-row-state { margin-left: 8px; color: rgba(255, 255, 255, 0.5); font-size: 9px; font-weight: 800; text-align: right; }
+.promoted .command-row-state { color: #ff315d; }
+.featured-stage { border-color: rgba(232, 20, 70, 0.42); }
+.grand-final-card {
+  border-color: rgba(232, 20, 70, 0.7);
+  background: linear-gradient(45deg, #090909 0%, #260006 24%, #8f071d 50%, #250005 76%, #080808 100%);
+  background-size: 260% 260%;
+  animation: grandFinalSurfaceFlow 8s ease-in-out infinite;
+}
+.third-final-card { border-color: rgba(145, 72, 220, 0.48); background: linear-gradient(145deg, #17131c, #111113); }
+.third-final-card .command-match-header h3 { color: #a968ed; }
+.view-match-button {
+  width: calc(100% - 20px);
+  min-height: 38px;
+  margin: 10px;
+  border: 0;
+  background: #e81446;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.third-final-card .view-match-button { background: #6f32b6; }
+.view-match-button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.flow-connector { position: relative; min-height: 100%; pointer-events: none; }
+.flow-connector i { position: absolute; display: block; border-color: #e81446; border-style: solid; filter: drop-shadow(0 0 3px rgba(232, 20, 70, 0.34)); }
+.connector-straight .line-out { left: 0; right: 0; top: 50%; border-width: 2px 0 0; }
+.connector-straight::after,
+.connector-merge::after,
+.connector-split::after { content: ""; position: absolute; right: 0; top: calc(50% - 5px); border: 5px solid transparent; border-left-color: #e81446; }
+.connector-merge .line-top { left: 0; width: 50%; top: 25%; border-width: 2px 0 0; }
+.connector-merge .line-bottom { left: 0; width: 50%; top: 75%; border-width: 2px 0 0; }
+.connector-merge .line-spine { left: 50%; top: 25%; height: 50%; border-width: 0 0 0 2px; }
+.connector-merge .line-out { left: 50%; right: 0; top: 50%; border-width: 2px 0 0; }
+.connector-split .line-in { left: 0; width: 50%; top: 50%; border-width: 2px 0 0; }
+.connector-split .line-spine { left: 50%; top: 25%; height: 50%; border-width: 0 0 0 2px; }
+.connector-split .line-top { left: 50%; right: 0; top: 25%; border-width: 2px 0 0; }
+.connector-split .line-bottom { left: 50%; right: 0; top: 75%; border-width: 2px 0 0; }
+
+.command-sidebar { display: flex; flex-direction: column; gap: 12px; }
+.command-side-card { padding: 13px; }
+.command-side-card > header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.command-side-card h3 { margin: 0; color: #fff; font-size: 15px; font-weight: 1000; }
+.command-side-card header span { color: rgba(255, 255, 255, 0.3); font-size: 9px; }
+.command-roster-list { display: flex; flex-direction: column; }
+.command-roster-row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  cursor: grab;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+.command-roster-row:hover { background: rgba(232, 20, 70, 0.08); }
+.command-roster-row.selected { background: rgba(232, 20, 70, 0.16); box-shadow: inset 3px 0 #e81446; }
+.roster-logo { font-size: 16px; font-weight: 1000; font-style: italic; }
+.roster-name { overflow: hidden; color: rgba(255, 255, 255, 0.84); font-size: 10px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+.roster-group { margin-left: 8px; color: rgba(255, 255, 255, 0.34); font-size: 8px; text-align: right; }
+.status-card { margin-top: auto; }
+.status-live-row { display: flex; align-items: center; gap: 8px; margin: 13px 0 6px; color: #ff315d; font-size: 13px; }
+.status-card p { margin: 0; color: rgba(255, 255, 255, 0.4); font-size: 10px; line-height: 1.5; }
+.champion-card { display: flex; align-items: center; gap: 14px; min-height: 112px; }
+.trophy-mark { flex: 0 0 72px; color: #e9b137; }
+.trophy-mark svg { width: 72px; height: 72px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 4px 12px rgba(233, 177, 55, 0.2)); }
+.champion-card > div:last-child { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.champion-card span { color: #fff; font-size: 15px; font-weight: 1000; }
+.champion-card strong { overflow: hidden; color: #e9b137; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.champion-card small { color: rgba(233, 177, 55, 0.62); font-size: 9px; }
+
+@media (max-width: 1240px) {
+  .tournament-command-center { grid-template-columns: 1fr; }
+  .command-sidebar { display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items: stretch; }
+  .status-card { margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grand-final-card { animation: none; }
+  .command-match-card,
+  .command-roster-row { transition: none; }
 }
 </style>

@@ -7,17 +7,20 @@ const routes = [
   {
     path: '/',
     name: 'index',
-    component: IndexPage
+    component: IndexPage,
+    meta: { transition: 'page-back' }
   },
   {
     path: '/room',
     name: 'room',
-    component: RoomPage
+    component: RoomPage,
+    meta: { transition: 'tournament-slide' }
   },
   {
     path: '/tournament',
     name: 'tournament',
-    component: TournamentPage
+    component: TournamentPage,
+    meta: { transition: 'tournament-slide' }
   }
 ]
 

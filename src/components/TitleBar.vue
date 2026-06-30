@@ -1,8 +1,8 @@
 <template>
   <div v-if="isTauri" class="titlebar" data-tauri-drag-region>
     <div class="titlebar-left" data-tauri-drag-region>
-      <span class="titlebar-logo">🔮</span>
-      <span class="titlebar-text">社团组队系统</span>
+      <span class="titlebar-logo" aria-hidden="true"></span>
+      <span class="titlebar-text">俱乐部战队匹配系统</span>
     </div>
     <div class="titlebar-controls">
       <button class="titlebar-btn btn-minimize" @click="handleMinimize" title="最小化">
@@ -56,29 +56,58 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 36px;
+  height: 44px;
   flex-shrink: 0;
-  background: rgba(8, 6, 11, 0.96);
-  border-bottom: 1px solid rgba(225, 29, 72, 0.22);
+  background: #07090d;
+  border-bottom: 1px solid rgba(225, 29, 72, 0.38);
   user-select: none;
   -webkit-app-region: drag;
-  padding: 0 8px;
+  padding: 0 16px 0 24px;
 }
 
 .titlebar-left {
-  display: none;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding-left: 8px;
+  gap: 12px;
+  padding-left: 0;
 }
 
-.titlebar-logo { font-size: 14px; }
+.titlebar-logo {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+.titlebar-logo::before,
+.titlebar-logo::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  width: 9px;
+  height: 18px;
+  border-radius: 2px;
+  transform-origin: bottom center;
+}
+
+.titlebar-logo::before {
+  left: 3px;
+  background: linear-gradient(180deg, #ffb42f, #f25a24);
+  transform: skewX(-27deg);
+}
+
+.titlebar-logo::after {
+  left: 10px;
+  height: 14px;
+  background: linear-gradient(180deg, #ff315d, #bc1234);
+  transform: skewX(27deg);
+}
 
 .titlebar-text {
-  font-size: 12px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.72);
-  letter-spacing: 0.5px;
+  font-size: 16px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.76);
+  letter-spacing: 0;
 }
 
 .titlebar-controls {
@@ -87,14 +116,14 @@ export default {
 }
 
 .titlebar-btn {
-  width: 36px;
-  height: 28px;
+  width: 46px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: none;
-  border-radius: 6px;
+  border-radius: 0;
   color: rgba(255, 255, 255, 0.55);
   cursor: pointer;
   transition: all 0.15s ease;

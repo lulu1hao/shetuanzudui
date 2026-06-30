@@ -16,58 +16,40 @@
       >
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3v5H3M16 3v5h5M8 21v-5H3M16 21v-5h5" /></svg>
       </button>
-      <div class="hero-lulu-viewport" aria-hidden="true">
-        <div class="hero-lulu-word" ref="luluWord">
-          <div
-            v-for="groupIndex in 2"
-            :key="groupIndex"
-            class="lulu-group"
-          >
-            <span
-              v-for="(letter, index) in luluLetters"
-              :key="`${groupIndex}-${letter}-${index}`"
-              class="lulu-letter"
-              @mouseenter="floatLetter"
-              @mouseleave="settleLetter"
-            >{{ letter }}</span>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="content-stack">
       <section class="profile-section" aria-label="系统介绍">
-      <div class="sidebar-logo">
-        <span class="logo-icon">🔮</span>
-        <span class="logo-title text-gradient-primary">鹿鹿 的 社团组队系统</span>
-      </div>
-      
-      <!-- 创作者头像与信息区域 -->
-      <div class="creator-card">
-        <div class="creator-avatar-container">
-          <img src="./creator_avatar.jpg" alt="创建者头像" class="creator-avatar" />
-          <div class="pulse-glow"></div>
-        </div>
-        <div class="creator-details">
-          <div class="creator-role-badge">○系统创建者</div>
-          <div class="creator-name">lulululululu</div>
-        </div>
-      </div>
+        <div class="profile-dock">
+          <div class="creator-card">
+            <div class="creator-avatar-container">
+              <img src="./creator_avatar.jpg" alt="创建者头像" class="creator-avatar" />
+            </div>
+          </div>
 
-      <div class="sidebar-stats">
-        <div class="stat-item">
-          <span class="stat-num">{{ rooms.length }}</span>
-          <span class="stat-label">历史房间</span>
+          <div class="profile-identity">
+            <div class="sidebar-logo">
+              <span class="logo-title">鹿鹿的社团组队系统</span>
+            </div>
+            <div class="profile-tags" aria-label="创建者标签">
+              <span>系统创建者</span>
+              <span>MBTI · ENFP</span>
+              <span>文学奖读者</span>
+              <span>清华所在地学生</span>
+            </div>
+          </div>
+
+          <div class="sidebar-slogan">
+            快速创建专属房间与赛事，一键智能洗牌，支持多队拖拽与淘汰晋级
+          </div>
+
+          <div class="sidebar-stats">
+            <div class="stat-item">
+              <span class="stat-num">{{ rooms.length }}</span>
+              <span class="stat-label">历史房间</span>
+            </div>
+          </div>
         </div>
-        <!-- <div class="stat-item">
-          <span class="stat-num">{{ totalMembers }}</span>
-          <span class="stat-label">活跃成员</span>
-        </div> -->
-      </div>
-      <div class="sidebar-slogan">快速创建专属房间与赛事，一键智能洗牌，支持多队拖拽与淘汰晋级</div>
-      <button class="create-btn-sidebar" @click="showCreateModal">
-        <span class="plus-icon">＋</span> 创建房间 / 赛事
-      </button>
       </section>
 
     <!-- 主内容区 -->
@@ -105,6 +87,7 @@
           v-for="room in rooms"
           :key="room.id"
           class="room-card glass-panel"
+          :data-room-id="room.id"
           :class="{ 'tournament-card-border': room.type === 'tournament' }"
           @click="goToRoom(room)"
         >
@@ -280,6 +263,14 @@ import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { roomStore, MODES, MAPS } from '../../store/roomStore.js'
 import { useToast } from '../../composables/useToast.js'
+import {
+  beginLuluDisplayTransition,
+  consumeLobbyReturnRoomId,
+  expandGlobalLulu,
+  placeGlobalLuluInLobby,
+  settleLobbyReturnTransition,
+  TOURNAMENT_DISPLAY_REVEAL_DURATION
+} from '../../utils/globalLuluTransition.js'
 
 export default {
   setup() {
@@ -295,16 +286,13 @@ export default {
     const newRoomMap = ref('random')
     const pageRoot = ref(null)
     const heroPanel = ref(null)
-    const luluWord = ref(null)
     const isHeroExpanded = ref(false)
-    const luluLetters = 'LU'.repeat(18).split('')
-    const LULU_EXPANDED_DURATION = 57
-    const LULU_COLLAPSED_DURATION = 156
     let gsapContext
     let heroTransition
-    let marqueeTween
+    let tournamentLaunchTimeline
     let reduceMotion = false
     let isHeroAnimating = false
+    let isNavigatingToTournament = false
 
     const modeOptions = [
       { key: 'cashout', icon: '💰', shortName: '提现' },
@@ -325,54 +313,65 @@ export default {
       if (!pageRoot.value) return
       gsapContext = gsap.context(() => {
         reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        const letters = gsap.utils.toArray('.lulu-letter')
-
-        gsap.set(letters, {
-          autoAlpha: 0.82,
-          y: 0,
-          rotation: 0,
-          transformOrigin: '50% 55%'
-        })
-
-        gsap.set(luluWord.value, { xPercent: 0 })
       }, pageRoot.value)
 
       window.addEventListener('keydown', handleHeroKeydown)
-      startMarquee()
+      const profileDock = pageRoot.value.querySelector('.profile-dock')
+      const profileSection = pageRoot.value.querySelector('.profile-section')
+      consumeLobbyReturnRoomId()
+      const isReturningFromTournament = settleLobbyReturnTransition(heroPanel.value, {
+        onComplete: () => {
+          pageRoot.value?.classList.remove('lobby-returning')
+        }
+      })
+
+      if (!isReturningFromTournament) {
+        placeGlobalLuluInLobby(heroPanel.value)
+      } else {
+        pageRoot.value.classList.add('lobby-returning')
+        const expandedHeight = pageRoot.value.clientHeight
+        const alignmentY = profileDock && profileSection
+          ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+          : 0
+        gsap.set(heroPanel.value, { height: expandedHeight, willChange: 'height' })
+        gsap.set(profileDock, { y: alignmentY, willChange: 'transform' })
+        heroTransition = gsap.timeline({ defaults: { overwrite: 'auto' } })
+          .to(heroPanel.value, {
+            height: 245,
+            duration: reduceMotion ? 0 : 0.82,
+            ease: 'power3.inOut',
+            clearProps: 'height,will-change'
+          }, 0)
+          .to(profileDock, {
+            y: 0,
+            duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
+            ease: 'power3.inOut',
+            clearProps: 'transform,will-change'
+          }, 0)
+      }
     })
 
     onUnmounted(() => {
       window.removeEventListener('keydown', handleHeroKeydown)
       heroTransition?.kill()
-      marqueeTween?.kill()
+      tournamentLaunchTimeline?.kill()
       gsapContext?.revert()
     })
 
-    const startMarquee = () => {
-      marqueeTween?.kill()
-      if (reduceMotion || !luluWord.value) return
-      gsap.set(luluWord.value, { xPercent: -50 })
-      marqueeTween = gsap.to(luluWord.value, {
-        xPercent: 0,
-        duration: LULU_EXPANDED_DURATION,
-        ease: 'none',
-        repeat: -1
-      })
-      marqueeTween.timeScale(LULU_EXPANDED_DURATION / LULU_COLLAPSED_DURATION)
-    }
-
     const expandHero = async () => {
-      if (isHeroExpanded.value || isHeroAnimating || !heroPanel.value || !luluWord.value) return
+      if (isHeroExpanded.value || isHeroAnimating || !heroPanel.value) return
       const expandedHeight = pageRoot.value.clientHeight
-      const luluViewport = heroPanel.value.querySelector('.hero-lulu-viewport')
-      const groups = heroPanel.value.querySelectorAll('.lulu-group')
       const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
       const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
-      const marqueeSpeed = marqueeTween || { timeScale: 1 }
 
       isHeroAnimating = true
       isHeroExpanded.value = true
       await nextTick()
+      const profileDock = pageRoot.value.querySelector('.profile-dock')
+      const profileSection = pageRoot.value.querySelector('.profile-section')
+      const alignmentY = profileDock && profileSection
+        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+        : 0
 
       heroTransition = gsap.timeline({
         defaults: { overwrite: 'auto' },
@@ -380,36 +379,25 @@ export default {
           isHeroAnimating = false
         }
       })
+        .call(() => {
+          expandGlobalLulu(
+            heroPanel.value,
+            expandedHeight,
+            expandedViewportHeight,
+            expandedFontSize,
+            { duration: reduceMotion ? 0 : 0.82 }
+          )
+        }, null, 0)
+        .to(profileDock, {
+          y: alignmentY,
+          duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
         .to(heroPanel.value, {
           height: expandedHeight,
           duration: reduceMotion ? 0 : 0.82,
           ease: 'power3.inOut'
-        }, 0)
-        .to(luluViewport, {
-          left: 0,
-          top: expandedHeight * 0.5,
-          yPercent: -58,
-          height: expandedViewportHeight,
-          duration: reduceMotion ? 0 : 0.82,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(luluWord.value, {
-          fontSize: expandedFontSize,
-          lineHeight: 0.92,
-          duration: reduceMotion ? 0 : 0.78,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(groups, {
-          scaleX: 1,
-          skewX: 0,
-          paddingRight: 0,
-          duration: reduceMotion ? 0 : 0.78,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(marqueeSpeed, {
-          timeScale: 1,
-          duration: reduceMotion ? 0 : 0.45,
-          ease: 'power2.out'
         }, 0)
         .fromTo('.hero-collapse-button', {
           autoAlpha: 0,
@@ -421,17 +409,17 @@ export default {
           rotation: 0,
           duration: reduceMotion ? 0 : 0.36,
           ease: 'back.out(1.5)'
-        }, reduceMotion ? 0 : 0.46)
+        }, reduceMotion ? 0 : 0.82)
     }
 
     const collapseHero = () => {
-      if (!isHeroExpanded.value || isHeroAnimating || !heroPanel.value || !luluWord.value) return
+      if (!isHeroExpanded.value || isHeroAnimating || !heroPanel.value) return
       isHeroAnimating = true
-      const luluViewport = heroPanel.value.querySelector('.hero-lulu-viewport')
-      const groups = heroPanel.value.querySelectorAll('.lulu-group')
-      const marqueeSpeed = marqueeTween || {
-        timeScale: LULU_EXPANDED_DURATION / LULU_COLLAPSED_DURATION
-      }
+      const profileDock = pageRoot.value.querySelector('.profile-dock')
+      placeGlobalLuluInLobby(heroPanel.value, {
+        duration: reduceMotion ? 0 : 0.82,
+        holdDisplayLayer: true
+      })
 
       heroTransition?.kill()
       heroTransition = gsap.timeline({
@@ -446,37 +434,17 @@ export default {
           duration: reduceMotion ? 0 : 0.82,
           ease: 'power3.inOut'
         }, 0)
-        .to(luluViewport, {
-          left: 0,
-          top: 24.5,
-          yPercent: 0,
-          height: 196,
-          duration: reduceMotion ? 0 : 0.82,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(luluWord.value, {
-          fontSize: 222,
-          lineHeight: 0.88,
-          duration: reduceMotion ? 0 : 0.78,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(groups, {
-          scaleX: 1,
-          skewX: -5,
-          paddingRight: 0,
-          duration: reduceMotion ? 0 : 0.78,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(marqueeSpeed, {
-          timeScale: LULU_EXPANDED_DURATION / LULU_COLLAPSED_DURATION,
-          duration: reduceMotion ? 0 : 0.45,
-          ease: 'power2.out'
-        }, 0)
         .to('.hero-collapse-button', {
           autoAlpha: 0,
           scale: 0.88,
           duration: reduceMotion ? 0 : 0.22,
           ease: 'power2.in'
+        }, 0)
+        .to(profileDock, {
+          y: 0,
+          duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          clearProps: 'transform,will-change'
         }, 0)
     }
 
@@ -543,12 +511,68 @@ export default {
       }
     }
 
-    const goToRoom = (room) => {
-      if (room.type === 'tournament') {
-        router.push({ path: '/tournament', query: { id: room.id } })
-      } else {
-        router.push({ path: '/room', query: { id: room.id } })
+    const prepareDisplayLaunch = async () => {
+      if (!isHeroExpanded.value) {
+        isHeroExpanded.value = true
+        await nextTick()
       }
+      const profileDock = pageRoot.value?.querySelector('.profile-dock')
+      const profileSection = pageRoot.value?.querySelector('.profile-section')
+      const alignmentY = profileDock && profileSection
+        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+        : 0
+      return { profileDock, alignmentY }
+    }
+
+    const goToRoom = async (room) => {
+      if (isNavigatingToTournament) return
+      isNavigatingToTournament = true
+      const navigate = () => router.push({
+        path: room.type === 'tournament' ? '/tournament' : '/room',
+        query: { id: room.id }
+      })
+
+      if (reduceMotion || !pageRoot.value || !heroPanel.value) {
+        navigate()
+        return
+      }
+
+      pageRoot.value.classList.add('tournament-launching')
+      heroTransition?.kill()
+      const { profileDock, alignmentY } = await prepareDisplayLaunch()
+      const expandedHeight = pageRoot.value.clientHeight
+      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
+      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
+      const displayLaunchAt = TOURNAMENT_DISPLAY_REVEAL_DURATION
+
+      tournamentLaunchTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
+        .call(() => {
+          expandGlobalLulu(
+            heroPanel.value,
+            expandedHeight,
+            expandedViewportHeight,
+            expandedFontSize,
+            { duration: TOURNAMENT_DISPLAY_REVEAL_DURATION }
+          )
+        }, null, 0)
+        .to(profileDock ? [profileDock] : [], {
+          y: alignmentY,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
+        .to(heroPanel.value, {
+          height: expandedHeight,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'height'
+        }, 0)
+        .call(() => {
+          beginLuluDisplayTransition(room.id)
+        }, null, displayLaunchAt)
+        .call(() => {
+          navigate()
+        }, null, displayLaunchAt + TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
     }
 
     const getRoomModeLabel = (room) => {
@@ -586,7 +610,7 @@ export default {
 
     return {
       rooms, totalMembers, isCreateModalVisible, newRoomName, newRoomType,
-      pageRoot, heroPanel, luluWord, isHeroExpanded, luluLetters,
+      pageRoot, heroPanel, isHeroExpanded,
       newTeamCount, newRoomMode, newRoomMap, modeOptions, MAPS,
       selectNewRoomType, selectNewTeamCount, selectNewRoomMode, selectNewRoomMap,
       expandHero, collapseHero, handleHeroWheel, floatLetter, settleLetter,
@@ -1859,7 +1883,7 @@ export default {
   display: flex;
   width: max-content;
   align-items: flex-start;
-  color: rgba(28, 31, 31, 0.9);
+  color: rgba(28, 22, 25, 0.72);
   font-size: 222px;
   font-style: italic;
   font-weight: 1000;
@@ -1918,7 +1942,7 @@ export default {
 }
 
 .hero-expanded .sidebar {
-  z-index: 50;
+  z-index: 0;
   overflow: hidden;
   box-shadow: none;
 }
@@ -1959,58 +1983,225 @@ export default {
 
 .profile-section {
   position: relative;
-  z-index: 2;
-  flex: 0 0 108px;
-  min-height: 108px;
+  z-index: 12;
+  flex: 0 0 74px;
+  min-height: 74px;
   background: #242424;
   overflow: visible;
 }
 
-.profile-section .sidebar-logo {
-  left: 210px;
-  top: -64px;
+.profile-dock {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  top: -54px;
+  height: 112px;
+  display: grid;
+  grid-template-columns: 78px minmax(420px, 1.2fr) minmax(300px, 0.9fr) 118px;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 22px;
+  border: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.profile-dock::after {
+  content: none;
 }
 
 .profile-section .creator-card {
-  left: 55px;
-  top: -66px;
-  width: 132px;
-  height: 132px;
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 78px;
+  height: 78px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 11px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: none;
 }
 
-.profile-section .creator-details {
-  left: 155px;
-  top: 76px;
-  width: calc(100vw - 430px);
+.profile-section .creator-card:hover {
+  transform: none;
+  background: #ffffff;
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.profile-section .creator-avatar-container {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.profile-section .creator-avatar {
+  border: 0;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.profile-identity {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.profile-section .sidebar-logo {
+  position: static;
+  min-height: auto;
+}
+
+.profile-section .logo-title {
+  display: block;
+  color: #ffffff;
+  font-size: clamp(24px, 2.25vw, 35px);
+  line-height: 1.12;
+  font-weight: 1000;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  text-shadow: 0 3px 0 rgba(54, 5, 18, 0.42);
+}
+
+.profile-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.profile-tags span {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 750;
+  white-space: nowrap;
 }
 
 .profile-section .sidebar-stats {
-  position: absolute;
-  right: 58px;
-  top: 14px;
-  bottom: auto;
-  z-index: 5;
+  position: relative;
+  inset: auto;
+  width: auto;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 22px;
+  border-left: 2px solid #f0224f;
+  z-index: 1;
+}
+
+.profile-section .stat-item {
+  gap: 3px;
+}
+
+.profile-section .stat-num {
+  color: #ffffff;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.profile-section .stat-label {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  letter-spacing: 0.08em;
 }
 
 .profile-section .sidebar-slogan {
-  right: 88px;
-  top: -88px;
-  color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.profile-section .create-btn-sidebar {
-  display: none;
+  position: relative;
+  inset: auto;
+  width: auto;
+  min-width: 0;
+  padding: 0 0 0 22px;
+  border: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  line-height: 1.7;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-shadow: none;
+  backdrop-filter: none;
+  transform: translateY(6px);
 }
 
 .content-stack .main-content {
   flex: 1;
   min-height: 0;
+  padding-top: 0;
   will-change: auto;
+}
+
+.content-stack .lobby-tabs {
+  height: 54px;
+  margin-bottom: 18px;
 }
 
 .hero-expanded .content-stack {
   pointer-events: none;
+}
+
+.tournament-launching {
+  cursor: progress;
+}
+
+.tournament-launching .room-card,
+.tournament-launching .create-room-tile,
+.tournament-launching .lobby-tab {
+  pointer-events: none;
+}
+
+.tournament-launching .hero-collapse-button {
+  display: none;
+}
+
+.tournament-launching .hero-lulu-word {
+  text-shadow: 18px 0 34px rgba(20, 0, 7, 0.28);
+}
+
+@media (max-width: 1180px) {
+  .profile-dock {
+    grid-template-columns: 72px minmax(360px, 1fr) minmax(240px, 0.72fr) 104px;
+    gap: 18px;
+    padding-inline: 18px;
+  }
+
+  .profile-section .creator-card {
+    width: 72px;
+    height: 72px;
+  }
+
+  .profile-tags span {
+    padding-inline: 8px;
+    font-size: 10px;
+  }
+
+  .profile-section .sidebar-slogan {
+    padding-left: 16px;
+    font-size: 11px;
+  }
+
+  .profile-section .sidebar-stats {
+    padding-left: 16px;
+  }
 }
 
 @media (max-width: 720px) {
