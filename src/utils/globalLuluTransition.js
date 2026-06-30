@@ -4,6 +4,10 @@ const NORMAL_DURATION = 156
 const LAUNCH_TIMESCALE = 3
 export const TOURNAMENT_DISPLAY_REVEAL_DURATION = 0.82
 
+const LOBBY_WORD_TOP = 24.5
+const LOBBY_WORD_HEIGHT = 184
+const LOBBY_WORD_FONT_SIZE = 206
+
 let marquee = null
 let pendingLayout = null
 let displayTransitionId = null
@@ -50,6 +54,18 @@ const getLayoutRect = (element) => {
   }
 }
 
+const getLobbyWordLayout = (rect) => ({
+  left: rect.left,
+  top: rect.top + LOBBY_WORD_TOP,
+  width: rect.width,
+  height: LOBBY_WORD_HEIGHT,
+  fontSize: LOBBY_WORD_FONT_SIZE,
+  lineHeight: 0.88,
+  skewX: -5,
+  wordY: 0,
+  wordOpacity: 1
+})
+
 const setMarqueeMode = (mode) => {
   if (!marquee?.viewport) return
   marquee.viewport.classList.remove('is-lobby', 'is-expanded', 'is-tournament', 'is-room')
@@ -57,10 +73,6 @@ const setMarqueeMode = (mode) => {
 }
 
 const appContent = () => document.querySelector('#app-content')
-
-const clearDisplayLaunchState = () => {
-  appContent()?.classList.remove('is-display-launch-transition')
-}
 
 const runLayout = (layout, { duration = 0, ease = 'power3.inOut', timeScale = 1, onComplete } = {}) => {
   if (!marquee) {
@@ -87,6 +99,7 @@ const runLayout = (layout, { duration = 0, ease = 'power3.inOut', timeScale = 1,
       fontSize: layout.fontSize,
       lineHeight: layout.lineHeight,
       y: layout.wordY ?? 0,
+      autoAlpha: layout.wordOpacity ?? 1,
       duration: actualDuration,
       ease
     }, 0)
@@ -144,16 +157,7 @@ export const placeGlobalLuluInLobby = (panel, { duration = 0, holdDisplayLayer =
   // When the display page is collapsing, its red panel remains on layer 50
   // until the animation ends. Keep the marquee above it for the same span.
   setMarqueeMode(holdDisplayLayer ? 'expanded' : 'lobby')
-  return runLayout({
-    left: rect.left,
-    top: rect.top + 24.5,
-    width: rect.width,
-    height: 196,
-    fontSize: 222,
-    lineHeight: 0.88,
-    skewX: -5,
-    wordY: 0
-  }, {
+  return runLayout(getLobbyWordLayout(rect), {
     duration,
     timeScale: 1,
     onComplete: holdDisplayLayer ? () => setMarqueeMode('lobby') : undefined
@@ -182,7 +186,6 @@ export const beginLuluDisplayTransition = (id) => {
   displayTransitionId = String(id)
   activeDisplayReturnId = String(id)
   returningToLobby = false
-  content.classList.add('is-display-launch-transition')
   setMarqueeMode('expanded')
   marquee.viewport.classList.add('is-launching', 'is-display-transition')
 
@@ -198,7 +201,8 @@ export const beginLuluDisplayTransition = (id) => {
     fontSize,
     lineHeight: 0.92,
     skewX: 0,
-    wordY: Math.max(0, height * 0.5 - fontSize * 0.46)
+    wordY: Math.max(0, height * 0.5 - fontSize * 0.46),
+    wordOpacity: 1
   }, {
     duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
     timeScale: LAUNCH_TIMESCALE,
@@ -213,7 +217,6 @@ export const beginLobbyReturnTransition = (roomId) => {
   displayTransitionId = null
   if (roomId) activeDisplayReturnId = String(roomId)
   returningToLobby = true
-  clearDisplayLaunchState()
   content.classList.add('is-lobby-display-transition')
   setMarqueeMode('expanded')
   marquee.viewport.classList.add('is-launching', 'is-display-transition')
@@ -230,7 +233,8 @@ export const beginLobbyReturnTransition = (roomId) => {
     fontSize,
     lineHeight: 0.92,
     skewX: 0,
-    wordY: Math.max(0, height * 0.5 - fontSize * 0.46)
+    wordY: Math.max(0, height * 0.5 - fontSize * 0.46),
+    wordOpacity: 1
   }, {
     duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
     timeScale: LAUNCH_TIMESCALE,
@@ -244,16 +248,7 @@ export const settleLobbyReturnTransition = (panel, { onComplete } = {}) => {
   if (!rect) return false
 
   setMarqueeMode('lobby')
-  return runLayout({
-    left: rect.left,
-    top: rect.top + 24.5,
-    width: rect.width,
-    height: 196,
-    fontSize: 222,
-    lineHeight: 0.88,
-    skewX: -5,
-    wordY: 0
-  }, {
+  return runLayout(getLobbyWordLayout(rect), {
     duration: 0.82,
     timeScale: 1,
     onComplete: () => {
@@ -288,7 +283,6 @@ export const settleLuluDisplayTransition = ({ id, target, root, onComplete }) =>
 
   const completeDisplayTransition = () => {
     displayTransitionId = null
-    clearDisplayLaunchState()
     marquee?.viewport.classList.remove('is-launching', 'is-display-transition')
     onComplete?.()
   }
@@ -303,7 +297,8 @@ export const settleLuluDisplayTransition = ({ id, target, root, onComplete }) =>
     fontSize: 138,
     lineHeight: 0.82,
     skewX: -5,
-    wordY: 0
+    wordY: 0,
+    wordOpacity: 1
   }, {
     duration: 0.82,
     timeScale: 1,
@@ -380,7 +375,6 @@ export const placeGlobalLuluInDisplayTarget = (root, { target, duration = 0 } = 
   if (!rect) return false
   displayTransitionId = null
   returningToLobby = false
-  clearDisplayLaunchState()
   document.querySelector('#app-content')?.classList.remove('is-lobby-display-transition')
   marquee?.viewport.classList.remove('is-launching', 'is-display-transition')
   setMarqueeMode(config.mode)
@@ -392,6 +386,7 @@ export const placeGlobalLuluInDisplayTarget = (root, { target, duration = 0 } = 
     fontSize: 138,
     lineHeight: 0.82,
     skewX: -5,
-    wordY: 0
+    wordY: 0,
+    wordOpacity: 1
   }, { duration, timeScale: 1 })
 }

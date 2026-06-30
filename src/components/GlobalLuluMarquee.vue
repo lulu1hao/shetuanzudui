@@ -51,12 +51,12 @@ onUnmounted(unregisterGlobalLuluMarquee)
 
 .global-lulu-viewport.is-tournament.is-launching,
 .global-lulu-viewport.is-room.is-launching {
-  z-index: 50;
+  z-index: 1;
   opacity: 1;
 }
 
 .global-lulu-viewport.is-display-transition {
-  background: #e81446;
+  background: linear-gradient(145deg, #8e0b24 0%, #d71442 58%, #ef174e 100%);
   box-shadow: none;
 }
 
@@ -66,7 +66,7 @@ onUnmounted(unregisterGlobalLuluMarquee)
   width: max-content;
   align-items: flex-start;
   color: rgba(28, 22, 25, 0.72);
-  font-size: 222px;
+  font-size: 206px;
   font-style: italic;
   font-weight: 1000;
   line-height: 0.88;

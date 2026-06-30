@@ -121,27 +121,6 @@ export default {
   opacity: 1;
 }
 
-/* The full-screen Lulu layer owns the launch from the lobby into display
-   pages. Keep route wrappers from creating an intermediate stacking layer, so
-   the red display surface can cover page body content while header copy enters
-   above it. */
-#app-content.is-display-launch-transition .tournament-slide-enter-active,
-#app-content.is-display-launch-transition .tournament-slide-leave-active {
-  z-index: auto;
-  transition: none;
-  transform: none;
-  opacity: 1;
-  will-change: auto;
-}
-
-#app-content.is-display-launch-transition .tournament-slide-enter-from,
-#app-content.is-display-launch-transition .tournament-slide-enter-to,
-#app-content.is-display-launch-transition .tournament-slide-leave-from,
-#app-content.is-display-launch-transition .tournament-slide-leave-to {
-  transform: none;
-  opacity: 1;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .tournament-slide-enter-active,
   .tournament-slide-leave-active,

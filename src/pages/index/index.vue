@@ -272,6 +272,8 @@ import {
   TOURNAMENT_DISPLAY_REVEAL_DURATION
 } from '../../utils/globalLuluTransition.js'
 
+const PROFILE_DOCK_SHIFT_DURATION = 1.12
+
 export default {
   setup() {
     const router = useRouter()
@@ -390,7 +392,7 @@ export default {
         }, null, 0)
         .to(profileDock, {
           y: alignmentY,
-          duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          duration: reduceMotion ? 0 : PROFILE_DOCK_SHIFT_DURATION,
           ease: 'power3.inOut',
           willChange: 'transform'
         }, 0)
@@ -540,39 +542,26 @@ export default {
       pageRoot.value.classList.add('tournament-launching')
       heroTransition?.kill()
       const { profileDock, alignmentY } = await prepareDisplayLaunch()
-      const expandedHeight = pageRoot.value.clientHeight
-      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
-      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
-      const displayLaunchAt = TOURNAMENT_DISPLAY_REVEAL_DURATION
+      if (profileDock) {
+        gsap.set(profileDock, {
+          y: alignmentY,
+          willChange: 'transform'
+        })
+      }
 
       tournamentLaunchTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
         .call(() => {
-          expandGlobalLulu(
-            heroPanel.value,
-            expandedHeight,
-            expandedViewportHeight,
-            expandedFontSize,
-            { duration: TOURNAMENT_DISPLAY_REVEAL_DURATION }
-          )
+          beginLuluDisplayTransition(room.id)
         }, null, 0)
-        .to(profileDock ? [profileDock] : [], {
-          y: alignmentY,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'transform'
-        }, 0)
         .to(heroPanel.value, {
-          height: expandedHeight,
+          height: pageRoot.value.clientHeight,
           duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
           ease: 'power3.inOut',
           willChange: 'height'
         }, 0)
         .call(() => {
-          beginLuluDisplayTransition(room.id)
-        }, null, displayLaunchAt)
-        .call(() => {
           navigate()
-        }, null, displayLaunchAt + TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
+        }, null, TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
     }
 
     const getRoomModeLabel = (room) => {
