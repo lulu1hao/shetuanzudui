@@ -290,9 +290,11 @@ import gsap from 'gsap'
 import {
   animateDisplayHeaderCopy,
   beginLobbyReturnTransition,
+  clearLuluDisplayArrivalStyles,
   hasLuluDisplayTransition,
   markLobbyReturnDisplay,
   placeGlobalLuluInDisplayTarget,
+  prepareLuluDisplayArrival,
   settleLuluDisplayTransition,
   TOURNAMENT_DISPLAY_REVEAL_DURATION
 } from '../../utils/globalLuluTransition.js'
@@ -381,16 +383,7 @@ export default {
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
     const clearRoomEntranceStyles = () => {
-      const root = roomRootRef.value
-      const header = root?.querySelector('.room-header')
-      if (header) {
-        gsap.set(header, { clearProps: 'height,minHeight,will-change' })
-      }
-      if (root) {
-        gsap.set(root.querySelectorAll('.header-left, .header-right'), {
-          clearProps: 'opacity,visibility,transform,will-change'
-        })
-      }
+      clearLuluDisplayArrivalStyles({ target: 'room', root: roomRootRef.value })
     }
 
     const animateRoomHeaderEntrance = ({ arrival = false } = {}) => {
@@ -435,15 +428,7 @@ export default {
         loadRoomData()
 
         if (isRoomArrival.value && !shouldReduceMotion()) {
-          const root = roomRootRef.value
-          const header = root?.querySelector('.room-header')
-          if (root && header) {
-            gsap.set(header, {
-              height: root.clientHeight,
-              minHeight: root.clientHeight,
-              willChange: 'height'
-            })
-          }
+          prepareLuluDisplayArrival({ target: 'room', root: roomRootRef.value })
         }
 
         roomEntranceTimer = setTimeout(() => {
@@ -1585,6 +1570,7 @@ export default {
 }
 
 .container.room-arrival {
+  position: relative;
   background: transparent !important;
 }
 
@@ -1616,8 +1602,6 @@ export default {
 
 .room-arrival .room-header {
   z-index: auto;
-  height: 100%;
-  min-height: 100%;
   border-color: transparent !important;
   border-left-color: transparent !important;
   background: transparent !important;

@@ -273,6 +273,7 @@ import {
 } from '../../utils/globalLuluTransition.js'
 
 const PROFILE_DOCK_SHIFT_DURATION = 1.12
+const DISPLAY_ROUTE_PRELUDE_DURATION = 0.72
 
 export default {
   setup() {
@@ -362,56 +363,13 @@ export default {
 
     const expandHero = async () => {
       if (isHeroExpanded.value || isHeroAnimating || !heroPanel.value) return
-      const expandedHeight = pageRoot.value.clientHeight
-      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
-      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
-
       isHeroAnimating = true
-      isHeroExpanded.value = true
-      await nextTick()
-      const profileDock = pageRoot.value.querySelector('.profile-dock')
-      const profileSection = pageRoot.value.querySelector('.profile-section')
-      const alignmentY = profileDock && profileSection
-        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
-        : 0
-
-      heroTransition = gsap.timeline({
-        defaults: { overwrite: 'auto' },
+      heroTransition = await createHeroExpandTimeline({
+        showCollapseButton: true,
         onComplete: () => {
           isHeroAnimating = false
         }
       })
-        .call(() => {
-          expandGlobalLulu(
-            heroPanel.value,
-            expandedHeight,
-            expandedViewportHeight,
-            expandedFontSize,
-            { duration: reduceMotion ? 0 : 0.82 }
-          )
-        }, null, 0)
-        .to(profileDock, {
-          y: alignmentY,
-          duration: reduceMotion ? 0 : PROFILE_DOCK_SHIFT_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'transform'
-        }, 0)
-        .to(heroPanel.value, {
-          height: expandedHeight,
-          duration: reduceMotion ? 0 : 0.82,
-          ease: 'power3.inOut'
-        }, 0)
-        .fromTo('.hero-collapse-button', {
-          autoAlpha: 0,
-          scale: 0.78,
-          rotation: -8
-        }, {
-          autoAlpha: 1,
-          scale: 1,
-          rotation: 0,
-          duration: reduceMotion ? 0 : 0.36,
-          ease: 'back.out(1.5)'
-        }, reduceMotion ? 0 : 0.82)
     }
 
     const collapseHero = () => {
@@ -513,17 +471,76 @@ export default {
       }
     }
 
-    const prepareDisplayLaunch = async () => {
+    const getHeroExpandLayout = async () => {
       if (!isHeroExpanded.value) {
         isHeroExpanded.value = true
         await nextTick()
       }
+      const expandedHeight = pageRoot.value.clientHeight
+      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
+      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
       const profileDock = pageRoot.value?.querySelector('.profile-dock')
       const profileSection = pageRoot.value?.querySelector('.profile-section')
       const alignmentY = profileDock && profileSection
         ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
         : 0
-      return { profileDock, alignmentY }
+      return { expandedHeight, expandedFontSize, expandedViewportHeight, profileDock, alignmentY }
+    }
+
+    const createHeroExpandTimeline = async ({ showCollapseButton = false, duration: forcedDuration, paused = false, onComplete } = {}) => {
+      if (!pageRoot.value || !heroPanel.value) return null
+      const {
+        expandedHeight,
+        expandedFontSize,
+        expandedViewportHeight,
+        profileDock,
+        alignmentY
+      } = await getHeroExpandLayout()
+      const duration = forcedDuration ?? (reduceMotion ? 0 : PROFILE_DOCK_SHIFT_DURATION)
+      const timeline = gsap.timeline({
+        defaults: { overwrite: 'auto' },
+        paused,
+        onComplete
+      })
+        .call(() => {
+          expandGlobalLulu(
+            heroPanel.value,
+            expandedHeight,
+            expandedViewportHeight,
+            expandedFontSize,
+            { duration }
+          )
+        }, null, 0)
+        .to(profileDock ? [profileDock] : [], {
+          y: alignmentY,
+          duration,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
+        .to(heroPanel.value, {
+          height: expandedHeight,
+          duration,
+          ease: 'power3.inOut',
+          willChange: 'height'
+        }, 0)
+
+      if (showCollapseButton) {
+        timeline.fromTo('.hero-collapse-button', {
+          autoAlpha: 0,
+          scale: 0.78,
+          rotation: -8
+        }, {
+          autoAlpha: 1,
+          scale: 1,
+          rotation: 0,
+          duration: reduceMotion ? 0 : 0.36,
+          ease: 'back.out(1.5)'
+        }, duration)
+      } else {
+        timeline.set('.hero-collapse-button', { autoAlpha: 0, display: 'none' }, 0)
+      }
+
+      return timeline
     }
 
     const goToRoom = async (room) => {
@@ -541,41 +558,27 @@ export default {
 
       pageRoot.value.classList.add('tournament-launching')
       heroTransition?.kill()
-      const shouldShiftProfileDock = !isHeroExpanded.value
-      const expandedHeight = pageRoot.value.clientHeight
-      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
-      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
-      const { profileDock, alignmentY } = await prepareDisplayLaunch()
-      const displayLaunchAt = shouldShiftProfileDock ? PROFILE_DOCK_SHIFT_DURATION : 0
+      const wasHeroExpanded = isHeroExpanded.value
+      const preludeDuration = wasHeroExpanded ? 0 : (reduceMotion ? 0 : DISPLAY_ROUTE_PRELUDE_DURATION)
+      tournamentLaunchTimeline = await createHeroExpandTimeline({
+        showCollapseButton: false,
+        duration: preludeDuration,
+        paused: true
+      })
+      if (!tournamentLaunchTimeline) {
+        navigate()
+        return
+      }
 
-      tournamentLaunchTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
-        .call(() => {
-          expandGlobalLulu(
-            heroPanel.value,
-            expandedHeight,
-            expandedViewportHeight,
-            expandedFontSize,
-            { duration: reduceMotion ? 0 : 0.82 }
-          )
-        }, null, 0)
-        .to(profileDock ? [profileDock] : [], {
-          y: alignmentY,
-          duration: shouldShiftProfileDock ? PROFILE_DOCK_SHIFT_DURATION : 0,
-          ease: 'power3.inOut',
-          willChange: 'transform'
-        }, 0)
-        .to(heroPanel.value, {
-          height: expandedHeight,
-          duration: reduceMotion ? 0 : 0.82,
-          ease: 'power3.inOut',
-          willChange: 'height'
-        }, 0)
+      tournamentLaunchTimeline
+        .addLabel('displayLaunch', preludeDuration)
         .call(() => {
           beginLuluDisplayTransition(room.id)
-        }, null, displayLaunchAt)
+        }, null, 'displayLaunch')
         .call(() => {
           navigate()
-        }, null, displayLaunchAt + TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
+        }, null, `displayLaunch+=${TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04}`)
+        .play(0)
     }
 
     const getRoomModeLabel = (room) => {
@@ -2173,7 +2176,9 @@ export default {
 }
 
 .tournament-launching .hero-collapse-button {
-  display: none;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
 .tournament-launching .hero-lulu-word {

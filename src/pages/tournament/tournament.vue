@@ -812,8 +812,10 @@ import gsap from 'gsap'
 import {
   animateDisplayHeaderCopy,
   beginLobbyReturnTransition,
+  clearLuluDisplayArrivalStyles,
   hasLuluDisplayTransition,
   placeGlobalLuluInDisplayTarget,
+  prepareLuluDisplayArrival,
   settleLuluDisplayTransition,
   TOURNAMENT_DISPLAY_REVEAL_DURATION
 } from '../../utils/globalLuluTransition.js'
@@ -1054,14 +1056,8 @@ export default {
           isTournamentArrival.value = false
           nextTick(() => {
             const root = tournamentRootRef.value
-            const header = root?.querySelector('.hud-header')
-            if (header) {
-              gsap.set(header, { clearProps: 'height,minHeight,will-change' })
-            }
             if (root) {
-              gsap.set(root.querySelectorAll('.header-left, .header-right'), {
-                clearProps: 'opacity,visibility,transform,will-change'
-              })
+              clearLuluDisplayArrivalStyles({ target: 'tournament', root })
               placeGlobalLuluInDisplayTarget(root, { target: 'tournament' })
             }
             animateActivePaths()
@@ -1181,15 +1177,7 @@ export default {
         loadRoomData();
 
         if (isTournamentArrival.value && !shouldReduceMotion()) {
-          const root = tournamentRootRef.value
-          const header = root?.querySelector('.hud-header')
-          if (root && header) {
-            gsap.set(header, {
-              height: root.clientHeight,
-              minHeight: root.clientHeight,
-              willChange: 'height'
-            })
-          }
+          prepareLuluDisplayArrival({ target: 'tournament', root: tournamentRootRef.value })
         }
 
         // 先保留完整展示帧，再由全局展示层统一回缩，避免底部提前露出赛事页。

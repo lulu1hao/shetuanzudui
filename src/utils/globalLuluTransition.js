@@ -66,10 +66,20 @@ const getLobbyWordLayout = (rect) => ({
   wordOpacity: 1
 })
 
+const getExpandedViewportHeight = (height) =>
+  Math.min(height * 0.42, 330)
+
+const getDisplayWordY = (height) =>
+  Math.max(0, height * 0.5 - getExpandedViewportHeight(height) * 0.58)
+
 const setMarqueeMode = (mode) => {
   if (!marquee?.viewport) return
   marquee.viewport.classList.remove('is-lobby', 'is-expanded', 'is-tournament', 'is-room')
   if (mode) marquee.viewport.classList.add(`is-${mode}`)
+}
+
+const setDisplayCovered = (covered) => {
+  marquee?.viewport?.classList.toggle('is-display-covered', Boolean(covered))
 }
 
 const appContent = () => document.querySelector('#app-content')
@@ -154,6 +164,7 @@ export const placeGlobalLuluInLobby = (panel, { duration = 0, holdDisplayLayer =
   returningToLobby = false
   marquee?.viewport.classList.remove('is-launching')
   marquee?.viewport.classList.remove('is-display-transition')
+  setDisplayCovered(false)
   // When the display page is collapsing, its red panel remains on layer 50
   // until the animation ends. Keep the marquee above it for the same span.
   setMarqueeMode(holdDisplayLayer ? 'expanded' : 'lobby')
@@ -186,6 +197,7 @@ export const beginLuluDisplayTransition = (id) => {
   displayTransitionId = String(id)
   activeDisplayReturnId = String(id)
   returningToLobby = false
+  setDisplayCovered(false)
   setMarqueeMode('expanded')
   marquee.viewport.classList.add('is-launching', 'is-display-transition')
 
@@ -201,12 +213,13 @@ export const beginLuluDisplayTransition = (id) => {
     fontSize,
     lineHeight: 0.92,
     skewX: 0,
-    wordY: Math.max(0, height * 0.5 - fontSize * 0.46),
+    wordY: getDisplayWordY(height),
     wordOpacity: 1
   }, {
     duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
     timeScale: LAUNCH_TIMESCALE,
-    ease: 'power3.inOut'
+    ease: 'power3.inOut',
+    onComplete: () => setDisplayCovered(true)
   })
 }
 
@@ -220,6 +233,7 @@ export const beginLobbyReturnTransition = (roomId) => {
   content.classList.add('is-lobby-display-transition')
   setMarqueeMode('expanded')
   marquee.viewport.classList.add('is-launching', 'is-display-transition')
+  setDisplayCovered(true)
 
   const width = content.offsetWidth
   const height = content.offsetHeight
@@ -233,7 +247,7 @@ export const beginLobbyReturnTransition = (roomId) => {
     fontSize,
     lineHeight: 0.92,
     skewX: 0,
-    wordY: Math.max(0, height * 0.5 - fontSize * 0.46),
+    wordY: getDisplayWordY(height),
     wordOpacity: 1
   }, {
     duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
@@ -255,6 +269,7 @@ export const settleLobbyReturnTransition = (panel, { onComplete } = {}) => {
       returningToLobby = false
       document.querySelector('#app-content')?.classList.remove('is-lobby-display-transition')
       marquee?.viewport.classList.remove('is-launching', 'is-display-transition')
+      setDisplayCovered(false)
       onComplete?.()
     }
   })
@@ -273,6 +288,30 @@ export const markLobbyReturnDisplay = (id) => {
   activeDisplayReturnId = id ? String(id) : null
 }
 
+export const prepareLuluDisplayArrival = ({ target, root }) => {
+  const config = DISPLAY_TARGETS[target]
+  const header = config ? root?.querySelector(config.selector) : null
+  if (!root || !header) return false
+  gsap.set(header, {
+    height: root.clientHeight,
+    minHeight: root.clientHeight,
+    willChange: 'height'
+  })
+  return true
+}
+
+export const clearLuluDisplayArrivalStyles = ({ target, root }) => {
+  const config = DISPLAY_TARGETS[target]
+  if (!config || !root) return
+  const header = root.querySelector(config.selector)
+  if (header) {
+    gsap.set(header, { clearProps: 'height,minHeight,will-change' })
+  }
+  gsap.set(root.querySelectorAll('.header-left, .header-right'), {
+    clearProps: 'opacity,visibility,transform,will-change'
+  })
+}
+
 export const settleLuluDisplayTransition = ({ id, target, root, onComplete }) => {
   const config = DISPLAY_TARGETS[target]
   if (!config || !hasLuluDisplayTransition(id) || !root) return false
@@ -284,6 +323,7 @@ export const settleLuluDisplayTransition = ({ id, target, root, onComplete }) =>
   const completeDisplayTransition = () => {
     displayTransitionId = null
     marquee?.viewport.classList.remove('is-launching', 'is-display-transition')
+    setDisplayCovered(false)
     onComplete?.()
   }
 
@@ -377,6 +417,7 @@ export const placeGlobalLuluInDisplayTarget = (root, { target, duration = 0 } = 
   returningToLobby = false
   document.querySelector('#app-content')?.classList.remove('is-lobby-display-transition')
   marquee?.viewport.classList.remove('is-launching', 'is-display-transition')
+  setDisplayCovered(false)
   setMarqueeMode(config.mode)
   return runLayout({
     left: rect.left,

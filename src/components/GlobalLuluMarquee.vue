@@ -56,6 +56,11 @@ onUnmounted(unregisterGlobalLuluMarquee)
 }
 
 .global-lulu-viewport.is-display-transition {
+  background: transparent;
+  box-shadow: none;
+}
+
+.global-lulu-viewport.is-display-transition.is-display-covered {
   background: linear-gradient(145deg, #8e0b24 0%, #d71442 58%, #ef174e 100%);
   box-shadow: none;
 }

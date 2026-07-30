@@ -9,3 +9,6 @@ src-tauri/target/
 .idea/
 *.exe
 社团组队系统/
+artifacts/
+*-profile/
+*-profile-*/
