@@ -157,7 +157,7 @@ const syncCashoutTournamentMatches = (room) => {
       if (third) { third.status = 'pending'; third.teams = [null, null]; third.cashouts = {}; third.rankings = [] }
     } else {
       let promoted = sf4 ? (sf4.promoted || []) : []
-      let eliminated = sf4 ? sf4.teams.filter(t => !promoted.includes(t)) : []
+      let eliminated = sf4 ? (sf4.teams || []).filter(t => Boolean(t) && !promoted.includes(t)) : []
       if (final && final.status !== 'completed') final.teams = [promoted[0] || null, promoted[1] || null]
       if (third && third.status !== 'completed') third.teams = [eliminated[0] || null, eliminated[1] || null]
     }
@@ -176,10 +176,10 @@ const syncCashoutTournamentMatches = (room) => {
       if (sf4 && sf4.status !== 'completed') sf4.teams = [pA[0] || null, pA[1] || null, pB[0] || null, pB[1] || null]
       if (!isDownstreamCompleted && (!sf4 || sf4.status !== 'completed')) {
         if (final) { final.status = 'pending'; final.teams = [null, null]; final.cashouts = {}; final.rankings = [] }
-        if (third) { third.status = 'pending'; third.teams = [null, null]; third.cashouts = {}; third.rankings = [] }
+        if (third) { third.status = 'pending'; third.teams = [null, null]; third.cashouts = {}; final.rankings = [] }
       } else {
         let promoted = sf4 ? (sf4.promoted || []) : []
-        let eliminated = sf4 ? sf4.teams.filter(t => !promoted.includes(t)) : []
+        let eliminated = sf4 ? (sf4.teams || []).filter(t => Boolean(t) && !promoted.includes(t)) : []
         if (final && final.status !== 'completed') final.teams = [promoted[0] || null, promoted[1] || null]
         if (third && third.status !== 'completed') third.teams = [eliminated[0] || null, eliminated[1] || null]
       }
@@ -503,11 +503,26 @@ export const roomStore = {
     const memberA = room.members.find(m => m.id === memberAId)
     const memberB = room.members.find(m => m.id === memberBId)
     if (!memberA || !memberB) return { success: false, msg: '成员未找到' }
-    
-    // Swap their teamIds
-    const temp = memberA.teamId
-    memberA.teamId = memberB.teamId
-    memberB.teamId = temp
+    if (memberA.id === memberB.id) return { success: true }
+
+    const activeModeKey = room.activeMode || room.mode || 'cashout'
+    const config = MODES[activeModeKey] || MODES.cashout
+    const teamAId = memberA.teamId
+    const teamBId = memberB.teamId
+
+    if (teamAId !== teamBId) {
+      if (teamBId !== null && teamBId !== 'spectator') {
+        const countB = room.members.filter(m => m.teamId === teamBId && m.id !== memberBId).length + 1
+        if (countB > config.teamCapacity) return { success: false, msg: `第 ${teamBId} 队人数已满（上限 ${config.teamCapacity} 人）` }
+      }
+      if (teamAId !== null && teamAId !== 'spectator') {
+        const countA = room.members.filter(m => m.teamId === teamAId && m.id !== memberAId).length + 1
+        if (countA > config.teamCapacity) return { success: false, msg: `第 ${teamAId} 队人数已满（上限 ${config.teamCapacity} 人）` }
+      }
+    }
+
+    memberA.teamId = teamBId
+    memberB.teamId = teamAId
     return { success: true }
   },
 
@@ -582,12 +597,20 @@ export const roomStore = {
     if (!room) return { success: false, msg: '房间未找到' }
     const match = room.matches.find(m => m.id === matchId)
     if (!match) return { success: false, msg: '场次未找到' }
-    match.cashouts = cashouts; match.status = 'completed'
-    const sorted = [...match.teams].sort((a, b) => parseInt(cashouts[b] || 0) - parseInt(cashouts[a] || 0))
+    if ((match.teams || []).some(t => !t)) {
+      return { success: false, msg: '对局包含待定战队，无法录入比分' }
+    }
+    match.cashouts = cashouts || {}; match.status = 'completed'
+    const validTeams = (match.teams || []).filter(t => Boolean(t))
+    const sorted = [...validTeams].sort((a, b) => {
+      const cashA = parseInt((cashouts && cashouts[a]) || 0) || 0
+      const cashB = parseInt((cashouts && cashouts[b]) || 0) || 0
+      return cashB - cashA
+    })
     if (match.stage === 'grand_final' || match.stage === '3rd_place') {
       match.rankings = sorted
     } else {
-      match.promoted = [sorted[0], sorted[1]]
+      match.promoted = [sorted[0] || null, sorted[1] || null]
     }
     syncCashoutTournamentMatches(room)
     return { success: true }

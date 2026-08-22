@@ -421,7 +421,16 @@ export default {
       }
     }
 
+    const forceCleanupDrag = () => {
+      isDragging.value = false
+      hoverTeamId.value = undefined
+      dragEnterCount.value = {}
+      draggedMember.value = null
+      draggedMemberId.value = null
+    }
+
     onMounted(() => {
+      window.addEventListener('dragend', forceCleanupDrag)
       const id = route.query.id
       if (id) {
         roomId.value = id
@@ -443,6 +452,7 @@ export default {
     })
 
     onUnmounted(() => {
+      window.removeEventListener('dragend', forceCleanupDrag)
       if (roomEntranceTimer) clearTimeout(roomEntranceTimer)
       roomReturnTimeline?.kill()
       const root = roomRootRef.value

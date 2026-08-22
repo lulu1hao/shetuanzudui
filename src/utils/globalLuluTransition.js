@@ -34,9 +34,6 @@ const getLayoutRect = (element) => {
   const appContent = document.querySelector('#app-content')
   if (!appContent || !element) return null
 
-  // offset* values describe layout coordinates and deliberately ignore the
-  // transform used by Vue's route transition. getBoundingClientRect() would
-  // capture the temporary -10% page offset when returning to the lobby.
   let left = 0
   let top = 0
   let current = element
@@ -92,6 +89,31 @@ const runLayout = (layout, { duration = 0, ease = 'power3.inOut', timeScale = 1,
 
   marquee.layoutTimeline?.kill()
   const actualDuration = marquee.reduceMotion ? 0 : duration
+
+  if (actualDuration === 0) {
+    gsap.set(marquee.viewport, {
+      left: layout.left,
+      top: layout.top,
+      width: layout.width,
+      height: layout.height,
+      autoAlpha: 1
+    })
+    gsap.set(marquee.word, {
+      fontSize: layout.fontSize,
+      lineHeight: layout.lineHeight,
+      y: layout.wordY ?? 0,
+      autoAlpha: layout.wordOpacity ?? 1
+    })
+    gsap.set(marquee.groups, {
+      skewX: layout.skewX
+    })
+    if (marquee.tween) {
+      marquee.tween.timeScale(timeScale)
+    }
+    onComplete?.()
+    return true
+  }
+
   marquee.layoutTimeline = gsap.timeline({
     defaults: { overwrite: 'auto' },
     onComplete
@@ -149,24 +171,28 @@ export const registerGlobalLuluMarquee = ({ viewport, word, groups }) => {
   command?.()
 }
 
+export const resetGlobalLuluState = () => {
+  displayTransitionId = null
+  activeDisplayReturnId = null
+  returningToLobby = false
+  if (marquee?.viewport) {
+    marquee.viewport.classList.remove('is-launching', 'is-display-transition', 'is-display-covered')
+  }
+  document.querySelector('#app-content')?.classList.remove('is-lobby-display-transition')
+}
+
 export const unregisterGlobalLuluMarquee = () => {
   marquee?.layoutTimeline?.kill()
   marquee?.speedTween?.kill()
   marquee?.tween?.kill()
   marquee = null
-  returningToLobby = false
+  resetGlobalLuluState()
 }
 
 export const placeGlobalLuluInLobby = (panel, { duration = 0, holdDisplayLayer = false } = {}) => {
   const rect = getLayoutRect(panel)
   if (!rect) return false
-  displayTransitionId = null
-  returningToLobby = false
-  marquee?.viewport.classList.remove('is-launching')
-  marquee?.viewport.classList.remove('is-display-transition')
-  setDisplayCovered(false)
-  // When the display page is collapsing, its red panel remains on layer 50
-  // until the animation ends. Keep the marquee above it for the same span.
+  resetGlobalLuluState()
   setMarqueeMode(holdDisplayLayer ? 'expanded' : 'lobby')
   return runLayout(getLobbyWordLayout(rect), {
     duration,
@@ -331,8 +357,6 @@ export const settleLuluDisplayTransition = ({ id, target, root, onComplete }) =>
     left: rect.left,
     top: rect.top,
     width: rect.width,
-    // Display headers start at full viewport height and shrink with the
-    // shared lobby layout. Target the settled CSS height, not the live size.
     height: config.settledHeight,
     fontSize: 138,
     lineHeight: 0.82,

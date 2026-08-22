@@ -1,8 +1,11 @@
 <template>
   <div ref="viewport" class="global-lulu-viewport" aria-hidden="true">
     <div ref="word" class="global-lulu-word">
-      <div v-for="groupIndex in 2" :key="groupIndex" ref="groups" class="global-lulu-group">
-        <span v-for="(letter, index) in letters" :key="`${groupIndex}-${index}`">{{ letter }}</span>
+      <div ref="group1" class="global-lulu-group">
+        <span v-for="(letter, index) in letters" :key="`g1-${index}`">{{ letter }}</span>
+      </div>
+      <div ref="group2" class="global-lulu-group">
+        <span v-for="(letter, index) in letters" :key="`g2-${index}`">{{ letter }}</span>
       </div>
     </div>
   </div>
@@ -17,14 +20,17 @@ import {
 
 const viewport = ref(null)
 const word = ref(null)
-const groups = ref([])
-const letters = 'LU'.repeat(18).split('')
+const group1 = ref(null)
+const group2 = ref(null)
+const letters = 'LU'.repeat(24).split('')
 
-onMounted(() => registerGlobalLuluMarquee({
-  viewport: viewport.value,
-  word: word.value,
-  groups: groups.value
-}))
+onMounted(() => {
+  registerGlobalLuluMarquee({
+    viewport: viewport.value,
+    word: word.value,
+    groups: [group1.value, group2.value].filter(Boolean)
+  })
+})
 
 onUnmounted(unregisterGlobalLuluMarquee)
 </script>
@@ -51,12 +57,12 @@ onUnmounted(unregisterGlobalLuluMarquee)
 
 .global-lulu-viewport.is-tournament.is-launching,
 .global-lulu-viewport.is-room.is-launching {
-  z-index: 1;
+  z-index: 50;
   opacity: 1;
 }
 
 .global-lulu-viewport.is-display-transition {
-  background: transparent;
+  background: linear-gradient(145deg, #8e0b24 0%, #d71442 58%, #ef174e 100%);
   box-shadow: none;
 }
 

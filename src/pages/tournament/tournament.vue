@@ -1430,7 +1430,10 @@ export default {
 
     const openCashoutScoreModal = (match) => {
       if (!match) return
-      if (match.teams.some(teamId => !teamId)) { showToast('有参赛队伍尚未决出，无法录入！'); return }
+      if (!match.teams || match.teams.length === 0 || match.teams.some(teamId => !teamId)) {
+        showToast('上一轮次赛事尚未结束，尚有待定战队，暂不可录入！')
+        return
+      }
       activeCashoutMatch.value = match; cashoutInputs.value = {}
       match.teams.forEach(teamId => { cashoutInputs.value[teamId] = match.cashouts && match.cashouts[teamId] !== undefined ? match.cashouts[teamId] : 0 })
       isCashoutScoreModalVisible.value = true
@@ -1443,6 +1446,7 @@ export default {
       activeCashoutMatch.value.teams.forEach(teamId => { formatted[teamId] = parseInt(cashoutInputs.value[teamId] || 0) })
       const res = roomStore.updateCashoutMatchScore(roomId.value, activeCashoutMatch.value.id, formatted)
       if (res.success) { showToast('成绩录入成功', 'success'); closeCashoutScoreModal(); loadRoomData() }
+      else { showToast(res.msg || '录入失败') }
     }
 
     const resetMatchScore = async () => {
@@ -1455,7 +1459,11 @@ export default {
     }
 
     const openScoreModal = (match) => {
-      if (!match || match.teamA === 'bye' || match.teamB === 'bye' || !match.teamA || !match.teamB) return
+      if (!match) return
+      if (match.teamA === 'bye' || match.teamB === 'bye' || !match.teamA || !match.teamB) {
+        showToast('包含待定战队或轮空，暂不可录入比分！')
+        return
+      }
       activeMatch.value = match; inputScoreA.value = match.scoreA !== null ? match.scoreA : 0
       inputScoreB.value = match.scoreB !== null ? match.scoreB : 0; inputKillsA.value = match.killsA !== null ? match.killsA : 0
       inputKillsB.value = match.killsB !== null ? match.killsB : 0; inputWinnerId.value = match.winnerId || match.teamA

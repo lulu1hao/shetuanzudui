@@ -52,104 +52,122 @@
         </div>
       </section>
 
-    <!-- 主内容区 -->
-    <div class="main-content">
-      <!-- 顶栏 -->
-      <div class="topbar">
-        <div class="title-left">
-          <div class="title-indicator"></div>
-          <h1 class="section-title">活动 / 赛事大厅</h1>
+      <!-- 主内容区 -->
+      <div class="main-content">
+        <!-- 顶栏 -->
+        <div class="topbar">
+          <div class="title-left">
+            <div class="title-indicator"></div>
+            <h1 class="section-title">活动 / 赛事大厅</h1>
+          </div>
+          <button class="create-btn-top glass-panel" @click="showCreateModal">
+            <span class="plus-icon">＋</span> 创建房间 / 赛事
+          </button>
         </div>
-        <button class="create-btn-top glass-panel" @click="showCreateModal">
-          <span class="plus-icon">＋</span> 创建房间 / 赛事
-        </button>
-      </div>
 
-      <div class="lobby-tabs">
-        <button class="lobby-tab active">活动 / 赛事大厅</button>
-        <button class="lobby-tab">小桌宠</button>
-        <button class="lobby-tab">交流区</button>
-        <button class="lobby-tab">问题反馈(与我联系)</button>
-        <span class="finals-mark">THE FINALS</span>
-      </div>
-
-      <!-- 空状态 -->
-      <div v-if="rooms.length === 0" class="empty-state glass-panel">
-        <span class="empty-emoji">👽</span>
-        <span class="empty-title">暂无活动房间</span>
-        <span class="empty-desc">赶紧点击下方按钮创建一个吧！</span>
-        <button class="create-btn-lg" @click="showCreateModal">创建第一个房间 / 赛事</button>
-      </div>
-
-      <!-- 房间网格 -->
-      <div v-else class="room-grid">
-        <div
-          v-for="room in rooms"
-          :key="room.id"
-          class="room-card glass-panel"
-          :data-room-id="room.id"
-          :class="{ 'tournament-card-border': room.type === 'tournament' }"
-          @click="goToRoom(room)"
-        >
-          <div class="room-card-header">
-            <span class="room-name">
-              <span class="trophy-prefix" v-if="room.type === 'tournament'">🏆 </span>
-              {{ room.name }}
-            </span>
-            <div class="delete-icon">{{ room.type === 'tournament' ? '赛事' : '组队' }}</div>
-          </div>
-
-          <div class="room-badge" :class="{ 'tournament-badge': room.type === 'tournament' }">
-            <div class="room-mode-row">
-              <span>{{ getRoomPrimaryLabel(room) }}</span>
-              <span>{{ getRoomCapacityLabel(room) }}</span>
-            </div>
-            <span class="badge-text" :class="{ 'tournament-badge-text': room.type === 'tournament' }">
-              {{ getRoomMapLabel(room) }}
-            </span>
-          </div>
-
-          <!-- 赛事进度条 -->
-          <div class="room-info" v-if="room.type === 'tournament'">
-            <div class="info-label-row">
-              <span class="info-label">赛事进度 (完赛场次)</span>
-              <span class="info-value">{{ getCompletedMatchesCount(room) }} / {{ getTotalMatchesCount(room) }} 场</span>
-            </div>
-            <div class="progress-bar-bg">
-              <div
-                class="progress-bar-fill progress-tournament-fill"
-                :style="{ width: (getTotalMatchesCount(room) > 0 ? (getCompletedMatchesCount(room) / getTotalMatchesCount(room) * 100) : 0) + '%' }"
-              ></div>
-            </div>
-          </div>
-
-          <!-- 组队进度条 -->
-          <div class="room-info" v-else>
-            <div class="info-label-row">
-              <span class="info-label">已加入成员</span>
-              <span class="info-value">{{ room.members ? room.members.length : 0 }} / {{ getRoomMaxCapacity(room) }}</span>
-            </div>
-            <div class="progress-bar-bg">
-              <div
-                class="progress-bar-fill"
-                :style="{ width: ((room.members ? room.members.length : 0) / getRoomMaxCapacity(room) * 100) + '%' }"
-              ></div>
-            </div>
-          </div>
-
-          <div class="room-footer">
-            <span class="created-time">创建时间：{{ room.createdAt }}</span>
-            <span class="updated-time">最后更新：{{ room.updatedAt || room.createdAt }}</span>
-            <button class="enter-btn" :class="{ 'enter-btn-tournament': room.type === 'tournament' }">
-              {{ room.type === 'tournament' ? '进入赛事 🏆' : '进入组队 ➡️' }}
-            </button>
-          </div>
+        <div class="lobby-tabs">
+          <button
+            v-for="(tabName, idx) in lobbyTabs"
+            :key="idx"
+            class="lobby-tab"
+            :class="{ 'active': currentLobbyTab === idx }"
+            @click="selectLobbyTab(idx)"
+          >{{ tabName }}</button>
+          <span class="finals-mark">THE FINALS</span>
         </div>
-        <button class="create-room-tile" @click="showCreateModal" title="创建房间 / 赛事">
-          <span>+</span>
-        </button>
+
+        <!-- 空状态 -->
+        <div v-if="rooms.length === 0" class="empty-state glass-panel">
+          <span class="empty-emoji">👽</span>
+          <span class="empty-title">暂无活动房间</span>
+          <span class="empty-desc">赶紧点击下方按钮创建一个吧！</span>
+          <button class="create-btn-lg" @click="showCreateModal">创建第一个房间 / 赛事</button>
+        </div>
+
+        <!-- 房间网格 -->
+        <div v-else class="room-grid">
+          <div
+            v-for="room in rooms"
+            :key="room.id"
+            class="room-card glass-panel"
+            :data-room-id="room.id"
+            :class="{ 'tournament-card-border': room.type === 'tournament' }"
+            @click="goToRoom(room)"
+          >
+            <div class="room-card-header">
+              <span class="room-name">
+                <span class="trophy-prefix" v-if="room.type === 'tournament'">🏆 </span>
+                {{ room.name }}
+              </span>
+              <div class="room-card-actions">
+                <span class="room-type-tag" :class="{ 'tag-tournament': room.type === 'tournament' }">
+                  {{ room.type === 'tournament' ? '赛事' : '组队' }}
+                </span>
+                <button
+                  class="delete-room-btn"
+                  type="button"
+                  title="删除房间"
+                  aria-label="删除房间"
+                  @click.stop="confirmDeleteRoom(room)"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="room-badge" :class="{ 'tournament-badge': room.type === 'tournament' }">
+              <div class="room-mode-row">
+                <span>{{ getRoomPrimaryLabel(room) }}</span>
+                <span>{{ getRoomCapacityLabel(room) }}</span>
+              </div>
+              <span class="badge-text" :class="{ 'tournament-badge-text': room.type === 'tournament' }">
+                {{ getRoomMapLabel(room) }}
+              </span>
+            </div>
+
+            <!-- 赛事进度条 -->
+            <div class="room-info" v-if="room.type === 'tournament'">
+              <div class="info-label-row">
+                <span class="info-label">赛事进度 (完赛场次)</span>
+                <span class="info-value">{{ getCompletedMatchesCount(room) }} / {{ getTotalMatchesCount(room) }} 场</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div
+                  class="progress-bar-fill progress-tournament-fill"
+                  :style="{ width: (getTotalMatchesCount(room) > 0 ? (getCompletedMatchesCount(room) / getTotalMatchesCount(room) * 100) : 0) + '%' }"
+                ></div>
+              </div>
+            </div>
+
+            <!-- 组队进度条 -->
+            <div class="room-info" v-else>
+              <div class="info-label-row">
+                <span class="info-label">已加入成员</span>
+                <span class="info-value">{{ room.members ? room.members.length : 0 }} / {{ getRoomMaxCapacity(room) }}</span>
+              </div>
+              <div class="progress-bar-bg">
+                <div
+                  class="progress-bar-fill"
+                  :style="{ width: ((room.members ? room.members.length : 0) / getRoomMaxCapacity(room) * 100) + '%' }"
+                ></div>
+              </div>
+            </div>
+
+            <div class="room-footer">
+              <span class="created-time">创建时间：{{ room.createdAt }}</span>
+              <span class="updated-time">最后更新：{{ room.updatedAt || room.createdAt }}</span>
+              <button class="enter-btn" :class="{ 'enter-btn-tournament': room.type === 'tournament' }">
+                {{ room.type === 'tournament' ? '进入赛事 🏆' : '进入组队 ➡️' }}
+              </button>
+            </div>
+          </div>
+          <button class="create-room-tile" @click="showCreateModal" title="创建房间 / 赛事">
+            <span>+</span>
+          </button>
+        </div>
       </div>
-    </div>
     </div>
 
     <!-- 创建弹窗 -->
@@ -258,7 +276,7 @@
 </template>
 
 <script>
-import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { roomStore, MODES, MAPS } from '../../store/roomStore.js'
@@ -268,12 +286,10 @@ import {
   consumeLobbyReturnRoomId,
   expandGlobalLulu,
   placeGlobalLuluInLobby,
+  resetGlobalLuluState,
   settleLobbyReturnTransition,
   TOURNAMENT_DISPLAY_REVEAL_DURATION
 } from '../../utils/globalLuluTransition.js'
-
-const PROFILE_DOCK_SHIFT_DURATION = 1.12
-const DISPLAY_ROUTE_PRELUDE_DURATION = 0.72
 
 export default {
   setup() {
@@ -290,6 +306,8 @@ export default {
     const pageRoot = ref(null)
     const heroPanel = ref(null)
     const isHeroExpanded = ref(false)
+    const currentLobbyTab = ref(0)
+    const lobbyTabs = ['活动 / 赛事大厅', '小桌宠', '交流区', '问题反馈(与我联系)']
     let gsapContext
     let heroTransition
     let tournamentLaunchTimeline
@@ -312,23 +330,43 @@ export default {
     const selectNewRoomMode = (v) => { newRoomMode.value = v }
     const selectNewRoomMap = (v) => { newRoomMap.value = v }
 
+    const selectLobbyTab = (idx) => {
+      currentLobbyTab.value = idx
+      if (idx !== 0) {
+        showToast(`功能“${lobbyTabs[idx]}”正在全力开发中，敬请期待！`, 'none')
+      }
+    }
+
+    const syncLobbyMarquee = () => {
+      if (heroPanel.value && !isHeroExpanded.value && !isNavigatingToTournament) {
+        placeGlobalLuluInLobby(heroPanel.value)
+      }
+    }
+
     onMounted(() => {
+      isNavigatingToTournament = false
+      isHeroExpanded.value = false
+      isHeroAnimating = false
       if (!pageRoot.value) return
+      pageRoot.value.classList.remove('tournament-launching', 'hero-expanded', 'lobby-returning')
       gsapContext = gsap.context(() => {
         reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       }, pageRoot.value)
 
       window.addEventListener('keydown', handleHeroKeydown)
+      window.addEventListener('resize', syncLobbyMarquee)
       const profileDock = pageRoot.value.querySelector('.profile-dock')
       const profileSection = pageRoot.value.querySelector('.profile-section')
       consumeLobbyReturnRoomId()
       const isReturningFromTournament = settleLobbyReturnTransition(heroPanel.value, {
         onComplete: () => {
           pageRoot.value?.classList.remove('lobby-returning')
+          syncLobbyMarquee()
         }
       })
 
       if (!isReturningFromTournament) {
+        resetGlobalLuluState()
         placeGlobalLuluInLobby(heroPanel.value)
       } else {
         pageRoot.value.classList.add('lobby-returning')
@@ -356,24 +394,72 @@ export default {
 
     onUnmounted(() => {
       window.removeEventListener('keydown', handleHeroKeydown)
+      window.removeEventListener('resize', syncLobbyMarquee)
       heroTransition?.kill()
       tournamentLaunchTimeline?.kill()
+      pageRoot.value?.classList.remove('tournament-launching', 'lobby-returning', 'hero-expanded')
+      isNavigatingToTournament = false
+      isHeroExpanded.value = false
+      isHeroAnimating = false
       gsapContext?.revert()
     })
 
-    const expandHero = async () => {
-      if (isHeroExpanded.value || isHeroAnimating || !heroPanel.value) return
+    const expandHero = () => {
+      if (isHeroExpanded.value || isHeroAnimating || !heroPanel.value || !pageRoot.value) return
       isHeroAnimating = true
-      heroTransition = await createHeroExpandTimeline({
-        showCollapseButton: true,
+      isHeroExpanded.value = true
+
+      const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
+      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
+      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
+      const profileDock = pageRoot.value.querySelector('.profile-dock')
+      const profileSection = pageRoot.value.querySelector('.profile-section')
+      const alignmentY = profileDock && profileSection
+        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+        : 0
+
+      heroTransition = gsap.timeline({
+        defaults: { overwrite: 'auto' },
         onComplete: () => {
           isHeroAnimating = false
         }
       })
+        .call(() => {
+          expandGlobalLulu(
+            heroPanel.value,
+            expandedHeight,
+            expandedViewportHeight,
+            expandedFontSize,
+            { duration: reduceMotion ? 0 : 0.82 }
+          )
+        }, null, 0)
+        .to(profileDock ? [profileDock] : [], {
+          y: alignmentY,
+          duration: reduceMotion ? 0 : 0.82,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
+        .to(heroPanel.value, {
+          height: expandedHeight,
+          duration: reduceMotion ? 0 : 0.82,
+          ease: 'power3.inOut',
+          willChange: 'height'
+        }, 0)
+        .fromTo('.hero-collapse-button', {
+          autoAlpha: 0,
+          scale: 0.78,
+          rotation: -8
+        }, {
+          autoAlpha: 1,
+          scale: 1,
+          rotation: 0,
+          duration: reduceMotion ? 0 : 0.36,
+          ease: 'back.out(1.5)'
+        }, reduceMotion ? 0 : 0.46)
     }
 
     const collapseHero = () => {
-      if (!isHeroExpanded.value || isHeroAnimating || !heroPanel.value) return
+      if (!isHeroExpanded.value || isHeroAnimating || !heroPanel.value || !pageRoot.value) return
       isHeroAnimating = true
       const profileDock = pageRoot.value.querySelector('.profile-dock')
       placeGlobalLuluInLobby(heroPanel.value, {
@@ -400,7 +486,7 @@ export default {
           duration: reduceMotion ? 0 : 0.22,
           ease: 'power2.in'
         }, 0)
-        .to(profileDock, {
+        .to(profileDock ? [profileDock] : [], {
           y: 0,
           duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
           ease: 'power3.inOut',
@@ -417,31 +503,6 @@ export default {
 
     const handleHeroKeydown = (event) => {
       if (event.key === 'Escape') collapseHero()
-    }
-
-    const floatLetter = (event) => {
-      if (!isHeroExpanded.value || reduceMotion) return
-      gsap.to(event.currentTarget, {
-        y: -24,
-        rotation: gsap.utils.random(-7, 7),
-        scale: 1.08,
-        autoAlpha: 1,
-        duration: 0.34,
-        ease: 'back.out(2)',
-        overwrite: 'auto'
-      })
-    }
-
-    const settleLetter = (event) => {
-      gsap.to(event.currentTarget, {
-        y: 0,
-        rotation: 0,
-        scale: 1,
-        autoAlpha: 0.82,
-        duration: reduceMotion ? 0 : 0.42,
-        ease: 'power3.out',
-        overwrite: 'auto'
-      })
     }
 
     const showCreateModal = () => {
@@ -471,79 +532,7 @@ export default {
       }
     }
 
-    const getHeroExpandLayout = async () => {
-      if (!isHeroExpanded.value) {
-        isHeroExpanded.value = true
-        await nextTick()
-      }
-      const expandedHeight = pageRoot.value.clientHeight
-      const expandedFontSize = Math.min(340, Math.max(180, window.innerWidth * 0.21))
-      const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
-      const profileDock = pageRoot.value?.querySelector('.profile-dock')
-      const profileSection = pageRoot.value?.querySelector('.profile-section')
-      const alignmentY = profileDock && profileSection
-        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
-        : 0
-      return { expandedHeight, expandedFontSize, expandedViewportHeight, profileDock, alignmentY }
-    }
-
-    const createHeroExpandTimeline = async ({ showCollapseButton = false, duration: forcedDuration, paused = false, onComplete } = {}) => {
-      if (!pageRoot.value || !heroPanel.value) return null
-      const {
-        expandedHeight,
-        expandedFontSize,
-        expandedViewportHeight,
-        profileDock,
-        alignmentY
-      } = await getHeroExpandLayout()
-      const duration = forcedDuration ?? (reduceMotion ? 0 : PROFILE_DOCK_SHIFT_DURATION)
-      const timeline = gsap.timeline({
-        defaults: { overwrite: 'auto' },
-        paused,
-        onComplete
-      })
-        .call(() => {
-          expandGlobalLulu(
-            heroPanel.value,
-            expandedHeight,
-            expandedViewportHeight,
-            expandedFontSize,
-            { duration }
-          )
-        }, null, 0)
-        .to(profileDock ? [profileDock] : [], {
-          y: alignmentY,
-          duration,
-          ease: 'power3.inOut',
-          willChange: 'transform'
-        }, 0)
-        .to(heroPanel.value, {
-          height: expandedHeight,
-          duration,
-          ease: 'power3.inOut',
-          willChange: 'height'
-        }, 0)
-
-      if (showCollapseButton) {
-        timeline.fromTo('.hero-collapse-button', {
-          autoAlpha: 0,
-          scale: 0.78,
-          rotation: -8
-        }, {
-          autoAlpha: 1,
-          scale: 1,
-          rotation: 0,
-          duration: reduceMotion ? 0 : 0.36,
-          ease: 'back.out(1.5)'
-        }, duration)
-      } else {
-        timeline.set('.hero-collapse-button', { autoAlpha: 0, display: 'none' }, 0)
-      }
-
-      return timeline
-    }
-
-    const goToRoom = async (room) => {
+    const goToRoom = (room) => {
       if (isNavigatingToTournament) return
       isNavigatingToTournament = true
       const navigate = () => router.push({
@@ -558,37 +547,35 @@ export default {
 
       pageRoot.value.classList.add('tournament-launching')
       heroTransition?.kill()
-      const wasHeroExpanded = isHeroExpanded.value
-      const preludeDuration = wasHeroExpanded ? 0 : (reduceMotion ? 0 : DISPLAY_ROUTE_PRELUDE_DURATION)
-      tournamentLaunchTimeline = await createHeroExpandTimeline({
-        showCollapseButton: false,
-        duration: preludeDuration,
-        paused: true
-      })
-      if (!tournamentLaunchTimeline) {
-        navigate()
-        return
-      }
 
-      tournamentLaunchTimeline
-        .addLabel('displayLaunch', preludeDuration)
+      const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
+      const profileDock = pageRoot.value.querySelector('.profile-dock')
+      const profileSection = pageRoot.value.querySelector('.profile-section')
+      const alignmentY = profileDock && profileSection
+        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+        : 0
+
+      tournamentLaunchTimeline = gsap.timeline({
+        defaults: { overwrite: 'auto' },
+        onComplete: () => {
+          navigate()
+        }
+      })
         .call(() => {
           beginLuluDisplayTransition(room.id)
-        }, null, 'displayLaunch')
-        .call(() => {
-          navigate()
-        }, null, `displayLaunch+=${TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04}`)
-        .play(0)
-    }
-
-    const getRoomModeLabel = (room) => {
-      const mapStr = room.map === 'random' ? `🎲 随机地图 (${room.activeMap})` : (room.map || '未知地图')
-      if (room.type === 'tournament') {
-        return `🏆 赛事房间 | 💰 提现锦标赛 | 🗺️ ${mapStr} | ${room.teamCount}支队伍`
-      }
-      const activeModeKey = room.activeMode || room.mode || 'cashout'
-      const activeConfig = MODES[activeModeKey] || MODES.cashout
-      return `${activeConfig.name} | 🗺️ ${mapStr} | ${activeConfig.maxMembers}人上限`
+        }, null, 0)
+        .to(heroPanel.value, {
+          height: expandedHeight,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'height'
+        }, 0)
+        .to(profileDock ? [profileDock] : [], {
+          y: alignmentY,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
     }
 
     const getRoomPrimaryLabel = (room) => {
@@ -616,12 +603,12 @@ export default {
 
     return {
       rooms, totalMembers, isCreateModalVisible, newRoomName, newRoomType,
-      pageRoot, heroPanel, isHeroExpanded,
+      pageRoot, heroPanel, isHeroExpanded, currentLobbyTab, lobbyTabs, selectLobbyTab,
       newTeamCount, newRoomMode, newRoomMap, modeOptions, MAPS,
       selectNewRoomType, selectNewTeamCount, selectNewRoomMode, selectNewRoomMap,
-      expandHero, collapseHero, handleHeroWheel, floatLetter, settleLetter,
+      expandHero, collapseHero, handleHeroWheel,
       showCreateModal, closeCreateModal, handleCreateRoom, confirmDeleteRoom, goToRoom,
-      getRoomModeLabel, getRoomPrimaryLabel, getRoomCapacityLabel, getRoomMapLabel,
+      getRoomPrimaryLabel, getRoomCapacityLabel, getRoomMapLabel,
       getRoomMaxCapacity, getCompletedMatchesCount, getTotalMatchesCount
     }
   }
@@ -633,1211 +620,26 @@ export default {
   display: flex;
   height: 100%;
   overflow: hidden;
-}
-
-/* 创作者头像卡片样式 */
-.creator-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-}
-
-.creator-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(239, 68, 68, 0.3); /* 发光红色边框 */
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15);
-}
-
-.creator-avatar-container {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  padding: 2px;
-  background: linear-gradient(135deg, #ef4444, #ec4899); /* 渐变边框 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.creator-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #111827;
-  border: 1.5px solid #111827;
-  z-index: 2;
-}
-
-.pulse-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ef4444, #ec4899);
-  filter: blur(4px);
-  opacity: 0.6;
-  z-index: 1;
-  animation: pulse-ring 2s infinite;
-}
-
-@keyframes pulse-ring {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(0.95);
-    opacity: 0.6;
-  }
-}
-
-.creator-details {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  z-index: 2;
-}
-
-.creator-role-badge {
-  font-size: 10px;
-  font-weight: 700;
-  color: #ffffff;
-  background: linear-gradient(135deg, #ef4444, #b91c1c); /* 红/深红渐变背景 */
-  padding: 1.5px 6px;
-  border-radius: 4px;
-  width: max-content;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2);
-}
-
-.creator-name {
-  font-size: 13px;
-  font-weight: 700;
-  color: #e5e7eb;
-  letter-spacing: 0.5px;
-}
-
-/* 侧边栏 */
-.sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 24px 20px;
-  border-radius: 0;
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
-  border-right: 1px solid rgba(255,255,255,0.08);
-  gap: 20px;
-}
-
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-icon { font-size: 28px; }
-
-.logo-title {
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  line-height: 1.3;
-}
-
-.sidebar-stats {
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  background: rgba(255,255,255,0.03);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-.stat-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-num {
-  font-size: 24px;
-  font-weight: 800;
-  color: #a78bfa;
-}
-
-.stat-label {
-  font-size: 11px;
-  color: #6b7280;
-  margin-top: 2px;
-}
-
-.sidebar-slogan {
-  font-size: 12px;
-  color: #4b5563;
-  line-height: 1.7;
-}
-
-.create-btn-sidebar {
-  margin-top: auto;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, #a78bfa, #6366f1);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: var(--radius-lg);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  box-shadow: 0 4px 16px rgba(99,102,241,0.3);
-  transition: all 0.2s ease;
-}
-
-.create-btn-sidebar:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
-}
-
-/* 主内容 */
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  padding: 24px;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-shrink: 0;
-}
-
-.title-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.title-indicator {
-  width: 4px;
-  height: 20px;
-  background: linear-gradient(to bottom, #a78bfa, #6366f1);
-  border-radius: 2px;
-}
-
-.section-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #f3f4f6;
-}
-
-.create-btn-top {
-  padding: 8px 18px;
-  font-size: 13px;
-  color: #a78bfa;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: rgba(167,139,250,0.1);
-  border: 1px solid rgba(167,139,250,0.2);
-  transition: all 0.2s;
-}
-
-.create-btn-top:hover {
-  background: rgba(167,139,250,0.18);
-  border-color: rgba(167,139,250,0.4);
-}
-
-.plus-icon { font-size: 16px; font-weight: bold; }
-
-/* 空状态 */
-.empty-state {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  text-align: center;
-}
-
-.empty-emoji { font-size: 60px; }
-.empty-title { font-size: 20px; font-weight: 700; color: #e5e7eb; }
-.empty-desc { font-size: 13px; color: #9ca3af; }
-
-.create-btn-lg {
-  margin-top: 8px;
-  padding: 12px 32px;
-  background: linear-gradient(135deg, #a78bfa, #6366f1);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 24px;
-  border: none;
-  box-shadow: 0 4px 20px rgba(99,102,241,0.3);
-}
-
-.create-btn-lg:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(99,102,241,0.4); }
-
-/* 房间网格 */
-.room-grid {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-  overflow-y: auto;
-  padding-right: 4px;
-  align-content: start;
-}
-
-.room-card {
-  padding: 18px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.room-card:hover {
-  background: rgba(255,255,255,0.07);
-  border-color: rgba(255,255,255,0.14);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-
-.tournament-card-border { border-color: rgba(52,211,153,0.25) !important; }
-
-.room-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.room-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: #ffffff;
-  flex: 1;
-  line-height: 1.4;
-}
-
-.trophy-prefix { color: #fbbf24; }
-
-.delete-icon {
-  font-size: 18px;
-  opacity: 0.4;
-  transition: opacity 0.2s;
-  cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-.delete-icon:hover { opacity: 1; background: rgba(239,68,68,0.1); }
-
-.room-badge {
-  display: inline-flex;
-  background: rgba(167,139,250,0.1);
-  border: 1px solid rgba(167,139,250,0.2);
-  padding: 4px 10px;
-  border-radius: 6px;
-  align-self: flex-start;
-}
-
-.tournament-badge { background: rgba(52,211,153,0.08) !important; border-color: rgba(52,211,153,0.2) !important; }
-
-.badge-text { font-size: 11px; color: #c084fc; font-weight: 600; }
-.tournament-badge-text { color: #34d399 !important; }
-
-.room-info { display: flex; flex-direction: column; gap: 5px; }
-
-.info-label-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #9ca3af;
-}
-
-.info-value { color: #e5e7eb; font-weight: 600; }
-
-.progress-bar-bg {
-  height: 5px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #a78bfa, #6366f1);
-  border-radius: 3px;
-  transition: width 0.3s ease;
-}
-
-.progress-tournament-fill { background: linear-gradient(90deg, #10b981, #34d399) !important; }
-
-.room-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.created-time { font-size: 11px; color: #6b7280; }
-
-.enter-btn {
-  padding: 5px 14px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: #ffffff;
-  font-size: 12px;
-  border-radius: 6px;
-  transition: all 0.2s;
-}
-
-.enter-btn:hover { background: rgba(255,255,255,0.1); }
-.enter-btn-tournament { border-color: rgba(52,211,153,0.3) !important; color: #34d399 !important; background: rgba(52,211,153,0.05) !important; }
-
-/* 弹窗 */
-.modal-mask {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(5px);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  width: 520px;
-  max-height: 85vh;
-  background: rgba(17,24,39,0.97) !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  border-radius: var(--radius-lg);
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  flex-shrink: 0;
-}
-
-.modal-title { font-size: 16px; font-weight: 700; color: #ffffff; }
-
-.modal-close {
-  background: transparent;
-  color: #9ca3af;
-  font-size: 18px;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-
-.modal-close:hover { background: rgba(255,255,255,0.07); color: #ffffff; }
-
-.modal-scroll-body { flex: 1; overflow-y: auto; }
-
-.modal-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 18px; }
-
-.form-item { display: flex; flex-direction: column; gap: 8px; }
-
-.form-label { font-size: 12px; color: #a78bfa; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-
-.form-input {
-  width: 100%;
-  height: 40px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  padding: 0 14px;
-  font-size: 14px;
-  color: #ffffff;
-  transition: border-color 0.2s;
-}
-
-.form-input:focus { border-color: rgba(167,139,250,0.5); }
-
-.modal-mode-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.modal-mode-grid-3 { grid-template-columns: repeat(3, 1fr) !important; }
-
-.modal-mode-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 12px 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-}
-
-.modal-mode-card:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: rgba(255,255,255,0.12);
-}
-
-.modal-mode-card.active {
-  background: rgba(167,139,250,0.12) !important;
-  border-color: rgba(167,139,250,0.5) !important;
-  box-shadow: 0 2px 12px rgba(167,139,250,0.2);
-}
-
-.type-tournament-card.active {
-  background: rgba(52,211,153,0.1) !important;
-  border-color: rgba(52,211,153,0.5) !important;
-}
-
-.modal-mode-icon { font-size: 20px; }
-.modal-mode-name { font-size: 12px; color: #ffffff; font-weight: 600; }
-
-.modal-teams-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.modal-team-count-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  padding: 10px 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.modal-team-count-card.active {
-  background: rgba(52,211,153,0.1) !important;
-  border-color: rgba(52,211,153,0.5) !important;
-}
-
-.modal-team-count-num { font-size: 18px; font-weight: 700; color: #ffffff; }
-.modal-team-count-label { font-size: 11px; color: #9ca3af; }
-
-.modal-map-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.modal-map-capsule {
-  padding: 6px 14px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 8px;
-  font-size: 12px;
-  color: #ffffff;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.modal-map-capsule:hover { border-color: rgba(255,255,255,0.14); background: rgba(255,255,255,0.06); }
-
-.modal-map-capsule.active {
-  background: rgba(52,211,153,0.12) !important;
-  border-color: rgba(52,211,153,0.5) !important;
-  color: #34d399;
-}
-
-.modal-footer {
-  display: flex;
-  gap: 10px;
-  padding: 14px 24px 20px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  flex-shrink: 0;
-}
-
-.modal-btn-cancel {
-  flex: 1;
-  height: 40px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: #e5e7eb;
-  font-size: 14px;
-  border-radius: 8px;
-}
-
-.modal-btn-cancel:hover { background: rgba(255,255,255,0.08); }
-
-.modal-btn-confirm {
-  flex: 2;
-  height: 40px;
-  background: linear-gradient(135deg, #a78bfa, #6366f1);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0 2px 12px rgba(99,102,241,0.3);
-}
-
-.modal-btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(99,102,241,0.4); }
-
-/* THE FINALS inspired lobby skin */
-.container {
   flex-direction: column;
   background: #232323;
   color: #f5f5f5;
 }
 
+/* 侧边栏与头部 Hero */
 .sidebar {
   width: 100%;
-  height: 322px;
-  min-height: 322px;
+  height: 245px;
+  min-height: 245px;
+  flex-shrink: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
-  gap: 0;
   position: relative;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, #8e0b1f 0, #e11d48 245px, #242424 245px, #242424 100%);
+  background: linear-gradient(145deg, #8e0b24 0%, #d71442 58%, #ef174e 100%);
   box-shadow: none;
-}
-
-.sidebar::before {
-  content: "LULULULULULU";
-  position: absolute;
-  left: 64px;
-  top: 8px;
-  color: rgba(15, 18, 22, 0.78);
-  font-size: 190px;
-  line-height: 1;
-  font-weight: 1000;
-  letter-spacing: 6px;
-  transform: scaleX(0.78);
-  transform-origin: left center;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.sidebar-logo {
-  position: absolute;
-  left: 206px;
-  top: 139px;
-  z-index: 5;
-}
-
-.logo-icon {
-  display: none;
-}
-
-.logo-title {
-  background: none;
-  -webkit-text-fill-color: #ffffff;
-  color: #ffffff;
-  font-size: 40px;
-  line-height: 1;
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.24);
-}
-
-.creator-card {
-  position: absolute;
-  left: 48px;
-  top: 128px;
-  z-index: 6;
-  width: 138px;
-  height: 138px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: #ffffff;
-  overflow: visible;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: none;
-}
-
-.creator-card:hover {
-  transform: none;
-  background: #ffffff;
-  border-color: transparent;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-}
-
-.creator-avatar-container {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border-radius: 0;
-  background: #ffffff;
-}
-
-.creator-avatar {
-  border-radius: 0;
-  border: 0;
-  background: #ffffff;
-  object-fit: cover;
-}
-
-.pulse-glow {
-  display: none;
-}
-
-.creator-details {
-  position: absolute;
-  left: 158px;
-  top: 75px;
-  width: 740px;
-  gap: 6px;
-  z-index: 5;
-}
-
-.creator-role-badge {
-  background: transparent;
-  box-shadow: none;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 13px;
-  line-height: 1.5;
-  padding: 0;
-  width: auto;
-  letter-spacing: 0;
-}
-
-.creator-role-badge::after {
-  content: "  ○MBTI-ENFP  ○诺贝尔文学奖读者  ○全国人大代表被代表人  ○清华大学所在地国家学生  ○2008年感动中国被感动人  ○世界五百强管理层被管理人  ○大型上市公司风险投资人";
-}
-
-.creator-name {
-  display: none;
-}
-
-.sidebar-stats {
-  position: fixed;
-  right: 58px;
-  bottom: 28px;
-  z-index: 12;
-  width: 180px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  justify-content: flex-end;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.stat-item {
-  align-items: flex-end;
-}
-
-.stat-num {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 34px;
-  font-weight: 500;
-}
-
-.stat-label {
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 15px;
-}
-
-.sidebar-slogan {
-  position: absolute;
-  right: 92px;
-  top: 124px;
-  z-index: 5;
-  width: 260px;
-  text-align: right;
-  color: rgba(0, 0, 0, 0.42);
-  font-size: 13px;
-  line-height: 1.7;
-  font-weight: 700;
-}
-
-.create-btn-sidebar {
-  display: none;
-}
-
-.main-content {
-  flex: 1;
-  padding: 34px 58px 28px;
-  background: #242424;
-  overflow: hidden;
-}
-
-.topbar {
-  margin-bottom: 14px;
-}
-
-.section-title,
-.title-left,
-.create-btn-top {
-  display: none;
-}
-
-.lobby-tabs {
-  display: flex;
-  align-items: center;
-  gap: 46px;
-  height: 54px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.12);
-  margin-bottom: 24px;
-}
-
-.lobby-tab {
-  height: 38px;
-  min-height: 38px;
-  padding: 0 0 0 12px;
-  border-left: 4px solid rgba(255, 255, 255, 0.18);
-  border-radius: 0;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 22px;
-  font-weight: 500;
-}
-
-.lobby-tab.active {
-  border-left-color: #e11d48;
-  color: #ffffff;
-}
-
-.lobby-tab:hover {
-  color: #ffffff;
-}
-
-.finals-mark {
-  margin-left: auto;
-  color: #f1f1f1;
-  font-size: 24px;
-  font-weight: 1000;
-  letter-spacing: -1px;
-  transform: scaleX(0.88);
-  opacity: 0.95;
-}
-
-.room-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 28px 42px;
-  padding: 0 0 18px;
-  overflow-y: auto;
-  align-content: start;
-}
-
-.room-card {
-  min-height: 198px;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(225, 29, 72, 0.12)),
-    #262323;
-  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
-  overflow: hidden;
-  gap: 0;
-}
-
-.room-card:hover {
-  transform: translateY(-2px);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(225, 29, 72, 0.18)),
-    #2a2525;
-  border-color: transparent;
-  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34);
-}
-
-.room-card:nth-child(4n + 1) .room-card-header {
-  background: #e11d48;
-  color: #ffffff;
-}
-
-.room-card:nth-child(4n + 1) .enter-btn {
-  color: #ffffff;
-}
-
-.room-card-header {
-  height: 42px;
-  padding: 0 16px;
-  align-items: center;
-  background: #f3f3f3;
-  color: #e11d48;
-}
-
-.room-name {
-  color: inherit;
-  font-size: 22px;
-  font-weight: 900;
-  line-height: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.trophy-prefix {
-  display: none;
-}
-
-.delete-icon {
-  color: inherit;
-  opacity: 0.75;
-}
-
-.delete-icon:hover {
-  background: rgba(0, 0, 0, 0.16);
-  opacity: 1;
-}
-
-.room-badge {
-  order: 2;
-  margin: 26px 16px 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent !important;
-}
-
-.badge-text,
-.tournament-badge-text {
-  color: #ffffff !important;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.6;
-}
-
-.room-info {
-  order: 3;
-  padding: 24px 16px 0;
-  gap: 8px;
-}
-
-.info-label-row {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.52);
-}
-
-.info-value {
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.progress-bar-bg {
-  height: 4px;
-  background: rgba(255, 255, 255, 0.13);
-  border-radius: 0;
-}
-
-.progress-bar-fill,
-.progress-tournament-fill {
-  background: #e11d48 !important;
-  border-radius: 0;
-}
-
-.room-footer {
-  order: 4;
-  margin-top: auto;
-  padding: 8px 16px 14px;
-  border-top: 0;
-}
-
-.created-time {
-  color: rgba(255, 255, 255, 0.22);
-  font-size: 10px;
-}
-
-.enter-btn,
-.enter-btn-tournament {
-  padding: 0;
-  background: transparent !important;
-  border: 0 !important;
-  color: rgba(255, 255, 255, 0.82) !important;
-  font-size: 12px;
-  font-weight: 900;
-}
-
-.empty-state {
-  border-radius: 0;
-  border: 1px solid rgba(225, 29, 72, 0.45);
-  background: rgba(20, 20, 20, 0.74);
-}
-
-.empty-emoji {
-  color: #e11d48;
-}
-
-.create-btn-lg,
-.modal-btn-confirm {
-  border-radius: 0;
-  background: #e11d48;
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(225, 29, 72, 0.28);
-}
-
-.modal-mask {
-  background: rgba(8, 8, 10, 0.78);
-}
-
-.modal-content {
-  border-radius: 0;
-  border-color: rgba(225, 29, 72, 0.5) !important;
-  background: rgba(34, 34, 34, 0.98) !important;
-}
-
-.modal-title,
-.form-label {
-  color: #ffffff;
-}
-
-.modal-mode-card,
-.modal-team-count-card,
-.modal-map-capsule,
-.form-input {
-  border-radius: 0;
-}
-
-.modal-mode-card.active,
-.modal-team-count-card.active,
-.modal-map-capsule.active {
-  border-color: #e11d48 !important;
-  background: rgba(225, 29, 72, 0.16) !important;
-  color: #ffffff;
-}
-
-/* Reference-match homepage overrides */
-.sidebar {
-  height: 320px;
-  min-height: 320px;
-  background:
-    linear-gradient(180deg, #830a1d 0, #d71442 197px, #242424 197px, #242424 100%);
-}
-
-.sidebar::before {
-  left: 61px;
-  top: 11px;
-  color: rgba(28, 31, 31, 0.9);
-  font-size: 222px;
-  font-style: italic;
-  letter-spacing: 0;
-  transform: scaleX(0.72) skewX(-5deg);
-}
-
-.sidebar-logo {
-  left: 206px;
-  top: 139px;
-}
-
-.logo-title {
-  font-size: 39px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.24);
-}
-
-.creator-card {
-  left: 49px;
-  top: 128px;
-  width: 137px;
-  height: 137px;
-  box-shadow: none;
-}
-
-.creator-card:hover {
-  box-shadow: none;
-}
-
-.creator-details {
-  left: 157px;
-  top: 82px;
-  width: 760px;
-}
-
-.creator-role-badge {
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.55;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-}
-
-.creator-role-badge::after {
-  content: " ○MBTI-ENFP ○诺贝尔文学奖读者 ○全国人大代表被代表人 ○清华大学所在地国家学生 ○2008年感动中国被感动人 ○世界五百强管理层被管理人 ○大型上市公司风险投资人";
-}
-
-.sidebar-slogan {
-  top: 124px;
-  right: 88px;
-  width: 280px;
-  color: rgba(0, 0, 0, 0.38);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.main-content {
-  padding: 14px 58px 28px;
-  background: #242424;
-}
-
-.topbar {
-  display: none;
-}
-
-.lobby-tabs {
-  height: 60px;
-  margin-bottom: 24px;
-  gap: 48px;
-}
-
-.lobby-tab {
-  height: 40px;
-  font-size: 22px;
-  line-height: 1;
-}
-
-.room-grid {
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 28px 42px;
-}
-
-.room-card {
-  min-height: 198px;
-  height: 198px;
-}
-
-.room-card:nth-child(4n + 1) .room-card-header {
-  background: #f3f3f3;
-  color: #e11d48;
-}
-
-.room-card.tournament-card-border .room-card-header {
-  background: #e11d48;
-  color: #ffffff;
-}
-
-.room-card-header {
-  height: 42px;
-}
-
-.delete-icon {
-  min-width: 32px;
-  padding: 0;
-  font-size: 0;
-  text-align: right;
-  cursor: default;
-}
-
-.delete-icon::before {
-  content: "组队";
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.room-card.tournament-card-border .delete-icon::before {
-  content: "赛事";
-}
-
-.room-badge {
-  display: flex;
-  flex-direction: column;
-  align-self: stretch;
-  margin: 25px 16px 0;
-  gap: 2px;
-}
-
-.room-mode-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.5;
-}
-
-.badge-text,
-.tournament-badge-text {
-  display: block;
-  color: #ffffff !important;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.55;
-}
-
-.room-info {
-  padding: 22px 16px 0;
-}
-
-.room-footer {
-  gap: 16px;
-  padding: 8px 16px 14px;
-}
-
-.updated-time {
-  margin-left: auto;
-  color: rgba(255, 255, 255, 0.22);
-  font-size: 10px;
-  white-space: nowrap;
-}
-
-.enter-btn,
-.enter-btn-tournament {
-  display: none;
-}
-
-.create-room-tile {
-  width: 160px;
-  height: 106px;
-  min-height: 106px;
-  align-self: start;
-  background: rgba(34, 34, 34, 0.7);
-  border: 1px solid rgba(225, 29, 72, 0.75);
-  border-radius: 6px;
-  color: rgba(255, 255, 255, 0.22);
-  font-size: 58px;
-  font-weight: 300;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.create-room-tile:hover {
-  color: rgba(255, 255, 255, 0.42);
-  background: rgba(225, 29, 72, 0.08);
-}
-
-.container {
-  position: relative;
+  perspective: 900px;
 }
 
 .hero-wheel-hint {
@@ -1866,60 +668,6 @@ export default {
   stroke-linejoin: round;
 }
 
-.sidebar {
-  perspective: 900px;
-}
-
-.sidebar::before {
-  content: none;
-}
-
-.hero-lulu-viewport {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 24.5px;
-  height: 196px;
-  z-index: 1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.hero-lulu-word {
-  display: flex;
-  width: max-content;
-  align-items: flex-start;
-  color: rgba(28, 22, 25, 0.72);
-  font-size: 222px;
-  font-style: italic;
-  font-weight: 1000;
-  line-height: 0.88;
-  letter-spacing: 0;
-  white-space: nowrap;
-  will-change: transform;
-}
-
-.lulu-group {
-  display: flex;
-  flex: none;
-  padding-right: 0;
-  transform: skewX(-5deg);
-  transform-origin: left top;
-}
-
-.lulu-group:nth-child(2) {
-  display: flex;
-}
-
-.lulu-letter {
-  display: inline-block;
-  opacity: 0.82;
-  visibility: visible;
-  transform-origin: 50% 55%;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
 .hero-collapse-button {
   position: absolute;
   left: 24px;
@@ -1932,15 +680,17 @@ export default {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 50%;
-  background: rgba(20, 20, 20, 0.18);
+  background: rgba(20, 20, 20, 0.4);
   color: #ffffff;
   backdrop-filter: blur(10px);
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .hero-collapse-button:hover {
-  background: rgba(20, 20, 20, 0.34);
-  border-color: rgba(255, 255, 255, 0.72);
+  background: rgba(20, 20, 20, 0.65);
+  border-color: rgba(255, 255, 255, 0.85);
+  transform: scale(1.06);
 }
 
 .hero-collapse-button:focus-visible {
@@ -1957,26 +707,6 @@ export default {
   display: none;
 }
 
-.hero-expanded .hero-lulu-viewport {
-  pointer-events: auto;
-}
-
-.hero-expanded .hero-lulu-word {
-  text-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
-}
-
-.hero-expanded .lulu-letter {
-  cursor: default;
-  pointer-events: auto;
-}
-
-.sidebar {
-  height: 245px;
-  min-height: 245px;
-  flex-shrink: 0;
-  background: linear-gradient(145deg, #8e0b24 0%, #d71442 58%, #ef174e 100%);
-}
-
 .content-stack {
   position: relative;
   z-index: 10;
@@ -1987,6 +717,11 @@ export default {
   background: #242424;
 }
 
+.hero-expanded .content-stack {
+  pointer-events: none;
+}
+
+/* 个人信息栏 */
 .profile-section {
   position: relative;
   z-index: 12;
@@ -2002,27 +737,22 @@ export default {
   right: 32px;
   top: -54px;
   height: 112px;
+  max-width: 1720px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 78px minmax(420px, 1.2fr) minmax(300px, 0.9fr) 118px;
+  grid-template-columns: 78px minmax(360px, 1.2fr) minmax(260px, 0.9fr) 118px;
   align-items: center;
   gap: 24px;
   padding: 16px 22px;
   border: 0;
   background: transparent;
-  -webkit-backdrop-filter: none;
   backdrop-filter: none;
   box-shadow: none;
   overflow: visible;
 }
 
-.profile-dock::after {
-  content: none;
-}
-
-.profile-section .creator-card {
+.creator-card {
   position: relative;
-  left: auto;
-  top: auto;
   width: 78px;
   height: 78px;
   padding: 0;
@@ -2031,17 +761,12 @@ export default {
   background: #ffffff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  transition: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.profile-section .creator-card:hover {
-  transform: none;
-  background: #ffffff;
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.profile-section .creator-avatar-container {
+.creator-avatar-container {
   width: 100%;
   height: 100%;
   padding: 0;
@@ -2049,10 +774,13 @@ export default {
   background: #ffffff;
 }
 
-.profile-section .creator-avatar {
-  border: 0;
+.creator-avatar {
+  width: 100%;
+  height: 100%;
   border-radius: 0;
+  border: 0;
   background: #ffffff;
+  object-fit: cover;
 }
 
 .profile-identity {
@@ -2060,15 +788,15 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-.profile-section .sidebar-logo {
-  position: static;
-  min-height: auto;
+.sidebar-logo {
+  display: flex;
+  align-items: center;
 }
 
-.profile-section .logo-title {
+.logo-title {
   display: block;
   color: #ffffff;
   font-size: clamp(24px, 2.25vw, 35px);
@@ -2084,6 +812,8 @@ export default {
   align-items: center;
   gap: 8px;
   min-width: 0;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
 .profile-tags span {
@@ -2099,41 +829,8 @@ export default {
   white-space: nowrap;
 }
 
-.profile-section .sidebar-stats {
+.sidebar-slogan {
   position: relative;
-  inset: auto;
-  width: auto;
-  min-width: 0;
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 22px;
-  border-left: 2px solid #f0224f;
-  z-index: 1;
-}
-
-.profile-section .stat-item {
-  gap: 3px;
-}
-
-.profile-section .stat-num {
-  color: #ffffff;
-  font-size: 38px;
-  line-height: 1;
-  font-weight: 300;
-}
-
-.profile-section .stat-label {
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-}
-
-.profile-section .sidebar-slogan {
-  position: relative;
-  inset: auto;
-  width: auto;
   min-width: 0;
   padding: 0 0 0 22px;
   border: 0;
@@ -2149,22 +846,568 @@ export default {
   transform: translateY(6px);
 }
 
-.content-stack .main-content {
+.sidebar-stats {
+  position: relative;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 22px;
+  border-left: 2px solid #f0224f;
+  z-index: 1;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.stat-num {
+  color: #ffffff;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* 主内容区域 */
+.main-content {
   flex: 1;
   min-height: 0;
-  padding-top: 0;
-  will-change: auto;
+  padding: 14px 58px 28px;
+  background: #242424;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.content-stack .lobby-tabs {
+.topbar {
+  display: none;
+}
+
+.lobby-tabs {
+  display: flex;
+  align-items: center;
+  gap: 46px;
   height: 54px;
-  margin-bottom: 18px;
+  min-height: 54px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
-.hero-expanded .content-stack {
-  pointer-events: none;
+.lobby-tab {
+  height: 38px;
+  min-height: 38px;
+  padding: 0 0 0 12px;
+  border: none;
+  border-left: 4px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
+.lobby-tab.active {
+  border-left-color: #e11d48;
+  color: #ffffff;
+}
+
+.lobby-tab:hover {
+  color: #ffffff;
+}
+
+.finals-mark {
+  margin-left: auto;
+  color: #f1f1f1;
+  font-size: 24px;
+  font-weight: 1000;
+  letter-spacing: -1px;
+  transform: scaleX(0.88);
+  opacity: 0.95;
+  user-select: none;
+}
+
+/* 空状态 */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  border: 1px solid rgba(225, 29, 72, 0.45);
+  background: rgba(20, 20, 20, 0.74);
+  padding: 40px;
+}
+
+.empty-emoji { font-size: 60px; color: #e11d48; }
+.empty-title { font-size: 20px; font-weight: 700; color: #e5e7eb; }
+.empty-desc { font-size: 13px; color: #9ca3af; }
+
+.create-btn-lg {
+  margin-top: 8px;
+  padding: 12px 32px;
+  background: #e11d48;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 10px 24px rgba(225, 29, 72, 0.28);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.create-btn-lg:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(225, 29, 72, 0.38);
+}
+
+/* 房间网格 */
+.room-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px 36px;
+  overflow-y: auto;
+  align-content: start;
+  padding: 4px 4px 20px 0;
+}
+
+.room-card {
+  min-height: 198px;
+  height: 198px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(225, 29, 72, 0.12)),
+    #262323;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-2px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(225, 29, 72, 0.18)),
+    #2a2525;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.34);
+}
+
+.room-card-header {
+  height: 42px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f3f3;
+  color: #e11d48;
+}
+
+.room-card.tournament-card-border .room-card-header {
+  background: #e11d48;
+  color: #ffffff;
+}
+
+.room-name {
+  color: inherit;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  margin-right: 12px;
+}
+
+.trophy-prefix {
+  display: none;
+}
+
+.room-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.room-type-tag {
+  font-size: 12px;
+  font-weight: 800;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.delete-room-btn {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: inherit;
+  opacity: 0.55;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-room-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.delete-room-btn:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.18);
+  color: #ff2a4b;
+  transform: scale(1.15);
+}
+
+.room-badge {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  margin: 20px 16px 0;
+  gap: 2px;
+  background: transparent !important;
+}
+
+.room-mode-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.badge-text,
+.tournament-badge-text {
+  display: block;
+  color: #ffffff !important;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.room-info {
+  padding: 16px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.info-value {
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 600;
+}
+
+.progress-bar-bg {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.13);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.progress-bar-fill,
+.progress-tournament-fill {
+  height: 100%;
+  background: #e11d48 !important;
+  border-radius: 0;
+  transition: width 0.3s ease;
+}
+
+.room-footer {
+  margin-top: auto;
+  padding: 8px 16px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.created-time {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 10px;
+}
+
+.updated-time {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.enter-btn {
+  display: none;
+}
+
+.create-room-tile {
+  width: 100%;
+  min-height: 198px;
+  height: 198px;
+  background: rgba(34, 34, 34, 0.7);
+  border: 1px dashed rgba(225, 29, 72, 0.55);
+  border-radius: 0;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 54px;
+  font-weight: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.create-room-tile:hover {
+  color: #ffffff;
+  border-color: #e11d48;
+  background: rgba(225, 29, 72, 0.1);
+  transform: translateY(-2px);
+}
+
+/* 创建弹窗 */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 10, 0.78);
+  backdrop-filter: blur(5px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width: 520px;
+  max-height: 85vh;
+  background: rgba(34, 34, 34, 0.98) !important;
+  border: 1px solid rgba(225, 29, 72, 0.5) !important;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.modal-close {
+  background: transparent;
+  color: #9ca3af;
+  font-size: 18px;
+  padding: 4px 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+}
+
+.modal-scroll-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-input {
+  width: 100%;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  padding: 0 14px;
+  font-size: 14px;
+  color: #ffffff;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  border-color: #e11d48;
+}
+
+.modal-mode-grid,
+.modal-teams-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.modal-mode-card,
+.modal-team-count-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.modal-mode-card:hover,
+.modal-team-count-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.modal-mode-card.active,
+.modal-team-count-card.active {
+  border-color: #e11d48 !important;
+  background: rgba(225, 29, 72, 0.16) !important;
+  color: #ffffff;
+}
+
+.modal-mode-icon { font-size: 20px; }
+.modal-mode-name { font-size: 12px; color: #ffffff; font-weight: 700; }
+.modal-team-count-num { font-size: 18px; font-weight: 700; color: #ffffff; }
+.modal-team-count-label { font-size: 11px; color: #9ca3af; }
+
+.modal-map-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modal-map-capsule {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-map-capsule:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.modal-map-capsule.active {
+  border-color: #e11d48 !important;
+  background: rgba(225, 29, 72, 0.16) !important;
+  color: #ffffff;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 14px 24px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.modal-btn-cancel {
+  flex: 1;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  font-size: 14px;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.modal-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.modal-btn-confirm {
+  flex: 2;
+  height: 40px;
+  background: #e11d48;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 0;
+  border: none;
+  box-shadow: 0 4px 16px rgba(225, 29, 72, 0.3);
+  cursor: pointer;
+}
+
+.modal-btn-confirm:hover {
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.45);
+}
+
+/* 转场与动画保护 */
 .tournament-launching {
   cursor: progress;
 }
@@ -2181,45 +1424,31 @@ export default {
   opacity: 0 !important;
 }
 
-.tournament-launching .hero-lulu-word {
-  text-shadow: 18px 0 34px rgba(20, 0, 7, 0.28);
-}
-
-@media (max-width: 1180px) {
+/* 响应式适配 */
+@media (max-width: 1280px) {
   .profile-dock {
-    grid-template-columns: 72px minmax(360px, 1fr) minmax(240px, 0.72fr) 104px;
-    gap: 18px;
-    padding-inline: 18px;
+    grid-template-columns: 72px minmax(320px, 1fr) minmax(220px, 0.8fr) 100px;
+    gap: 16px;
+    padding-inline: 16px;
   }
 
-  .profile-section .creator-card {
-    width: 72px;
-    height: 72px;
-  }
-
-  .profile-tags span {
-    padding-inline: 8px;
-    font-size: 10px;
-  }
-
-  .profile-section .sidebar-slogan {
-    padding-left: 16px;
-    font-size: 11px;
-  }
-
-  .profile-section .sidebar-stats {
-    padding-left: 16px;
+  .main-content {
+    padding-inline: 32px;
   }
 }
 
-@media (max-width: 720px) {
-  .hero-wheel-hint span {
+@media (max-width: 960px) {
+  .profile-dock {
+    grid-template-columns: 64px 1fr 90px;
+    gap: 12px;
+  }
+
+  .sidebar-slogan {
     display: none;
   }
 
-  .hero-collapse-button {
-    left: 16px;
-    top: 16px;
+  .main-content {
+    padding-inline: 20px;
   }
 }
 </style>
