@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import IndexPage from '../pages/index/index.vue'
 import RoomPage from '../pages/room/room.vue'
 import TournamentPage from '../pages/tournament/tournament.vue'
+import LeaderboardPage from '../pages/leaderboard/leaderboard.vue'
 
 const routes = [
   {
@@ -20,6 +21,12 @@ const routes = [
     path: '/tournament',
     name: 'tournament',
     component: TournamentPage,
+    meta: { transition: 'tournament-slide' }
+  },
+  {
+    path: '/leaderboard',
+    name: 'leaderboard',
+    component: LeaderboardPage,
     meta: { transition: 'tournament-slide' }
   }
 ]

@@ -1,7 +1,7 @@
 <template>
   <div v-if="isTauri" class="titlebar" data-tauri-drag-region>
     <div class="titlebar-left" data-tauri-drag-region>
-      <span class="titlebar-logo" aria-hidden="true"></span>
+      <img src="../assets/branding/tournament-deer-logo.png" class="titlebar-logo-img" alt="Logo" />
       <span class="titlebar-text">俱乐部战队匹配系统</span>
     </div>
     <div class="titlebar-controls">
@@ -72,35 +72,11 @@ export default {
   padding-left: 0;
 }
 
-.titlebar-logo {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-}
-
-.titlebar-logo::before,
-.titlebar-logo::after {
-  content: "";
-  position: absolute;
-  bottom: 1px;
-  width: 9px;
-  height: 18px;
-  border-radius: 2px;
-  transform-origin: bottom center;
-}
-
-.titlebar-logo::before {
-  left: 3px;
-  background: linear-gradient(180deg, #ffb42f, #f25a24);
-  transform: skewX(-27deg);
-}
-
-.titlebar-logo::after {
-  left: 10px;
-  height: 14px;
-  background: linear-gradient(180deg, #ff315d, #bc1234);
-  transform: skewX(27deg);
+.titlebar-logo-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(255, 30, 86, 0.4));
 }
 
 .titlebar-text {

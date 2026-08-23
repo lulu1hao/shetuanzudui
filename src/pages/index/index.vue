@@ -76,97 +76,148 @@
           <span class="finals-mark">THE FINALS</span>
         </div>
 
-        <!-- 空状态 -->
-        <div v-if="rooms.length === 0" class="empty-state glass-panel">
-          <span class="empty-emoji">👽</span>
-          <span class="empty-title">暂无活动房间</span>
-          <span class="empty-desc">赶紧点击下方按钮创建一个吧！</span>
-          <button class="create-btn-lg" @click="showCreateModal">创建第一个房间 / 赛事</button>
-        </div>
+        <!-- 房间大厅 (Tab 0) -->
+        <template v-if="currentLobbyTab === 0">
+          <!-- 空状态 -->
+          <div v-if="rooms.length === 0" class="empty-state glass-panel">
+            <span class="empty-emoji">👽</span>
+            <span class="empty-title">暂无活动房间</span>
+            <span class="empty-desc">赶紧点击下方按钮创建一个吧！</span>
+            <button class="create-btn-lg" @click="showCreateModal">创建第一个房间 / 赛事</button>
+          </div>
 
-        <!-- 房间网格 -->
-        <div v-else class="room-grid">
-          <div
-            v-for="room in rooms"
-            :key="room.id"
-            class="room-card glass-panel"
-            :data-room-id="room.id"
-            :class="{ 'tournament-card-border': room.type === 'tournament' }"
-            @click="goToRoom(room)"
-          >
-            <div class="room-card-header">
-              <span class="room-name">
-                <span class="trophy-prefix" v-if="room.type === 'tournament'">🏆 </span>
-                {{ room.name }}
-              </span>
-              <div class="room-card-actions">
-                <span class="room-type-tag" :class="{ 'tag-tournament': room.type === 'tournament' }">
-                  {{ room.type === 'tournament' ? '赛事' : '组队' }}
+          <!-- 房间网格 -->
+          <div v-else class="room-grid">
+            <div
+              v-for="room in rooms"
+              :key="room.id"
+              class="room-card glass-panel"
+              :data-room-id="room.id"
+              :class="{ 'tournament-card-border': room.type === 'tournament' }"
+              @click="goToRoom(room)"
+            >
+              <div class="room-card-header">
+                <span class="room-name">
+                  <span class="trophy-prefix" v-if="room.type === 'tournament'">🏆 </span>
+                  {{ room.name }}
                 </span>
-                <button
-                  class="delete-room-btn"
-                  type="button"
-                  title="删除房间"
-                  aria-label="删除房间"
-                  @click.stop="confirmDeleteRoom(room)"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" />
-                  </svg>
+                <div class="room-card-actions">
+                  <span class="room-type-tag" :class="{ 'tag-tournament': room.type === 'tournament' }">
+                    {{ room.type === 'tournament' ? '赛事' : '组队' }}
+                  </span>
+                  <button
+                    class="delete-room-btn"
+                    type="button"
+                    title="删除房间"
+                    aria-label="删除房间"
+                    @click.stop="confirmDeleteRoom(room)"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="room-badge" :class="{ 'tournament-badge': room.type === 'tournament' }">
+                <div class="room-mode-row">
+                  <span>{{ getRoomPrimaryLabel(room) }}</span>
+                  <span>{{ getRoomCapacityLabel(room) }}</span>
+                </div>
+                <span class="badge-text" :class="{ 'tournament-badge-text': room.type === 'tournament' }">
+                  {{ getRoomMapLabel(room) }}
+                </span>
+              </div>
+
+              <!-- 赛事进度条 -->
+              <div class="room-info" v-if="room.type === 'tournament'">
+                <div class="info-label-row">
+                  <span class="info-label">赛事进度 (完赛场次)</span>
+                  <span class="info-value">{{ getCompletedMatchesCount(room) }} / {{ getTotalMatchesCount(room) }} 场</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div
+                    class="progress-bar-fill progress-tournament-fill"
+                    :style="{ width: (getTotalMatchesCount(room) > 0 ? (getCompletedMatchesCount(room) / getTotalMatchesCount(room) * 100) : 0) + '%' }"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- 组队进度条 -->
+              <div class="room-info" v-else>
+                <div class="info-label-row">
+                  <span class="info-label">已加入成员</span>
+                  <span class="info-value">{{ room.members ? room.members.length : 0 }} / {{ getRoomMaxCapacity(room) }}</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div
+                    class="progress-bar-fill"
+                    :style="{ width: ((room.members ? room.members.length : 0) / getRoomMaxCapacity(room) * 100) + '%' }"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="room-footer">
+                <span class="created-time">创建时间：{{ room.createdAt }}</span>
+                <span class="updated-time">最后更新：{{ room.updatedAt || room.createdAt }}</span>
+                <button class="enter-btn" :class="{ 'enter-btn-tournament': room.type === 'tournament' }">
+                  {{ room.type === 'tournament' ? '进入赛事 🏆' : '进入组队 ➡️' }}
                 </button>
               </div>
             </div>
 
-            <div class="room-badge" :class="{ 'tournament-badge': room.type === 'tournament' }">
-              <div class="room-mode-row">
-                <span>{{ getRoomPrimaryLabel(room) }}</span>
-                <span>{{ getRoomCapacityLabel(room) }}</span>
+            <!-- THE FINALS 实时战绩中心快捷卡片 -->
+            <div class="room-card glass-panel finals-feature-card" @click="goToLeaderboard">
+              <div class="room-card-header">
+                <span class="room-name">
+                  <span class="trophy-prefix">🏆 </span>
+                  THE FINALS 实时战绩中心
+                </span>
+                <div class="room-card-actions">
+                  <span class="room-type-tag tag-finals-live">S11 LIVE</span>
+                </div>
               </div>
-              <span class="badge-text" :class="{ 'tournament-badge-text': room.type === 'tournament' }">
-                {{ getRoomMapLabel(room) }}
-              </span>
+              <div class="room-badge finals-feature-badge">
+                <div class="room-mode-row">
+                  <span>全球前 10,000 名实时天梯</span>
+                  <span>S1~S11 全覆盖</span>
+                </div>
+                <span class="badge-text tournament-badge-text">
+                  排位 RS · 世界巡回赛 · 赞助商争霸
+                </span>
+              </div>
+              <div class="room-info">
+                <div class="info-label-row">
+                  <span class="info-label">数据状态</span>
+                  <span class="info-value" style="color: #34d399">● 实时同步中</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill progress-tournament-fill" style="width: 100%"></div>
+                </div>
+              </div>
+              <div class="room-footer">
+                <span class="created-time">数据源：Embark 官方公开排行榜</span>
+                <button class="enter-btn enter-btn-tournament">
+                  进入查询 🏆
+                </button>
+              </div>
             </div>
 
-            <!-- 赛事进度条 -->
-            <div class="room-info" v-if="room.type === 'tournament'">
-              <div class="info-label-row">
-                <span class="info-label">赛事进度 (完赛场次)</span>
-                <span class="info-value">{{ getCompletedMatchesCount(room) }} / {{ getTotalMatchesCount(room) }} 场</span>
-              </div>
-              <div class="progress-bar-bg">
-                <div
-                  class="progress-bar-fill progress-tournament-fill"
-                  :style="{ width: (getTotalMatchesCount(room) > 0 ? (getCompletedMatchesCount(room) / getTotalMatchesCount(room) * 100) : 0) + '%' }"
-                ></div>
-              </div>
-            </div>
-
-            <!-- 组队进度条 -->
-            <div class="room-info" v-else>
-              <div class="info-label-row">
-                <span class="info-label">已加入成员</span>
-                <span class="info-value">{{ room.members ? room.members.length : 0 }} / {{ getRoomMaxCapacity(room) }}</span>
-              </div>
-              <div class="progress-bar-bg">
-                <div
-                  class="progress-bar-fill"
-                  :style="{ width: ((room.members ? room.members.length : 0) / getRoomMaxCapacity(room) * 100) + '%' }"
-                ></div>
-              </div>
-            </div>
-
-            <div class="room-footer">
-              <span class="created-time">创建时间：{{ room.createdAt }}</span>
-              <span class="updated-time">最后更新：{{ room.updatedAt || room.createdAt }}</span>
-              <button class="enter-btn" :class="{ 'enter-btn-tournament': room.type === 'tournament' }">
-                {{ room.type === 'tournament' ? '进入赛事 🏆' : '进入组队 ➡️' }}
-              </button>
-            </div>
+            <button class="create-room-tile" @click="showCreateModal" title="创建房间 / 赛事">
+              <span>+</span>
+            </button>
           </div>
-          <button class="create-room-tile" @click="showCreateModal" title="创建房间 / 赛事">
-            <span>+</span>
-          </button>
-        </div>
+        </template>
+
+        <!-- 其它暂未开放 Tab -->
+        <template v-else>
+          <div class="empty-state glass-panel dev-tab-state">
+            <span class="empty-emoji">🚧</span>
+            <span class="empty-title">“{{ lobbyTabs[currentLobbyTab] }}” 模块全力开发中</span>
+            <span class="empty-desc">更多社团专属交流与活动板块即将上线，敬请期待！</span>
+            <button class="create-btn-lg" @click="selectLobbyTab(0)">返回活动大厅</button>
+          </div>
+        </template>
       </div>
     </div>
 
@@ -307,7 +358,7 @@ export default {
     const heroPanel = ref(null)
     const isHeroExpanded = ref(false)
     const currentLobbyTab = ref(0)
-    const lobbyTabs = ['活动 / 赛事大厅', '小桌宠', '交流区', '问题反馈(与我联系)']
+    const lobbyTabs = ['活动 / 赛事大厅', 'THE FINALS 积分查询', '交流区', '问题反馈(与我联系)']
     let gsapContext
     let heroTransition
     let tournamentLaunchTimeline
@@ -330,9 +381,65 @@ export default {
     const selectNewRoomMode = (v) => { newRoomMode.value = v }
     const selectNewRoomMap = (v) => { newRoomMap.value = v }
 
+    const goToLeaderboard = () => {
+      if (isNavigatingToTournament) return
+      isNavigatingToTournament = true
+      const navigate = () => router.push('/leaderboard')
+
+      if (reduceMotion || !pageRoot.value || !heroPanel.value) {
+        navigate()
+        return
+      }
+
+      pageRoot.value.classList.add('tournament-launching')
+      heroTransition?.kill()
+
+      const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
+      const profileDock = pageRoot.value.querySelector('.profile-dock')
+      const profileSection = pageRoot.value.querySelector('.profile-section')
+      const mainContentEl = pageRoot.value.querySelector('.main-content')
+      const alignmentY = profileDock && profileSection
+        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+        : 0
+
+      tournamentLaunchTimeline = gsap.timeline({
+        defaults: { overwrite: 'auto' },
+        onComplete: () => {
+          navigate()
+        }
+      })
+        .call(() => {
+          beginLuluDisplayTransition('leaderboard')
+        }, null, 0)
+        .to(heroPanel.value, {
+          height: expandedHeight,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'height'
+        }, 0)
+        .to(profileDock ? [profileDock] : [], {
+          y: alignmentY,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
+      if (mainContentEl && !reduceMotion) {
+        tournamentLaunchTimeline.to(mainContentEl, {
+          y: 70,
+          autoAlpha: 0,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power2.in'
+        }, 0)
+      }
+    }
+
     const selectLobbyTab = (idx) => {
+      if (idx === 1) {
+        goToLeaderboard()
+        return
+      }
       currentLobbyTab.value = idx
-      if (idx !== 0) {
+      if (idx >= 2) {
         showToast(`功能“${lobbyTabs[idx]}”正在全力开发中，敬请期待！`, 'none')
       }
     }
@@ -342,6 +449,8 @@ export default {
         placeGlobalLuluInLobby(heroPanel.value)
       }
     }
+
+    const LOBBY_HERO_SETTLED_HEIGHT = 200
 
     onMounted(() => {
       isNavigatingToTournament = false
@@ -374,12 +483,23 @@ export default {
         const alignmentY = profileDock && profileSection
           ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
           : 0
+        const mainContentEl = pageRoot.value.querySelector('.main-content')
         gsap.set(heroPanel.value, { height: expandedHeight, willChange: 'height' })
         gsap.set(profileDock, { y: alignmentY, willChange: 'transform' })
-        heroTransition = gsap.timeline({ defaults: { overwrite: 'auto' } })
+        if (mainContentEl && !reduceMotion) {
+          gsap.set(mainContentEl, { autoAlpha: 0, y: 24 })
+        }
+        heroTransition = gsap.timeline({
+          defaults: { overwrite: 'auto' },
+          onComplete: () => {
+            if (mainContentEl) {
+              gsap.set(mainContentEl, { clearProps: 'all' })
+            }
+          }
+        })
           .to(heroPanel.value, {
-            height: 245,
-            duration: reduceMotion ? 0 : 0.82,
+            height: LOBBY_HERO_SETTLED_HEIGHT,
+            duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
             ease: 'power3.inOut',
             clearProps: 'height,will-change'
           }, 0)
@@ -389,6 +509,15 @@ export default {
             ease: 'power3.inOut',
             clearProps: 'transform,will-change'
           }, 0)
+        if (mainContentEl && !reduceMotion) {
+          heroTransition.to(mainContentEl, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.48,
+            ease: 'power2.out',
+            clearProps: 'all'
+          }, 0.2)
+        }
       }
     })
 
@@ -414,6 +543,7 @@ export default {
       const expandedViewportHeight = Math.min(window.innerHeight * 0.42, 330)
       const profileDock = pageRoot.value.querySelector('.profile-dock')
       const profileSection = pageRoot.value.querySelector('.profile-section')
+      const mainContentEl = pageRoot.value.querySelector('.main-content')
       const alignmentY = profileDock && profileSection
         ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
         : 0
@@ -430,18 +560,18 @@ export default {
             expandedHeight,
             expandedViewportHeight,
             expandedFontSize,
-            { duration: reduceMotion ? 0 : 0.82 }
+            { duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION }
           )
         }, null, 0)
         .to(profileDock ? [profileDock] : [], {
           y: alignmentY,
-          duration: reduceMotion ? 0 : 0.82,
+          duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
           ease: 'power3.inOut',
           willChange: 'transform'
         }, 0)
         .to(heroPanel.value, {
           height: expandedHeight,
-          duration: reduceMotion ? 0 : 0.82,
+          duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
           ease: 'power3.inOut',
           willChange: 'height'
         }, 0)
@@ -456,14 +586,22 @@ export default {
           duration: reduceMotion ? 0 : 0.36,
           ease: 'back.out(1.5)'
         }, reduceMotion ? 0 : 0.46)
+      if (mainContentEl && !reduceMotion) {
+        heroTransition.to(mainContentEl, {
+          autoAlpha: 0,
+          duration: 0.18,
+          ease: 'power2.in'
+        }, 0)
+      }
     }
 
     const collapseHero = () => {
       if (!isHeroExpanded.value || isHeroAnimating || !heroPanel.value || !pageRoot.value) return
       isHeroAnimating = true
       const profileDock = pageRoot.value.querySelector('.profile-dock')
+      const mainContentEl = pageRoot.value.querySelector('.main-content')
       placeGlobalLuluInLobby(heroPanel.value, {
-        duration: reduceMotion ? 0 : 0.82,
+        duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
         holdDisplayLayer: true
       })
 
@@ -473,12 +611,16 @@ export default {
         onComplete: () => {
           isHeroExpanded.value = false
           isHeroAnimating = false
+          if (mainContentEl) {
+            gsap.set(mainContentEl, { clearProps: 'all' })
+          }
         }
       })
         .to(heroPanel.value, {
-          height: 245,
-          duration: reduceMotion ? 0 : 0.82,
-          ease: 'power3.inOut'
+          height: LOBBY_HERO_SETTLED_HEIGHT,
+          duration: reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          clearProps: 'height,will-change'
         }, 0)
         .to('.hero-collapse-button', {
           autoAlpha: 0,
@@ -492,6 +634,14 @@ export default {
           ease: 'power3.inOut',
           clearProps: 'transform,will-change'
         }, 0)
+      if (mainContentEl && !reduceMotion) {
+        heroTransition.to(mainContentEl, {
+          autoAlpha: 1,
+          duration: 0.48,
+          ease: 'power2.out',
+          clearProps: 'all'
+        }, 0.2)
+      }
     }
 
     const handleHeroWheel = (event) => {
@@ -551,6 +701,7 @@ export default {
       const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
       const profileDock = pageRoot.value.querySelector('.profile-dock')
       const profileSection = pageRoot.value.querySelector('.profile-section')
+      const mainContentEl = pageRoot.value.querySelector('.main-content')
       const alignmentY = profileDock && profileSection
         ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
         : 0
@@ -576,6 +727,14 @@ export default {
           ease: 'power3.inOut',
           willChange: 'transform'
         }, 0)
+      if (mainContentEl && !reduceMotion) {
+        tournamentLaunchTimeline.to(mainContentEl, {
+          y: 70,
+          autoAlpha: 0,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power2.in'
+        }, 0)
+      }
     }
 
     const getRoomPrimaryLabel = (room) => {
@@ -603,7 +762,7 @@ export default {
 
     return {
       rooms, totalMembers, isCreateModalVisible, newRoomName, newRoomType,
-      pageRoot, heroPanel, isHeroExpanded, currentLobbyTab, lobbyTabs, selectLobbyTab,
+      pageRoot, heroPanel, isHeroExpanded, currentLobbyTab, lobbyTabs, selectLobbyTab, goToLeaderboard,
       newTeamCount, newRoomMode, newRoomMap, modeOptions, MAPS,
       selectNewRoomType, selectNewTeamCount, selectNewRoomMode, selectNewRoomMap,
       expandHero, collapseHero, handleHeroWheel,
@@ -629,8 +788,8 @@ export default {
 /* 侧边栏与头部 Hero */
 .sidebar {
   width: 100%;
-  height: 245px;
-  min-height: 245px;
+  height: 200px;
+  min-height: 200px;
   flex-shrink: 0;
   padding: 0;
   border: 0;
@@ -645,7 +804,7 @@ export default {
 .hero-wheel-hint {
   position: absolute;
   right: 22px;
-  top: 18px;
+  top: 14px;
   z-index: 30;
   display: flex;
   align-items: center;
@@ -721,12 +880,12 @@ export default {
   pointer-events: none;
 }
 
-/* 个人信息栏 */
+/* 个人信息栏 (确保层级高于跑马灯画布，文字始终不被覆盖) */
 .profile-section {
   position: relative;
-  z-index: 12;
-  flex: 0 0 74px;
-  min-height: 74px;
+  z-index: 70;
+  flex: 0 0 54px;
+  min-height: 54px;
   background: #242424;
   overflow: visible;
 }
@@ -735,29 +894,30 @@ export default {
   position: absolute;
   left: 32px;
   right: 32px;
-  top: -54px;
-  height: 112px;
+  top: -48px;
+  height: 96px;
   max-width: 1720px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 78px minmax(360px, 1.2fr) minmax(260px, 0.9fr) 118px;
+  grid-template-columns: 68px minmax(320px, 1.2fr) minmax(240px, 0.9fr) 100px;
   align-items: center;
-  gap: 24px;
-  padding: 16px 22px;
+  gap: 18px;
+  padding: 10px 22px;
   border: 0;
   background: transparent;
   backdrop-filter: none;
   box-shadow: none;
   overflow: visible;
+  z-index: 75;
 }
 
 .creator-card {
   position: relative;
-  width: 78px;
-  height: 78px;
+  width: 68px;
+  height: 68px;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 11px;
+  border-radius: 10px;
   background: #ffffff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
@@ -788,7 +948,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 6px;
 }
 
 .sidebar-logo {
@@ -799,7 +959,7 @@ export default {
 .logo-title {
   display: block;
   color: #ffffff;
-  font-size: clamp(24px, 2.25vw, 35px);
+  font-size: clamp(20px, 2vw, 30px);
   line-height: 1.12;
   font-weight: 1000;
   letter-spacing: -0.03em;
@@ -810,7 +970,7 @@ export default {
 .profile-tags {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
   flex-wrap: nowrap;
   overflow: hidden;
@@ -818,12 +978,12 @@ export default {
 
 .profile-tags span {
   flex: none;
-  padding: 5px 10px;
+  padding: 3px 8px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 6px;
+  border-radius: 5px;
   background: rgba(255, 255, 255, 0.035);
   color: rgba(255, 255, 255, 0.72);
-  font-size: 11px;
+  font-size: 10.5px;
   line-height: 1;
   font-weight: 750;
   white-space: nowrap;
@@ -832,18 +992,18 @@ export default {
 .sidebar-slogan {
   position: relative;
   min-width: 0;
-  padding: 0 0 0 22px;
+  padding: 0 0 0 16px;
   border: 0;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
   background: transparent;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 12px;
-  line-height: 1.7;
+  font-size: 11px;
+  line-height: 1.6;
   font-weight: 700;
   letter-spacing: 0;
   text-shadow: none;
   backdrop-filter: none;
-  transform: translateY(6px);
+  transform: translateY(4px);
 }
 
 .sidebar-stats {
@@ -853,7 +1013,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 22px;
+  padding-left: 16px;
   border-left: 2px solid #f0224f;
   z-index: 1;
 }
@@ -862,19 +1022,19 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 3px;
+  gap: 2px;
 }
 
 .stat-num {
   color: #ffffff;
-  font-size: 38px;
+  font-size: 32px;
   line-height: 1;
   font-weight: 300;
 }
 
 .stat-label {
   color: rgba(255, 255, 255, 0.52);
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
@@ -883,11 +1043,13 @@ export default {
 .main-content {
   flex: 1;
   min-height: 0;
-  padding: 14px 58px 28px;
+  padding: 4px 58px 24px;
   background: #242424;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  z-index: 10;
 }
 
 .topbar {
@@ -897,25 +1059,27 @@ export default {
 .lobby-tabs {
   display: flex;
   align-items: center;
-  gap: 46px;
-  height: 54px;
-  min-height: 54px;
+  gap: 32px;
+  height: 44px;
+  min-height: 44px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.12);
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   flex-shrink: 0;
 }
 
 .lobby-tab {
-  height: 38px;
-  min-height: 38px;
-  padding: 0 0 0 12px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0 0 0 10px;
   border: none;
-  border-left: 4px solid rgba(255, 255, 255, 0.18);
+  border-left: 3px solid rgba(255, 255, 255, 0.18);
   border-radius: 0;
   background: transparent;
   color: rgba(255, 255, 255, 0.88);
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -932,7 +1096,7 @@ export default {
 .finals-mark {
   margin-left: auto;
   color: #f1f1f1;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 1000;
   letter-spacing: -1px;
   transform: scaleX(0.88);

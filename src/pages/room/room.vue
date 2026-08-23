@@ -12,7 +12,7 @@
     <!-- 顶部导航栏 -->
     <div class="room-header">
       <div class="header-left">
-        <button class="back-btn" @click="goBack">← 返回大厅</button>
+        <button class="back-btn" @click="goBack">← 大厅</button>
         <div class="header-title-block">
           <span class="room-title-text">{{ room.name || '房间详情' }}</span>
           <div class="badge-mode">{{ activeModeConfig.name }}</div>
@@ -1667,19 +1667,25 @@ export default {
 }
 
 .back-btn {
-  min-height: 42px;
+  min-height: 40px;
   padding: 0 16px;
-  border-radius: 4px !important;
-  border-color: rgba(255, 255, 255, 0.42) !important;
-  background: rgba(13, 10, 12, 0.34) !important;
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  background: rgba(13, 10, 12, 0.3) !important;
   color: #ffffff !important;
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 13px !important;
+  font-weight: 850 !important;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .back-btn:hover {
-  border-color: rgba(255, 255, 255, 0.76) !important;
-  background: rgba(13, 10, 12, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.72) !important;
+  background: rgba(13, 10, 12, 0.48) !important;
 }
 
 .header-title-block {

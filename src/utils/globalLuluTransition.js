@@ -2,11 +2,11 @@ import { gsap } from 'gsap'
 
 const NORMAL_DURATION = 156
 const LAUNCH_TIMESCALE = 3
-export const TOURNAMENT_DISPLAY_REVEAL_DURATION = 0.82
+export const TOURNAMENT_DISPLAY_REVEAL_DURATION = 0.72
 
-const LOBBY_WORD_TOP = 24.5
-const LOBBY_WORD_HEIGHT = 184
-const LOBBY_WORD_FONT_SIZE = 206
+const LOBBY_WORD_TOP = 20
+const LOBBY_WORD_HEIGHT = 160
+const LOBBY_WORD_FONT_SIZE = 175
 
 let marquee = null
 let pendingLayout = null
@@ -23,6 +23,11 @@ const DISPLAY_TARGETS = {
   room: {
     mode: 'room',
     selector: '.room-header',
+    settledHeight: 112
+  },
+  leaderboard: {
+    mode: 'tournament',
+    selector: '.hud-header',
     settledHeight: 112
   }
 }
@@ -288,8 +293,10 @@ export const settleLobbyReturnTransition = (panel, { onComplete } = {}) => {
   if (!rect) return false
 
   setMarqueeMode('lobby')
+  marquee?.viewport.classList.remove('is-launching', 'is-display-transition', 'is-display-covered')
+  setDisplayCovered(false)
   return runLayout(getLobbyWordLayout(rect), {
-    duration: 0.82,
+    duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
     timeScale: 1,
     onComplete: () => {
       returningToLobby = false
@@ -364,7 +371,7 @@ export const settleLuluDisplayTransition = ({ id, target, root, onComplete }) =>
     wordY: 0,
     wordOpacity: 1
   }, {
-    duration: 0.82,
+    duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
     timeScale: 1,
     onComplete: undefined
   })
@@ -373,7 +380,7 @@ export const settleLuluDisplayTransition = ({ id, target, root, onComplete }) =>
     gsap.to(header, {
       height: config.settledHeight,
       minHeight: config.settledHeight,
-      duration: marquee?.reduceMotion ? 0 : 0.82,
+      duration: marquee?.reduceMotion ? 0 : TOURNAMENT_DISPLAY_REVEAL_DURATION,
       ease: 'power3.inOut',
       overwrite: 'auto',
       onComplete: completeDisplayTransition

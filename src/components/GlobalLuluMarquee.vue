@@ -45,9 +45,12 @@ onUnmounted(unregisterGlobalLuluMarquee)
   will-change: left, top, width, height;
 }
 
-.global-lulu-viewport.is-lobby { z-index: 11; }
-.global-lulu-viewport.is-expanded { z-index: 50; }
-.global-lulu-viewport.is-launching { z-index: 50; }
+.global-lulu-viewport.is-lobby {
+  z-index: 1;
+  background: transparent !important;
+}
+.global-lulu-viewport.is-expanded { z-index: 10; }
+.global-lulu-viewport.is-launching { z-index: 10; }
 .global-lulu-viewport.is-tournament,
 .global-lulu-viewport.is-room {
   z-index: 1;
@@ -57,7 +60,7 @@ onUnmounted(unregisterGlobalLuluMarquee)
 
 .global-lulu-viewport.is-tournament.is-launching,
 .global-lulu-viewport.is-room.is-launching {
-  z-index: 50;
+  z-index: 10;
   opacity: 1;
 }
 
