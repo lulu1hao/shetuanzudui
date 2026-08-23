@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "社团组队系统",
-  "version": "2.0.0",
-  "identifier": "com.club-team-matcher.desktop",
+  "productName": "lulu",
+  "version": "3.0.0",
+  "identifier": "com.lulu.desktop",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "社团组队系统",
+        "title": "lulu",
         "width": 1280,
         "height": 800,
         "minWidth": 900,

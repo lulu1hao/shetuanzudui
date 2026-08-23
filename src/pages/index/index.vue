@@ -29,7 +29,7 @@
 
           <div class="profile-identity">
             <div class="sidebar-logo">
-              <span class="logo-title">鹿鹿的社团组队系统</span>
+              <span class="logo-title">lulu</span>
             </div>
             <div class="profile-tags" aria-label="创建者标签">
               <span>系统创建者</span>
@@ -37,10 +37,6 @@
               <span>文学奖读者</span>
               <span>清华所在地学生</span>
             </div>
-          </div>
-
-          <div class="sidebar-slogan">
-            快速创建专属房间与赛事，一键智能洗牌，支持多队拖拽与淘汰晋级
           </div>
 
           <div class="sidebar-stats">
