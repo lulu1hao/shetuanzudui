@@ -207,7 +207,6 @@
             <div class="room-card glass-panel finals-feature-card finals-equipment-card" @click="goToEquipment">
               <div class="room-card-header">
                 <span class="room-name">
-                  <span class="trophy-prefix">🔫 </span>
                   THE FINALS 装备与配装中心
                 </span>
                 <div class="room-card-actions">
@@ -235,7 +234,7 @@
               <div class="room-footer">
                 <span class="created-time">数据源：THE FINALS 官方 Wiki 直连</span>
                 <button class="enter-btn enter-btn-tournament">
-                  进入装备 ➡️
+                  进入装备 →
                 </button>
               </div>
             </div>

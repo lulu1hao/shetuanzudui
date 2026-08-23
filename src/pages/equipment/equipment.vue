@@ -13,7 +13,7 @@
       </div>
 
       <div class="header-right">
-        <!-- 模块切换 (百科 / 配装器 / 热门推荐) -->
+        <!-- 模块切换 (百科 / 枪械对比 / 配装器 / 热门推荐) -->
         <div class="hud-tab-switcher">
           <button
             v-for="tab in mainTabs"
@@ -23,8 +23,10 @@
             :class="{ active: currentMainTab === tab.key }"
             @click="currentMainTab = tab.key"
           >
-            <span>{{ tab.icon }}</span>
             <span>{{ tab.label }}</span>
+            <span v-if="tab.key === 'compare' && compareWeaponList.length" class="tab-count-badge">
+              {{ compareWeaponList.length }}/3
+            </span>
           </button>
         </div>
 
@@ -57,13 +59,13 @@
           <div>
             <span class="command-eyebrow">THE FINALS · WEAPONS, GADGETS & SPECIALIZATIONS</span>
             <div class="room-hero-title">
-              <h2>装备百科与配装实验室</h2>
+              <h2>装备百科与枪械战术分析</h2>
               <span class="badge-stage-tag">{{ totalEquipmentCount }} 件全赛季装备</span>
             </div>
           </div>
           <div class="equipment-stats-badge">
             <span class="pulse-dot"></span>
-            <span>全职业（轻型/中型/重型）数据源自 THE FINALS Wiki 实时直连</span>
+            <span>全职业（轻型/中型/重型）数据源自 THE FINALS Wiki 官方实测</span>
           </div>
         </section>
 
@@ -85,7 +87,6 @@
                   :class="{ active: selectedBuild === b.key, [`pill-${b.key.toLowerCase()}`]: true }"
                   @click="selectedBuild = b.key"
                 >
-                  <span class="pill-icon">{{ b.icon }}</span>
                   <span class="pill-name">{{ b.label }}</span>
                   <span v-if="b.hp" class="pill-hp">{{ b.hp }}</span>
                 </button>
@@ -104,7 +105,6 @@
                   :class="{ active: selectedCategory === c.key }"
                   @click="selectedCategory = c.key"
                 >
-                  <span class="pill-icon">{{ c.icon }}</span>
                   <span class="pill-name">{{ c.label }}</span>
                 </button>
               </div>
@@ -118,7 +118,7 @@
                   type="text"
                   v-model="searchKeyword"
                   class="main-search-input"
-                  placeholder="快速检索武器/道具名称（如: AKM, 除颤仪, 锁弹, RPG, 闪烁...）"
+                  placeholder="快速检索武器/道具名称（如: AKM, 地狱犬, 龙息, 除颤仪, 锁弹, RPG, 闪烁...）"
                   spellcheck="false"
                 />
                 <button v-if="searchKeyword" type="button" class="input-clear-btn" @click="searchKeyword = ''">✕</button>
@@ -141,7 +141,6 @@
             <!-- 装备卡片网格 -->
             <div class="equipment-cards-grid">
               <div v-if="filteredEquipmentList.length === 0" class="empty-equipment-state">
-                <span class="empty-icon">🔍</span>
                 <span class="empty-text">未检索到匹配的装备或武器</span>
                 <button class="btn-reset-filter" @click="resetFilters">重置筛选条件</button>
               </div>
@@ -161,7 +160,20 @@
                   <span class="build-tag" :class="`tag-${item.build.toLowerCase().replace(/[^a-z]/g, '')}`">
                     {{ getBuildBadgeLabel(item.build) }}
                   </span>
-                  <span class="category-tag">{{ getCategoryBadgeLabel(item.category) }}</span>
+                  <div class="topbar-right-actions">
+                    <span class="category-tag">{{ getCategoryBadgeLabel(item.category) }}</span>
+                    <!-- 武器对比添加按钮 -->
+                    <button
+                      v-if="item.category === 'weapons'"
+                      type="button"
+                      class="btn-card-compare"
+                      :class="{ 'in-compare': isInCompare(item.id) }"
+                      @click.stop="toggleCompareWeapon(item)"
+                      :title="isInCompare(item.id) ? '从对比栏移除' : '加入对比 (最多3把)'"
+                    >
+                      {{ isInCompare(item.id) ? '已对比' : '+ 对比' }}
+                    </button>
+                  </div>
                 </div>
 
                 <!-- 装备官方缩略图 -->
@@ -206,7 +218,7 @@
                 </div>
 
                 <div class="card-hover-action">
-                  <span>战术检视 ➔</span>
+                  <span>战术检视 →</span>
                 </div>
               </div>
             </div>
@@ -233,15 +245,76 @@
                   </div>
                 </div>
 
-                <!-- 引言与战术定位 -->
+                <!-- 简要定位说明 -->
                 <div class="inspector-quote-box">
-                  <p class="quote-text">“{{ activeInspectorItem.description || activeInspectorItem.descZh }}”</p>
-                  <p v-if="activeInspectorItem.descZh && activeInspectorItem.description !== activeInspectorItem.descZh" class="desc-zh-text">
-                    {{ activeInspectorItem.descZh }}
-                  </p>
+                  <p class="quote-text">{{ activeInspectorItem.descZh || activeInspectorItem.description }}</p>
                 </div>
 
-                <!-- 完整数据矩阵 (MediaWiki 官方实测数值) -->
+                <!-- ================= 1. 击杀分析 TTK 与子弹数 (武器专属) ================= -->
+                <div v-if="activeInspectorItem.category === 'weapons'" class="inspector-ttk-section">
+                  <div class="ttk-section-header">
+                    <span class="matrix-title">击杀分析 (TTK & 所需子弹数)</span>
+                    <span class="ttk-subtitle">基于 100% 命中且无衰减测算</span>
+                  </div>
+
+                  <div class="ttk-table-grid">
+                    <!-- 轻型 150 HP -->
+                    <div class="ttk-card-item ttk-light-border">
+                      <div class="ttk-target-header">
+                        <span class="target-name">轻型 (LIGHT)</span>
+                        <span class="target-hp">150 HP</span>
+                      </div>
+                      <div class="ttk-data-row">
+                        <div class="ttk-metric">
+                          <span class="metric-lbl">全爆头 (Head)</span>
+                          <strong class="metric-val text-gold">{{ getWeaponTTK(activeInspectorItem, 'light', 'head') }}</strong>
+                        </div>
+                        <div class="ttk-metric">
+                          <span class="metric-lbl">全身体 (Body)</span>
+                          <strong class="metric-val">{{ getWeaponTTK(activeInspectorItem, 'light', 'body') }}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 中型 250 HP -->
+                    <div class="ttk-card-item ttk-medium-border">
+                      <div class="ttk-target-header">
+                        <span class="target-name">中型 (MEDIUM)</span>
+                        <span class="target-hp">250 HP</span>
+                      </div>
+                      <div class="ttk-data-row">
+                        <div class="ttk-metric">
+                          <span class="metric-lbl">全爆头 (Head)</span>
+                          <strong class="metric-val text-gold">{{ getWeaponTTK(activeInspectorItem, 'medium', 'head') }}</strong>
+                        </div>
+                        <div class="ttk-metric">
+                          <span class="metric-lbl">全身体 (Body)</span>
+                          <strong class="metric-val">{{ getWeaponTTK(activeInspectorItem, 'medium', 'body') }}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- 重型 350 HP -->
+                    <div class="ttk-card-item ttk-heavy-border">
+                      <div class="ttk-target-header">
+                        <span class="target-name">重型 (HEAVY)</span>
+                        <span class="target-hp">350 HP</span>
+                      </div>
+                      <div class="ttk-data-row">
+                        <div class="ttk-metric">
+                          <span class="metric-lbl">全爆头 (Head)</span>
+                          <strong class="metric-val text-gold">{{ getWeaponTTK(activeInspectorItem, 'heavy', 'head') }}</strong>
+                        </div>
+                        <div class="ttk-metric">
+                          <span class="metric-lbl">全身体 (Body)</span>
+                          <strong class="metric-val">{{ getWeaponTTK(activeInspectorItem, 'heavy', 'body') }}</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ================= 2. 完整数据矩阵 (MediaWiki 官方实测数值) ================= -->
                 <div class="inspector-stats-matrix">
                   <h4 class="matrix-title">WIKI 核心战斗参数</h4>
                   <div class="stats-grid">
@@ -250,7 +323,7 @@
                       <strong class="m-val">{{ activeInspectorItem.stats?.damage || '—' }}</strong>
                     </div>
                     <div class="matrix-stat-item">
-                      <span class="m-lbl">爆头倍率 (Crit)</span>
+                      <span class="m-lbl">爆头倍率</span>
                       <strong class="m-val text-gold">{{ activeInspectorItem.stats?.crit || '—' }}</strong>
                     </div>
                     <div class="matrix-stat-item">
@@ -282,7 +355,7 @@
 
                 <!-- 实战建议 -->
                 <div class="inspector-tips-box">
-                  <h4 class="tips-title">💡 战术协同指南</h4>
+                  <h4 class="tips-title">战术协同指南</h4>
                   <ul class="tips-list">
                     <li v-for="(tip, idx) in activeInspectorItem.tips" :key="idx">{{ tip }}</li>
                   </ul>
@@ -292,6 +365,14 @@
                 <div class="inspector-actions-bar">
                   <button type="button" class="btn-inspector-primary" @click="loadItemIntoBuilder(activeInspectorItem)">
                     + 填入配装模拟器
+                  </button>
+                  <button
+                    v-if="activeInspectorItem.category === 'weapons'"
+                    type="button"
+                    class="btn-inspector-compare"
+                    @click="toggleCompareWeapon(activeInspectorItem)"
+                  >
+                    {{ isInCompare(activeInspectorItem.id) ? '已加入对比' : '+ 加入枪械对比' }}
                   </button>
                   <button type="button" class="btn-inspector-secondary" @click="copyEquipmentSummary(activeInspectorItem)">
                     复制数据
@@ -304,16 +385,152 @@
 
               <!-- 默认未选中状态提示 -->
               <div v-else class="inspector-placeholder glass-panel">
-                <div class="placeholder-icon">🎯</div>
                 <h4 class="placeholder-title">点击左侧任意装备</h4>
-                <p class="placeholder-desc">查看来自 THE FINALS Wiki 的高精度伤害曲线、爆头倍率、装填速率与实战克制技巧。</p>
+                <p class="placeholder-desc">查看来自 THE FINALS Wiki 的高精度击杀时间(TTK)、爆头所需弹数、伤害衰减与实战克制技巧。</p>
               </div>
             </aside>
           </section>
         </template>
 
         <!-- ========================================================= -->
-        <!-- 模块 2：自由配装实验室 (CONTESTANT LOADOUT BUILDER) -->
+        <!-- 模块 2：枪械数据对比 (WEAPON COMPARISON - 最多3把) -->
+        <!-- ========================================================= -->
+        <template v-else-if="currentMainTab === 'compare'">
+          <section class="compare-workspace-card glass-panel">
+            <div class="compare-header-bar">
+              <div>
+                <h3 class="compare-main-title">枪械深度多维对比 (最多支持 3 把)</h3>
+                <span class="compare-sub-desc">直观比对伤害、DPS、换弹效率与轻/中/重型击杀时间 (TTK)</span>
+              </div>
+              <div class="compare-header-actions">
+                <button type="button" class="btn-clear-compare" @click="clearCompareList">清空对比列表</button>
+                <button type="button" class="btn-go-armory" @click="currentMainTab = 'armory'">+ 从军械库添加</button>
+              </div>
+            </div>
+
+            <!-- 空对比状态 -->
+            <div v-if="compareWeaponList.length === 0" class="empty-compare-box">
+              <h4 class="empty-c-title">暂未添加对比武器</h4>
+              <p class="empty-c-desc">前往军械库点击任意武器卡片右上角的 “+ 对比” 按钮，即可将最多 3 把枪械置于同一维度横向测算。</p>
+              <button class="btn-primary-add" @click="currentMainTab = 'armory'">前往军械库选枪</button>
+            </div>
+
+            <!-- 对比矩阵数据表格 -->
+            <div v-else class="compare-matrix-wrapper">
+              <div class="compare-columns-container" :style="{ gridTemplateColumns: `repeat(${compareWeaponList.length}, 1fr)` }">
+                <div
+                  v-for="(w, wIdx) in compareWeaponList"
+                  :key="w.id"
+                  class="compare-weapon-col"
+                  :class="`border-${w.build.toLowerCase()}`"
+                >
+                  <!-- 枪械头部 -->
+                  <div class="c-weapon-header">
+                    <button class="btn-remove-compare" @click="removeFromCompare(w.id)" title="从对比中移除">✕</button>
+                    <div class="c-thumb-wrap">
+                      <img :src="w.imageUrl" :alt="w.name" class="c-weapon-img" />
+                    </div>
+                    <div class="c-weapon-meta">
+                      <span class="c-build-tag" :class="`tag-${w.build.toLowerCase()}`">{{ getBuildBadgeLabel(w.build) }}</span>
+                      <strong class="c-name">{{ w.name }}</strong>
+                      <span class="c-name-zh">{{ w.nameZh }}</span>
+                    </div>
+                  </div>
+
+                  <!-- 核心参数指标对比 -->
+                  <div class="c-metrics-block">
+                    <h5 class="c-block-heading">基础作战参数</h5>
+                    <div class="c-metric-row">
+                      <span class="c-m-label">单发基础伤害</span>
+                      <strong class="c-m-value">{{ w.stats?.damage || '—' }}</strong>
+                    </div>
+                    <div class="c-metric-row">
+                      <span class="c-m-label">爆头倍率</span>
+                      <strong class="c-m-value text-gold">{{ w.stats?.crit || '—' }}</strong>
+                    </div>
+                    <div class="c-metric-row">
+                      <span class="c-m-label">理论秒伤 (DPS)</span>
+                      <strong class="c-m-value text-red">{{ w.stats?.dps || '—' }}</strong>
+                    </div>
+                    <div class="c-metric-row">
+                      <span class="c-m-label">射速 (RPM)</span>
+                      <strong class="c-m-value">{{ w.stats?.rpm || '—' }}</strong>
+                    </div>
+                    <div class="c-metric-row">
+                      <span class="c-m-label">弹匣容量</span>
+                      <strong class="c-m-value">{{ w.stats?.magazine || '—' }} 发</strong>
+                    </div>
+                    <div class="c-metric-row">
+                      <span class="c-m-label">换弹耗时</span>
+                      <strong class="c-m-value">{{ w.stats?.reload || '—' }}</strong>
+                    </div>
+                    <div class="c-metric-row">
+                      <span class="c-m-label">有效射程</span>
+                      <strong class="c-m-value">{{ w.stats?.falloff || '—' }}</strong>
+                    </div>
+                  </div>
+
+                  <!-- 击杀时间 TTK 对比 (全爆头 / 全身体) -->
+                  <div class="c-metrics-block c-ttk-block">
+                    <h5 class="c-block-heading">击杀时间 (TTK) & 弹数对比</h5>
+
+                    <!-- 对 轻型 150 HP -->
+                    <div class="c-ttk-target-box ttk-light-border">
+                      <div class="c-target-head">
+                        <span>轻型 (150 HP)</span>
+                      </div>
+                      <div class="c-sub-row">
+                        <span>全爆头:</span>
+                        <strong class="text-gold">{{ getWeaponTTK(w, 'light', 'head') }}</strong>
+                      </div>
+                      <div class="c-sub-row">
+                        <span>全身体:</span>
+                        <strong>{{ getWeaponTTK(w, 'light', 'body') }}</strong>
+                      </div>
+                    </div>
+
+                    <!-- 对 中型 250 HP -->
+                    <div class="c-ttk-target-box ttk-medium-border">
+                      <div class="c-target-head">
+                        <span>中型 (250 HP)</span>
+                      </div>
+                      <div class="c-sub-row">
+                        <span>全爆头:</span>
+                        <strong class="text-gold">{{ getWeaponTTK(w, 'medium', 'head') }}</strong>
+                      </div>
+                      <div class="c-sub-row">
+                        <span>全身体:</span>
+                        <strong>{{ getWeaponTTK(w, 'medium', 'body') }}</strong>
+                      </div>
+                    </div>
+
+                    <!-- 对 重型 350 HP -->
+                    <div class="c-ttk-target-box ttk-heavy-border">
+                      <div class="c-target-head">
+                        <span>重型 (350 HP)</span>
+                      </div>
+                      <div class="c-sub-row">
+                        <span>全爆头:</span>
+                        <strong class="text-gold">{{ getWeaponTTK(w, 'heavy', 'head') }}</strong>
+                      </div>
+                      <div class="c-sub-row">
+                        <span>全身体:</span>
+                        <strong>{{ getWeaponTTK(w, 'heavy', 'body') }}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="c-footer-actions">
+                    <button class="btn-c-loadout" @click="loadItemIntoBuilder(w)">填入配装器 →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </template>
+
+        <!-- ========================================================= -->
+        <!-- 模块 3：自由配装实验室 (CONTESTANT LOADOUT BUILDER) -->
         <!-- ========================================================= -->
         <template v-else-if="currentMainTab === 'builder'">
           <section class="builder-workspace-card glass-panel">
@@ -330,7 +547,7 @@
                     :class="{ active: currentBuilderBuild === b, [`btn-${b.toLowerCase()}`]: true }"
                     @click="switchBuilderBuild(b)"
                   >
-                    <span>{{ b === 'Light' ? '⚡ 轻型 (150 HP)' : (b === 'Medium' ? '🛡️ 中型 (250 HP)' : '🧱 重型 (350 HP)') }}</span>
+                    <span>{{ b === 'Light' ? '轻型 (150 HP)' : (b === 'Medium' ? '中型 (250 HP)' : '重型 (350 HP)') }}</span>
                   </button>
                 </div>
               </div>
@@ -353,7 +570,7 @@
               <!-- 槽位 1：特殊能力 Specialization -->
               <div class="slot-column">
                 <div class="slot-header">
-                  <span class="slot-badge-specialization">✦ 特殊能力 (SPECIALIZATION)</span>
+                  <span class="slot-badge-specialization">特殊能力 (SPECIALIZATION)</span>
                   <span class="slot-hint">1 个主技能</span>
                 </div>
                 <div
@@ -382,7 +599,7 @@
               <!-- 槽位 2：主武器 Weapon -->
               <div class="slot-column">
                 <div class="slot-header">
-                  <span class="slot-badge-weapon">🔫 主武器 (WEAPON)</span>
+                  <span class="slot-badge-weapon">主武器 (WEAPON)</span>
                   <span class="slot-hint">1 把核心枪械/近战</span>
                 </div>
                 <div
@@ -411,7 +628,7 @@
               <!-- 槽位 3：随身战术道具 (3个) -->
               <div class="slot-column slot-column-gadgets">
                 <div class="slot-header">
-                  <span class="slot-badge-gadget">💣 随身道具 (GADGETS)</span>
+                  <span class="slot-badge-gadget">随身道具 (GADGETS)</span>
                   <span class="slot-hint">3 个战术道具</span>
                 </div>
                 <div class="gadgets-sub-grid">
@@ -507,7 +724,7 @@
                   <span v-if="loadout.weapon" class="preview-pill">{{ getEquipmentById(loadout.weapon)?.name || loadout.weapon }}</span>
                 </div>
                 <div class="preset-card-footer">
-                  <button type="button" class="btn-apply-preset" @click="applySavedLoadout(loadout)">应用到配装器 ➔</button>
+                  <button type="button" class="btn-apply-preset" @click="applySavedLoadout(loadout)">应用到配装器 →</button>
                 </div>
               </div>
             </div>
@@ -515,7 +732,7 @@
         </template>
 
         <!-- ========================================================= -->
-        <!-- 模块 3：天梯热门竞技配装推荐 (COMPETITIVE META BUILDS) -->
+        <!-- 模块 4：天梯热门竞技配装推荐 (COMPETITIVE META BUILDS) -->
         <!-- ========================================================= -->
         <template v-else-if="currentMainTab === 'presets'">
           <section class="meta-presets-section">
@@ -532,7 +749,7 @@
               >
                 <div class="preset-topbar">
                   <span class="preset-build-badge" :class="`tag-${preset.build.toLowerCase()}`">
-                    {{ preset.build === 'Light' ? '⚡ 轻型' : (preset.build === 'Medium' ? '🛡️ 中型' : '🧱 重型') }}
+                    {{ preset.build === 'Light' ? '轻型' : (preset.build === 'Medium' ? '中型' : '重型') }}
                   </span>
                   <span class="preset-author">{{ preset.author }}</span>
                 </div>
@@ -563,7 +780,7 @@
                 <!-- 配装底部操作 -->
                 <div class="preset-card-footer">
                   <button type="button" class="btn-apply-preset" @click="applyPreset(preset)">
-                    载入配装器测试 ➔
+                    载入配装器测试 →
                   </button>
                   <button type="button" class="btn-copy-preset" @click="copyPresetCode(preset)">
                     分享码
@@ -608,7 +825,7 @@
               <span class="p-zh">{{ item.nameZh }}</span>
               <span class="p-role">{{ item.role }}</span>
             </div>
-            <span class="p-select-arrow">选择 ➔</span>
+            <span class="p-select-arrow">选择 →</span>
           </div>
         </div>
       </div>
@@ -618,7 +835,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import {
@@ -633,6 +850,8 @@ import {
   deleteCustomLoadout,
   exportLoadoutCode,
   importLoadoutCode,
+  getSavedCompareWeaponIds,
+  saveCompareWeaponIds,
   PRESET_LOADOUTS
 } from '../../utils/theFinalsEquipmentApi.js'
 import { useToast } from '../../composables/useToast.js'
@@ -658,36 +877,40 @@ export default {
     let lobbyReturnTimeline = null
     let entranceTimer = null
 
-    // 主选项卡
+    // 主选项卡 (无 Emoji)
     const mainTabs = [
-      { key: 'armory', label: '军械百科', icon: '📖' },
-      { key: 'builder', label: '配装实验室', icon: '🛠️' },
-      { key: 'presets', label: '天梯热门推荐', icon: '🔥' }
+      { key: 'armory', label: '军械百科' },
+      { key: 'compare', label: '枪械对比' },
+      { key: 'builder', label: '配装实验室' },
+      { key: 'presets', label: '天梯热门推荐' }
     ]
     const currentMainTab = ref('armory')
 
-    // 筛选状态
+    // 筛选状态 (无 Emoji)
     const selectedBuild = ref('all')
     const selectedCategory = ref('all')
     const searchKeyword = ref('')
     const selectedSortBy = ref('default')
 
     const buildFilterOptions = [
-      { key: 'all', label: '全部职业', icon: '✦', hp: '' },
-      { key: 'Light', label: '轻型 (Light)', icon: '⚡', hp: '150 HP' },
-      { key: 'Medium', label: '中型 (Medium)', icon: '🛡️', hp: '250 HP' },
-      { key: 'Heavy', label: '重型 (Heavy)', icon: '🧱', hp: '350 HP' }
+      { key: 'all', label: '全部职业', hp: '' },
+      { key: 'Light', label: '轻型 (LIGHT)', hp: '150 HP' },
+      { key: 'Medium', label: '中型 (MEDIUM)', hp: '250 HP' },
+      { key: 'Heavy', label: '重型 (HEAVY)', hp: '350 HP' }
     ]
 
     const categoryFilterOptions = [
-      { key: 'all', label: '全部类别', icon: '✦' },
-      { key: 'weapons', label: '主武器', icon: '🔫' },
-      { key: 'specializations', label: '特殊能力', icon: '✨' },
-      { key: 'gadgets', label: '战术道具', icon: '💣' }
+      { key: 'all', label: '全部类别' },
+      { key: 'weapons', label: '主武器' },
+      { key: 'specializations', label: '特殊能力' },
+      { key: 'gadgets', label: '战术道具' }
     ]
 
     // 检视器
     const activeInspectorItem = ref(null)
+
+    // 武器对比列表 (最多3把)
+    const compareWeaponIds = ref(getSavedCompareWeaponIds())
 
     // 网络与 Wiki 同步状态
     const isOnline = ref(typeof navigator !== 'undefined' ? navigator.onLine : true)
@@ -704,7 +927,7 @@ export default {
 
     // 槽位弹窗状态
     const isSlotPickerOpen = ref(false)
-    const currentPickingSlotType = ref('specialization') // 'specialization' | 'weapon' | 'gadget'
+    const currentPickingSlotType = ref('specialization')
     const currentPickingGadgetIndex = ref(0)
     const pickerSearchKeyword = ref('')
 
@@ -721,11 +944,36 @@ export default {
       })
     })
 
+    const compareWeaponList = computed(() => {
+      return compareWeaponIds.value
+        .map(id => getEquipmentById(id))
+        .filter(Boolean)
+    })
+
     const syncStatusLabel = computed(() => {
       if (isSyncing.value) return '正在连接 Wiki 同步最新数据...'
       if (!isOnline.value) return '离线模式 (使用本地最新缓存)'
       return `Wiki 数据已同步 (${formatSyncTime(lastSyncTime.value)})`
     })
+
+    // 获取武器 TTK 格式化文本
+    const getWeaponTTK = (weapon, buildKey, hitType) => {
+      if (!weapon) return '—'
+      const ttkData = weapon.ttk?.[buildKey]?.[hitType]
+      if (ttkData) {
+        return `${ttkData.shots} 枪 (${ttkData.ttk})`
+      }
+
+      // 动态推算 fallback
+      const targetHp = buildKey === 'light' ? 150 : (buildKey === 'medium' ? 250 : 350)
+      const rawDamage = parseFloat(weapon.stats?.damage) || 20
+      const critMulti = parseFloat(weapon.stats?.crit) || 1.5
+      const dmgPerHit = hitType === 'head' ? rawDamage * critMulti : rawDamage
+      const shots = Math.ceil(targetHp / Math.max(1, dmgPerHit))
+      const rpm = parseFloat(weapon.stats?.rpm) || 600
+      const ttkSec = ((shots - 1) * (60 / rpm)).toFixed(2)
+      return `${shots} 枪 (${ttkSec}s)`
+    }
 
     // 配装协同能力雷达计算
     const calculatedSynergy = computed(() => {
@@ -776,12 +1024,46 @@ export default {
       })
     })
 
+    // 对比相关操作
+    const isInCompare = (weaponId) => {
+      return compareWeaponIds.value.includes(weaponId)
+    }
+
+    const toggleCompareWeapon = (weapon) => {
+      if (!weapon) return
+      const idx = compareWeaponIds.value.indexOf(weapon.id)
+      if (idx >= 0) {
+        compareWeaponIds.value.splice(idx, 1)
+        saveCompareWeaponIds(compareWeaponIds.value)
+        showToast(`已将 [${weapon.name}] 从对比列表移除`)
+      } else {
+        if (compareWeaponIds.value.length >= 3) {
+          showToast('对比列表最多支持 3 把武器，请先移除一把', 'none')
+          return
+        }
+        compareWeaponIds.value.push(weapon.id)
+        saveCompareWeaponIds(compareWeaponIds.value)
+        showToast(`已加入对比列表 (${compareWeaponIds.value.length}/3)`, 'success')
+      }
+    }
+
+    const removeFromCompare = (weaponId) => {
+      compareWeaponIds.value = compareWeaponIds.value.filter(id => id !== weaponId)
+      saveCompareWeaponIds(compareWeaponIds.value)
+    }
+
+    const clearCompareList = () => {
+      compareWeaponIds.value = []
+      saveCompareWeaponIds([])
+      showToast('已清空对比列表')
+    }
+
     // 辅助函数
     const getBuildBadgeLabel = (build = '') => {
-      if (build === 'Light') return '⚡ 轻型'
-      if (build === 'Medium') return '🛡️ 中型'
-      if (build === 'Heavy') return '🧱 重型'
-      return '✦ 通用'
+      if (build === 'Light') return '轻型 (LIGHT)'
+      if (build === 'Medium') return '中型 (MEDIUM)'
+      if (build === 'Heavy') return '重型 (HEAVY)'
+      return '通用 (ALL)'
     }
 
     const getCategoryBadgeLabel = (cat = '') => {
@@ -839,7 +1121,6 @@ export default {
     // 配装模拟器操作
     const switchBuilderBuild = (b) => {
       currentBuilderBuild.value = b
-      // 检查已填槽位是否兼容新体型
       if (activeBuilderSpecialization.value && activeBuilderSpecialization.value.build !== b) {
         activeBuilderSpecialization.value = null
       }
@@ -994,8 +1275,8 @@ export default {
       window.addEventListener('online', updateOnlineStatus)
       window.addEventListener('offline', updateOnlineStatus)
 
-      // 默认选中第一件武器展示检视器
-      const defaultItem = filteredEquipmentList.value[0]
+      // 默认选中 AKM 展示检视器
+      const defaultItem = getEquipmentById('akm') || filteredEquipmentList.value[0]
       if (defaultItem) {
         activeInspectorItem.value = defaultItem
       }
@@ -1088,7 +1369,8 @@ export default {
       currentBuilderBuild, currentLoadoutTitle, activeBuilderSpecialization, activeBuilderWeapon, activeBuilderGadgets,
       calculatedSynergy, savedCustomLoadouts, PRESET_LOADOUTS,
       isSlotPickerOpen, pickerSlotTitle, availablePickerItems, pickerSearchKeyword,
-      getBuildBadgeLabel, getCategoryBadgeLabel, handleImgError, copyEquipmentSummary,
+      compareWeaponIds, compareWeaponList, isInCompare, toggleCompareWeapon, removeFromCompare, clearCompareList,
+      getBuildBadgeLabel, getCategoryBadgeLabel, handleImgError, copyEquipmentSummary, getWeaponTTK,
       switchBuilderBuild, loadItemIntoBuilder, openSlotPicker, selectItemForSlot, removeGadgetSlot,
       handleResetBuilder, handleSaveCurrentLoadout, handleDeleteSavedLoadout, applySavedLoadout, applyPreset,
       handleExportLoadoutCode, copyPresetCode, getEquipmentById
@@ -1234,10 +1516,10 @@ export default {
   gap: 16px;
 }
 
-/* 主 Tab 切换器 */
+/* 主 Tab 切换器 (干净直角电竞风格) */
 .hud-tab-switcher {
   display: flex;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 3px;
   gap: 4px;
@@ -1268,12 +1550,21 @@ export default {
   box-shadow: 0 0 12px rgba(215, 20, 66, 0.45);
 }
 
+.tab-count-badge {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 10px;
+  padding: 1px 5px;
+  font-weight: 850;
+  color: #fbbf24;
+}
+
 /* 同步状态小部件 */
 .wiki-sync-box {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 5px 10px;
 }
@@ -1345,7 +1636,7 @@ export default {
 }
 
 .equipment-container-inner {
-  max-width: 1480px;
+  max-width: 1520px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1422,7 +1713,7 @@ export default {
   font-weight: 850;
   color: rgba(255, 255, 255, 0.45);
   letter-spacing: 0.06em;
-  min-width: 130px;
+  min-width: 140px;
 }
 
 .filter-pills-row {
@@ -1474,9 +1765,8 @@ export default {
 
 .pill-hp {
   font-size: 10px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.35);
   padding: 1px 5px;
-  border-radius: 2px;
   opacity: 0.85;
 }
 
@@ -1557,7 +1847,7 @@ export default {
 /* 百科左右分栏 */
 .armory-split-layout {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: 1fr 420px;
   gap: 20px;
   align-items: start;
 }
@@ -1599,6 +1889,12 @@ export default {
   align-items: center;
 }
 
+.topbar-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .build-tag {
   font-size: 10px;
   font-weight: 850;
@@ -1630,6 +1926,28 @@ export default {
   font-size: 10px;
   font-weight: 750;
   color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-card-compare {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-card-compare:hover {
+  background: #d71442;
+  border-color: #d71442;
+}
+
+.btn-card-compare.in-compare {
+  background: #34d399;
+  border-color: #34d399;
+  color: #0d0a0c;
 }
 
 .equip-thumb-box {
@@ -1818,15 +2136,91 @@ export default {
 
 .quote-text {
   font-size: 12px;
-  font-style: italic;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
+  line-height: 1.4;
 }
 
-.desc-zh-text {
+/* TTK 击杀分析面板 */
+.inspector-ttk-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ttk-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ttk-subtitle {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ttk-table-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ttk-card-item {
+  background: rgba(0, 0, 0, 0.35);
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ttk-card-item.ttk-light-border {
+  border-left-color: #38bdf8;
+}
+
+.ttk-card-item.ttk-medium-border {
+  border-left-color: #fbbf24;
+}
+
+.ttk-card-item.ttk-heavy-border {
+  border-left-color: #f87171;
+}
+
+.ttk-target-header {
+  display: flex;
+  justify-content: space-between;
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
-  margin: 6px 0 0;
+  font-weight: 850;
+  color: #ffffff;
+}
+
+.target-hp {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+}
+
+.ttk-data-row {
+  display: flex;
+  gap: 12px;
+}
+
+.ttk-metric {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px 6px;
+}
+
+.metric-lbl {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.metric-val {
+  font-size: 11px;
+  font-weight: 850;
 }
 
 .matrix-title, .tips-title {
@@ -1882,13 +2276,14 @@ export default {
 
 .inspector-actions-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 4px;
 }
 
 .btn-inspector-primary {
-  flex: 2;
-  padding: 8px;
+  flex: 1 1 100%;
+  padding: 9px;
   background: #d71442;
   border: 0;
   color: #ffffff;
@@ -1903,13 +2298,29 @@ export default {
   box-shadow: 0 0 12px rgba(239, 23, 78, 0.5);
 }
 
+.btn-inspector-compare {
+  flex: 1;
+  padding: 7px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  font-size: 11px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.btn-inspector-compare:hover {
+  background: #38bdf8;
+  color: #0d0a0c;
+}
+
 .btn-inspector-secondary {
   flex: 1;
-  padding: 8px;
+  padding: 7px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -1919,11 +2330,11 @@ export default {
 }
 
 .btn-inspector-wiki {
-  padding: 8px 12px;
+  padding: 7px 12px;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #38bdf8;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 850;
   text-decoration: none;
   display: inline-flex;
@@ -1938,11 +2349,6 @@ export default {
   text-align: center;
 }
 
-.placeholder-icon {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
 .placeholder-title {
   font-size: 16px;
   font-weight: 850;
@@ -1954,6 +2360,257 @@ export default {
   color: rgba(255, 255, 255, 0.5);
   line-height: 1.5;
   margin: 0;
+}
+
+/* ================= 枪械对比视图样式 ================= */
+.compare-workspace-card {
+  background: rgba(24, 21, 28, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.compare-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 16px;
+}
+
+.compare-main-title {
+  font-size: 20px;
+  font-weight: 950;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.compare-sub-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.compare-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-clear-compare {
+  background: transparent;
+  border: 1px solid rgba(239, 23, 78, 0.4);
+  color: #ef174e;
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.btn-go-armory {
+  background: #d71442;
+  border: 0;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 850;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.empty-compare-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  padding: 60px 24px;
+  text-align: center;
+}
+
+.empty-c-title {
+  font-size: 18px;
+  font-weight: 900;
+  margin: 0 0 8px;
+}
+
+.empty-c-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 500px;
+  margin: 0 auto 20px;
+  line-height: 1.5;
+}
+
+.btn-primary-add {
+  background: #d71442;
+  border: 0;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 850;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.compare-matrix-wrapper {
+  overflow-x: auto;
+}
+
+.compare-columns-container {
+  display: grid;
+  gap: 16px;
+}
+
+.compare-weapon-col {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 3px solid #ef174e;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.compare-weapon-col.border-light {
+  border-top-color: #38bdf8;
+}
+
+.compare-weapon-col.border-medium {
+  border-top-color: #fbbf24;
+}
+
+.compare-weapon-col.border-heavy {
+  border-top-color: #f87171;
+}
+
+.c-weapon-header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.btn-remove-compare {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: 0;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-remove-compare:hover {
+  color: #ef174e;
+}
+
+.c-thumb-wrap {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-weapon-img {
+  max-height: 80px;
+  max-width: 90%;
+  object-fit: contain;
+}
+
+.c-weapon-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.c-build-tag {
+  font-size: 10px;
+  font-weight: 850;
+  padding: 2px 6px;
+}
+
+.c-name {
+  font-size: 18px;
+  font-weight: 950;
+  color: #ffffff;
+}
+
+.c-name-zh {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.c-metrics-block {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.c-block-heading {
+  font-size: 11px;
+  font-weight: 850;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 4px;
+  letter-spacing: 0.05em;
+}
+
+.c-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  padding-bottom: 4px;
+}
+
+.c-m-label {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.c-m-value {
+  font-weight: 850;
+  color: #ffffff;
+}
+
+.c-ttk-block {
+  gap: 10px;
+}
+
+.c-ttk-target-box {
+  background: rgba(0, 0, 0, 0.35);
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.c-target-head {
+  font-size: 11px;
+  font-weight: 850;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.c-sub-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.btn-c-loadout {
+  width: 100%;
+  padding: 8px;
+  background: #d71442;
+  border: 0;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
 }
 
 /* ================= 配装实验室样式 ================= */

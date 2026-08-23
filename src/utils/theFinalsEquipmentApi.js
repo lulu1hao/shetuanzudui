@@ -9,6 +9,7 @@ import baseEquipmentData from '../data/finalsEquipmentData.json'
 const STORAGE_KEY_DATA = 'finals_equipment_data_v2'
 const STORAGE_KEY_LAST_SYNC = 'finals_equipment_last_sync_time'
 const STORAGE_KEY_CUSTOM_BUILDS = 'finals_custom_loadouts_v2'
+const STORAGE_KEY_COMPARE_WEAPONS = 'finals_compare_weapons_v2'
 
 // 热门预设竞技配装 (Competitive Meta Builds)
 export const PRESET_LOADOUTS = [
@@ -147,7 +148,6 @@ export async function syncEquipmentFromWiki() {
   const current = getEquipmentData()
   const items = current.items || []
 
-  // 1. 批量检查最新修订版本
   const titleChunks = []
   const titleList = items.map(it => it.name)
   for (let i = 0; i < titleList.length; i += 30) {
@@ -176,21 +176,9 @@ export async function syncEquipmentFromWiki() {
         if (!wikitext) continue
 
         const item = items.find(it => it.name.toLowerCase() === p.title.toLowerCase())
-        if (item) {
-          // 提取可能更新的数值（例如伤害、DPS、装填速度、射速）
-          const dmgMatch = wikitext.match(/\|\s*bodydamage\s*=\s*([^\n|]+)/i)
-          const critMatch = wikitext.match(/\|\s*crit\s*=\s*([^\n|]+)/i)
-          const dpsMatch = wikitext.match(/\|\s*dps\s*=\s*([^\n|]+)/i)
-          const rpmMatch = wikitext.match(/\|\s*rpm\s*=\s*([^\n|]+)/i)
-          const magMatch = wikitext.match(/\|\s*magazinesize\s*=\s*([^\n|]+)/i)
-          const quoteMatch = wikitext.match(/\{\{Quote\|text=([^}]+)\}\}/i)
-
-          if (dmgMatch && item.stats) item.stats.damage = dmgMatch[1].trim()
-          if (critMatch && item.stats) item.stats.crit = critMatch[1].trim()
-          if (dpsMatch && item.stats) item.stats.dps = dpsMatch[1].trim()
-          if (rpmMatch && item.stats) item.stats.rpm = rpmMatch[1].trim()
-          if (magMatch && item.stats) item.stats.magazine = magMatch[1].trim()
-          if (quoteMatch) item.description = quoteMatch[1].trim()
+        if (item && item.category !== 'weapons') {
+          const cdMatch = wikitext.match(/\|\s*cooldown\s*=\s*([^\n|]+)/i)
+          if (cdMatch && item.stats) item.stats.cooldown = cdMatch[1].trim()
           updatedCount++
         }
       }
@@ -372,5 +360,29 @@ export function importLoadoutCode(code) {
     }
   } catch {
     return null
+  }
+}
+
+/**
+ * 武器对比相关函数 (最多支持3把)
+ */
+export function getSavedCompareWeaponIds() {
+  try {
+    const str = localStorage.getItem(STORAGE_KEY_COMPARE_WEAPONS)
+    if (str) {
+      const parsed = JSON.parse(str)
+      if (Array.isArray(parsed)) return parsed.slice(0, 3)
+    }
+  } catch {
+    // fallback
+  }
+  return ['akm', 'fcar', 'xp_54']
+}
+
+export function saveCompareWeaponIds(ids) {
+  try {
+    localStorage.setItem(STORAGE_KEY_COMPARE_WEAPONS, JSON.stringify(ids.slice(0, 3)))
+  } catch {
+    // fallback
   }
 }
