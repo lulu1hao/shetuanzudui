@@ -207,7 +207,7 @@
                     <strong class="stat-val stat-highlight">{{ item.stats?.dps || '—' }}</strong>
                   </div>
                   <div v-if="item.category === 'weapons'" class="mini-stat-cell">
-                    <span class="stat-lbl">弹夹</span>
+                    <span class="stat-lbl">弹匣</span>
                     <strong class="stat-val">{{ item.stats?.magazine || '—' }}</strong>
                   </div>
 
@@ -250,67 +250,71 @@
                   <p class="quote-text">{{ activeInspectorItem.descZh || activeInspectorItem.description }}</p>
                 </div>
 
-                <!-- ================= 1. 击杀分析 TTK 与子弹数 (武器专属) ================= -->
-                <div v-if="activeInspectorItem.category === 'weapons'" class="inspector-ttk-section">
-                  <div class="ttk-section-header">
-                    <span class="matrix-title">击杀分析 (TTK & 所需子弹数)</span>
-                    <span class="ttk-subtitle">基于 100% 命中且无衰减测算</span>
+                <!-- ================= 1. WIKI 官方标准击杀数据表 (DAMAGE PROFILE) ================= -->
+                <div v-if="activeInspectorItem.category === 'weapons'" class="inspector-wiki-profile-section">
+                  <div class="profile-section-head">
+                    <span class="matrix-title">WIKI 击杀数据档案 (DAMAGE PROFILE)</span>
+                    <span class="ttk-subtitle">基于社区实测与游戏内帧率</span>
                   </div>
 
-                  <div class="ttk-table-grid">
-                    <!-- 轻型 150 HP -->
-                    <div class="ttk-card-item ttk-light-border">
-                      <div class="ttk-target-header">
-                        <span class="target-name">轻型 (LIGHT)</span>
-                        <span class="target-hp">150 HP</span>
-                      </div>
-                      <div class="ttk-data-row">
-                        <div class="ttk-metric">
-                          <span class="metric-lbl">全爆头 (Head)</span>
-                          <strong class="metric-val text-gold">{{ getWeaponTTK(activeInspectorItem, 'light', 'head') }}</strong>
-                        </div>
-                        <div class="ttk-metric">
-                          <span class="metric-lbl">全身体 (Body)</span>
-                          <strong class="metric-val">{{ getWeaponTTK(activeInspectorItem, 'light', 'body') }}</strong>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- 中型 250 HP -->
-                    <div class="ttk-card-item ttk-medium-border">
-                      <div class="ttk-target-header">
-                        <span class="target-name">中型 (MEDIUM)</span>
-                        <span class="target-hp">250 HP</span>
-                      </div>
-                      <div class="ttk-data-row">
-                        <div class="ttk-metric">
-                          <span class="metric-lbl">全爆头 (Head)</span>
-                          <strong class="metric-val text-gold">{{ getWeaponTTK(activeInspectorItem, 'medium', 'head') }}</strong>
-                        </div>
-                        <div class="ttk-metric">
-                          <span class="metric-lbl">全身体 (Body)</span>
-                          <strong class="metric-val">{{ getWeaponTTK(activeInspectorItem, 'medium', 'body') }}</strong>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- 重型 350 HP -->
-                    <div class="ttk-card-item ttk-heavy-border">
-                      <div class="ttk-target-header">
-                        <span class="target-name">重型 (HEAVY)</span>
-                        <span class="target-hp">350 HP</span>
-                      </div>
-                      <div class="ttk-data-row">
-                        <div class="ttk-metric">
-                          <span class="metric-lbl">全爆头 (Head)</span>
-                          <strong class="metric-val text-gold">{{ getWeaponTTK(activeInspectorItem, 'heavy', 'head') }}</strong>
-                        </div>
-                        <div class="ttk-metric">
-                          <span class="metric-lbl">全身体 (Body)</span>
-                          <strong class="metric-val">{{ getWeaponTTK(activeInspectorItem, 'heavy', 'body') }}</strong>
-                        </div>
-                      </div>
-                    </div>
+                  <table class="wiki-table-matrix">
+                    <thead>
+                      <tr>
+                        <th class="th-part">部位</th>
+                        <th class="th-target th-light">轻型 (150 HP)</th>
+                        <th class="th-target th-medium">中型 (250 HP)</th>
+                        <th class="th-target th-heavy">重型 (350 HP)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- 爆头行 -->
+                      <tr>
+                        <td class="td-part text-gold">全爆头 (Head)</td>
+                        <td class="td-target">
+                          <div class="dmg-cell">
+                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'head', 'light') }}</span>
+                            <strong class="cell-ttk text-gold">{{ getWeaponProfileTTK(activeInspectorItem, 'head', 'light') }}</strong>
+                          </div>
+                        </td>
+                        <td class="td-target">
+                          <div class="dmg-cell">
+                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'head', 'medium') }}</span>
+                            <strong class="cell-ttk text-gold">{{ getWeaponProfileTTK(activeInspectorItem, 'head', 'medium') }}</strong>
+                          </div>
+                        </td>
+                        <td class="td-target">
+                          <div class="dmg-cell">
+                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'head', 'heavy') }}</span>
+                            <strong class="cell-ttk text-gold">{{ getWeaponProfileTTK(activeInspectorItem, 'head', 'heavy') }}</strong>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- 身体行 -->
+                      <tr>
+                        <td class="td-part">全身体 (Body)</td>
+                        <td class="td-target">
+                          <div class="dmg-cell">
+                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'body', 'light') }}</span>
+                            <strong class="cell-ttk">{{ getWeaponProfileTTK(activeInspectorItem, 'body', 'light') }}</strong>
+                          </div>
+                        </td>
+                        <td class="td-target">
+                          <div class="dmg-cell">
+                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'body', 'medium') }}</span>
+                            <strong class="cell-ttk">{{ getWeaponProfileTTK(activeInspectorItem, 'body', 'medium') }}</strong>
+                          </div>
+                        </td>
+                        <td class="td-target">
+                          <div class="dmg-cell">
+                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'body', 'heavy') }}</span>
+                            <strong class="cell-ttk">{{ getWeaponProfileTTK(activeInspectorItem, 'body', 'heavy') }}</strong>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="wiki-calc-footnote">
+                    <span>* 测算标准：首发于 t = 0.00s 击发，TTK 为 (弹数 - 1) × 循环射击间隔</span>
                   </div>
                 </div>
 
@@ -400,7 +404,7 @@
             <div class="compare-header-bar">
               <div>
                 <h3 class="compare-main-title">枪械深度多维对比 (最多支持 3 把)</h3>
-                <span class="compare-sub-desc">直观比对伤害、DPS、换弹效率与轻/中/重型击杀时间 (TTK)</span>
+                <span class="compare-sub-desc">直观比对 Wiki 实测伤害、DPS、换弹效率与轻/中/重型击杀时间 (TTK)</span>
               </div>
               <div class="compare-header-actions">
                 <button type="button" class="btn-clear-compare" @click="clearCompareList">清空对比列表</button>
@@ -470,9 +474,9 @@
                     </div>
                   </div>
 
-                  <!-- 击杀时间 TTK 对比 (全爆头 / 全身体) -->
+                  <!-- Wiki 标准 Damage Profile 击杀时间对比 -->
                   <div class="c-metrics-block c-ttk-block">
-                    <h5 class="c-block-heading">击杀时间 (TTK) & 弹数对比</h5>
+                    <h5 class="c-block-heading">WIKI 击杀数据 (DAMAGE PROFILE)</h5>
 
                     <!-- 对 轻型 150 HP -->
                     <div class="c-ttk-target-box ttk-light-border">
@@ -481,11 +485,15 @@
                       </div>
                       <div class="c-sub-row">
                         <span>全爆头:</span>
-                        <strong class="text-gold">{{ getWeaponTTK(w, 'light', 'head') }}</strong>
+                        <strong class="text-gold">
+                          {{ getWeaponProfileShots(w, 'head', 'light') }} ({{ getWeaponProfileTTK(w, 'head', 'light') }})
+                        </strong>
                       </div>
                       <div class="c-sub-row">
                         <span>全身体:</span>
-                        <strong>{{ getWeaponTTK(w, 'light', 'body') }}</strong>
+                        <strong>
+                          {{ getWeaponProfileShots(w, 'body', 'light') }} ({{ getWeaponProfileTTK(w, 'body', 'light') }})
+                        </strong>
                       </div>
                     </div>
 
@@ -496,11 +504,15 @@
                       </div>
                       <div class="c-sub-row">
                         <span>全爆头:</span>
-                        <strong class="text-gold">{{ getWeaponTTK(w, 'medium', 'head') }}</strong>
+                        <strong class="text-gold">
+                          {{ getWeaponProfileShots(w, 'head', 'medium') }} ({{ getWeaponProfileTTK(w, 'head', 'medium') }})
+                        </strong>
                       </div>
                       <div class="c-sub-row">
                         <span>全身体:</span>
-                        <strong>{{ getWeaponTTK(w, 'medium', 'body') }}</strong>
+                        <strong>
+                          {{ getWeaponProfileShots(w, 'body', 'medium') }} ({{ getWeaponProfileTTK(w, 'body', 'medium') }})
+                        </strong>
                       </div>
                     </div>
 
@@ -511,11 +523,15 @@
                       </div>
                       <div class="c-sub-row">
                         <span>全爆头:</span>
-                        <strong class="text-gold">{{ getWeaponTTK(w, 'heavy', 'head') }}</strong>
+                        <strong class="text-gold">
+                          {{ getWeaponProfileShots(w, 'head', 'heavy') }} ({{ getWeaponProfileTTK(w, 'head', 'heavy') }})
+                        </strong>
                       </div>
                       <div class="c-sub-row">
                         <span>全身体:</span>
-                        <strong>{{ getWeaponTTK(w, 'heavy', 'body') }}</strong>
+                        <strong>
+                          {{ getWeaponProfileShots(w, 'body', 'heavy') }} ({{ getWeaponProfileTTK(w, 'body', 'heavy') }})
+                        </strong>
                       </div>
                     </div>
                   </div>
@@ -956,23 +972,27 @@ export default {
       return `Wiki 数据已同步 (${formatSyncTime(lastSyncTime.value)})`
     })
 
-    // 获取武器 TTK 格式化文本
-    const getWeaponTTK = (weapon, buildKey, hitType) => {
+    // Wiki 标准 Damage Profile 获取函数
+    const getWeaponProfileShots = (weapon, hitType, buildKey) => {
       if (!weapon) return '—'
-      const ttkData = weapon.ttk?.[buildKey]?.[hitType]
-      if (ttkData) {
-        return `${ttkData.shots} 枪 (${ttkData.ttk})`
+      const prof = weapon.damageProfile || weapon.ttk
+      const row = prof?.[hitType] || weapon.ttk?.[buildKey]?.[hitType]
+      const cell = row?.[buildKey] || (weapon.ttk?.[buildKey]?.[hitType])
+      if (cell && cell.shots !== undefined) {
+        return `${cell.shots} 发`
       }
+      return '—'
+    }
 
-      // 动态推算 fallback
-      const targetHp = buildKey === 'light' ? 150 : (buildKey === 'medium' ? 250 : 350)
-      const rawDamage = parseFloat(weapon.stats?.damage) || 20
-      const critMulti = parseFloat(weapon.stats?.crit) || 1.5
-      const dmgPerHit = hitType === 'head' ? rawDamage * critMulti : rawDamage
-      const shots = Math.ceil(targetHp / Math.max(1, dmgPerHit))
-      const rpm = parseFloat(weapon.stats?.rpm) || 600
-      const ttkSec = ((shots - 1) * (60 / rpm)).toFixed(2)
-      return `${shots} 枪 (${ttkSec}s)`
+    const getWeaponProfileTTK = (weapon, hitType, buildKey) => {
+      if (!weapon) return '—'
+      const prof = weapon.damageProfile || weapon.ttk
+      const row = prof?.[hitType]
+      const cell = row?.[buildKey] || (weapon.ttk?.[buildKey]?.[hitType])
+      if (cell && cell.ttk) {
+        return cell.ttk
+      }
+      return '—'
     }
 
     // 配装协同能力雷达计算
@@ -1107,7 +1127,7 @@ export default {
     // 复制装备数据
     const copyEquipmentSummary = async (item) => {
       if (!item) return
-      const text = `【THE FINALS 装备档案】${item.name} (${item.nameZh}) | 职业: ${item.build} | 类别: ${getCategoryBadgeLabel(item.category)} | 伤害: ${item.stats?.damage || '—'} | DPS: ${item.stats?.dps || '—'} | 弹夹: ${item.stats?.magazine || '—'}`
+      const text = `【THE FINALS 装备档案】${item.name} (${item.nameZh}) | 职业: ${item.build} | 类别: ${getCategoryBadgeLabel(item.category)} | 伤害: ${item.stats?.damage || '—'} | DPS: ${item.stats?.dps || '—'} | 弹匣: ${item.stats?.magazine || '—'}`
       try {
         if (navigator.clipboard?.writeText) {
           await navigator.clipboard.writeText(text)
@@ -1370,7 +1390,8 @@ export default {
       calculatedSynergy, savedCustomLoadouts, PRESET_LOADOUTS,
       isSlotPickerOpen, pickerSlotTitle, availablePickerItems, pickerSearchKeyword,
       compareWeaponIds, compareWeaponList, isInCompare, toggleCompareWeapon, removeFromCompare, clearCompareList,
-      getBuildBadgeLabel, getCategoryBadgeLabel, handleImgError, copyEquipmentSummary, getWeaponTTK,
+      getBuildBadgeLabel, getCategoryBadgeLabel, handleImgError, copyEquipmentSummary,
+      getWeaponProfileShots, getWeaponProfileTTK,
       switchBuilderBuild, loadItemIntoBuilder, openSlotPicker, selectItemForSlot, removeGadgetSlot,
       handleResetBuilder, handleSaveCurrentLoadout, handleDeleteSavedLoadout, applySavedLoadout, applyPreset,
       handleExportLoadoutCode, copyPresetCode, getEquipmentById
@@ -1847,7 +1868,7 @@ export default {
 /* 百科左右分栏 */
 .armory-split-layout {
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 1fr 440px;
   gap: 20px;
   align-items: start;
 }
@@ -2141,14 +2162,17 @@ export default {
   line-height: 1.4;
 }
 
-/* TTK 击杀分析面板 */
-.inspector-ttk-section {
+/* Wiki 官方标准 Damage Profile 击杀表格 */
+.inspector-wiki-profile-section {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px;
 }
 
-.ttk-section-header {
+.profile-section-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -2159,68 +2183,75 @@ export default {
   color: rgba(255, 255, 255, 0.4);
 }
 
-.ttk-table-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.ttk-card-item {
-  background: rgba(0, 0, 0, 0.35);
-  border-left: 3px solid rgba(255, 255, 255, 0.2);
-  padding: 8px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.ttk-card-item.ttk-light-border {
-  border-left-color: #38bdf8;
-}
-
-.ttk-card-item.ttk-medium-border {
-  border-left-color: #fbbf24;
-}
-
-.ttk-card-item.ttk-heavy-border {
-  border-left-color: #f87171;
-}
-
-.ttk-target-header {
-  display: flex;
-  justify-content: space-between;
+.wiki-table-matrix {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 11px;
+}
+
+.wiki-table-matrix th {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 4px;
+  text-align: center;
   font-weight: 850;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wiki-table-matrix th.th-part {
+  text-align: left;
+  padding-left: 8px;
+  width: 90px;
+}
+
+.wiki-table-matrix th.th-light {
+  color: #38bdf8;
+}
+
+.wiki-table-matrix th.th-medium {
+  color: #fbbf24;
+}
+
+.wiki-table-matrix th.th-heavy {
+  color: #f87171;
+}
+
+.wiki-table-matrix td {
+  padding: 6px 4px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.wiki-table-matrix td.td-part {
+  text-align: left;
+  padding-left: 8px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.dmg-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.cell-shots {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.cell-ttk {
+  font-size: 12px;
+  font-weight: 900;
   color: #ffffff;
 }
 
-.target-hp {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 10px;
-}
-
-.ttk-data-row {
-  display: flex;
-  gap: 12px;
-}
-
-.ttk-metric {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.04);
-  padding: 3px 6px;
-}
-
-.metric-lbl {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.metric-val {
-  font-size: 11px;
-  font-weight: 850;
+.wiki-calc-footnote {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.38);
+  line-height: 1.3;
 }
 
 .matrix-title, .tips-title {

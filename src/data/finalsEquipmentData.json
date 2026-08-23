@@ -72,33 +72,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/93R",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 7,
-            "ttk": "0.66s"
-          },
           "head": {
             "shots": 5,
-            "ttk": "0.42s"
+            "ttk": "0.46s"
+          },
+          "body": {
+            "shots": 7,
+            "ttk": "0.81s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 11,
-            "ttk": "1.02s"
-          },
           "head": {
             "shots": 7,
-            "ttk": "0.66s"
+            "ttk": "0.81s"
+          },
+          "body": {
+            "shots": 11,
+            "ttk": "1.27s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 15,
-            "ttk": "1.38s"
-          },
           "head": {
             "shots": 10,
-            "ttk": "0.96s"
+            "ttk": "1.21s"
+          },
+          "body": {
+            "shots": 15,
+            "ttk": "1.74s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.46s"
+          },
+          "medium": {
+            "shots": 7,
+            "ttk": "0.81s"
+          },
+          "heavy": {
+            "shots": 10,
+            "ttk": "1.21s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 7,
+            "ttk": "0.81s"
+          },
+          "medium": {
+            "shots": 11,
+            "ttk": "1.27s"
+          },
+          "heavy": {
+            "shots": 15,
+            "ttk": "1.74s"
           }
         }
       }
@@ -136,33 +166,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/ARN-220",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 9,
-            "ttk": "0.64s"
-          },
           "head": {
             "shots": 6,
             "ttk": "0.40s"
+          },
+          "body": {
+            "shots": 9,
+            "ttk": "0.64s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 15,
-            "ttk": "1.12s"
-          },
           "head": {
             "shots": 10,
             "ttk": "0.72s"
+          },
+          "body": {
+            "shots": 15,
+            "ttk": "1.12s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 21,
-            "ttk": "1.60s"
-          },
           "head": {
             "shots": 14,
             "ttk": "1.04s"
+          },
+          "body": {
+            "shots": 21,
+            "ttk": "1.60s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 6,
+            "ttk": "0.40s"
+          },
+          "medium": {
+            "shots": 10,
+            "ttk": "0.72s"
+          },
+          "heavy": {
+            "shots": 14,
+            "ttk": "1.04s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 9,
+            "ttk": "0.64s"
+          },
+          "medium": {
+            "shots": 15,
+            "ttk": "1.12s"
+          },
+          "heavy": {
+            "shots": 21,
+            "ttk": "1.60s"
           }
         }
       }
@@ -200,33 +260,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Dagger",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 3,
-            "ttk": "1.00s"
-          },
           "head": {
             "shots": 1,
             "ttk": "0.00s (背刺秒杀)"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "0.50s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 5,
-            "ttk": "2.00s"
-          },
           "head": {
             "shots": 1,
             "ttk": "0.00s (背刺秒杀)"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "1.50s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 7,
-            "ttk": "3.00s"
-          },
           "head": {
             "shots": 2,
             "ttk": "0.50s (背刺+平A)"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "2.00s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 1,
+            "ttk": "0.00s (背刺秒杀)"
+          },
+          "medium": {
+            "shots": 1,
+            "ttk": "0.00s (背刺秒杀)"
+          },
+          "heavy": {
+            "shots": 2,
+            "ttk": "0.50s (背刺+平A)"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.50s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "1.50s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "2.00s"
           }
         }
       }
@@ -264,33 +354,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/LH1",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 4,
-            "ttk": "0.67s"
-          },
           "head": {
             "shots": 2,
             "ttk": "0.22s"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "0.67s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 6,
-            "ttk": "1.11s"
-          },
           "head": {
             "shots": 3,
             "ttk": "0.44s"
+          },
+          "body": {
+            "shots": 6,
+            "ttk": "1.11s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 8,
-            "ttk": "1.56s"
-          },
           "head": {
             "shots": 4,
             "ttk": "0.67s"
+          },
+          "body": {
+            "shots": 8,
+            "ttk": "1.56s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.22s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "0.44s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "0.67s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 4,
+            "ttk": "0.67s"
+          },
+          "medium": {
+            "shots": 6,
+            "ttk": "1.11s"
+          },
+          "heavy": {
+            "shots": 8,
+            "ttk": "1.56s"
           }
         }
       }
@@ -328,33 +448,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/M11",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 10,
-            "ttk": "0.54s"
-          },
           "head": {
             "shots": 7,
             "ttk": "0.36s"
+          },
+          "body": {
+            "shots": 10,
+            "ttk": "0.54s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 16,
-            "ttk": "0.90s"
-          },
           "head": {
             "shots": 11,
             "ttk": "0.60s"
+          },
+          "body": {
+            "shots": 16,
+            "ttk": "0.90s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 22,
-            "ttk": "1.26s"
-          },
           "head": {
             "shots": 15,
             "ttk": "0.84s"
+          },
+          "body": {
+            "shots": 22,
+            "ttk": "1.26s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 7,
+            "ttk": "0.36s"
+          },
+          "medium": {
+            "shots": 11,
+            "ttk": "0.60s"
+          },
+          "heavy": {
+            "shots": 15,
+            "ttk": "0.84s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 10,
+            "ttk": "0.54s"
+          },
+          "medium": {
+            "shots": 16,
+            "ttk": "0.90s"
+          },
+          "heavy": {
+            "shots": 22,
+            "ttk": "1.26s"
           }
         }
       }
@@ -392,31 +542,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/M26_Matter",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.71s"
           },
-          "head": {
+          "body": {
             "shots": 2,
             "ttk": "0.71s"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.43s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "1.43s"
           }
         },
         "heavy": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.43s"
           },
-          "head": {
+          "body": {
+            "shots": 3,
+            "ttk": "1.43s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.71s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.43s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "1.43s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.71s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.43s"
+          },
+          "heavy": {
             "shots": 3,
             "ttk": "1.43s"
           }
@@ -456,33 +636,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Recurve_Bow",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.77s"
           },
-          "head": {
-            "shots": 1,
-            "ttk": "0.00s (满弓秒杀)"
-          }
-        },
-        "medium": {
           "body": {
             "shots": 3,
             "ttk": "1.54s"
-          },
+          }
+        },
+        "medium": {
           "head": {
-            "shots": 2,
-            "ttk": "0.77s"
+            "shots": 3,
+            "ttk": "1.54s"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "3.08s"
           }
         },
         "heavy": {
-          "body": {
+          "head": {
             "shots": 4,
             "ttk": "2.31s"
           },
-          "head": {
+          "body": {
+            "shots": 6,
+            "ttk": "3.85s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
             "shots": 2,
             "ttk": "0.77s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.54s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "2.31s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 3,
+            "ttk": "1.54s"
+          },
+          "medium": {
+            "shots": 5,
+            "ttk": "3.08s"
+          },
+          "heavy": {
+            "shots": 6,
+            "ttk": "3.85s"
           }
         }
       }
@@ -520,33 +730,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/SH1900",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 1,
             "ttk": "0.00s (瞬秒)"
           },
-          "head": {
+          "body": {
             "shots": 1,
-            "ttk": "0.00s"
+            "ttk": "0.00s (瞬秒)"
           }
         },
         "medium": {
-          "body": {
-            "shots": 2,
-            "ttk": "0.30s"
-          },
           "head": {
             "shots": 2,
-            "ttk": "0.30s"
+            "ttk": "0.75s"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "0.75s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 2,
-            "ttk": "0.30s"
-          },
           "head": {
             "shots": 2,
-            "ttk": "0.30s"
+            "ttk": "0.75s"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "0.75s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 1,
+            "ttk": "0.00s (瞬秒)"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "0.75s"
+          },
+          "heavy": {
+            "shots": 2,
+            "ttk": "0.75s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 1,
+            "ttk": "0.00s (瞬秒)"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "0.75s"
+          },
+          "heavy": {
+            "shots": 2,
+            "ttk": "0.75s"
           }
         }
       }
@@ -584,33 +824,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/SR-84",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 2,
-            "ttk": "1.33s"
-          },
           "head": {
             "shots": 1,
             "ttk": "0.00s (爆头秒杀)"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "1.33s"
           }
         },
         "medium": {
+          "head": {
+            "shots": 2,
+            "ttk": "1.33s"
+          },
           "body": {
             "shots": 3,
             "ttk": "2.67s"
-          },
+          }
+        },
+        "heavy": {
           "head": {
+            "shots": 2,
+            "ttk": "1.33s"
+          },
+          "body": {
+            "shots": 3,
+            "ttk": "2.67s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 1,
+            "ttk": "0.00s (爆头秒杀)"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "1.33s"
+          },
+          "heavy": {
             "shots": 2,
             "ttk": "1.33s"
           }
         },
-        "heavy": {
-          "body": {
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "1.33s"
+          },
+          "medium": {
             "shots": 3,
             "ttk": "2.67s"
           },
-          "head": {
-            "shots": 2,
-            "ttk": "1.33s"
+          "heavy": {
+            "shots": 3,
+            "ttk": "2.67s"
           }
         }
       }
@@ -648,31 +918,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Sword",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.50s (突刺+平A)"
           },
-          "head": {
+          "body": {
             "shots": 2,
-            "ttk": "0.50s"
+            "ttk": "0.50s (突刺+平A)"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.00s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "1.00s"
           }
         },
         "heavy": {
+          "head": {
+            "shots": 4,
+            "ttk": "1.50s"
+          },
           "body": {
             "shots": 4,
-            "ttk": "1.50s (2突刺+1平A)"
+            "ttk": "1.50s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.50s (突刺+平A)"
           },
-          "head": {
+          "medium": {
+            "shots": 3,
+            "ttk": "1.00s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "1.50s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.50s (突刺+平A)"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.00s"
+          },
+          "heavy": {
             "shots": 4,
             "ttk": "1.50s"
           }
@@ -712,33 +1012,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Throwing_Knives",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 3,
-            "ttk": "0.67s"
-          },
           "head": {
             "shots": 2,
-            "ttk": "0.33s"
+            "ttk": "0.11s"
+          },
+          "body": {
+            "shots": 3,
+            "ttk": "0.78s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 5,
-            "ttk": "1.33s"
-          },
           "head": {
             "shots": 3,
-            "ttk": "0.67s"
+            "ttk": "0.78s"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "1.57s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 6,
-            "ttk": "1.67s"
-          },
           "head": {
             "shots": 4,
-            "ttk": "1.00s"
+            "ttk": "0.89s"
+          },
+          "body": {
+            "shots": 6,
+            "ttk": "1.68s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.11s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "0.78s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "0.89s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.78s"
+          },
+          "medium": {
+            "shots": 5,
+            "ttk": "1.57s"
+          },
+          "heavy": {
+            "shots": 6,
+            "ttk": "1.68s"
           }
         }
       }
@@ -776,33 +1106,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/V9S",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 4,
-            "ttk": "0.50s"
-          },
           "head": {
             "shots": 3,
             "ttk": "0.33s"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "0.50s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 7,
-            "ttk": "1.00s"
-          },
           "head": {
             "shots": 5,
             "ttk": "0.67s"
+          },
+          "body": {
+            "shots": 7,
+            "ttk": "1.00s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 10,
-            "ttk": "1.50s"
-          },
           "head": {
             "shots": 7,
             "ttk": "1.00s"
+          },
+          "body": {
+            "shots": 10,
+            "ttk": "1.50s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.33s"
+          },
+          "medium": {
+            "shots": 5,
+            "ttk": "0.67s"
+          },
+          "heavy": {
+            "shots": 7,
+            "ttk": "1.00s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 4,
+            "ttk": "0.50s"
+          },
+          "medium": {
+            "shots": 7,
+            "ttk": "1.00s"
+          },
+          "heavy": {
+            "shots": 10,
+            "ttk": "1.50s"
           }
         }
       }
@@ -840,33 +1200,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/XP-54",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 9,
-            "ttk": "0.55s"
-          },
           "head": {
-            "shots": 6,
-            "ttk": "0.34s"
-          }
-        },
-        "medium": {
-          "body": {
-            "shots": 14,
-            "ttk": "0.89s"
+            "shots": 7,
+            "ttk": "0.41s"
           },
-          "head": {
+          "body": {
             "shots": 10,
             "ttk": "0.61s"
           }
         },
-        "heavy": {
-          "body": {
-            "shots": 20,
-            "ttk": "1.30s"
-          },
+        "medium": {
           "head": {
-            "shots": 13,
-            "ttk": "0.82s"
+            "shots": 11,
+            "ttk": "0.68s"
+          },
+          "body": {
+            "shots": 16,
+            "ttk": "1.02s"
+          }
+        },
+        "heavy": {
+          "head": {
+            "shots": 15,
+            "ttk": "0.96s"
+          },
+          "body": {
+            "shots": 22,
+            "ttk": "1.43s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 7,
+            "ttk": "0.41s"
+          },
+          "medium": {
+            "shots": 11,
+            "ttk": "0.68s"
+          },
+          "heavy": {
+            "shots": 15,
+            "ttk": "0.96s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 10,
+            "ttk": "0.61s"
+          },
+          "medium": {
+            "shots": 16,
+            "ttk": "1.02s"
+          },
+          "heavy": {
+            "shots": 22,
+            "ttk": "1.43s"
           }
         }
       }
@@ -904,33 +1294,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/AKM",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 8,
-            "ttk": "0.70s"
-          },
           "head": {
             "shots": 5,
             "ttk": "0.40s"
-          }
-        },
-        "medium": {
-          "body": {
-            "shots": 12,
-            "ttk": "1.10s"
           },
-          "head": {
+          "body": {
             "shots": 8,
             "ttk": "0.70s"
           }
         },
-        "heavy": {
-          "body": {
-            "shots": 17,
-            "ttk": "1.60s"
+        "medium": {
+          "head": {
+            "shots": 8,
+            "ttk": "0.70s"
           },
+          "body": {
+            "shots": 12,
+            "ttk": "1.10s"
+          }
+        },
+        "heavy": {
           "head": {
             "shots": 12,
             "ttk": "1.10s"
+          },
+          "body": {
+            "shots": 17,
+            "ttk": "1.60s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.40s"
+          },
+          "medium": {
+            "shots": 8,
+            "ttk": "0.70s"
+          },
+          "heavy": {
+            "shots": 12,
+            "ttk": "1.10s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 8,
+            "ttk": "0.70s"
+          },
+          "medium": {
+            "shots": 12,
+            "ttk": "1.10s"
+          },
+          "heavy": {
+            "shots": 17,
+            "ttk": "1.60s"
           }
         }
       }
@@ -968,33 +1388,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/CB-01_Repeater",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.77s"
           },
-          "head": {
+          "body": {
             "shots": 2,
-            "ttk": "0.77s (或1爆头1身体)"
+            "ttk": "0.77s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 3,
-            "ttk": "1.54s"
-          },
           "head": {
             "shots": 2,
             "ttk": "0.77s"
+          },
+          "body": {
+            "shots": 3,
+            "ttk": "1.54s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 5,
-            "ttk": "3.08s"
-          },
           "head": {
             "shots": 3,
             "ttk": "1.54s"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "3.08s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.77s"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "0.77s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "1.54s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.77s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.54s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "3.08s"
           }
         }
       }
@@ -1032,31 +1482,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Cerberus_12GA",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 2,
-            "ttk": "0.60s (加灼烧瞬秒)"
-          },
           "head": {
+            "shots": 2,
+            "ttk": "0.60s"
+          },
+          "body": {
             "shots": 2,
             "ttk": "0.60s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 3,
-            "ttk": "1.20s (或2枪+灼烧斩杀)"
-          },
           "head": {
+            "shots": 3,
+            "ttk": "1.20s"
+          },
+          "body": {
             "shots": 3,
             "ttk": "1.20s"
           }
         },
         "heavy": {
+          "head": {
+            "shots": 3,
+            "ttk": "1.20s"
+          },
           "body": {
             "shots": 3,
-            "ttk": "1.20s (3发全中+灼烧击杀)"
+            "ttk": "1.20s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.60s"
           },
-          "head": {
+          "medium": {
+            "shots": 3,
+            "ttk": "1.20s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "1.20s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.60s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.20s"
+          },
+          "heavy": {
             "shots": 3,
             "ttk": "1.20s"
           }
@@ -1096,33 +1576,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Chimera-XB",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 4,
-            "ttk": "0.69s"
-          },
           "head": {
             "shots": 3,
             "ttk": "0.46s"
-          }
-        },
-        "medium": {
-          "body": {
-            "shots": 6,
-            "ttk": "1.15s"
           },
-          "head": {
+          "body": {
             "shots": 4,
             "ttk": "0.69s"
           }
         },
-        "heavy": {
-          "body": {
-            "shots": 8,
-            "ttk": "1.62s"
+        "medium": {
+          "head": {
+            "shots": 4,
+            "ttk": "0.69s"
           },
+          "body": {
+            "shots": 6,
+            "ttk": "1.15s"
+          }
+        },
+        "heavy": {
           "head": {
             "shots": 6,
             "ttk": "1.15s"
+          },
+          "body": {
+            "shots": 8,
+            "ttk": "1.62s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.46s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "0.69s"
+          },
+          "heavy": {
+            "shots": 6,
+            "ttk": "1.15s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 4,
+            "ttk": "0.69s"
+          },
+          "medium": {
+            "shots": 6,
+            "ttk": "1.15s"
+          },
+          "heavy": {
+            "shots": 8,
+            "ttk": "1.62s"
           }
         }
       }
@@ -1160,33 +1670,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/CL-40",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.82s"
           },
-          "head": {
+          "body": {
             "shots": 2,
             "ttk": "0.82s"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.64s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "1.64s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 4,
-            "ttk": "2.46s"
-          },
           "head": {
             "shots": 4,
-            "ttk": "2.46s"
+            "ttk": "2.47s"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "2.47s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.82s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.64s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "2.47s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.82s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.64s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "2.47s"
           }
         }
       }
@@ -1224,33 +1764,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Dual_Blades",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "0.92s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "0.92s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 4,
-            "ttk": "1.38s"
-          },
           "head": {
-            "shots": 4,
-            "ttk": "1.38s"
+            "shots": 5,
+            "ttk": "1.84s"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "1.84s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 6,
-            "ttk": "2.30s"
-          },
           "head": {
-            "shots": 6,
-            "ttk": "2.30s"
+            "shots": 7,
+            "ttk": "2.76s"
+          },
+          "body": {
+            "shots": 7,
+            "ttk": "2.76s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.92s"
+          },
+          "medium": {
+            "shots": 5,
+            "ttk": "1.84s"
+          },
+          "heavy": {
+            "shots": 7,
+            "ttk": "2.76s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.92s"
+          },
+          "medium": {
+            "shots": 5,
+            "ttk": "1.84s"
+          },
+          "heavy": {
+            "shots": 7,
+            "ttk": "2.76s"
           }
         }
       }
@@ -1288,33 +1858,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/FAMAS",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 7,
-            "ttk": "0.65s"
-          },
           "head": {
             "shots": 5,
-            "ttk": "0.38s"
+            "ttk": "0.44s"
+          },
+          "body": {
+            "shots": 7,
+            "ttk": "0.76s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 11,
-            "ttk": "1.05s"
-          },
           "head": {
             "shots": 7,
-            "ttk": "0.65s"
+            "ttk": "0.76s"
+          },
+          "body": {
+            "shots": 11,
+            "ttk": "1.20s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 15,
-            "ttk": "1.45s"
-          },
           "head": {
             "shots": 10,
-            "ttk": "0.95s"
+            "ttk": "1.14s"
+          },
+          "body": {
+            "shots": 15,
+            "ttk": "1.64s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.44s"
+          },
+          "medium": {
+            "shots": 7,
+            "ttk": "0.76s"
+          },
+          "heavy": {
+            "shots": 10,
+            "ttk": "1.14s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 7,
+            "ttk": "0.76s"
+          },
+          "medium": {
+            "shots": 11,
+            "ttk": "1.20s"
+          },
+          "heavy": {
+            "shots": 15,
+            "ttk": "1.64s"
           }
         }
       }
@@ -1352,33 +1952,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/FCAR",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 7,
-            "ttk": "0.68s"
-          },
           "head": {
             "shots": 5,
             "ttk": "0.45s"
+          },
+          "body": {
+            "shots": 7,
+            "ttk": "0.68s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 11,
-            "ttk": "1.13s"
-          },
           "head": {
             "shots": 8,
             "ttk": "0.79s"
+          },
+          "body": {
+            "shots": 11,
+            "ttk": "1.13s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 16,
-            "ttk": "1.70s"
-          },
           "head": {
             "shots": 11,
             "ttk": "1.13s"
+          },
+          "body": {
+            "shots": 16,
+            "ttk": "1.70s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.45s"
+          },
+          "medium": {
+            "shots": 8,
+            "ttk": "0.79s"
+          },
+          "heavy": {
+            "shots": 11,
+            "ttk": "1.13s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 7,
+            "ttk": "0.68s"
+          },
+          "medium": {
+            "shots": 11,
+            "ttk": "1.13s"
+          },
+          "heavy": {
+            "shots": 16,
+            "ttk": "1.70s"
           }
         }
       }
@@ -1416,33 +2046,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Model_1887",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 2,
-            "ttk": "0.83s"
-          },
           "head": {
             "shots": 2,
-            "ttk": "0.83s"
+            "ttk": "0.87s"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "0.87s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 2,
-            "ttk": "0.83s"
-          },
           "head": {
-            "shots": 2,
-            "ttk": "0.83s"
+            "shots": 3,
+            "ttk": "1.74s"
+          },
+          "body": {
+            "shots": 3,
+            "ttk": "1.74s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 3,
-            "ttk": "1.67s"
-          },
           "head": {
             "shots": 3,
-            "ttk": "1.67s"
+            "ttk": "1.74s"
+          },
+          "body": {
+            "shots": 3,
+            "ttk": "1.74s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.87s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.74s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "1.74s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.87s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.74s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "1.74s"
           }
         }
       }
@@ -1480,33 +2140,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/P90",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 11,
-            "ttk": "0.67s"
-          },
           "head": {
             "shots": 8,
             "ttk": "0.47s"
+          },
+          "body": {
+            "shots": 11,
+            "ttk": "0.67s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 18,
-            "ttk": "1.13s"
-          },
           "head": {
             "shots": 12,
             "ttk": "0.73s"
+          },
+          "body": {
+            "shots": 18,
+            "ttk": "1.13s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 25,
-            "ttk": "1.60s"
-          },
           "head": {
             "shots": 17,
             "ttk": "1.07s"
+          },
+          "body": {
+            "shots": 25,
+            "ttk": "1.60s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 8,
+            "ttk": "0.47s"
+          },
+          "medium": {
+            "shots": 12,
+            "ttk": "0.73s"
+          },
+          "heavy": {
+            "shots": 17,
+            "ttk": "1.07s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 11,
+            "ttk": "0.67s"
+          },
+          "medium": {
+            "shots": 18,
+            "ttk": "1.13s"
+          },
+          "heavy": {
+            "shots": 25,
+            "ttk": "1.60s"
           }
         }
       }
@@ -1544,33 +2234,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Pike-556",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 4,
-            "ttk": "0.90s"
-          },
           "head": {
             "shots": 2,
             "ttk": "0.30s"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "0.90s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 6,
-            "ttk": "1.50s"
-          },
           "head": {
             "shots": 3,
             "ttk": "0.60s"
+          },
+          "body": {
+            "shots": 6,
+            "ttk": "1.50s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 8,
-            "ttk": "2.10s"
-          },
           "head": {
             "shots": 5,
             "ttk": "1.20s"
+          },
+          "body": {
+            "shots": 8,
+            "ttk": "2.10s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.30s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "0.60s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "1.20s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 4,
+            "ttk": "0.90s"
+          },
+          "medium": {
+            "shots": 6,
+            "ttk": "1.50s"
+          },
+          "heavy": {
+            "shots": 8,
+            "ttk": "2.10s"
           }
         }
       }
@@ -1608,33 +2328,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/R_.357",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 3,
-            "ttk": "0.86s"
-          },
-          "head": {
-            "shots": 2,
-            "ttk": "0.43s (1爆头1身秒杀)"
-          }
-        },
-        "medium": {
-          "body": {
-            "shots": 4,
-            "ttk": "1.29s"
-          },
           "head": {
             "shots": 2,
             "ttk": "0.43s"
+          },
+          "body": {
+            "shots": 3,
+            "ttk": "0.86s"
+          }
+        },
+        "medium": {
+          "head": {
+            "shots": 2,
+            "ttk": "0.43s"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "1.29s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 5,
-            "ttk": "1.71s"
-          },
           "head": {
             "shots": 3,
             "ttk": "0.86s"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "1.71s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.43s"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "0.43s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "0.86s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.86s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "1.29s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "1.71s"
           }
         }
       }
@@ -1672,31 +2422,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Riot_Shield",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.75s"
           },
-          "head": {
+          "body": {
             "shots": 2,
             "ttk": "0.75s"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.50s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "1.50s"
           }
         },
         "heavy": {
-          "body": {
+          "head": {
             "shots": 5,
             "ttk": "3.00s"
           },
-          "head": {
+          "body": {
+            "shots": 5,
+            "ttk": "3.00s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.75s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.50s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "3.00s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.75s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.50s"
+          },
+          "heavy": {
             "shots": 5,
             "ttk": "3.00s"
           }
@@ -1768,33 +2548,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/BFR_Titan",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 2,
-            "ttk": "0.84s"
-          },
           "head": {
             "shots": 2,
-            "ttk": "0.84s (1爆头1身秒杀)"
+            "ttk": "0.85s"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "0.85s"
           }
         },
         "medium": {
+          "head": {
+            "shots": 2,
+            "ttk": "0.85s"
+          },
           "body": {
             "shots": 3,
             "ttk": "1.69s"
-          },
-          "head": {
-            "shots": 2,
-            "ttk": "0.84s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 4,
-            "ttk": "2.53s"
-          },
           "head": {
             "shots": 3,
             "ttk": "1.69s"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "2.54s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.85s"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "0.85s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "1.69s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.85s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.69s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "2.54s"
           }
         }
       }
@@ -1832,31 +2642,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Flamethrower",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 5,
             "ttk": "0.70s"
           },
-          "head": {
+          "body": {
             "shots": 5,
             "ttk": "0.70s"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 8,
             "ttk": "1.20s"
           },
-          "head": {
+          "body": {
             "shots": 8,
             "ttk": "1.20s"
           }
         },
         "heavy": {
-          "body": {
+          "head": {
             "shots": 11,
             "ttk": "1.75s"
           },
-          "head": {
+          "body": {
+            "shots": 11,
+            "ttk": "1.75s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.70s"
+          },
+          "medium": {
+            "shots": 8,
+            "ttk": "1.20s"
+          },
+          "heavy": {
+            "shots": 11,
+            "ttk": "1.75s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.70s"
+          },
+          "medium": {
+            "shots": 8,
+            "ttk": "1.20s"
+          },
+          "heavy": {
             "shots": 11,
             "ttk": "1.75s"
           }
@@ -1896,31 +2736,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/KS-23",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.77s"
           },
-          "head": {
+          "body": {
             "shots": 2,
             "ttk": "0.77s"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.54s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "1.54s"
           }
         },
         "heavy": {
-          "body": {
+          "head": {
             "shots": 4,
             "ttk": "2.31s"
           },
-          "head": {
+          "body": {
+            "shots": 4,
+            "ttk": "2.31s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.77s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.54s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "2.31s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.77s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.54s"
+          },
+          "heavy": {
             "shots": 4,
             "ttk": "2.31s"
           }
@@ -1960,33 +2830,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Lewis_Gun",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 7,
-            "ttk": "0.72s"
-          },
           "head": {
             "shots": 5,
             "ttk": "0.48s"
+          },
+          "body": {
+            "shots": 7,
+            "ttk": "0.72s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 12,
-            "ttk": "1.32s"
-          },
           "head": {
             "shots": 8,
             "ttk": "0.84s"
+          },
+          "body": {
+            "shots": 11,
+            "ttk": "1.20s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 16,
-            "ttk": "1.80s"
-          },
           "head": {
             "shots": 11,
             "ttk": "1.20s"
+          },
+          "body": {
+            "shots": 16,
+            "ttk": "1.80s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.48s"
+          },
+          "medium": {
+            "shots": 8,
+            "ttk": "0.84s"
+          },
+          "heavy": {
+            "shots": 11,
+            "ttk": "1.20s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 7,
+            "ttk": "0.72s"
+          },
+          "medium": {
+            "shots": 11,
+            "ttk": "1.20s"
+          },
+          "heavy": {
+            "shots": 16,
+            "ttk": "1.80s"
           }
         }
       }
@@ -2024,33 +2924,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/M134_Minigun",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 14,
-            "ttk": "0.52s (+预热)"
-          },
           "head": {
             "shots": 11,
-            "ttk": "0.40s (+预热)"
+            "ttk": "1.62s (含预热)"
+          },
+          "body": {
+            "shots": 14,
+            "ttk": "1.75s (含预热)"
           }
         },
         "medium": {
-          "body": {
-            "shots": 23,
-            "ttk": "0.88s (+预热)"
-          },
           "head": {
             "shots": 18,
-            "ttk": "0.68s (+预热)"
+            "ttk": "1.91s (含预热)"
+          },
+          "body": {
+            "shots": 23,
+            "ttk": "2.27s (含预热)"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 32,
-            "ttk": "1.24s (+预热)"
-          },
           "head": {
             "shots": 24,
-            "ttk": "0.92s (+预热)"
+            "ttk": "2.15s (含预热)"
+          },
+          "body": {
+            "shots": 32,
+            "ttk": "2.47s (含预热)"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 11,
+            "ttk": "1.62s (含预热)"
+          },
+          "medium": {
+            "shots": 18,
+            "ttk": "1.91s (含预热)"
+          },
+          "heavy": {
+            "shots": 24,
+            "ttk": "2.15s (含预热)"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 14,
+            "ttk": "1.75s (含预热)"
+          },
+          "medium": {
+            "shots": 23,
+            "ttk": "2.27s (含预热)"
+          },
+          "heavy": {
+            "shots": 32,
+            "ttk": "2.47s (含预热)"
           }
         }
       }
@@ -2088,33 +3018,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/M60",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 8,
-            "ttk": "0.72s"
-          },
           "head": {
             "shots": 5,
             "ttk": "0.41s"
+          },
+          "body": {
+            "shots": 8,
+            "ttk": "0.72s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 13,
-            "ttk": "1.24s"
-          },
           "head": {
             "shots": 9,
             "ttk": "0.83s"
+          },
+          "body": {
+            "shots": 13,
+            "ttk": "1.24s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 18,
-            "ttk": "1.76s"
-          },
           "head": {
             "shots": 12,
             "ttk": "1.14s"
+          },
+          "body": {
+            "shots": 18,
+            "ttk": "1.76s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.41s"
+          },
+          "medium": {
+            "shots": 9,
+            "ttk": "0.83s"
+          },
+          "heavy": {
+            "shots": 12,
+            "ttk": "1.14s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 8,
+            "ttk": "0.72s"
+          },
+          "medium": {
+            "shots": 13,
+            "ttk": "1.24s"
+          },
+          "heavy": {
+            "shots": 18,
+            "ttk": "1.76s"
           }
         }
       }
@@ -2152,31 +3112,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/MGL32",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.67s"
           },
-          "head": {
+          "body": {
             "shots": 2,
             "ttk": "0.67s"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.33s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "1.33s"
           }
         },
         "heavy": {
-          "body": {
+          "head": {
             "shots": 5,
             "ttk": "2.67s"
           },
-          "head": {
+          "body": {
+            "shots": 5,
+            "ttk": "2.67s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.67s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.33s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "2.67s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.67s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.33s"
+          },
+          "heavy": {
             "shots": 5,
             "ttk": "2.67s"
           }
@@ -2216,33 +3206,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/SA1216",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 3,
-            "ttk": "0.40s"
-          },
           "head": {
             "shots": 3,
-            "ttk": "0.40s"
+            "ttk": "0.63s"
+          },
+          "body": {
+            "shots": 3,
+            "ttk": "0.63s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 4,
-            "ttk": "0.60s"
-          },
           "head": {
             "shots": 4,
-            "ttk": "0.60s"
+            "ttk": "0.95s"
+          },
+          "body": {
+            "shots": 4,
+            "ttk": "0.95s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 5,
-            "ttk": "1.20s"
-          },
           "head": {
             "shots": 5,
-            "ttk": "1.20s"
+            "ttk": "1.75s"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "1.75s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.63s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "0.95s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "1.75s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 3,
+            "ttk": "0.63s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "0.95s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "1.75s"
           }
         }
       }
@@ -2280,33 +3300,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/ShAK-50",
       "ttk": {
         "light": {
-          "body": {
-            "shots": 5,
-            "ttk": "0.57s"
-          },
           "head": {
             "shots": 4,
             "ttk": "0.43s"
+          },
+          "body": {
+            "shots": 5,
+            "ttk": "0.57s"
           }
         },
         "medium": {
-          "body": {
-            "shots": 9,
-            "ttk": "1.14s"
-          },
           "head": {
             "shots": 6,
             "ttk": "0.71s"
+          },
+          "body": {
+            "shots": 9,
+            "ttk": "1.14s"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 12,
-            "ttk": "1.57s"
-          },
           "head": {
             "shots": 8,
             "ttk": "1.00s"
+          },
+          "body": {
+            "shots": 12,
+            "ttk": "1.57s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 4,
+            "ttk": "0.43s"
+          },
+          "medium": {
+            "shots": 6,
+            "ttk": "0.71s"
+          },
+          "heavy": {
+            "shots": 8,
+            "ttk": "1.00s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 5,
+            "ttk": "0.57s"
+          },
+          "medium": {
+            "shots": 9,
+            "ttk": "1.14s"
+          },
+          "heavy": {
+            "shots": 12,
+            "ttk": "1.57s"
           }
         }
       }
@@ -2344,33 +3394,63 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Sledgehammer",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 1,
             "ttk": "0.00s (重击秒杀)"
           },
-          "head": {
+          "body": {
             "shots": 1,
-            "ttk": "0.00s"
+            "ttk": "0.00s (重击秒杀)"
           }
         },
         "medium": {
-          "body": {
-            "shots": 2,
-            "ttk": "0.85s (1重+1轻)"
-          },
           "head": {
             "shots": 2,
-            "ttk": "0.85s"
+            "ttk": "0.85s (重击+轻击)"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "0.85s (重击+轻击)"
           }
         },
         "heavy": {
-          "body": {
-            "shots": 2,
-            "ttk": "1.60s (2次重砸)"
-          },
           "head": {
             "shots": 2,
-            "ttk": "1.60s"
+            "ttk": "1.60s (2次重击)"
+          },
+          "body": {
+            "shots": 2,
+            "ttk": "1.60s (2次重击)"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 1,
+            "ttk": "0.00s (重击秒杀)"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "0.85s (重击+轻击)"
+          },
+          "heavy": {
+            "shots": 2,
+            "ttk": "1.60s (2次重击)"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 1,
+            "ttk": "0.00s (重击秒杀)"
+          },
+          "medium": {
+            "shots": 2,
+            "ttk": "0.85s (重击+轻击)"
+          },
+          "heavy": {
+            "shots": 2,
+            "ttk": "1.60s (2次重击)"
           }
         }
       }
@@ -2408,31 +3488,61 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Spear",
       "ttk": {
         "light": {
-          "body": {
+          "head": {
             "shots": 2,
             "ttk": "0.75s"
           },
-          "head": {
+          "body": {
             "shots": 2,
             "ttk": "0.75s"
           }
         },
         "medium": {
-          "body": {
+          "head": {
             "shots": 3,
             "ttk": "1.50s"
           },
-          "head": {
+          "body": {
             "shots": 3,
             "ttk": "1.50s"
           }
         },
         "heavy": {
-          "body": {
+          "head": {
             "shots": 4,
             "ttk": "2.25s"
           },
-          "head": {
+          "body": {
+            "shots": 4,
+            "ttk": "2.25s"
+          }
+        }
+      },
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.75s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.50s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "2.25s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.75s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "1.50s"
+          },
+          "heavy": {
             "shots": 4,
             "ttk": "2.25s"
           }

@@ -1,0 +1,906 @@
+{
+  "93r": {
+    "name": "93R",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 5,
+          "ttk": "0.46s"
+        },
+        "medium": {
+          "shots": 7,
+          "ttk": "0.81s"
+        },
+        "heavy": {
+          "shots": 10,
+          "ttk": "1.21s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 7,
+          "ttk": "0.81s"
+        },
+        "medium": {
+          "shots": 11,
+          "ttk": "1.27s"
+        },
+        "heavy": {
+          "shots": 15,
+          "ttk": "1.74s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.46\n| 7\n| 0.81\n| 10\n| 1.21\n|-\n| Body\n| 7\n| 0.81\n| 11\n| 1.27\n| 15\n| 1.74\n|}\n<small>Values are approximate and determined by community testing. ([[Update:11.0.0|11.0.0]])</small>"
+    },
+    "hasTable": true
+  },
+  "arn_220": {
+    "name": "ARN-220",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 6,
+          "ttk": "0.40s"
+        },
+        "medium": {
+          "shots": 10,
+          "ttk": "0.72s"
+        },
+        "heavy": {
+          "shots": 14,
+          "ttk": "1.04s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 9,
+          "ttk": "0.64s"
+        },
+        "medium": {
+          "shots": 15,
+          "ttk": "1.12s"
+        },
+        "heavy": {
+          "shots": 21,
+          "ttk": "1.60s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 6\n| 0.40\n| 10\n| 0.72\n| 14\n| 1.04\n|-\n| Body\n| 9\n| 0.64\n| 15\n| 1.12\n| 21\n| 1.60\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "dagger": {
+    "name": "Dagger",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 3,
+          "ttk": "-s"
+        },
+        "medium": {
+          "shots": 5,
+          "ttk": "-s"
+        },
+        "heavy": {
+          "shots": 6,
+          "ttk": "-s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n|-\n| Back (Alt-Fire)\n| 1\n| -\n| 1\n| -\n| 2\n| -\n|-\n| Body (Alt-Fire)\n| 2\n| -\n| 4\n| -\n| 5\n| -\n|-\n| Body\n| 3\n| -\n| 5\n| -\n| 6\n| -\n|}\n<small>Values are approximate and determined by community testing ([[Update:6.6.0|6.6.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "lh1": {
+    "name": "LH1",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.222s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "0.444s"
+        },
+        "heavy": {
+          "shots": 4,
+          "ttk": "0.667s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 4,
+          "ttk": "0.667s"
+        },
+        "medium": {
+          "shots": 6,
+          "ttk": "1.111s"
+        },
+        "heavy": {
+          "shots": 8,
+          "ttk": "1.556s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.222\n| 3\n| 0.444\n| 4\n| 0.667\n|-\n| Body\n| 4\n| 0.667\n| 6\n| 1.111\n| 8\n| 1.556\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "m11": {
+    "name": "M11",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 7,
+          "ttk": "0.360s"
+        },
+        "medium": {
+          "shots": 11,
+          "ttk": "0.60s"
+        },
+        "heavy": {
+          "shots": 15,
+          "ttk": "0.84s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 10,
+          "ttk": "0.540s"
+        },
+        "medium": {
+          "shots": 16,
+          "ttk": "0.90s"
+        },
+        "heavy": {
+          "shots": 22,
+          "ttk": "1.260s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 7\n| 0.360\n| 11\n| 0.60\n| 15\n| 0.84\n|-\n| Body\n| 10\n| 0.540\n| 16\n| 0.90\n| 22\n| 1.260\n|}\n<small>Values are approximate and determined by community testing. ([[Update:10.0.0|10.0.0]])</small>"
+    },
+    "hasTable": true
+  },
+  "m26_matter": {
+    "name": "M26 Matter",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.714s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "1.429s"
+        },
+        "heavy": {
+          "shots": 3,
+          "ttk": "1.4s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.714\n| 3\n| 1.429\n| 3\n| 1.4\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "recurve_bow": {
+    "name": "Recurve Bow",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.769s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "1.538s"
+        },
+        "heavy": {
+          "shots": 4,
+          "ttk": "2.308s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 3,
+          "ttk": "1.538s"
+        },
+        "medium": {
+          "shots": 5,
+          "ttk": "3.077s"
+        },
+        "heavy": {
+          "shots": 6,
+          "ttk": "3.846s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n|-\n| Head (Max Draw)\n| 1\n| 0.000\n| 2\n| 1.250\n| 2\n| 1.250\n|-\n| Body (Max Draw)\n| 2\n| 1.250\n| 2\n| 1.250\n| 3\n| 2.500\n|-\n| Head\n| 2\n| 0.769\n| 3\n| 1.538\n| 4\n| 2.308\n|-\n| Body\n| 3\n| 1.538\n| 5\n| 3.077\n| 6\n| 3.846\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "sh1900": {
+    "name": "SH1900",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 1,
+          "ttk": "0.000s"
+        },
+        "medium": {
+          "shots": 2,
+          "ttk": "0.750s"
+        },
+        "heavy": {
+          "shots": 2,
+          "ttk": "0.750s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 1\n| 0.000\n| 2\n| 0.750\n| 2\n| 0.750\n|}\n<small>Values are approximate and determined by community testing (</small>[[Update:10.0.0|10.0.0]]<small>).</small>"
+    },
+    "hasTable": true
+  },
+  "sr_84": {
+    "name": "SR-84",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 1,
+          "ttk": "0.000s"
+        },
+        "medium": {
+          "shots": 2,
+          "ttk": "1.333s"
+        },
+        "heavy": {
+          "shots": 2,
+          "ttk": "1.333s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 2,
+          "ttk": "1.333s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "2.667s"
+        },
+        "heavy": {
+          "shots": 3,
+          "ttk": "2.667s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 1\n| 0.000\n| 2\n| 1.333\n| 2\n| 1.333\n|-\n| Body\n| 2\n| 1.333\n| 3\n| 2.667\n| 3\n| 2.667\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "sword": {
+    "name": "Sword",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 2,
+          "ttk": "-s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "-s"
+        },
+        "heavy": {
+          "shots": 4,
+          "ttk": "-s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n|-\n| Body (Alt-Fire)\n| 2\n| -\n| 3\n| -\n| 3\n| -\n|-\n| Body\n| 2\n| -\n| 3\n| -\n| 4\n| -\n|-\n|Optimal Combo\n|2, Lunge → Quick Melee\n| -\n|3,  3x Slash \n| -\n|4, Lunge → 3x Slash¹ \n| -\n|}\n¹, Heavy is much harder to fully combo owing to the larger health pool of 350. Leading with a lunge is usually best to initially get in range but 4x Slash will also kill in the same time.\n\n<small>Values are approximate and determined by community testing ([[Update:7.9.0|7.9.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "throwing_knives": {
+    "name": "Throwing Knives",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.110s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "0.784s"
+        },
+        "heavy": {
+          "shots": 4,
+          "ttk": "0.894s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 3,
+          "ttk": "0.784s"
+        },
+        "medium": {
+          "shots": 5,
+          "ttk": "1.568s"
+        },
+        "heavy": {
+          "shots": 6,
+          "ttk": "1.678s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n|-\n| Head (Alt-Fire)\n| 1\n| 0.000\n| 2\n| 2.166\n| 2\n| 2.166\n|-\n| Body (Alt-Fire)\n| 2\n| 2.166\n| 2\n| 2.166\n| 3\n| 4.332\n|-\n| Head\n| 2\n| 0.110\n| 3\n| 0.784\n| 4\n| 0.894\n|-\n| Body\n| 3\n| 0.784\n| 5\n| 1.568\n| 6\n| 1.678\n|}\n<small>Values are approximate and determined by community testing (</small>[[Update:10.0.0|10.0.0]]<small>).</small>"
+    },
+    "hasTable": true
+  },
+  "v9s": {
+    "name": "V9S",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 3,
+          "ttk": "0.333s"
+        },
+        "medium": {
+          "shots": 5,
+          "ttk": "0.667s"
+        },
+        "heavy": {
+          "shots": 7,
+          "ttk": "1.000s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 4,
+          "ttk": "0.500s"
+        },
+        "medium": {
+          "shots": 7,
+          "ttk": "1.000s"
+        },
+        "heavy": {
+          "shots": 10,
+          "ttk": "1.500s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 3\n| 0.333\n| 5\n| 0.667\n| 7\n| 1.000\n|-\n| Body\n| 4\n| 0.500\n| 7\n| 1.000\n| 10\n| 1.500\n|}<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "xp_54": {
+    "name": "XP-54",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 7,
+          "ttk": "0.409s"
+        },
+        "medium": {
+          "shots": 11,
+          "ttk": "0.682s"
+        },
+        "heavy": {
+          "shots": 15,
+          "ttk": "0.955s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 10,
+          "ttk": "0.614s"
+        },
+        "medium": {
+          "shots": 16,
+          "ttk": "1.023s"
+        },
+        "heavy": {
+          "shots": 22,
+          "ttk": "1.432s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 7\n| 0.409\n| 11\n| 0.682\n| 15\n| 0.955\n|-\n| Body\n| 10\n| 0.614\n| 16\n| 1.023\n| 22\n| 1.432\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "akm": {
+    "name": "AKM",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 5,
+          "ttk": "0.4s"
+        },
+        "medium": {
+          "shots": 8,
+          "ttk": "0.7s"
+        },
+        "heavy": {
+          "shots": 12,
+          "ttk": "1.1s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 8,
+          "ttk": "0.7s"
+        },
+        "medium": {
+          "shots": 12,
+          "ttk": "1.1s"
+        },
+        "heavy": {
+          "shots": 17,
+          "ttk": "1.6s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.4\n| 8\n| 0.7\n| 12\n| 1.1\n|-\n| Body\n| 8\n| 0.7\n| 12\n| 1.1\n| 17\n| 1.6\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "cb_01_repeater": {
+    "name": "CB-01 Repeater",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.77s"
+        },
+        "medium": {
+          "shots": 2,
+          "ttk": "0.77s"
+        },
+        "heavy": {
+          "shots": 3,
+          "ttk": "1.54s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.77s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "1.54s"
+        },
+        "heavy": {
+          "shots": 5,
+          "ttk": "3.08s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.77\n| 2\n| 0.77\n| 3\n| 1.54\n|-\n| Body\n| 2\n| 0.77\n| 3\n| 1.54\n| 5\n| 3.08\n|}\n<small>Values are approximate and determined by community testing ([[Update:9.9.0|9.9.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "cerberus_12ga": {
+    "name": "Cerberus 12GA",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.60s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "1.20s"
+        },
+        "heavy": {
+          "shots": 3,
+          "ttk": "1.20s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.60\n| 3\n| 1.20\n| 3\n| 1.20\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "chimera_xb": {
+    "name": "Chimera-XB",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 3,
+          "ttk": "0.462s"
+        },
+        "medium": {
+          "shots": 4,
+          "ttk": "0.692s"
+        },
+        "heavy": {
+          "shots": 6,
+          "ttk": "1.154s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 4,
+          "ttk": "0.692s"
+        },
+        "medium": {
+          "shots": 6,
+          "ttk": "1.154s"
+        },
+        "heavy": {
+          "shots": 8,
+          "ttk": "1.615s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n|3\n| 0.462\n| 4\n| 0.692\n| 6\n| 1.154\n|-\n| Body\n| 4\n| 0.692\n| 6\n| 1.154\n| 8\n| 1.615\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "cl_40": {
+    "name": "CL-40",
+    "profile": {
+      "head": null,
+      "body": null,
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Blast Type\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Direct\n| 2\n| 0.80\n| 3\n| 1.60\n| 4\n| 2.40\n|-\n| Splash\n| 2\n| 0.80\n| 3\n| 1.60\n| 4\n| 2.40\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]). </small>"
+    },
+    "hasTable": true
+  },
+  "dual_blades": {
+    "name": "Dual Blades",
+    "profile": null,
+    "hasTable": false
+  },
+  "famas": {
+    "name": "FAMAS",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 5,
+          "ttk": "0.44s"
+        },
+        "medium": {
+          "shots": 7,
+          "ttk": "0.76s"
+        },
+        "heavy": {
+          "shots": 10,
+          "ttk": "1.14s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 7,
+          "ttk": "0.76s"
+        },
+        "medium": {
+          "shots": 11,
+          "ttk": "1.20s"
+        },
+        "heavy": {
+          "shots": 15,
+          "ttk": "1.64s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.44\n| 7\n| 0.76\n| 10\n| 1.14\n|-\n| Body\n| 7\n| 0.76\n| 11\n| 1.20\n| 15\n| 1.64\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "fcar": {
+    "name": "FCAR",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 5,
+          "ttk": "0.45s"
+        },
+        "medium": {
+          "shots": 8,
+          "ttk": "0.79s"
+        },
+        "heavy": {
+          "shots": 11,
+          "ttk": "1.13s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 7,
+          "ttk": "0.68s"
+        },
+        "medium": {
+          "shots": 11,
+          "ttk": "1.13s"
+        },
+        "heavy": {
+          "shots": 16,
+          "ttk": "1.70s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.45\n| 8\n| 0.79\n| 11\n| 1.13\n|-\n| Body\n| 7\n| 0.68\n| 11\n| 1.13\n| 16\n| 1.70\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "model_1887": {
+    "name": "Model 1887",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.87s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "1.74s"
+        },
+        "heavy": {
+          "shots": 3,
+          "ttk": "1.74s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.87\n| 3\n| 1.74\n| 3\n| 1.74\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "p90": {
+    "name": "P90",
+    "profile": null,
+    "hasTable": false
+  },
+  "pike_556": {
+    "name": "Pike-556",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.30s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "0.60s"
+        },
+        "heavy": {
+          "shots": 5,
+          "ttk": "1.20s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 4,
+          "ttk": "0.90s"
+        },
+        "medium": {
+          "shots": 6,
+          "ttk": "1.50s"
+        },
+        "heavy": {
+          "shots": 8,
+          "ttk": "2.10s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.30\n| 3\n| 0.60\n| 5\n| 1.20\n|-\n| Body\n| 4\n| 0.90\n| 6\n| 1.50\n| 8\n| 2.10\n|}\n<small>Values are approximate and determined by community testing. ([[Update:11.0.0|11.0.0]])</small>"
+    },
+    "hasTable": true
+  },
+  "r_357": {
+    "name": "R .357",
+    "profile": null,
+    "hasTable": false
+  },
+  "riot_shield": {
+    "name": "Riot Shield",
+    "profile": null,
+    "hasTable": false
+  },
+  "50_akimbo": {
+    "name": ".50 Akimbo",
+    "profile": null,
+    "hasTable": false
+  },
+  "bfr_titan": {
+    "name": "BFR Titan",
+    "profile": null,
+    "hasTable": false
+  },
+  "flamethrower": {
+    "name": "Flamethrower",
+    "profile": null,
+    "hasTable": false
+  },
+  "ks_23": {
+    "name": "KS-23",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 2,
+          "ttk": "0.77s"
+        },
+        "medium": {
+          "shots": 3,
+          "ttk": "1.54s"
+        },
+        "heavy": {
+          "shots": 4,
+          "ttk": "2.31s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.77\n| 3\n| 1.54\n| 4\n| 2.31\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "lewis_gun": {
+    "name": "Lewis Gun",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 5,
+          "ttk": "0.48s"
+        },
+        "medium": {
+          "shots": 8,
+          "ttk": "0.84s"
+        },
+        "heavy": {
+          "shots": 11,
+          "ttk": "1.20s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 7,
+          "ttk": "0.72s"
+        },
+        "medium": {
+          "shots": 11,
+          "ttk": "1.20s"
+        },
+        "heavy": {
+          "shots": 16,
+          "ttk": "1.80s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.48\n| 8\n| 0.84\n| 11\n| 1.20\n|-\n| Body\n| 7\n| 0.72\n| 11\n| 1.20\n| 16\n| 1.80\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "m134_minigun": {
+    "name": "M134 Minigun",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 11,
+          "ttk": "1.62s"
+        },
+        "medium": {
+          "shots": 18,
+          "ttk": "1.91s"
+        },
+        "heavy": {
+          "shots": 24,
+          "ttk": "2.15s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 14,
+          "ttk": "1.75s"
+        },
+        "medium": {
+          "shots": 23,
+          "ttk": "2.27s"
+        },
+        "heavy": {
+          "shots": 32,
+          "ttk": "2.47s"
+        }
+      },
+      "rawText": "<tabber>\n|-|Full spin up =\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 11\n| 0.40\n| 18\n| 0.68\n| 24\n| 0.92\n|-\n| Body\n| 14\n| 0.52\n| 23\n| 0.88\n| 32\n| 1.24\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>\n\n|-|No spin up=\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 11\n| 1.62\n| 18\n| 1.91\n| 24\n| 2.15\n|-\n| Body\n| 14\n| 1.75\n| 23\n| 2.27\n| 32\n| 2.47\n|}\n<small>'''Note''': Time to kill is measured from the moment '''Fire''' button is pressed, not from the first bullet shot.\nValues are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>\n\n</tabber>"
+    },
+    "hasTable": true
+  },
+  "m60": {
+    "name": "M60",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 5,
+          "ttk": "0.414s"
+        },
+        "medium": {
+          "shots": 9,
+          "ttk": "0.828s"
+        },
+        "heavy": {
+          "shots": 12,
+          "ttk": "1.138s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 8,
+          "ttk": "0.724s"
+        },
+        "medium": {
+          "shots": 13,
+          "ttk": "1.241s"
+        },
+        "heavy": {
+          "shots": 18,
+          "ttk": "1.759s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.414\n| 9\n| 0.828\n| 12\n| 1.138\n|-\n| Body\n| 8\n| 0.724\n| 13\n| 1.241\n| 18\n| 1.759\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.3.0|10.3.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "mgl32": {
+    "name": "MGL32",
+    "profile": {
+      "head": null,
+      "body": null,
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Blast Type\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Splash\n| 2\n| 0.67\n| 4\n| 2.00\n| 5\n| 2.67\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "sa1216": {
+    "name": "SA1216",
+    "profile": {
+      "head": null,
+      "body": {
+        "light": {
+          "shots": 3,
+          "ttk": "0.63s"
+        },
+        "medium": {
+          "shots": 4,
+          "ttk": "0.95s"
+        },
+        "heavy": {
+          "shots": 5,
+          "ttk": "1.75s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 3\n| 0.63\n| 4\n| 0.95\n| 5\n| 1.75\n|}\nValues are approximate and determined by community testing ([[Update:11.3.0|11.3.0]])."
+    },
+    "hasTable": true
+  },
+  "shak_50": {
+    "name": "ShAK-50",
+    "profile": {
+      "head": {
+        "light": {
+          "shots": 4,
+          "ttk": "0.43s"
+        },
+        "medium": {
+          "shots": 6,
+          "ttk": "0.71s"
+        },
+        "heavy": {
+          "shots": 8,
+          "ttk": "1.00s"
+        }
+      },
+      "body": {
+        "light": {
+          "shots": 5,
+          "ttk": "0.57s"
+        },
+        "medium": {
+          "shots": 9,
+          "ttk": "1.14s"
+        },
+        "heavy": {
+          "shots": 12,
+          "ttk": "1.57s"
+        }
+      },
+      "rawText": "{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n|-\n| Head\n| 4\n| 0.43\n| 6\n| 0.71\n| 8\n| 1.00\n|-\n| Body\n| 5\n| 0.57\n| 9\n| 1.14\n| 12\n| 1.57\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>"
+    },
+    "hasTable": true
+  },
+  "sledgehammer": {
+    "name": "Sledgehammer",
+    "profile": null,
+    "hasTable": false
+  },
+  "spear": {
+    "name": "Spear",
+    "profile": null,
+    "hasTable": false
+  }
+}
