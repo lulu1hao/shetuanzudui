@@ -1302,7 +1302,7 @@ export default {
         prepareLuluDisplayArrival({ target: 'equipment', root: equipmentRootRef.value })
       }
 
-      requestAnimationFrame(() => {
+      entranceTimer = setTimeout(() => {
         if (isEquipmentArrival.value) {
           settleLuluDisplayTransition({
             id: 'equipment',
@@ -1314,14 +1314,14 @@ export default {
           })
           animateDisplayHeaderCopy(equipmentRootRef.value, { arrival: true })
           gsap.fromTo('.equipment-body-scroll',
-            { autoAlpha: 0, y: 12 },
-            { autoAlpha: 1, y: 0, duration: 0.32, ease: 'power2.out', clearProps: 'all' }
+            { autoAlpha: 0, y: 24 },
+            { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out', delay: 0.18, clearProps: 'all' }
           )
         } else {
           placeGlobalLuluInDisplayTarget(equipmentRootRef.value, { target: 'equipment' })
           animateDisplayHeaderCopy(equipmentRootRef.value, { arrival: false })
         }
-      })
+      }, 70)
     })
 
     onUnmounted(() => {

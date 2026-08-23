@@ -573,7 +573,7 @@ export default {
         prepareLuluDisplayArrival({ target: 'leaderboard', root: leaderboardRootRef.value })
       }
 
-      requestAnimationFrame(() => {
+      entranceTimer = setTimeout(() => {
         if (isLeaderboardArrival.value) {
           settleLuluDisplayTransition({
             id: 'leaderboard',
@@ -585,14 +585,14 @@ export default {
           })
           animateDisplayHeaderCopy(leaderboardRootRef.value, { arrival: true })
           gsap.fromTo('.leaderboard-body-scroll',
-            { autoAlpha: 0, y: 12 },
-            { autoAlpha: 1, y: 0, duration: 0.32, ease: 'power2.out', clearProps: 'all' }
+            { autoAlpha: 0, y: 24 },
+            { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out', delay: 0.18, clearProps: 'all' }
           )
         } else {
           placeGlobalLuluInDisplayTarget(leaderboardRootRef.value, { target: 'leaderboard' })
           animateDisplayHeaderCopy(leaderboardRootRef.value, { arrival: false })
         }
-      })
+      }, 70)
     })
 
     onUnmounted(() => {

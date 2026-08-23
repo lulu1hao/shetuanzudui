@@ -373,8 +373,6 @@ import {
   settleLobbyReturnTransition,
   TOURNAMENT_DISPLAY_REVEAL_DURATION
 } from '../../utils/globalLuluTransition.js'
-import { fetchLeaderboardTop } from '../../utils/theFinalsApi.js'
-import { getEquipmentData } from '../../utils/theFinalsEquipmentApi.js'
 
 export default {
   setup() {
@@ -416,9 +414,6 @@ export default {
     const selectNewRoomMap = (v) => { newRoomMap.value = v }
 
     const goToLeaderboard = () => {
-      // 在点击瞬间立刻提前重载与预取数据，使转场动画与数据并行，消除转场结束后的二次刷新与卡顿
-      fetchLeaderboardTop('s11', 'ranked', 'crossplay', 10).catch(() => {})
-
       if (isNavigatingToTournament) return
       isNavigatingToTournament = true
       const navigate = () => router.push('/leaderboard')
@@ -471,9 +466,6 @@ export default {
     }
 
     const goToEquipment = () => {
-      // 在点击瞬间立刻提前重载装备全量数据至内存单例
-      try { getEquipmentData() } catch(e) {}
-
       if (isNavigatingToTournament) return
       isNavigatingToTournament = true
       const navigate = () => router.push('/equipment')
@@ -997,7 +989,7 @@ export default {
   display: grid;
   grid-template-columns: 68px 1fr auto;
   align-items: center;
-  gap: 18px;
+  gap: 24px;
   padding: 10px 22px;
   border: 0;
   background: transparent;
@@ -1091,8 +1083,8 @@ export default {
   align-self: stretch;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding-left: 16px;
+  justify-content: flex-end;
+  padding-left: 24px;
   border-left: 2px solid #f0224f;
   z-index: 1;
 }
