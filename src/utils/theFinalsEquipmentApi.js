@@ -6,7 +6,7 @@
 
 import baseEquipmentData from '../data/finalsEquipmentData.json'
 
-const STORAGE_KEY_DATA = 'finals_equipment_data_v2'
+const STORAGE_KEY_DATA = 'finals_equipment_data_v3'
 const STORAGE_KEY_LAST_SYNC = 'finals_equipment_last_sync_time'
 const STORAGE_KEY_CUSTOM_BUILDS = 'finals_custom_loadouts_v2'
 const STORAGE_KEY_COMPARE_WEAPONS = 'finals_compare_weapons_v2'
@@ -111,6 +111,145 @@ export function getEquipmentData() {
 
   memoryEquipmentData = JSON.parse(JSON.stringify(baseEquipmentData))
   return memoryEquipmentData
+}
+
+/**
+ * 本地纯数学与实测帧率计算枪械 Wiki TTK 与所需子弹数 (100% 容错，绝不返回空)
+ * @param {Object} weapon 武器对象
+ * @param {'head'|'body'} hitType 命中部位
+ * @param {'light'|'medium'|'heavy'} buildKey 目标体型
+ */
+export function calculateWikiWeaponTTK(weapon, hitType = 'head', buildKey = 'light') {
+  if (!weapon || weapon.category !== 'weapons') return { shots: '—', ttk: '—' }
+
+  // 1. 检查是否有明确配置的伤害矩阵表
+  const prof = weapon.damageProfile || weapon.ttk
+  const directCell = prof?.[hitType]?.[buildKey] || weapon.ttk?.[buildKey]?.[hitType]
+  if (directCell && directCell.shots !== undefined && directCell.ttk) {
+    const rawTtk = String(directCell.ttk)
+    return {
+      shots: directCell.shots,
+      ttk: rawTtk.endsWith('s') ? rawTtk : rawTtk + 's'
+    }
+  }
+
+  const targetHp = buildKey === 'light' ? 150 : (buildKey === 'medium' ? 250 : 350)
+  const id = (weapon.id || '').toLowerCase()
+
+  // 2. 特殊机制武器实测帧率规则
+  if (id.includes('cerberus')) {
+    if (buildKey === 'light') return { shots: 2, ttk: '0.60s' }
+    if (buildKey === 'medium') return { shots: 3, ttk: '1.20s' }
+    return { shots: 3, ttk: '1.20s' }
+  }
+  if (id.includes('sh1900')) {
+    if (buildKey === 'light') return { shots: 1, ttk: '0.00s' }
+    if (buildKey === 'medium') return { shots: 2, ttk: '0.75s' }
+    return { shots: 2, ttk: '0.75s' }
+  }
+  if (id.includes('model_1887')) {
+    if (buildKey === 'light') return { shots: 2, ttk: '0.87s' }
+    if (buildKey === 'medium') return { shots: 3, ttk: '1.74s' }
+    return { shots: 3, ttk: '1.74s' }
+  }
+  if (id.includes('sa1216')) {
+    if (buildKey === 'light') return { shots: 3, ttk: '0.63s' }
+    if (buildKey === 'medium') return { shots: 4, ttk: '0.95s' }
+    return { shots: 5, ttk: '1.75s' }
+  }
+  if (id.includes('ks_23')) {
+    if (buildKey === 'light') return { shots: 2, ttk: '0.77s' }
+    if (buildKey === 'medium') return { shots: 3, ttk: '1.54s' }
+    return { shots: 4, ttk: '2.31s' }
+  }
+  if (id.includes('dagger')) {
+    if (hitType === 'head') {
+      if (buildKey === 'light' || buildKey === 'medium') return { shots: 1, ttk: '0.00s (背刺秒杀)' }
+      return { shots: 2, ttk: '0.50s (背刺+平A)' }
+    } else {
+      if (buildKey === 'light') return { shots: 2, ttk: '0.50s' }
+      if (buildKey === 'medium') return { shots: 4, ttk: '1.50s' }
+      return { shots: 5, ttk: '2.00s' }
+    }
+  }
+  if (id.includes('sledgehammer')) {
+    if (buildKey === 'light') return { shots: 1, ttk: '0.00s (重击秒杀)' }
+    if (buildKey === 'medium') return { shots: 2, ttk: '0.85s' }
+    return { shots: 2, ttk: '1.60s' }
+  }
+  if (id.includes('sword')) {
+    if (buildKey === 'light') return { shots: 2, ttk: '0.50s' }
+    if (buildKey === 'medium') return { shots: 3, ttk: '1.00s' }
+    return { shots: 4, ttk: '1.50s' }
+  }
+  if (id.includes('famas')) {
+    if (hitType === 'head') {
+      if (buildKey === 'light') return { shots: 5, ttk: '0.44s' }
+      if (buildKey === 'medium') return { shots: 7, ttk: '0.76s' }
+      return { shots: 10, ttk: '1.14s' }
+    } else {
+      if (buildKey === 'light') return { shots: 7, ttk: '0.76s' }
+      if (buildKey === 'medium') return { shots: 11, ttk: '1.20s' }
+      return { shots: 15, ttk: '1.64s' }
+    }
+  }
+  if (id.includes('93r')) {
+    if (hitType === 'head') {
+      if (buildKey === 'light') return { shots: 5, ttk: '0.46s' }
+      if (buildKey === 'medium') return { shots: 7, ttk: '0.81s' }
+      return { shots: 10, ttk: '1.21s' }
+    } else {
+      if (buildKey === 'light') return { shots: 7, ttk: '0.81s' }
+      if (buildKey === 'medium') return { shots: 11, ttk: '1.27s' }
+      return { shots: 15, ttk: '1.74s' }
+    }
+  }
+  if (id.includes('m134')) {
+    if (hitType === 'head') {
+      if (buildKey === 'light') return { shots: 11, ttk: '1.62s (含预热)' }
+      if (buildKey === 'medium') return { shots: 18, ttk: '1.91s (含预热)' }
+      return { shots: 24, ttk: '2.15s (含预热)' }
+    } else {
+      if (buildKey === 'light') return { shots: 14, ttk: '1.75s (含预热)' }
+      if (buildKey === 'medium') return { shots: 23, ttk: '2.27s (含预热)' }
+      return { shots: 32, ttk: '2.47s (含预热)' }
+    }
+  }
+
+  // 3. 通用枪械标准 Wiki 公式计算
+  // 单发伤害解析
+  const rawDmgMatch = String(weapon.stats?.damage || '').match(/(\d+(\.\d+)?)/)
+  const rawDmg = rawDmgMatch ? parseFloat(rawDmgMatch[1]) : 20
+
+  // 爆头倍率解析
+  let critMult = 1.5
+  const critStr = String(weapon.stats?.crit || '')
+  if (critStr.includes('1.0') || critStr.includes('无') || weapon.wtype === 'Shotgun' || weapon.wtype === 'Melee') {
+    critMult = 1.0
+  } else {
+    const critMatch = critStr.match(/(\d+(\.\d+)?)×?/)
+    if (critMatch) {
+      const parsedCrit = parseFloat(critMatch[1])
+      if (parsedCrit >= 1.0 && parsedCrit <= 3.0) {
+        critMult = parsedCrit
+      } else if (parsedCrit > 3.0 && rawDmg > 0) {
+        critMult = parsedCrit / rawDmg
+      }
+    }
+  }
+
+  const damagePerHit = hitType === 'head' ? (rawDmg * critMult) : rawDmg
+  const shots = Math.ceil(targetHp / Math.max(1, damagePerHit))
+
+  // 射速与时间计算
+  const rpmMatch = String(weapon.stats?.rpm || '').match(/(\d+(\.\d+)?)/)
+  const rpm = rpmMatch ? parseFloat(rpmMatch[1]) : 600
+  const cycleTime = 60 / rpm
+
+  const ttkSec = shots <= 1 ? 0 : (shots - 1) * cycleTime
+  const ttk = shots <= 1 ? '0.00s' : ttkSec.toFixed(2) + 's'
+
+  return { shots, ttk }
 }
 
 /**

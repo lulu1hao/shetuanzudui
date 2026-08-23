@@ -223,7 +223,7 @@
               </div>
             </div>
 
-            <!-- 右侧：全息战术检视器 (TACTICAL INSPECTOR) -->
+            <!-- 右侧：全息战术检视器 (TACTICAL INSPECTOR - 支持独立滚轮滚动与视口自适应) -->
             <aside class="tactical-inspector-sidebar">
               <div v-if="activeInspectorItem" class="inspector-card glass-panel">
                 <div class="inspector-header">
@@ -235,7 +235,7 @@
                   <button type="button" class="btn-inspector-close" @click="activeInspectorItem = null" title="关闭">✕</button>
                 </div>
 
-                <!-- 装备全息展示图 -->
+                <!-- 装备全息展示图 (紧凑优化) -->
                 <div class="inspector-banner-box">
                   <img :src="activeInspectorItem.imageUrl" :alt="activeInspectorItem.name" class="inspector-full-img" />
                   <div class="inspector-glow-badge">
@@ -868,6 +868,7 @@ import {
   importLoadoutCode,
   getSavedCompareWeaponIds,
   saveCompareWeaponIds,
+  calculateWikiWeaponTTK,
   PRESET_LOADOUTS
 } from '../../utils/theFinalsEquipmentApi.js'
 import { useToast } from '../../composables/useToast.js'
@@ -972,27 +973,17 @@ export default {
       return `Wiki 数据已同步 (${formatSyncTime(lastSyncTime.value)})`
     })
 
-    // Wiki 标准 Damage Profile 获取函数
+    // Wiki 标准 Damage Profile 获取函数 (100% 具备本地数学与帧率兜底)
     const getWeaponProfileShots = (weapon, hitType, buildKey) => {
       if (!weapon) return '—'
-      const prof = weapon.damageProfile || weapon.ttk
-      const row = prof?.[hitType] || weapon.ttk?.[buildKey]?.[hitType]
-      const cell = row?.[buildKey] || (weapon.ttk?.[buildKey]?.[hitType])
-      if (cell && cell.shots !== undefined) {
-        return `${cell.shots} 发`
-      }
-      return '—'
+      const res = calculateWikiWeaponTTK(weapon, hitType, buildKey)
+      return res.shots !== undefined && res.shots !== '—' ? `${res.shots} 发` : '—'
     }
 
     const getWeaponProfileTTK = (weapon, hitType, buildKey) => {
       if (!weapon) return '—'
-      const prof = weapon.damageProfile || weapon.ttk
-      const row = prof?.[hitType]
-      const cell = row?.[buildKey] || (weapon.ttk?.[buildKey]?.[hitType])
-      if (cell && cell.ttk) {
-        return cell.ttk
-      }
-      return '—'
+      const res = calculateWikiWeaponTTK(weapon, hitType, buildKey)
+      return res.ttk || '—'
     }
 
     // 配装协同能力雷达计算
@@ -1404,7 +1395,8 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
   background: #141217;
   color: #ffffff;
@@ -1648,12 +1640,28 @@ export default {
   animation: spin 0.6s linear infinite;
 }
 
-/* 主内容滚动区 */
+/* 主内容滚动区 (修复窗口状态下的溢出与滚轮失效问题) */
 .equipment-body-scroll {
-  flex: 1;
+  flex: 1 1 0%;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 24px 28px 48px;
+  padding: 20px 24px 40px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(239, 23, 78, 0.35) rgba(0, 0, 0, 0.2);
+}
+
+.equipment-body-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.equipment-body-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.equipment-body-scroll::-webkit-scrollbar-thumb {
+  background: rgba(239, 23, 78, 0.4);
+  border-radius: 3px;
 }
 
 .equipment-container-inner {
@@ -1661,7 +1669,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 /* 标题区 */
@@ -1670,7 +1678,7 @@ export default {
   justify-content: space-between;
   align-items: flex-end;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 14px;
+  padding-bottom: 12px;
 }
 
 .command-eyebrow {
@@ -1684,12 +1692,12 @@ export default {
 .room-hero-title {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   margin-top: 2px;
 }
 
 .room-hero-title h2 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 900;
   margin: 0;
   color: #ffffff;
@@ -1717,16 +1725,16 @@ export default {
 .filter-controls-card {
   background: rgba(24, 21, 28, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 16px 20px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .filter-group {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .filter-group-label {
@@ -1734,7 +1742,7 @@ export default {
   font-weight: 850;
   color: rgba(255, 255, 255, 0.45);
   letter-spacing: 0.06em;
-  min-width: 140px;
+  min-width: 130px;
 }
 
 .filter-pills-row {
@@ -1747,7 +1755,7 @@ export default {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 5px 12px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(0, 0, 0, 0.35);
   color: rgba(255, 255, 255, 0.75);
@@ -1793,8 +1801,8 @@ export default {
 
 .search-and-sort-row {
   display: flex;
-  gap: 16px;
-  margin-top: 4px;
+  gap: 14px;
+  margin-top: 2px;
 }
 
 .search-input-field {
@@ -1816,7 +1824,7 @@ export default {
 
 .main-search-input {
   flex: 1;
-  height: 38px;
+  height: 36px;
   background: transparent;
   border: 0;
   color: #ffffff;
@@ -1868,28 +1876,28 @@ export default {
 /* 百科左右分栏 */
 .armory-split-layout {
   display: grid;
-  grid-template-columns: 1fr 440px;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 18px;
   align-items: start;
 }
 
 /* 装备卡片网格 */
 .equipment-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
 }
 
 .equip-card {
   position: relative;
   background: rgba(26, 23, 31, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 14px;
+  padding: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .equip-card:hover {
@@ -1972,16 +1980,16 @@ export default {
 }
 
 .equip-thumb-box {
-  height: 96px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%);
-  padding: 8px;
+  padding: 6px;
 }
 
 .equip-thumb-img {
-  max-height: 84px;
+  max-height: 78px;
   max-width: 100%;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
@@ -2005,7 +2013,7 @@ export default {
 }
 
 .equip-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 900;
   color: #ffffff;
 }
@@ -2023,9 +2031,9 @@ export default {
 
 .equip-mini-stats {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   background: rgba(0, 0, 0, 0.35);
-  padding: 6px 8px;
+  padding: 5px 6px;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -2047,7 +2055,7 @@ export default {
 }
 
 .stat-val {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 850;
   color: #ffffff;
 }
@@ -2069,19 +2077,33 @@ export default {
   opacity: 1;
 }
 
-/* 右侧检视面板 */
+/* 右侧检视面板 (带滚动与固定视口) */
 .tactical-inspector-sidebar {
   position: sticky;
-  top: 0;
+  top: 10px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(239, 23, 78, 0.4) transparent;
+}
+
+.tactical-inspector-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tactical-inspector-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(239, 23, 78, 0.4);
+  border-radius: 4px;
 }
 
 .inspector-card {
   background: rgba(24, 21, 28, 0.95);
   border: 1px solid rgba(239, 23, 78, 0.35);
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
 }
 
@@ -2099,7 +2121,7 @@ export default {
 }
 
 .inspector-main-title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 950;
   color: #ffffff;
   margin: 2px 0 0;
@@ -2120,17 +2142,17 @@ export default {
 
 .inspector-banner-box {
   position: relative;
-  height: 140px;
+  height: 100px;
   background: radial-gradient(circle, rgba(239, 23, 78, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 8px;
 }
 
 .inspector-full-img {
-  max-height: 120px;
+  max-height: 84px;
   max-width: 90%;
   object-fit: contain;
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.8));
@@ -2138,8 +2160,8 @@ export default {
 
 .inspector-glow-badge {
   position: absolute;
-  bottom: 8px;
-  left: 8px;
+  bottom: 6px;
+  left: 6px;
 }
 
 .badge-build-hero {
@@ -2152,11 +2174,11 @@ export default {
 .inspector-quote-box {
   background: rgba(0, 0, 0, 0.35);
   border-left: 2px solid #ef174e;
-  padding: 10px 12px;
+  padding: 8px 10px;
 }
 
 .quote-text {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
   line-height: 1.4;
@@ -2166,10 +2188,10 @@ export default {
 .inspector-wiki-profile-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 12px;
+  padding: 10px;
 }
 
 .profile-section-head {
@@ -2191,7 +2213,7 @@ export default {
 
 .wiki-table-matrix th {
   background: rgba(255, 255, 255, 0.05);
-  padding: 6px 4px;
+  padding: 5px 3px;
   text-align: center;
   font-weight: 850;
   color: rgba(255, 255, 255, 0.8);
@@ -2200,8 +2222,8 @@ export default {
 
 .wiki-table-matrix th.th-part {
   text-align: left;
-  padding-left: 8px;
-  width: 90px;
+  padding-left: 6px;
+  width: 84px;
 }
 
 .wiki-table-matrix th.th-light {
@@ -2217,14 +2239,14 @@ export default {
 }
 
 .wiki-table-matrix td {
-  padding: 6px 4px;
+  padding: 5px 3px;
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .wiki-table-matrix td.td-part {
   text-align: left;
-  padding-left: 8px;
+  padding-left: 6px;
   font-weight: 800;
   color: rgba(255, 255, 255, 0.7);
   background: rgba(0, 0, 0, 0.2);
@@ -2259,30 +2281,30 @@ export default {
   font-weight: 850;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.06em;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .matrix-stat-item {
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 6px 8px;
+  padding: 5px 7px;
   display: flex;
   flex-direction: column;
 }
 
 .m-lbl {
-  font-size: 10px;
+  font-size: 9px;
   color: rgba(255, 255, 255, 0.45);
 }
 
 .m-val {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 850;
   color: #ffffff;
 }
@@ -2297,24 +2319,24 @@ export default {
 
 .tips-list {
   margin: 0;
-  padding-left: 16px;
+  padding-left: 14px;
   font-size: 11px;
   color: rgba(255, 255, 255, 0.7);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .inspector-actions-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
+  gap: 6px;
+  margin-top: 2px;
 }
 
 .btn-inspector-primary {
   flex: 1 1 100%;
-  padding: 9px;
+  padding: 8px;
   background: #d71442;
   border: 0;
   color: #ffffff;
@@ -2331,7 +2353,7 @@ export default {
 
 .btn-inspector-compare {
   flex: 1;
-  padding: 7px;
+  padding: 6px;
   background: rgba(56, 189, 248, 0.15);
   border: 1px solid #38bdf8;
   color: #38bdf8;
@@ -2347,7 +2369,7 @@ export default {
 
 .btn-inspector-secondary {
   flex: 1;
-  padding: 7px;
+  padding: 6px;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
@@ -2361,7 +2383,7 @@ export default {
 }
 
 .btn-inspector-wiki {
-  padding: 7px 12px;
+  padding: 6px 10px;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #38bdf8;
@@ -2376,12 +2398,12 @@ export default {
 .inspector-placeholder {
   background: rgba(24, 21, 28, 0.6);
   border: 1px dashed rgba(255, 255, 255, 0.15);
-  padding: 40px 24px;
+  padding: 36px 20px;
   text-align: center;
 }
 
 .placeholder-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 850;
   margin: 0 0 6px;
 }
@@ -2397,10 +2419,10 @@ export default {
 .compare-workspace-card {
   background: rgba(24, 21, 28, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .compare-header-bar {
@@ -2408,11 +2430,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 16px;
+  padding-bottom: 14px;
 }
 
 .compare-main-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 950;
   color: #ffffff;
   margin: 0 0 4px;
@@ -2434,7 +2456,7 @@ export default {
   color: #ef174e;
   font-size: 12px;
   font-weight: 800;
-  padding: 6px 14px;
+  padding: 5px 12px;
   cursor: pointer;
 }
 
@@ -2444,28 +2466,28 @@ export default {
   color: #ffffff;
   font-size: 12px;
   font-weight: 850;
-  padding: 6px 14px;
+  padding: 5px 12px;
   cursor: pointer;
 }
 
 .empty-compare-box {
   background: rgba(0, 0, 0, 0.35);
   border: 1px dashed rgba(255, 255, 255, 0.15);
-  padding: 60px 24px;
+  padding: 50px 20px;
   text-align: center;
 }
 
 .empty-c-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 900;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .empty-c-desc {
-  font-size: 13px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.55);
-  max-width: 500px;
-  margin: 0 auto 20px;
+  max-width: 480px;
+  margin: 0 auto 16px;
   line-height: 1.5;
 }
 
@@ -2473,9 +2495,9 @@ export default {
   background: #d71442;
   border: 0;
   color: #ffffff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 850;
-  padding: 8px 20px;
+  padding: 7px 18px;
   cursor: pointer;
 }
 
@@ -2485,17 +2507,17 @@ export default {
 
 .compare-columns-container {
   display: grid;
-  gap: 16px;
+  gap: 14px;
 }
 
 .compare-weapon-col {
   background: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-top: 3px solid #ef174e;
-  padding: 18px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .compare-weapon-col.border-light {
@@ -2516,7 +2538,7 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .btn-remove-compare {
@@ -2535,14 +2557,14 @@ export default {
 }
 
 .c-thumb-wrap {
-  height: 90px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .c-weapon-img {
-  max-height: 80px;
+  max-height: 72px;
   max-width: 90%;
   object-fit: contain;
 }
@@ -2561,30 +2583,30 @@ export default {
 }
 
 .c-name {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 950;
   color: #ffffff;
 }
 
 .c-name-zh {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.6);
 }
 
 .c-metrics-block {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 12px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .c-block-heading {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 850;
   color: rgba(255, 255, 255, 0.45);
-  margin: 0 0 4px;
+  margin: 0 0 3px;
   letter-spacing: 0.05em;
 }
 
@@ -2592,9 +2614,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 11px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  padding-bottom: 4px;
+  padding-bottom: 3px;
 }
 
 .c-m-label {
@@ -2607,20 +2629,20 @@ export default {
 }
 
 .c-ttk-block {
-  gap: 10px;
+  gap: 8px;
 }
 
 .c-ttk-target-box {
   background: rgba(0, 0, 0, 0.35);
   border-left: 2px solid rgba(255, 255, 255, 0.2);
-  padding: 6px 10px;
+  padding: 5px 8px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .c-target-head {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 850;
   color: #ffffff;
   margin-bottom: 2px;
@@ -2629,17 +2651,17 @@ export default {
 .c-sub-row {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.65);
 }
 
 .btn-c-loadout {
   width: 100%;
-  padding: 8px;
+  padding: 7px;
   background: #d71442;
   border: 0;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 850;
   cursor: pointer;
 }
@@ -2648,10 +2670,10 @@ export default {
 .builder-workspace-card {
   background: rgba(24, 21, 28, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .builder-header-bar {
@@ -2659,15 +2681,15 @@ export default {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 16px;
+  padding-bottom: 14px;
 }
 
 .build-type-selector {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .builder-label {
@@ -2677,7 +2699,7 @@ export default {
 }
 
 .btn-build-toggle {
-  padding: 6px 14px;
+  padding: 5px 12px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(0, 0, 0, 0.4);
   color: rgba(255, 255, 255, 0.7);
@@ -2697,18 +2719,18 @@ export default {
 .builder-actions-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .loadout-title-input {
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 5px 10px;
+  font-size: 12px;
   font-weight: 750;
   outline: none;
-  min-width: 220px;
+  min-width: 200px;
 }
 
 .btn-builder-save {
@@ -2717,7 +2739,7 @@ export default {
   color: #0d0a0c;
   font-size: 12px;
   font-weight: 850;
-  padding: 7px 14px;
+  padding: 6px 12px;
   cursor: pointer;
 }
 
@@ -2727,7 +2749,7 @@ export default {
   color: #ffffff;
   font-size: 12px;
   font-weight: 800;
-  padding: 6px 12px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
@@ -2737,20 +2759,20 @@ export default {
   color: #ef174e;
   font-size: 12px;
   font-weight: 800;
-  padding: 6px 12px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
 .loadout-slots-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1.6fr;
-  gap: 20px;
+  gap: 16px;
 }
 
 .slot-column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .slot-header {
@@ -2784,15 +2806,15 @@ export default {
 
 .slot-card {
   position: relative;
-  min-height: 120px;
+  min-height: 105px;
   background: rgba(0, 0, 0, 0.45);
   border: 1px dashed rgba(255, 255, 255, 0.2);
-  padding: 16px;
+  padding: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .slot-card:hover {
@@ -2807,8 +2829,8 @@ export default {
 }
 
 .slot-icon-img {
-  width: 64px;
-  height: 64px;
+  width: 54px;
+  height: 54px;
   object-fit: contain;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
 }
@@ -2821,26 +2843,26 @@ export default {
 }
 
 .slot-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 900;
   color: #ffffff;
 }
 
 .slot-zh {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.65);
 }
 
 .slot-desc-mini, .slot-stat-mini {
-  font-size: 11px;
+  font-size: 10px;
   color: #ef174e;
   font-weight: 750;
 }
 
 .btn-slot-clear {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 6px;
+  right: 6px;
   background: transparent;
   border: 0;
   color: rgba(255, 255, 255, 0.4);
@@ -2858,37 +2880,37 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
   color: rgba(255, 255, 255, 0.45);
   font-size: 12px;
   font-weight: 800;
 }
 
 .empty-slot-plus {
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1;
 }
 
 .gadgets-sub-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 .mini-gadget-slot {
-  min-height: 120px;
+  min-height: 105px;
   flex-direction: column;
   text-align: center;
-  padding: 10px;
+  padding: 8px;
 }
 
 .mini-gadget-slot .slot-icon-img {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
 }
 
 .mini-gadget-slot .slot-name {
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .mini-gadget-slot .slot-zh {
@@ -2899,20 +2921,20 @@ export default {
 .loadout-analytics-bar {
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 16px 20px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
 }
 
 .analytics-title-col {
   display: flex;
   flex-direction: column;
-  min-width: 130px;
+  min-width: 120px;
 }
 
 .radar-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 900;
   color: #ffffff;
 }
@@ -2926,25 +2948,25 @@ export default {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
 .synergy-bar-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .bar-label-row {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.7);
   font-weight: 750;
 }
 
 .bar-track {
-  height: 6px;
+  height: 5px;
   background: rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
@@ -2974,41 +2996,41 @@ export default {
 .meta-presets-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .presets-intro-banner {
   background: linear-gradient(135deg, rgba(215, 20, 66, 0.25) 0%, rgba(20, 18, 24, 0.85) 100%);
   border: 1px solid rgba(239, 23, 78, 0.3);
-  padding: 18px 24px;
+  padding: 16px 20px;
 }
 
 .presets-banner-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 900;
   margin: 0 0 4px;
   color: #ffffff;
 }
 
 .presets-banner-desc {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
 }
 
 .preset-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
 }
 
 .preset-card {
   background: rgba(24, 21, 28, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 18px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   transition: all 0.2s ease;
 }
 
@@ -3024,26 +3046,26 @@ export default {
 }
 
 .preset-build-badge {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 850;
-  padding: 2px 8px;
+  padding: 2px 7px;
 }
 
 .preset-author {
-  font-size: 11px;
+  font-size: 10px;
   color: #ef174e;
   font-weight: 750;
 }
 
 .preset-name {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 950;
   color: #ffffff;
   margin: 0;
 }
 
 .preset-desc {
-  font-size: 12px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.65);
   margin: 0;
   line-height: 1.4;
@@ -3052,10 +3074,10 @@ export default {
 .preset-items-lineup {
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 10px 12px;
+  padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .lineup-item {
@@ -3066,7 +3088,7 @@ export default {
 
 .lineup-lbl {
   color: rgba(255, 255, 255, 0.45);
-  min-width: 40px;
+  min-width: 36px;
 }
 
 .lineup-val {
@@ -3082,7 +3104,7 @@ export default {
 
 .lineup-tag {
   background: rgba(255, 255, 255, 0.1);
-  padding: 1px 6px;
+  padding: 1px 5px;
   font-size: 10px;
   color: #ffffff;
 }
@@ -3090,7 +3112,7 @@ export default {
 .preset-card-footer {
   display: flex;
   gap: 8px;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .btn-apply-preset {
@@ -3098,9 +3120,9 @@ export default {
   background: #d71442;
   border: 0;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 850;
-  padding: 8px;
+  padding: 7px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -3114,7 +3136,7 @@ export default {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -3148,12 +3170,12 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 14px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 900;
   color: #ffffff;
 }
@@ -3162,12 +3184,12 @@ export default {
   background: transparent;
   border: 0;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 }
 
 .picker-search-bar {
-  padding: 12px 20px;
+  padding: 10px 18px;
   background: rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -3177,15 +3199,15 @@ export default {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  padding: 8px 12px;
-  font-size: 13px;
+  padding: 7px 10px;
+  font-size: 12px;
   outline: none;
 }
 
 .picker-items-grid {
   flex: 1;
   overflow-y: auto;
-  padding: 14px 20px;
+  padding: 12px 18px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -3197,7 +3219,7 @@ export default {
   gap: 12px;
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 10px 14px;
+  padding: 8px 12px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -3208,8 +3230,8 @@ export default {
 }
 
 .picker-thumb {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
 }
 
@@ -3220,7 +3242,7 @@ export default {
 }
 
 .p-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 850;
   color: #ffffff;
 }
@@ -3247,9 +3269,14 @@ export default {
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
   .armory-split-layout {
     grid-template-columns: 1fr;
+  }
+  .tactical-inspector-sidebar {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
   }
   .loadout-slots-grid {
     grid-template-columns: 1fr;
