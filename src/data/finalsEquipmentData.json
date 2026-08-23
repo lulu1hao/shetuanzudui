@@ -1,6 +1,6 @@
 {
   "version": "Season 11 Live (Wiki Sync)",
-  "lastUpdated": "2026-08-23T14:01:06.565Z",
+  "lastUpdated": "2026-08-23T14:53:52.234Z",
   "itemCount": 86,
   "builds": [
     {
@@ -49,7 +49,7 @@
       "description": "三发点射战术手枪，拥有极快的组内射速与高爆发能力。",
       "descZh": "三发点射战术手枪，拥有极快的组内射速与高爆发能力。",
       "imageFile": "93R_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/3/3d/93R_Rank_1.png",
+      "imageUrl": "/equipment/93r.png",
       "unlock": "500",
       "wtype": "Handgun",
       "stats": {
@@ -131,7 +131,9 @@
             "ttk": "1.74s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/93r.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/3d/93R_Rank_1.png"
     },
     {
       "id": "arn_220",
@@ -143,7 +145,7 @@
       "description": "配备并联双弹匣的轻型突击步枪，可在空仓时极速切换次级弹匣。",
       "descZh": "配备并联双弹匣的轻型突击步枪，可在空仓时极速切换次级弹匣。",
       "imageFile": "ARN-220_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/e0/ARN-220_Rank_1.png",
+      "imageUrl": "/equipment/arn_220.png",
       "unlock": "500",
       "wtype": "Assault Rifle",
       "stats": {
@@ -225,7 +227,9 @@
             "ttk": "1.60s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/arn_220.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/e0/ARN-220_Rank_1.png"
     },
     {
       "id": "dagger",
@@ -237,7 +241,7 @@
       "description": "轻巧致命的暗杀短刃，右键背刺蓄力可打出320点致命伤害，秒杀一切非重装目标。",
       "descZh": "轻巧致命的暗杀短刃，右键背刺蓄力可打出320点致命伤害，秒杀一切非重装目标。",
       "imageFile": "Dagger_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/8/86/Dagger_Rank_1.png",
+      "imageUrl": "/equipment/dagger.png",
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
@@ -319,7 +323,9 @@
             "ttk": "2.00s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/dagger.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/8/86/Dagger_Rank_1.png"
     },
     {
       "id": "lh1",
@@ -331,7 +337,7 @@
       "description": "单发伤害极高的半自动步枪，爆头倍率高达2.0×，精准点射可迅速击碎敌方防线。",
       "descZh": "单发伤害极高的半自动步枪，爆头倍率高达2.0×，精准点射可迅速击碎敌方防线。",
       "imageFile": "LH1_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/e2/LH1_Rank_1.png",
+      "imageUrl": "/equipment/lh1.png",
       "unlock": "500",
       "wtype": "Marksman Rifle",
       "stats": {
@@ -413,7 +419,9 @@
             "ttk": "1.56s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/lh1.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/e2/LH1_Rank_1.png"
     },
     {
       "id": "m11",
@@ -425,7 +433,7 @@
       "description": "拥有1000 RPM极限射速的40发大弹匣冲锋枪，近距离贴身爆发力无与伦比。",
       "descZh": "拥有1000 RPM极限射速的40发大弹匣冲锋枪，近距离贴身爆发力无与伦比。",
       "imageFile": "M11_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/c3/M11_Rank_1.png",
+      "imageUrl": "/equipment/m11.png",
       "unlock": "Duelist",
       "wtype": "SMG",
       "stats": {
@@ -507,7 +515,9 @@
             "ttk": "1.26s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/m11.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/c3/M11_Rank_1.png"
     },
     {
       "id": "m26_matter",
@@ -519,7 +529,7 @@
       "description": "紧凑型弹匣泵动霰弹枪，单发打出11颗弹丸（11×11=121伤害），适合滑铲近身交火。",
       "descZh": "紧凑型弹匣泵动霰弹枪，单发打出11颗弹丸（11×11=121伤害），适合滑铲近身交火。",
       "imageFile": "M26 Matter_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/3/3c/M26_Matter_Rank_1.png",
+      "imageUrl": "/equipment/m26_matter.png",
       "unlock": "500",
       "wtype": "Shotgun",
       "stats": {
@@ -601,7 +611,9 @@
             "ttk": "1.43s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/m26_matter.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/3c/M26_Matter_Rank_1.png"
     },
     {
       "id": "recurve_bow",
@@ -613,7 +625,7 @@
       "description": "静音箭矢武器，蓄力满弓单发伤害达90点（爆头180点），适合幽灵刺客制高点冷箭。",
       "descZh": "静音箭矢武器，蓄力满弓单发伤害达90点（爆头180点），适合幽灵刺客制高点冷箭。",
       "imageFile": "Recurve Bow_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/7/7f/Recurve_Bow_Rank_1.png",
+      "imageUrl": "/equipment/recurve_bow.png",
       "unlock": "500",
       "wtype": "Bow",
       "stats": {
@@ -695,7 +707,9 @@
             "ttk": "3.85s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/recurve_bow.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/7/7f/Recurve_Bow_Rank_1.png"
     },
     {
       "id": "sh1900",
@@ -707,7 +721,7 @@
       "description": "双管猎枪，单发打出15颗重霰弹（15×12=180），贴脸单喷即可直接瞬秒轻型单位。",
       "descZh": "双管猎枪，单发打出15颗重霰弹（15×12=180），贴脸单喷即可直接瞬秒轻型单位。",
       "imageFile": "SH1900_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/a/a2/SH1900_Rank_1.png",
+      "imageUrl": "/equipment/sh1900.png",
       "unlock": "500",
       "wtype": "Shotgun",
       "stats": {
@@ -789,7 +803,9 @@
             "ttk": "0.75s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/sh1900.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/a/a2/SH1900_Rank_1.png"
     },
     {
       "id": "sr_84",
@@ -801,7 +817,7 @@
       "description": "高倍瞄具栓动狙击步枪，身体伤害118，爆头伤害高达236，远距离压制力极具威慑。",
       "descZh": "高倍瞄具栓动狙击步枪，身体伤害118，爆头伤害高达236，远距离压制力极具威慑。",
       "imageFile": "SR-84_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/0/0f/SR-84_Rank_1.png",
+      "imageUrl": "/equipment/sr_84.png",
       "unlock": "Free",
       "wtype": "Sniper Rifle",
       "stats": {
@@ -883,7 +899,9 @@
             "ttk": "2.67s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/sr_84.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/0f/SR-84_Rank_1.png"
     },
     {
       "id": "sword",
@@ -895,7 +913,7 @@
       "description": "附带突进冲刺斩杀的武士剑，右键蓄力突刺造成140点高额伤害，结合位移斩杀无解。",
       "descZh": "附带突进冲刺斩杀的武士剑，右键蓄力突刺造成140点高额伤害，结合位移斩杀无解。",
       "imageFile": "Sword_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/cf/Sword_Rank_1.png",
+      "imageUrl": "/equipment/sword.png",
       "unlock": "Free",
       "wtype": "Melee",
       "stats": {
@@ -977,7 +995,9 @@
             "ttk": "1.50s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/sword.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cf/Sword_Rank_1.png"
     },
     {
       "id": "throwing_knives",
@@ -989,7 +1009,7 @@
       "description": "双持投掷飞刀，每次投出两枚（60+60=120），无换弹概念，持续输出能力极强。",
       "descZh": "双持投掷飞刀，每次投出两枚（60+60=120），无换弹概念，持续输出能力极强。",
       "imageFile": "Throwing Knives_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/a/ab/Throwing_Knives_Rank_1.png",
+      "imageUrl": "/equipment/throwing_knives.png",
       "unlock": "Assassin",
       "wtype": "Marksman",
       "stats": {
@@ -1071,7 +1091,9 @@
             "ttk": "1.68s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/throwing_knives.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/a/ab/Throwing_Knives_Rank_1.png"
     },
     {
       "id": "v9s",
@@ -1083,7 +1105,7 @@
       "description": "半自动消音手枪，单发伤害38，射速取决于扣扳机手速（最高360 RPM），近距点射爆发极高。",
       "descZh": "半自动消音手枪，单发伤害38，射速取决于扣扳机手速（最高360 RPM），近距点射爆发极高。",
       "imageFile": "V9S_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/7/7f/V9S_Rank_1.png",
+      "imageUrl": "/equipment/v9s.png",
       "unlock": "Free",
       "wtype": "Handgun",
       "stats": {
@@ -1165,7 +1187,9 @@
             "ttk": "1.50s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/v9s.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/7/7f/V9S_Rank_1.png"
     },
     {
       "id": "xp_54",
@@ -1177,7 +1201,7 @@
       "description": "配备光学红点瞄具的战术冲锋枪，880 RPM射速且弹道散布极小，中近距离激光枪。",
       "descZh": "配备光学红点瞄具的战术冲锋枪，880 RPM射速且弹道散布极小，中近距离激光枪。",
       "imageFile": "XP-54_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/f/f0/XP-54_Rank_1.png",
+      "imageUrl": "/equipment/xp_54.png",
       "unlock": "Free",
       "wtype": "SMG",
       "stats": {
@@ -1259,7 +1283,9 @@
             "ttk": "1.43s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/xp_54.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/f/f0/XP-54_Rank_1.png"
     },
     {
       "id": "akm",
@@ -1271,7 +1297,7 @@
       "description": "中型中坚核心步枪，36发大弹仓提供充足的续航容错率，中全距离交火极为扎实。",
       "descZh": "中型中坚核心步枪，36发大弹仓提供充足的续航容错率，中全距离交火极为扎实。",
       "imageFile": "AKM_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/5/55/AKM_Rank_1.png",
+      "imageUrl": "/equipment/akm.png",
       "unlock": "Free",
       "wtype": "Assault Rifle",
       "stats": {
@@ -1353,7 +1379,9 @@
             "ttk": "1.60s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/akm.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/55/AKM_Rank_1.png"
     },
     {
       "id": "cb_01_repeater",
@@ -1365,7 +1393,7 @@
       "description": "杠杆式高单发步枪，单发84点伤害，中距离两枪爆头即可粉碎中甲单位。",
       "descZh": "杠杆式高单发步枪，单发84点伤害，中距离两枪爆头即可粉碎中甲单位。",
       "imageFile": "CB-01 Repeater_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/3/30/CB-01_Repeater_Rank_1.png",
+      "imageUrl": "/equipment/cb_01_repeater.png",
       "unlock": "500",
       "wtype": "Marksman Rifle",
       "stats": {
@@ -1447,7 +1475,9 @@
             "ttk": "3.08s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/cb_01_repeater.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/30/CB-01_Repeater_Rank_1.png"
     },
     {
       "id": "cerberus_12ga",
@@ -1459,7 +1489,7 @@
       "description": "中型专属三管龙息霰弹枪，单发射出13颗燃烧弹丸（9×13=117直接伤害），并附加额外~30点火焰灼烧DoT。",
       "descZh": "中型专属三管龙息霰弹枪，单发射出13颗燃烧弹丸（9×13=117直接伤害），并附加额外~30点火焰灼烧DoT。",
       "imageFile": "Cerberus 12GA_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/8/8e/Cerberus_12GA_Rank_1.png",
+      "imageUrl": "/equipment/cerberus_12ga.png",
       "unlock": "500",
       "wtype": "Shotgun",
       "stats": {
@@ -1541,7 +1571,9 @@
             "ttk": "1.20s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/cerberus_12ga.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/8/8e/Cerberus_12GA_Rank_1.png"
     },
     {
       "id": "chimera_xb",
@@ -1553,7 +1585,7 @@
       "description": "复合高张力战术弩，发射高速穿甲弩箭，射击静音且弹道下坠极低。",
       "descZh": "复合高张力战术弩，发射高速穿甲弩箭，射击静音且弹道下坠极低。",
       "imageFile": "Chimera-XB_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/a/ae/Chimera-XB_Rank_1.png",
+      "imageUrl": "/equipment/chimera_xb.png",
       "unlock": "Aerialist",
       "wtype": "Marksman",
       "stats": {
@@ -1635,7 +1667,9 @@
             "ttk": "1.62s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/chimera_xb.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/a/ae/Chimera-XB_Rank_1.png"
     },
     {
       "id": "cl_40",
@@ -1647,7 +1681,7 @@
       "description": "中型战术榴弹枪，单发直击105伤害，溅射范围79~11，擅长清洗抱团敌人与点内掩体。",
       "descZh": "中型战术榴弹枪，单发直击105伤害，溅射范围79~11，擅长清洗抱团敌人与点内掩体。",
       "imageFile": "CL-40_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/b/b3/CL-40_Rank_1.png",
+      "imageUrl": "/equipment/cl_40.png",
       "unlock": "Free",
       "wtype": "Grenade Launcher",
       "stats": {
@@ -1729,7 +1763,9 @@
             "ttk": "2.47s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/cl_40.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/b3/CL-40_Rank_1.png"
     },
     {
       "id": "dual_blades",
@@ -1741,7 +1777,7 @@
       "description": "双持战术利刃，右键按住可正面格挡反弹敌方枪弹，近身四连斩杀伤力惊人。",
       "descZh": "双持战术利刃，右键按住可正面格挡反弹敌方枪弹，近身四连斩杀伤力惊人。",
       "imageFile": "Dual Blades_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/cb/Dual_Blades_Rank_1.png",
+      "imageUrl": "/equipment/dual_blades.png",
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
@@ -1823,7 +1859,9 @@
             "ttk": "2.76s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/dual_blades.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cb/Dual_Blades_Rank_1.png"
     },
     {
       "id": "famas",
@@ -1835,7 +1873,7 @@
       "description": "三发点射步枪，单发伤害24（单组72），点射落点极度紧凑，中远距离对枪利刃。",
       "descZh": "三发点射步枪，单发伤害24（单组72），点射落点极度紧凑，中远距离对枪利刃。",
       "imageFile": "FAMAS_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/4/45/FAMAS_Rank_1.png",
+      "imageUrl": "/equipment/famas.png",
       "unlock": "Hacker",
       "wtype": "Assault Rifle",
       "stats": {
@@ -1917,7 +1955,9 @@
             "ttk": "1.64s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/famas.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/4/45/FAMAS_Rank_1.png"
     },
     {
       "id": "fcar",
@@ -1929,7 +1969,7 @@
       "description": "配备全息红点瞄具的重威力突击步枪，单发23点伤害，精准跟枪击杀极快。",
       "descZh": "配备全息红点瞄具的重威力突击步枪，单发23点伤害，精准跟枪击杀极快。",
       "imageFile": "FCAR_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/a/a8/FCAR_Rank_1.png",
+      "imageUrl": "/equipment/fcar.png",
       "unlock": "Free",
       "wtype": "Assault Rifle",
       "stats": {
@@ -2011,7 +2051,9 @@
             "ttk": "1.70s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/fcar.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/a/a8/FCAR_Rank_1.png"
     },
     {
       "id": "model_1887",
@@ -2023,7 +2065,7 @@
       "description": "经典杠杆霰弹枪，单发128点高额散射（16×8），两喷即可直接斩杀中型单位。",
       "descZh": "经典杠杆霰弹枪，单发128点高额散射（16×8），两喷即可直接斩杀中型单位。",
       "imageFile": "Model 1887_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/ed/Model_1887_Rank_1.png",
+      "imageUrl": "/equipment/model_1887.png",
       "unlock": "Engineer",
       "wtype": "Shotgun",
       "stats": {
@@ -2105,7 +2147,9 @@
             "ttk": "1.74s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/model_1887.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/ed/Model_1887_Rank_1.png"
     },
     {
       "id": "p90",
@@ -2117,7 +2161,7 @@
       "description": "50发超大弹鼓战术冲锋枪，900 RPM极速射速，提供充沛的持续近战压制力。",
       "descZh": "50发超大弹鼓战术冲锋枪，900 RPM极速射速，提供充沛的持续近战压制力。",
       "imageFile": "P90_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/6/6c/P90_Rank_1.png",
+      "imageUrl": "/equipment/p90.png",
       "unlock": "500",
       "wtype": "SMG",
       "stats": {
@@ -2199,7 +2243,9 @@
             "ttk": "1.60s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/p90.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/6/6c/P90_Rank_1.png"
     },
     {
       "id": "pike_556",
@@ -2211,7 +2257,7 @@
       "description": "配备高倍镜的精确射手步枪，单发49点伤害（爆头85.75），中远距离3枪瞬间终结对手。",
       "descZh": "配备高倍镜的精确射手步枪，单发49点伤害（爆头85.75），中远距离3枪瞬间终结对手。",
       "imageFile": "Pike-556_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/3/34/Pike-556_Rank_1.png",
+      "imageUrl": "/equipment/pike_556.png",
       "unlock": "500",
       "wtype": "DMR",
       "stats": {
@@ -2293,7 +2339,9 @@
             "ttk": "2.10s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/pike_556.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/34/Pike-556_Rank_1.png"
     },
     {
       "id": "r_357",
@@ -2305,7 +2353,7 @@
       "description": "大口径左轮手枪，单发74点伤害，精准爆头打出148点恐怖伤害，两枪爆头瞬秒重型。",
       "descZh": "大口径左轮手枪，单发74点伤害，精准爆头打出148点恐怖伤害，两枪爆头瞬秒重型。",
       "imageFile": "R .357_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/3/37/R_.357_Rank_1.png",
+      "imageUrl": "/equipment/r_357.png",
       "unlock": "Free",
       "wtype": "Handgun",
       "stats": {
@@ -2387,7 +2435,9 @@
             "ttk": "1.71s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/r_357.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/37/R_.357_Rank_1.png"
     },
     {
       "id": "riot_shield",
@@ -2399,7 +2449,7 @@
       "description": "正面抵御一切子弹伤害的防弹大盾，配合警棍近身敲击，防守与开路利器。",
       "descZh": "正面抵御一切子弹伤害的防弹大盾，配合警棍近身敲击，防守与开路利器。",
       "imageFile": "Riot Shield_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/0/0c/Riot_Shield_Rank_1.png",
+      "imageUrl": "/equipment/riot_shield.png",
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
@@ -2481,7 +2531,9 @@
             "ttk": "3.00s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/riot_shield.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/0c/Riot_Shield_Rank_1.png"
     },
     {
       "id": "50_akimbo",
@@ -2493,7 +2545,7 @@
       "description": "Dual, high-caliber handguns that deal high damage while sacrificing precision",
       "descZh": "双持五十口径巨兽，近距离双发齐射威力惊人。",
       "imageFile": ".50 Akimbo_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/5/5a/.50_Akimbo_Rank_1.png",
+      "imageUrl": "/equipment/50_akimbo.png",
       "unlock": "Free",
       "wtype": "Handgun",
       "stats": {
@@ -2513,7 +2565,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/.50_Akimbo"
+      "wikiUrl": "https://thefinals.wiki/wiki/.50_Akimbo",
+      "localImageUrl": "/equipment/50_akimbo.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/5a/.50_Akimbo_Rank_1.png"
     },
     {
       "id": "bfr_titan",
@@ -2525,7 +2579,7 @@
       "description": "重型手持转轮重炮，单发90点伤害（爆头135点），两发爆头直接摧毁中甲。",
       "descZh": "重型手持转轮重炮，单发90点伤害（爆头135点），两发爆头直接摧毁中甲。",
       "imageFile": "BFR Titan_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/1/1f/BFR_Titan_Rank_1.png",
+      "imageUrl": "/equipment/bfr_titan.png",
       "unlock": "500",
       "wtype": "Handgun",
       "stats": {
@@ -2607,7 +2661,9 @@
             "ttk": "2.54s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/bfr_titan.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/1/1f/BFR_Titan_Rank_1.png"
     },
     {
       "id": "flamethrower",
@@ -2619,7 +2675,7 @@
       "description": "喷射高温烈焰，穿透防弹盾牌并持续点燃目标（30直接+15/s燃烧），近战洗地大杀器。",
       "descZh": "喷射高温烈焰，穿透防弹盾牌并持续点燃目标（30直接+15/s燃烧），近战洗地大杀器。",
       "imageFile": "Flamethrower_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/5/50/Flamethrower_Rank_1.png",
+      "imageUrl": "/equipment/flamethrower.png",
       "unlock": "500",
       "wtype": "Special",
       "stats": {
@@ -2701,7 +2757,9 @@
             "ttk": "1.75s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/flamethrower.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/50/Flamethrower_Rank_1.png"
     },
     {
       "id": "ks_23",
@@ -2713,7 +2771,7 @@
       "description": "发射重型独头弹的霰弹枪，单发104点伤害，兼具远程精准伤害与直接轰塌墙体的破拆力。",
       "descZh": "发射重型独头弹的霰弹枪，单发104点伤害，兼具远程精准伤害与直接轰塌墙体的破拆力。",
       "imageFile": "KS-23_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/f/f4/KS-23_Rank_1.png",
+      "imageUrl": "/equipment/ks_23.png",
       "unlock": "Strategist",
       "wtype": "Shotgun",
       "stats": {
@@ -2795,7 +2853,9 @@
             "ttk": "2.31s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/ks_23.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/f/f4/KS-23_Rank_1.png"
     },
     {
       "id": "lewis_gun",
@@ -2807,7 +2867,7 @@
       "description": "47发弹盘重机枪，后坐力极易控制，全自动扫射输出稳定，是重装阵地战标准答案。",
       "descZh": "47发弹盘重机枪，后坐力极易控制，全自动扫射输出稳定，是重装阵地战标准答案。",
       "imageFile": "Lewis Gun_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/1/14/Lewis_Gun_Rank_1.png",
+      "imageUrl": "/equipment/lewis_gun.png",
       "unlock": "500",
       "wtype": "LMG",
       "stats": {
@@ -2889,7 +2949,9 @@
             "ttk": "1.80s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/lewis_gun.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/1/14/Lewis_Gun_Rank_1.png"
     },
     {
       "id": "m134_minigun",
@@ -2901,7 +2963,7 @@
       "description": "六管加特林重机枪，预热后爆发1500 RPM狂暴射速与150发弹箱，摧毁一切肉身与掩体。",
       "descZh": "六管加特林重机枪，预热后爆发1500 RPM狂暴射速与150发弹箱，摧毁一切肉身与掩体。",
       "imageFile": "M134 Minigun_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/9/96/M134_Minigun_Rank_1.png",
+      "imageUrl": "/equipment/m134_minigun.png",
       "unlock": "Demolisher",
       "wtype": "LMG",
       "stats": {
@@ -2983,7 +3045,9 @@
             "ttk": "2.47s (含预热)"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/m134_minigun.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/9/96/M134_Minigun_Rank_1.png"
     },
     {
       "id": "m60",
@@ -2995,7 +3059,7 @@
       "description": "70发超大弹箱全自动机枪，单发伤害20，擅长长时间封锁要道与压制掩体后敌人。",
       "descZh": "70发超大弹箱全自动机枪，单发伤害20，擅长长时间封锁要道与压制掩体后敌人。",
       "imageFile": "M60_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/a/a6/M60_Rank_1.png",
+      "imageUrl": "/equipment/m60.png",
       "unlock": "Free",
       "wtype": "LMG",
       "stats": {
@@ -3077,7 +3141,9 @@
             "ttk": "1.76s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/m60.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/a/a6/M60_Rank_1.png"
     },
     {
       "id": "mgl32",
@@ -3089,7 +3155,7 @@
       "description": "六连发转轮榴弹发射器，直击83伤害，榴弹会在地面/墙壁弹跳引爆，室内清点神兵。",
       "descZh": "六连发转轮榴弹发射器，直击83伤害，榴弹会在地面/墙壁弹跳引爆，室内清点神兵。",
       "imageFile": "MGL32_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/b/b1/MGL32_Rank_1.png",
+      "imageUrl": "/equipment/mgl32.png",
       "unlock": "500",
       "wtype": "Grenade Launcher",
       "stats": {
@@ -3171,7 +3237,9 @@
             "ttk": "2.67s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/mgl32.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/b1/MGL32_Rank_1.png"
     },
     {
       "id": "sa1216",
@@ -3183,7 +3251,7 @@
       "description": "旋转四管全自动霰弹枪，4发连喷可在0.6秒内倾泻288点巨额伤害，近战融化一切。",
       "descZh": "旋转四管全自动霰弹枪，4发连喷可在0.6秒内倾泻288点巨额伤害，近战融化一切。",
       "imageFile": "SA1216_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/cb/SA1216_Rank_1.png",
+      "imageUrl": "/equipment/sa1216.png",
       "unlock": "Free",
       "wtype": "Shotgun",
       "stats": {
@@ -3265,7 +3333,9 @@
             "ttk": "1.75s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/sa1216.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cb/SA1216_Rank_1.png"
     },
     {
       "id": "shak_50",
@@ -3277,7 +3347,7 @@
       "description": "发射.50重弹的重型战斗步枪，双发点射兼顾重甲穿透力与近战打击感。",
       "descZh": "发射.50重弹的重型战斗步枪，双发点射兼顾重甲穿透力与近战打击感。",
       "imageFile": "ShAK-50_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/f/fb/ShAK-50_Rank_1.png",
+      "imageUrl": "/equipment/shak_50.png",
       "unlock": "Enforcer",
       "wtype": "Battle Rifle",
       "stats": {
@@ -3359,7 +3429,9 @@
             "ttk": "1.57s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/shak_50.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/f/fb/ShAK-50_Rank_1.png"
     },
     {
       "id": "sledgehammer",
@@ -3371,7 +3443,7 @@
       "description": "物理引擎拆迁终极武器，轻击115伤害，右键蓄力重砸200伤害可直接砸穿楼板天花板。",
       "descZh": "物理引擎拆迁终极武器，轻击115伤害，右键蓄力重砸200伤害可直接砸穿楼板天花板。",
       "imageFile": "Sledgehammer_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/cb/Sledgehammer_Rank_1.png",
+      "imageUrl": "/equipment/sledgehammer.png",
       "unlock": "Free",
       "wtype": "Melee",
       "stats": {
@@ -3453,7 +3525,9 @@
             "ttk": "1.60s (2次重击)"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/sledgehammer.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cb/Sledgehammer_Rank_1.png"
     },
     {
       "id": "spear",
@@ -3465,7 +3539,7 @@
       "description": "长柄重型战矛，具备超长直刺距离（单发100），右键可施展旋转大风车群体横扫。",
       "descZh": "长柄重型战矛，具备超长直刺距离（单发100），右键可施展旋转大风车群体横扫。",
       "imageFile": "Spear_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/3/37/Spear_Rank_1.png",
+      "imageUrl": "/equipment/spear.png",
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
@@ -3547,39 +3621,42 @@
             "ttk": "2.25s"
           }
         }
-      }
+      },
+      "localImageUrl": "/equipment/spear.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/37/Spear_Rank_1.png"
     },
     {
       "id": "cloaking_device",
       "name": "Cloaking Device",
-      "nameZh": "隐身装置 (Cloaking Device)",
+      "nameZh": "隐形装置 (Cloaking Device)",
       "category": "specializations",
       "build": "Light",
-      "role": "光学隐身",
-      "description": "A temporary cloak that makes you hard to see when moving, and invisible when motionless",
-      "descZh": "静止或移动时进入隐形状态，打破敌方视觉侦测。",
+      "role": "光学隐形迷彩/潜行暗杀",
+      "description": "激活光学折射迷彩使自身进入隐身状态，静止时完全不可见，移动时呈现轻微光线折射轮廓。",
+      "descZh": "激活光学折射迷彩使自身进入隐身状态，静止时完全不可见，移动时呈现轻微光线折射轮廓。",
       "imageFile": "Cloaking Device_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/b/b0/Cloaking_Device_Rank_1.png",
+      "imageUrl": "/equipment/cloaking_device.png",
       "unlock": "Assassin",
       "wtype": "Specialization",
       "stats": {
-        "damage": "—",
+        "damage": "0 (潜行迷彩)",
         "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "Min - 11s <br> Max - 29s",
+        "dps": "隐身偷袭",
+        "rpm": "按需开关",
+        "magazine": "隐身能量槽 (最长 10s)",
+        "reload": "自动充能",
+        "falloff": "全距离隐匿",
+        "destruction": "None",
+        "cooldown": "起步消耗 15% 能量",
         "charges": "1"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "开火或受到攻击会瞬间打破隐身，攻击前找好最佳切入角度。",
+        "静止站立或蹲下时隐形效果最完美，适合在提现机旁埋伏敌方偷包选手。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Cloaking_Device"
+      "wikiUrl": "https://thefinals.wiki/wiki/Cloaking_Device",
+      "localImageUrl": "/equipment/cloaking_device.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/b0/Cloaking_Device_Rank_1.png"
     },
     {
       "id": "evasive_dash",
@@ -3587,63 +3664,65 @@
       "nameZh": "闪烁冲刺 (Evasive Dash)",
       "category": "specializations",
       "build": "Light",
-      "role": "三段瞬移",
-      "description": "A few quick dashes to close distance or dodge out of harm's way",
-      "descZh": "支持充能3次的多向快速突进，极速改变交火身位。",
+      "role": "三段瞬间位移/身法闪转腾挪",
+      "description": "向移动方向瞬间疾速冲刺（支持前后左右全方位位移），拥有3次充能槽，结合近战或冲锋枪拥有极高的身法操作上限。",
+      "descZh": "向移动方向瞬间疾速冲刺（支持前后左右全方位位移），拥有3次充能槽，结合近战或冲锋枪拥有极高的身法操作上限。",
       "imageFile": "Evasive Dash_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/4/42/Evasive_Dash_Rank_1.png",
+      "imageUrl": "/equipment/evasive_dash.png",
       "unlock": "Duelist",
       "wtype": "Specialization",
       "stats": {
-        "damage": "—",
+        "damage": "0 (纯机动位移)",
         "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "6s",
+        "dps": "闪避身法",
+        "rpm": "连环闪烁",
+        "magazine": "3 段充能",
+        "reload": "单段恢复 8s",
+        "falloff": "单次位移 8m",
+        "destruction": "None",
+        "cooldown": "单段 8s",
         "charges": "3"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "可在空中进行二次/三次变向冲刺，躲避火箭筒与霰弹枪致命伤害。",
+        "配合长剑蓄力突刺或双管喷近身，实现“冲刺-开火-冲刺拉开”的无伤消耗。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Evasive_Dash"
+      "wikiUrl": "https://thefinals.wiki/wiki/Evasive_Dash",
+      "localImageUrl": "/equipment/evasive_dash.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/4/42/Evasive_Dash_Rank_1.png"
     },
     {
       "id": "grappling_hook",
       "name": "Grappling Hook",
-      "nameZh": "抓钩 (Grappling Hook)",
+      "nameZh": "战术抓钩 (Grappling Hook)",
       "category": "specializations",
       "build": "Light",
-      "role": "立体机动",
-      "description": "A cord with a hook that you launch to scale structures and swing past walls. Also handy for quick escapes during combat",
-      "descZh": "发射抓钩高速牵引自身，快速飞跃楼宇与垂直制高点。",
+      "role": "远距离高空索道/制高点转点",
+      "description": "发射高速牵引抓钩，将自身快速拉向建筑顶端、塔吊、悬崖或远距离墙面，实现全地图最强立体机动。",
+      "descZh": "发射高速牵引抓钩，将自身快速拉向建筑顶端、塔吊、悬崖或远距离墙面，实现全地图最强立体机动。",
       "imageFile": "Grappling Hook_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/b/b4/Grappling_Hook_Rank_1.png",
+      "imageUrl": "/equipment/grappling_hook.png",
       "unlock": "Free",
       "wtype": "Specialization",
       "stats": {
-        "damage": "—",
+        "damage": "0 (立体机动)",
         "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "6s",
+        "dps": "飞索机动",
+        "rpm": "即时拉取",
+        "magazine": "1 次",
+        "reload": "—",
+        "falloff": "抓钩距离 25m",
+        "destruction": "None",
+        "cooldown": "8s",
         "charges": "1"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "在抓钩拉力达到最高点时按跳跃键脱钩，可利用惯性进行超远距离高空滑翔。",
+        "快速抢占制高点为狙击枪 (SR-84) 或反曲弓提供绝佳开火视野。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Grappling_Hook"
+      "wikiUrl": "https://thefinals.wiki/wiki/Grappling_Hook",
+      "localImageUrl": "/equipment/grappling_hook.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/b4/Grappling_Hook_Rank_1.png"
     },
     {
       "id": "dematerializer",
@@ -3651,63 +3730,65 @@
       "nameZh": "物质解构仪 (Dematerializer)",
       "category": "specializations",
       "build": "Medium",
-      "role": "虚空穿墙",
-      "description": "A tool that temporarily dematerializes physical surfaces in the arena, allowing any contestant to see or pass through them. It can also make these surfaces rematerialize.",
-      "descZh": "暂时抹除墙面或天花板物理碰撞，开辟奇袭通道。",
+      "role": "无视墙体物理穿透/天降奇兵",
+      "description": "瞬间解构墙壁、天花板或楼板形成战术通道，再次激活即可将结构重新复原封闭，创造出其不意的奇袭路线。",
+      "descZh": "瞬间解构墙壁、天花板或楼板形成战术通道，再次激活即可将结构重新复原封闭，创造出其不意的奇袭路线。",
       "imageFile": "Dematerializer_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/0/0d/Dematerializer_Rank_1.png",
+      "imageUrl": "/equipment/dematerializer.png",
       "unlock": "Hacker",
       "wtype": "Specialization",
       "stats": {
-        "damage": "—",
+        "damage": "0 (空间穿透通道)",
         "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "15s",
-        "charges": "1"
+        "dps": "空间重构",
+        "rpm": "即时激活",
+        "magazine": "3 次充能",
+        "reload": "单次充能恢复 12s",
+        "falloff": "射程 10m",
+        "destruction": "临时解构 (可复原)",
+        "cooldown": "单次 12s",
+        "charges": "3"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "在提现机正下方天花板解构，可直接将上方的现金箱漏到下层安全区域。",
+        "追击或逃跑时穿墙后立即按右键封闭通道，将敌人隔绝在墙后。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Dematerializer"
+      "wikiUrl": "https://thefinals.wiki/wiki/Dematerializer",
+      "localImageUrl": "/equipment/dematerializer.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/0d/Dematerializer_Rank_1.png"
     },
     {
       "id": "guardian_turret",
       "name": "Guardian Turret",
-      "nameZh": "哨戒炮塔 (Guardian Turret)",
+      "nameZh": "哨戒炮台 (Guardian Turret)",
       "category": "specializations",
       "build": "Medium",
-      "role": "自动防守",
-      "description": "Deployable AI-controlled assault rifle",
-      "descZh": "部署全自动防守炮塔，自动搜寻射击进入范围的敌人。",
+      "role": "250HP自动锁敌机枪/阵地交叉火力",
+      "description": "部署一台自动索敌的战术防卫机枪炮台（250 HP），能自动锁定并攻击视线范围内的敌方目标，单发造成8点伤害。",
+      "descZh": "部署一台自动索敌的战术防卫机枪炮台（250 HP），能自动锁定并攻击视线范围内的敌方目标，单发造成8点伤害。",
       "imageFile": "Guardian Turret_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/5/59/Guardian_Turret_Rank_1.png",
+      "imageUrl": "/equipment/guardian_turret.png",
       "unlock": "Engineer",
       "wtype": "Specialization",
       "stats": {
-        "damage": "6",
-        "crit": "—",
-        "dps": "—",
-        "rpm": "400}} The Guardian Turret is a Medium class specialization that places a turret which protects an area by rapidly firing at opponents it detects. {{Infographic|infographic-class = right|display = image",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
+        "damage": "8 / 发",
+        "crit": "1.0×",
+        "dps": "64 DPS",
+        "rpm": "480 RPM",
+        "magazine": "无限",
+        "reload": "—",
+        "falloff": "锁敌范围 20m (180°扫描)",
         "destruction": "Low",
-        "cooldown": "20s",
+        "cooldown": "30s",
         "charges": "1"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "放置在天花板横梁、墙角阴影或提现机高处盲区，形成立体交叉火力。",
+        "配合 APS 防护装置使用，防止炮台被敌方 EMP、RPG 或手雷瞬间炸毁。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Guardian_Turret"
+      "wikiUrl": "https://thefinals.wiki/wiki/Guardian_Turret",
+      "localImageUrl": "/equipment/guardian_turret.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/59/Guardian_Turret_Rank_1.png"
     },
     {
       "id": "healing_beam",
@@ -3715,31 +3796,32 @@
       "nameZh": "治疗光束 (Healing Beam)",
       "category": "specializations",
       "build": "Medium",
-      "role": "团队续航",
-      "description": "A beam that gives health directly to another teammate",
-      "descZh": "持续发射纳米医疗光束，为队友快速恢复生命值。",
+      "role": "50HP/s极速回血/团队生命中枢",
+      "description": "发射持续高能纳米治疗光束，以每秒50点的速率迅速恢复受损队友的生命值，团队续航不可或缺的核心。",
+      "descZh": "发射持续高能纳米治疗光束，以每秒50点的速率迅速恢复受损队友的生命值，团队续航不可或缺的核心。",
       "imageFile": "Healing Beam_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/6/60/Healing_Beam_Rank_1.png",
+      "imageUrl": "/equipment/healing_beam.png",
       "unlock": "Free",
       "wtype": "Specialization",
       "stats": {
-        "damage": "—",
+        "damage": "0 (纯团队治疗)",
         "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "5.5s",
+        "dps": "治疗速率 50 HP/s",
+        "rpm": "持续光束",
+        "magazine": "热量条 (持续约 6s)",
+        "reload": "过热冷却 4s / 自然散热",
+        "falloff": "有效连接距离 15m",
+        "destruction": "None",
+        "cooldown": "过热 4s",
         "charges": "1"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "保持在掩体后方锁定前排重装队友进行隔空连接治疗。",
+        "避免光束过热进入4秒红温锁死，在热量达到80%时短暂停顿快速降温。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Healing_Beam"
+      "wikiUrl": "https://thefinals.wiki/wiki/Healing_Beam",
+      "localImageUrl": "/equipment/healing_beam.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/6/60/Healing_Beam_Rank_1.png"
     },
     {
       "id": "shockwave",
@@ -3751,7 +3833,7 @@
       "description": "Throw an orb that creates a shockwave on impact, knocking opponents and objects away from the blast.",
       "descZh": "释放高能震荡波，强力击退敌人并打乱阵型。",
       "imageFile": "Shockwave_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/1/11/Shockwave_Rank_1.png",
+      "imageUrl": "/equipment/shockwave.png",
       "unlock": "Aerialist",
       "wtype": "Specialization",
       "stats": {
@@ -3771,7 +3853,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Shockwave"
+      "wikiUrl": "https://thefinals.wiki/wiki/Shockwave",
+      "localImageUrl": "/equipment/shockwave.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/1/11/Shockwave_Rank_1.png"
     },
     {
       "id": "recon_senses",
@@ -3783,7 +3867,7 @@
       "description": "A sensory enhancement that makes opponents visible through structures for a limited time. Weakens as distance increases",
       "descZh": "短暂开启红外透视扫描，标记掩体后方的敌人轮廓。",
       "imageFile": "Recon Senses_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/d/df/Recon_Senses_Rank_1.png",
+      "imageUrl": "/equipment/recon_senses.png",
       "unlock": "Free",
       "wtype": "Specialization",
       "stats": {
@@ -3803,39 +3887,43 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Recon_Senses"
+      "wikiUrl": "https://thefinals.wiki/wiki/Recon_Senses",
+      "localImageUrl": "/equipment/recon_senses.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/d/df/Recon_Senses_Rank_1.png"
     },
     {
       "id": "charge_n_slam",
       "name": "Charge 'N' Slam",
-      "nameZh": "强力冲撞 (Charge N Slam)",
+      "nameZh": "冲撞与重砸 (Charge 'N' Slam)",
       "category": "specializations",
       "build": "Heavy",
-      "role": "开路冲撞",
-      "description": "A charge to propel you forward to break through walls and obstacles, or to slam the ground if activated in the air. Deals damage to opponents.",
-      "descZh": "化身人形推土机向前冲刺砸毁一切，空中下砸造成巨大面伤。",
+      "role": "暴力破墙冲锋/空中重砸毁天灭地",
+      "description": "重装猛烈冲撞，撞击敌人造成130点高额伤害并粉碎一切墙体掩体；在空中激活可垂直向下俯冲重砸（Slam），造成最高200点范围毁灭伤害。",
+      "descZh": "重装猛烈冲撞，撞击敌人造成130点高额伤害并粉碎一切墙体掩体；在空中激活可垂直向下俯冲重砸（Slam），造成最高200点范围毁灭伤害。",
       "imageFile": "Charge 'N' Slam_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/thumb/Charge_'N'_Slam_Sideview.png/300px-Charge_'N'_Slam_Sideview.png",
+      "imageUrl": "/equipment/charge_n_slam.png",
       "unlock": "Demolisher",
       "wtype": "Specialization",
       "stats": {
-        "damage": "100 Initial<br>40 Subsequent<br>50-200 Ground Slam",
-        "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "3s}} Charge 'N' Slam is a Heavy class specialization that causes its user to rampage forwards, dealing high damage and pushing opponents, and destroying structures. It also has a ground pound functionality. {{Infographic | infographic-class = right | display = image",
+        "damage": "冲撞 130 / 重砸 最高200",
+        "crit": "1.0× (无爆头加成)",
+        "dps": "130+ 瞬间爆发",
+        "rpm": "冲撞持续 3.5s",
+        "magazine": "1 次",
+        "reload": "—",
+        "falloff": "重砸溅射 5m",
+        "destruction": "Max (秒破一切墙体楼板)",
+        "cooldown": "12s",
         "charges": "1"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "在空中跳下或使用跳板时启动，可触发空中重砸（Slam），伤害随下落高度增加（最高200点）。",
+        "冲撞可直接撞穿多面承重墙与结构，是提现点抢夺与开辟进攻路线的强力先手。",
+        "冲撞中撞到敌人会击退并造成130点直接伤害，配合一发近战或副手武器可瞬间击杀轻中型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Charge_'N'_Slam"
+      "wikiUrl": "https://thefinals.wiki/wiki/Charge_'N'_Slam",
+      "localImageUrl": "/equipment/charge_n_slam.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/39/Charge_N_Slam.png"
     },
     {
       "id": "goo_gun",
@@ -3843,31 +3931,32 @@
       "nameZh": "粘胶枪 (Goo Gun)",
       "category": "specializations",
       "build": "Heavy",
-      "role": "快速筑墙",
-      "description": "Shoots blobs of goo that solidify on impact; useful for creating defenses",
-      "descZh": "连续喷射凝固胶泡沫，构建临时掩体、桥梁或封堵门窗。",
+      "role": "连续喷射凝胶/定身封路造掩体",
+      "description": "连续喷射快速凝固的强化凝胶块，可封堵门窗要道、搭建攀爬阶梯、并在命中敌人时使其被凝胶禁锢减速。",
+      "descZh": "连续喷射快速凝固的强化凝胶块，可封堵门窗要道、搭建攀爬阶梯、并在命中敌人时使其被凝胶禁锢减速。",
       "imageFile": "Goo Gun_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/8/8c/Goo_Gun_Rank_1.png",
+      "imageUrl": "/equipment/goo_gun.png",
       "unlock": "Strategist",
       "wtype": "Specialization",
       "stats": {
-        "damage": "—",
+        "damage": "0 (强力地形创造/定身)",
         "crit": "—",
-        "dps": "—",
-        "rpm": "230|cooldown=Reload - 2.4s}}The '''Goo Gun''' is a Heavy class specialization that shoots blobs of goo.  {{Infographic|infographic-class = right|display = image",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "20s",
-        "charges": "1"
+        "dps": "控场/建造",
+        "rpm": "180 RPM",
+        "magazine": "8 发凝胶罐",
+        "reload": "自动充能",
+        "falloff": "射程 20m",
+        "destruction": "None (创造物理凝胶)",
+        "cooldown": "—",
+        "charges": "8"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "直接朝敌人脚下喷射，可将其粘在地面无法移动，配合队友集火。",
+        "在提现机周围喷满凝胶阻挡敌方视线与子弹，配合火焰道具可将凝胶点燃形成烈焰火海。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Goo_Gun"
+      "wikiUrl": "https://thefinals.wiki/wiki/Goo_Gun",
+      "localImageUrl": "/equipment/goo_gun.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/8/8c/Goo_Gun_Rank_1.png"
     },
     {
       "id": "mesh_shield",
@@ -3875,31 +3964,33 @@
       "nameZh": "网格护盾 (Mesh Shield)",
       "category": "specializations",
       "build": "Heavy",
-      "role": "移动巨盾",
-      "description": "A projected shield that blocks from the front only, creating a shoot-through cover for teammates.",
-      "descZh": "展开巨型高耐久电磁能量护盾，吸收所有正面飞行弹道。",
+      "role": "750HP单向透光巨盾/阵地壁垒",
+      "description": "展开一面拥有750点生命值的高能单向网格盾牌，阻挡敌方全部枪弹，同时允许己方队友自由向外开火。",
+      "descZh": "展开一面拥有750点生命值的高能单向网格盾牌，阻挡敌方全部枪弹，同时允许己方队友自由向外开火。",
       "imageFile": "Mesh Shield_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/e9/Mesh_Shield_Rank_1.png",
+      "imageUrl": "/equipment/mesh_shield.png",
       "unlock": "Free",
       "wtype": "Specialization",
       "stats": {
-        "damage": "—",
+        "damage": "0 (纯防守盾牌)",
         "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "20s",
-        "charges": "1"
+        "dps": "750 护盾承伤",
+        "rpm": "随开随关",
+        "magazine": "750 HP",
+        "reload": "关闭后自动充能 (100 HP/s)",
+        "falloff": "单向全屏防护",
+        "destruction": "None",
+        "cooldown": "完全碎盾后 8s 充能",
+        "charges": "1 (按住激活)"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "按住右键/技能键开启，随时松开收盾，避免被打至碎盾导致进入长冷却。",
+        "掩护队友进行提现偷包、除颤救人或在开阔地带推进。",
+        "注意防范火焰喷射器与毒气，这类元素伤害可穿透网格盾。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Mesh_Shield"
+      "wikiUrl": "https://thefinals.wiki/wiki/Mesh_Shield",
+      "localImageUrl": "/equipment/mesh_shield.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/e9/Mesh_Shield_Rank_1.png"
     },
     {
       "id": "winch_claw",
@@ -3907,31 +3998,33 @@
       "nameZh": "绞盘利爪 (Winch Claw)",
       "category": "specializations",
       "build": "Heavy",
-      "role": "强力拉拽",
-      "description": "Launches a chain claw that latches on to objects or contestants, pulling them in closer to you",
-      "descZh": "发射金属钩爪将远处的敌人、提现机或重物直接拽至身前。",
+      "role": "17m强力钩锁/强制拉取硬控",
+      "description": "发射战术绞盘钩爪（有效距离17米），强行将敌方选手、金库现金箱或重型物体拉至面前，并造成短暂眩晕打断。",
+      "descZh": "发射战术绞盘钩爪（有效距离17米），强行将敌方选手、金库现金箱或重型物体拉至面前，并造成短暂眩晕打断。",
       "imageFile": "Winch Claw_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/e0/Winch_Claw_Rank_1.png",
+      "imageUrl": "/equipment/winch_claw.png",
       "unlock": "Enforcer",
       "wtype": "Specialization",
       "stats": {
-        "damage": "5",
-        "crit": "—",
-        "dps": "—",
-        "rpm": "—",
-        "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "'''Stun:''' <br>3m or less - 0.1s<br>Max range - 0.5s }} The Winch Claw is a Heavy class specialization that fires a claw which, upon impact with an opponent or almost any type of object, forcibly brings them to the user. {{Infographic | infographic-class = right | display = image",
+        "damage": "15 (附带硬控眩晕)",
+        "crit": "1.0×",
+        "dps": "先手硬控",
+        "rpm": "17m 射程",
+        "magazine": "1 次",
+        "reload": "—",
+        "falloff": "最大有效距离 17m",
+        "destruction": "Low (可拉动物体/现金箱)",
+        "cooldown": "14s",
         "charges": "1"
       },
       "tips": [
-        "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
-        "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
-        "合理利用物理破坏特性打乱敌方防守阵型。"
+        "将正在偷包、开盾或治疗的敌人强行拉断其动作，并使其短暂失去反抗能力。",
+        "出钩拉中目标后，接 SA1216 自动喷、BFR 泰坦手炮或大锤蓄力，可实现瞬间近身秒杀。",
+        "可在安全掩体后远程拉取现金箱或队友雕像，改变战场局势。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Winch_Claw"
+      "wikiUrl": "https://thefinals.wiki/wiki/Winch_Claw",
+      "localImageUrl": "/equipment/winch_claw.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/e0/Winch_Claw_Rank_1.png"
     },
     {
       "id": "breach_charge",
@@ -3943,7 +4036,7 @@
       "description": "可吸附在任何表面的遥控炸药，精准爆破墙面地板。",
       "descZh": "可吸附在任何表面的遥控炸药，精准爆破墙面地板。",
       "imageFile": "Breach Charge_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/f/fc/Breach_Charge_Rank_1.png",
+      "imageUrl": "/equipment/breach_charge.png",
       "unlock": "Assassin",
       "wtype": "Utility",
       "stats": {
@@ -3963,7 +4056,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Breach_Charge"
+      "wikiUrl": "https://thefinals.wiki/wiki/Breach_Charge",
+      "localImageUrl": "/equipment/breach_charge.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/f/fc/Breach_Charge_Rank_1.png"
     },
     {
       "id": "gateway",
@@ -3975,7 +4070,7 @@
       "description": "A pair of deployable gateway entrances; when both are placed and activated, contestants and objects can move between the two locations",
       "descZh": "部署两个传送门节点，允许队伍在两点之间极速穿梭。",
       "imageFile": "Gateway_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/c4/Gateway_Rank_1.png",
+      "imageUrl": "/equipment/gateway.png",
       "unlock": "500",
       "wtype": "Utility",
       "stats": {
@@ -3995,7 +4090,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Gateway"
+      "wikiUrl": "https://thefinals.wiki/wiki/Gateway",
+      "localImageUrl": "/equipment/gateway.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/c4/Gateway_Rank_1.png"
     },
     {
       "id": "glitch_grenade",
@@ -4007,7 +4104,7 @@
       "description": "Thrown projectile that disables specializations and gadgets, glitches contestant's screens, and disables powered objects in the affected area",
       "descZh": "引爆电磁脉冲，短时间内使范围内敌人的技能道具彻底瘫痪。",
       "imageFile": "Glitch Grenade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/b/b5/Glitch_Grenade_Rank_1.png",
+      "imageUrl": "/equipment/glitch_grenade.png",
       "unlock": "Duelist",
       "wtype": "Offensive",
       "stats": {
@@ -4027,7 +4124,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Glitch_Grenade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Glitch_Grenade",
+      "localImageUrl": "/equipment/glitch_grenade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/b5/Glitch_Grenade_Rank_1.png"
     },
     {
       "id": "gravity_vortex",
@@ -4039,7 +4138,7 @@
       "description": "A remote-triggered device that creates a gravity vortex, pulling in objects and slowing contestants.",
       "descZh": "生成引力黑洞，将周围敌人与碎片强行吸附聚拢。",
       "imageFile": "Gravity Vortex_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/d/d6/Gravity_Vortex_Rank_1.png",
+      "imageUrl": "/equipment/gravity_vortex.png",
       "unlock": "500",
       "wtype": "Utility",
       "stats": {
@@ -4059,7 +4158,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Gravity_Vortex"
+      "wikiUrl": "https://thefinals.wiki/wiki/Gravity_Vortex",
+      "localImageUrl": "/equipment/gravity_vortex.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/d/d6/Gravity_Vortex_Rank_1.png"
     },
     {
       "id": "infuser",
@@ -4071,19 +4172,19 @@
       "description": "Rapid-fire healing device. Restores teammate health on hit and regenerates ammunition over time",
       "descZh": "刺激 contestant 生命体征，在交火中强行加速自愈。",
       "imageFile": "Infuser_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/thumb/Infuser_Sideview.png/300px-Infuser_Sideview.png",
+      "imageUrl": "/equipment/infuser.png",
       "unlock": "500",
       "wtype": "Utility",
       "stats": {
         "damage": "—",
         "crit": "—",
         "dps": "—",
-        "rpm": "800|envdmg=1}} The '''H+ Infuser''' is a Light class gadget that can be fired at teammates to heal them. {{Infographic",
+        "rpm": "800}} The '''H+ Infuser''' is a Light class gadget that can be fired at teammates to heal them. {{Infographic",
         "magazine": "—",
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "Starts recharging - 10s <br>  Fully recharged - 12s <!-- Needs testing -->",
+        "cooldown": "Starts recharging - 10s Fully recharged - 12s",
         "charges": "1"
       },
       "tips": [
@@ -4091,7 +4192,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Infuser"
+      "wikiUrl": "https://thefinals.wiki/wiki/Infuser",
+      "localImageUrl": "/equipment/infuser.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/thumb/Infuser_Sideview.png/300px-Infuser_Sideview.png"
     },
     {
       "id": "nullifier",
@@ -4103,7 +4206,7 @@
       "description": "Disables item use and interactions. Affected target cannot take or deal damage during effect",
       "descZh": "消除范围内的毒气、火焰、烟雾与负面状态效果。",
       "imageFile": "Nullifier_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/9/96/Nullifier_Rank_1.png",
+      "imageUrl": "/equipment/nullifier.png",
       "unlock": "Duelist",
       "wtype": "Utility",
       "stats": {
@@ -4115,7 +4218,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "18s<br>Reload - 1.9s",
+        "cooldown": "18s Reload - 1.9s",
         "charges": "1"
       },
       "tips": [
@@ -4123,7 +4226,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Nullifier"
+      "wikiUrl": "https://thefinals.wiki/wiki/Nullifier",
+      "localImageUrl": "/equipment/nullifier.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/9/96/Nullifier_Rank_1.png"
     },
     {
       "id": "sonar_grenade",
@@ -4135,7 +4240,7 @@
       "description": "Thrown projectile that emits several pulses, tracking affected contestants through walls",
       "descZh": "脉冲声呐扫描，周期性向全队暴露掩体后敌人的精确位置。",
       "imageFile": "Sonar Grenade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/ca/Sonar_Grenade_Rank_1.png",
+      "imageUrl": "/equipment/sonar_grenade.png",
       "unlock": "Scout",
       "wtype": "Utility",
       "stats": {
@@ -4155,7 +4260,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Sonar_Grenade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Sonar_Grenade",
+      "localImageUrl": "/equipment/sonar_grenade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/ca/Sonar_Grenade_Rank_1.png"
     },
     {
       "id": "thermal_bore",
@@ -4167,7 +4274,7 @@
       "description": "Launches a long-range projectile that burrows into structures and uses thermite to collapse them from within, opening up new sightlines",
       "descZh": "远距离发射高温钻孔弹，延时融毁远处建筑结构。",
       "imageFile": "Thermal Bore_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/d/dd/Thermal_Bore_Rank_1.png",
+      "imageUrl": "/equipment/thermal_bore.png",
       "unlock": "Scout",
       "wtype": "Utility",
       "stats": {
@@ -4179,7 +4286,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "High",
-        "cooldown": "25s<br>Reload - 2.6s",
+        "cooldown": "25s Reload - 2.6s",
         "charges": "1"
       },
       "tips": [
@@ -4187,7 +4294,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Thermal_Bore"
+      "wikiUrl": "https://thefinals.wiki/wiki/Thermal_Bore",
+      "localImageUrl": "/equipment/thermal_bore.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/d/dd/Thermal_Bore_Rank_1.png"
     },
     {
       "id": "thermal_vision",
@@ -4199,7 +4308,7 @@
       "description": "Reveals heat signatures",
       "descZh": "开启热成像视觉，无视烟雾并高亮突出所有热源目标。",
       "imageFile": "Thermal Vision_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/4/42/Thermal_Vision_Rank_1.png",
+      "imageUrl": "/equipment/thermal_vision.png",
       "unlock": "500",
       "wtype": "Utility",
       "stats": {
@@ -4219,7 +4328,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Thermal_Vision"
+      "wikiUrl": "https://thefinals.wiki/wiki/Thermal_Vision",
+      "localImageUrl": "/equipment/thermal_vision.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/4/42/Thermal_Vision_Rank_1.png"
     },
     {
       "id": "tracking_dart",
@@ -4231,7 +4342,7 @@
       "description": "Fires a projectile that tracks hit opponents through walls",
       "descZh": "击中目标后在全队视野中长时间实时追踪其行动轨迹。",
       "imageFile": "Tracking Dart_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/c9/Tracking_Dart_Rank_1.png",
+      "imageUrl": "/equipment/tracking_dart.png",
       "unlock": "500",
       "wtype": "Utility",
       "stats": {
@@ -4243,7 +4354,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "12s<br>Reload - 2.1s",
+        "cooldown": "12s Reload - 2.1s",
         "charges": "1"
       },
       "tips": [
@@ -4251,7 +4362,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Tracking_Dart"
+      "wikiUrl": "https://thefinals.wiki/wiki/Tracking_Dart",
+      "localImageUrl": "/equipment/tracking_dart.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/c9/Tracking_Dart_Rank_1.png"
     },
     {
       "id": "vanishing_bomb",
@@ -4263,7 +4376,7 @@
       "description": "Thrown projectile that cloaks your teammates for a short duration when detonated",
       "descZh": "掷出烟雾使自己和接触到的队友立即获得群体隐身。",
       "imageFile": "Vanishing Bomb_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/5/54/Vanishing_Bomb_Rank_1.png",
+      "imageUrl": "/equipment/vanishing_bomb.png",
       "unlock": "Assassin",
       "wtype": "Utility",
       "stats": {
@@ -4283,7 +4396,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Vanishing_Bomb"
+      "wikiUrl": "https://thefinals.wiki/wiki/Vanishing_Bomb",
+      "localImageUrl": "/equipment/vanishing_bomb.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/54/Vanishing_Bomb_Rank_1.png"
     },
     {
       "id": "aps_turret",
@@ -4295,7 +4410,7 @@
       "description": "Deployable that shoots down and destroys enemy projectiles",
       "descZh": "部署主动防御系统，自动击落射入范围内的所有敌方榴弹手雷。",
       "imageFile": "APS Turret_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/0/03/APS_Turret_Rank_1.png",
+      "imageUrl": "/equipment/aps_turret.png",
       "unlock": "Engineer",
       "wtype": "Defensive",
       "stats": {
@@ -4315,7 +4430,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/APS_Turret"
+      "wikiUrl": "https://thefinals.wiki/wiki/APS_Turret",
+      "localImageUrl": "/equipment/aps_turret.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/03/APS_Turret_Rank_1.png"
     },
     {
       "id": "breach_drill",
@@ -4327,7 +4444,7 @@
       "description": "Deployable that drills through surfaces and flashes the other side before detonating.",
       "descZh": "吸附式高转速破障钻头，迅速在坚固墙体上开出通孔。",
       "imageFile": "Breach Drill_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/8/8d/Breach_Drill_Rank_1.png",
+      "imageUrl": "/equipment/breach_drill.png",
       "unlock": "500",
       "wtype": "Utility",
       "stats": {
@@ -4347,7 +4464,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Breach_Drill"
+      "wikiUrl": "https://thefinals.wiki/wiki/Breach_Drill",
+      "localImageUrl": "/equipment/breach_drill.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/8/8d/Breach_Drill_Rank_1.png"
     },
     {
       "id": "data_reshaper",
@@ -4359,7 +4478,7 @@
       "description": "A tool that changes certain carriable and deployable objects in the arena into something else you can use",
       "descZh": "将敌方地雷、炮塔等危险设施瞬间重构成椅子、花盆等无害物品。",
       "imageFile": "Data Reshaper_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/ea/Data_Reshaper_Rank_1.png",
+      "imageUrl": "/equipment/data_reshaper.png",
       "unlock": "Hacker",
       "wtype": "Utility",
       "stats": {
@@ -4379,7 +4498,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Data_Reshaper"
+      "wikiUrl": "https://thefinals.wiki/wiki/Data_Reshaper",
+      "localImageUrl": "/equipment/data_reshaper.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/ea/Data_Reshaper_Rank_1.png"
     },
     {
       "id": "defibrillator",
@@ -4391,7 +4512,7 @@
       "description": "When charged, can be used on fallen teammates' statues to revive them instantly",
       "descZh": "电击救起阵亡队友雕像，战地救援神器。",
       "imageFile": "Defibrillator_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/e7/Defibrillator_Rank_1.png",
+      "imageUrl": "/equipment/defibrillator.png",
       "unlock": "Medic",
       "wtype": "Utility",
       "stats": {
@@ -4411,7 +4532,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Defibrillator"
+      "wikiUrl": "https://thefinals.wiki/wiki/Defibrillator",
+      "localImageUrl": "/equipment/defibrillator.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/e7/Defibrillator_Rank_1.png"
     },
     {
       "id": "gas_mine",
@@ -4423,11 +4546,11 @@
       "description": "Emits toxic gas when triggered; contestants take damage while exposed to toxic gas",
       "descZh": "触发后释放大范围剧毒浓烟，持续削减敌人高额生命值。",
       "imageFile": "Gas Mine_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/0/03/Gas_Mine_Rank_1.png",
+      "imageUrl": "/equipment/gas_mine.png",
       "unlock": "Free",
       "wtype": "Defensive",
       "stats": {
-        "damage": "Trigger - 30 <br> Gas - 30/s→60/s <small>(within 2s)</small>",
+        "damage": "Trigger - 30 Gas - 30/s→60/s (within 2s)",
         "crit": "—",
         "dps": "—",
         "rpm": "—",
@@ -4443,7 +4566,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Gas_Mine"
+      "wikiUrl": "https://thefinals.wiki/wiki/Gas_Mine",
+      "localImageUrl": "/equipment/gas_mine.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/03/Gas_Mine_Rank_1.png"
     },
     {
       "id": "glitch_trap",
@@ -4455,7 +4580,7 @@
       "description": "Deployable that sticks to a surface; when triggered, it disables specializations and gadgets and glitches screens",
       "descZh": "触发式失灵装置，剥夺踏入陷阱者的武器射击与技能使用。",
       "imageFile": "Glitch Trap_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/7/7d/Glitch_Trap_Rank_1.png",
+      "imageUrl": "/equipment/glitch_trap.png",
       "unlock": "Engineer",
       "wtype": "Defensive",
       "stats": {
@@ -4475,7 +4600,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Glitch_Trap"
+      "wikiUrl": "https://thefinals.wiki/wiki/Glitch_Trap",
+      "localImageUrl": "/equipment/glitch_trap.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/7/7d/Glitch_Trap_Rank_1.png"
     },
     {
       "id": "hover_pad",
@@ -4487,7 +4614,7 @@
       "description": "A deployable platform that hovers in midair, creating a temporary elevated surface.",
       "descZh": "生成反重力悬浮立足点，提供全新制高射击位。",
       "imageFile": "Hover Pad_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/7/76/Hover_Pad_Rank_1.png",
+      "imageUrl": "/equipment/hover_pad.png",
       "unlock": "Aerialist",
       "wtype": "Utility",
       "stats": {
@@ -4499,7 +4626,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "Destroyed - 11s<br>Picked up - 3.5s",
+        "cooldown": "Destroyed - 11s Picked up - 3.5s",
         "charges": "1"
       },
       "tips": [
@@ -4507,7 +4634,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Hover_Pad"
+      "wikiUrl": "https://thefinals.wiki/wiki/Hover_Pad",
+      "localImageUrl": "/equipment/hover_pad.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/7/76/Hover_Pad_Rank_1.png"
     },
     {
       "id": "jump_pad",
@@ -4519,7 +4648,7 @@
       "description": "Trampoline-like deployable; allows for high jumps",
       "descZh": "部署高弹性弹射板，将全队或提现箱瞬间弹射至高空屋顶。",
       "imageFile": "Jump Pad_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/ef/Jump_Pad_Rank_1.png",
+      "imageUrl": "/equipment/jump_pad.png",
       "unlock": "Medic",
       "wtype": "Utility",
       "stats": {
@@ -4539,7 +4668,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Jump_Pad"
+      "wikiUrl": "https://thefinals.wiki/wiki/Jump_Pad",
+      "localImageUrl": "/equipment/jump_pad.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/ef/Jump_Pad_Rank_1.png"
     },
     {
       "id": "zipline",
@@ -4551,7 +4682,7 @@
       "description": "Fires at a targeted surface and anchors a rope that can be used to traverse arenas easily",
       "descZh": "搭建长距离高空滑索通道，快速横渡复杂地形。",
       "imageFile": "Zipline_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/4/49/Zipline_Rank_1.png",
+      "imageUrl": "/equipment/zipline.png",
       "unlock": "Hacker",
       "wtype": "Utility",
       "stats": {
@@ -4571,7 +4702,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Zipline"
+      "wikiUrl": "https://thefinals.wiki/wiki/Zipline",
+      "localImageUrl": "/equipment/zipline.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/4/49/Zipline_Rank_1.png"
     },
     {
       "id": "anti_gravity_cube",
@@ -4583,7 +4716,7 @@
       "description": "Deployable that manipulates gravity in its immediate area, lifting contestants and objects upwards",
       "descZh": "生成立方体失重区域，使提现机、废墟与敌人全部漂浮至空中。",
       "imageFile": "Anti-Gravity Cube_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/4/42/Anti-Gravity_Cube_Rank_1.png",
+      "imageUrl": "/equipment/anti_gravity_cube.png",
       "unlock": "500",
       "wtype": "Utility",
       "stats": {
@@ -4603,7 +4736,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Anti-Gravity_Cube"
+      "wikiUrl": "https://thefinals.wiki/wiki/Anti-Gravity_Cube",
+      "localImageUrl": "/equipment/anti_gravity_cube.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/4/42/Anti-Gravity_Cube_Rank_1.png"
     },
     {
       "id": "barricade",
@@ -4615,7 +4750,7 @@
       "description": "Highly durable shields that are perfect for fortifying an area",
       "descZh": "可瞬间部署高耐久金属防护掩体，抵御猛烈正面火力。",
       "imageFile": "Barricade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/b/be/Barricade_Rank_1.png",
+      "imageUrl": "/equipment/barricade.png",
       "unlock": "Strategist",
       "wtype": "Defensive",
       "stats": {
@@ -4635,7 +4770,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Barricade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Barricade",
+      "localImageUrl": "/equipment/barricade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/be/Barricade_Rank_1.png"
     },
     {
       "id": "c4",
@@ -4647,7 +4784,7 @@
       "description": "Highly destructive deployable explosive that can be remotely detonated",
       "descZh": "高威力炸药，可吸附在可抛掷物品或墙体上遥控引爆。",
       "imageFile": "C4_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/a/a3/C4_Rank_1.png",
+      "imageUrl": "/equipment/c4.png",
       "unlock": "Strategist",
       "wtype": "Offensive",
       "stats": {
@@ -4667,7 +4804,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/C4"
+      "wikiUrl": "https://thefinals.wiki/wiki/C4",
+      "localImageUrl": "/equipment/c4.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/a/a3/C4_Rank_1.png"
     },
     {
       "id": "dome_shield",
@@ -4679,7 +4818,7 @@
       "description": "Projects a semi-transparent bubble that provides 360-degree protection for a short time",
       "descZh": "投掷球形能量护盾发生器，提供360度全方位火力庇护。",
       "imageFile": "Dome Shield_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/cd/Dome_Shield_Rank_1.png",
+      "imageUrl": "/equipment/dome_shield.png",
       "unlock": "Guardian",
       "wtype": "Defensive",
       "stats": {
@@ -4699,7 +4838,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Dome_Shield"
+      "wikiUrl": "https://thefinals.wiki/wiki/Dome_Shield",
+      "localImageUrl": "/equipment/dome_shield.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cd/Dome_Shield_Rank_1.png"
     },
     {
       "id": "healing_emitter",
@@ -4711,7 +4852,7 @@
       "description": "Deployable that heals you and nearby teammates. Can be picked up, carried and thrown.",
       "descZh": "部署范围治疗信标，为进入力场范围的队友持续输送生命。",
       "imageFile": "Healing Emitter_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/9/9b/Healing_Emitter_Rank_1.png",
+      "imageUrl": "/equipment/healing_emitter.png",
       "unlock": "Guardian",
       "wtype": "Utility",
       "stats": {
@@ -4731,7 +4872,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Healing_Emitter"
+      "wikiUrl": "https://thefinals.wiki/wiki/Healing_Emitter",
+      "localImageUrl": "/equipment/healing_emitter.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/9/9b/Healing_Emitter_Rank_1.png"
     },
     {
       "id": "lockbolt",
@@ -4743,7 +4886,7 @@
       "description": "A rocket-propelled Lockbolt device that chains nearby opponents and objectives to its general location.",
       "descZh": "发射高张力锚索，将敌人牵制锁止在特定区域。",
       "imageFile": "Lockbolt_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/d/d3/Lockbolt_Rank_1.png",
+      "imageUrl": "/equipment/lockbolt.png",
       "unlock": "Enforcer",
       "wtype": "Utility",
       "stats": {
@@ -4755,7 +4898,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "30s<br>Reload - 2.3s",
+        "cooldown": "30s Reload - 2.3s",
         "charges": "1"
       },
       "tips": [
@@ -4763,7 +4906,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Lockbolt"
+      "wikiUrl": "https://thefinals.wiki/wiki/Lockbolt",
+      "localImageUrl": "/equipment/lockbolt.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/d/d3/Lockbolt_Rank_1.png"
     },
     {
       "id": "pyro_mine",
@@ -4775,11 +4920,11 @@
       "description": "Explodes when triggered, setting fire to the immediate area; contestants in an area that is burning will take damage",
       "descZh": "触发后产生剧烈爆燃火海，破坏凝胶并造成持续灼烧。",
       "imageFile": "Pyro Mine_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/2/23/Pyro_Mine_Rank_1.png",
+      "imageUrl": "/equipment/pyro_mine.png",
       "unlock": "500",
       "wtype": "Defensive",
       "stats": {
-        "damage": "Explosion - 55 <br>Flame - 20/s <br>Burn - 15/s",
+        "damage": "Explosion - 55 Flame - 20/s Burn - 15/s",
         "crit": "—",
         "dps": "—",
         "rpm": "—",
@@ -4795,7 +4940,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Pyro_Mine"
+      "wikiUrl": "https://thefinals.wiki/wiki/Pyro_Mine",
+      "localImageUrl": "/equipment/pyro_mine.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/2/23/Pyro_Mine_Rank_1.png"
     },
     {
       "id": "rpg_7",
@@ -4807,7 +4954,7 @@
       "description": "Fires long-range, high-explosive missiles that detonate on impact",
       "descZh": "单发高爆火箭筒，提供超高单发瞬间爆发与大范围掩体瓦解。",
       "imageFile": "RPG-7_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/7/7a/RPG-7_Rank_1.png",
+      "imageUrl": "/equipment/rpg_7.png",
       "unlock": "Demolisher",
       "wtype": "Offensive",
       "stats": {
@@ -4819,7 +4966,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "High",
-        "cooldown": "45s<br>Reload - 2.15s",
+        "cooldown": "45s Reload - 2.15s",
         "charges": "1"
       },
       "tips": [
@@ -4827,7 +4974,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/RPG-7"
+      "wikiUrl": "https://thefinals.wiki/wiki/RPG-7",
+      "localImageUrl": "/equipment/rpg_7.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/7/7a/RPG-7_Rank_1.png"
     },
     {
       "id": "flashbang",
@@ -4839,7 +4988,7 @@
       "description": "Thrown projectile that disorients, blinds and deafens nearby players; can be thrown underhand or overhand",
       "descZh": "引爆强光与爆音，使范围内敌人陷入完全致盲与耳鸣状态。",
       "imageFile": "Flashbang_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/6/6e/Flashbang_Rank_1.png",
+      "imageUrl": "/equipment/flashbang.png",
       "unlock": "Free",
       "wtype": "Offensive",
       "stats": {
@@ -4859,7 +5008,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Flashbang"
+      "wikiUrl": "https://thefinals.wiki/wiki/Flashbang",
+      "localImageUrl": "/equipment/flashbang.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/6/6e/Flashbang_Rank_1.png"
     },
     {
       "id": "frag_grenade",
@@ -4871,7 +5022,7 @@
       "description": "Thrown projectile that explodes shortly after release; can be thrown underhand or overhand",
       "descZh": "经典延时高爆破片手雷，基础伤害高且便于反弹几何打击。",
       "imageFile": "Frag Grenade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/7/78/Frag_Grenade_Rank_1.png",
+      "imageUrl": "/equipment/frag_grenade.png",
       "unlock": "Free",
       "wtype": "Offensive",
       "stats": {
@@ -4891,7 +5042,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Frag_Grenade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Frag_Grenade",
+      "localImageUrl": "/equipment/frag_grenade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/7/78/Frag_Grenade_Rank_1.png"
     },
     {
       "id": "gas_grenade",
@@ -4903,7 +5056,7 @@
       "description": "Thrown projectile that emits a cloud of toxic gas; contestants take damage while exposed to toxic gas",
       "descZh": "大范围毒气弹，迫使抢点防守敌人离开关键提现机。",
       "imageFile": "Gas Grenade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/a/a4/Gas_Grenade_Rank_1.png",
+      "imageUrl": "/equipment/gas_grenade.png",
       "unlock": "Free",
       "wtype": "Offensive",
       "stats": {
@@ -4923,7 +5076,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Gas_Grenade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Gas_Grenade",
+      "localImageUrl": "/equipment/gas_grenade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/a/a4/Gas_Grenade_Rank_1.png"
     },
     {
       "id": "goo_grenade",
@@ -4935,7 +5090,7 @@
       "description": "Thrown projectile that explodes into several blobs of goo, which solidify on impact; can be thrown underhand or overhand",
       "descZh": "爆开生成大量凝胶掩体墙，阻挡视线与弹道。",
       "imageFile": "Goo Grenade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/9/93/Goo_Grenade_Rank_1.png",
+      "imageUrl": "/equipment/goo_grenade.png",
       "unlock": "Free",
       "wtype": "Defensive",
       "stats": {
@@ -4955,7 +5110,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Goo_Grenade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Goo_Grenade",
+      "localImageUrl": "/equipment/goo_grenade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/9/93/Goo_Grenade_Rank_1.png"
     },
     {
       "id": "pyro_grenade",
@@ -4967,11 +5124,11 @@
       "description": "Thrown projectile that starts a fire in the area where it explodes; contestants in an area that is burning will take damage",
       "descZh": "投掷后立即点燃地面化为火海，克制毒气并迅速清理凝胶。",
       "imageFile": "Pyro Grenade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/d/dc/Pyro_Grenade_Rank_1.png",
+      "imageUrl": "/equipment/pyro_grenade.png",
       "unlock": "Free",
       "wtype": "Offensive",
       "stats": {
-        "damage": "Flame - 20/s <br>Burn - 15/s",
+        "damage": "Flame - 20/s Burn - 15/s",
         "crit": "—",
         "dps": "—",
         "rpm": "—",
@@ -4987,7 +5144,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Pyro_Grenade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Pyro_Grenade",
+      "localImageUrl": "/equipment/pyro_grenade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/d/dc/Pyro_Grenade_Rank_1.png"
     },
     {
       "id": "smoke_grenade",
@@ -4999,7 +5158,7 @@
       "description": "Thrown projectile that emits smoke when it explodes, blocking lines of sight, extinguishing fire and preventing fire from igniting gas",
       "descZh": "大范围致密烟幕，熄灭火焰并彻底封锁敌方狙击视线。",
       "imageFile": "Smoke Grenade_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/e/ee/Smoke_Grenade_Rank_1.png",
+      "imageUrl": "/equipment/smoke_grenade.png",
       "unlock": "Free",
       "wtype": "Defensive",
       "stats": {
@@ -5019,7 +5178,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Smoke_Grenade"
+      "wikiUrl": "https://thefinals.wiki/wiki/Smoke_Grenade",
+      "localImageUrl": "/equipment/smoke_grenade.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/e/ee/Smoke_Grenade_Rank_1.png"
     },
     {
       "id": "proximity_sensor",
@@ -5031,7 +5192,7 @@
       "description": "Deployable sensor that sticks to a surface and tracks opponents in range through walls; can be triggered multiple times",
       "descZh": "小型感应探头，当敌人靠近时向全队发出高亮报警。",
       "imageFile": "Proximity Sensor_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/c/c9/Proximity_Sensor_Rank_1.png",
+      "imageUrl": "/equipment/proximity_sensor.png",
       "unlock": "Enforcer",
       "wtype": "Utility",
       "stats": {
@@ -5051,7 +5212,9 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Proximity_Sensor"
+      "wikiUrl": "https://thefinals.wiki/wiki/Proximity_Sensor",
+      "localImageUrl": "/equipment/proximity_sensor.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/c9/Proximity_Sensor_Rank_1.png"
     },
     {
       "id": "explosive_mine",
@@ -5063,7 +5226,7 @@
       "description": "Explodes when triggered",
       "descZh": "高伤害触发行地雷，是守护提现机与楼梯转角的经典利器。",
       "imageFile": "Explosive Mine_Rank_1.png",
-      "imageUrl": "https://www.thefinals.wiki/w/images/2/24/Explosive_Mine_Rank_1.png",
+      "imageUrl": "/equipment/explosive_mine.png",
       "unlock": "Demolisher",
       "wtype": "Defensive",
       "stats": {
@@ -5083,7 +5246,10 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Explosive_Mine"
+      "wikiUrl": "https://thefinals.wiki/wiki/Explosive_Mine",
+      "localImageUrl": "/equipment/explosive_mine.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/2/24/Explosive_Mine_Rank_1.png"
     }
-  ]
+  ],
+  "offlineReady": true
 }

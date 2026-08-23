@@ -281,7 +281,7 @@ export function formatSyncTime(isoStr) {
 }
 
 /**
- * 联网从 THE FINALS Wiki API 差量同步最新装备数据
+ * 联网从 THE FINALS Wiki API 差量同步最新装备数据并持久化到本地
  */
 export async function syncEquipmentFromWiki() {
   const current = getEquipmentData()
@@ -289,8 +289,8 @@ export async function syncEquipmentFromWiki() {
 
   const titleChunks = []
   const titleList = items.map(it => it.name)
-  for (let i = 0; i < titleList.length; i += 30) {
-    titleChunks.push(titleList.slice(i, i + 30))
+  for (let i = 0; i < titleList.length; i += 25) {
+    titleChunks.push(titleList.slice(i, i + 25))
   }
 
   let updatedCount = 0
@@ -300,7 +300,7 @@ export async function syncEquipmentFromWiki() {
       const url = `https://www.thefinals.wiki/w/api.php?action=query&titles=${titleStr}&prop=revisions&rvprop=content&format=json&origin=*`
       
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 6000)
+      const timeoutId = setTimeout(() => controller.abort(), 7000)
       const res = await fetch(url, { signal: controller.signal })
       clearTimeout(timeoutId)
 
@@ -315,9 +315,29 @@ export async function syncEquipmentFromWiki() {
         if (!wikitext) continue
 
         const item = items.find(it => it.name.toLowerCase() === p.title.toLowerCase())
-        if (item && item.category !== 'weapons') {
-          const cdMatch = wikitext.match(/\|\s*cooldown\s*=\s*([^\n|]+)/i)
-          if (cdMatch && item.stats) item.stats.cooldown = cdMatch[1].trim()
+        if (item && item.stats) {
+          // 提取通用属性
+          const cdMatch = wikitext.match(/\|\s*cooldown\s*=\s*([^\n|}]+)/i)
+          if (cdMatch) {
+            item.stats.cooldown = cdMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
+          }
+          const dmgMatch = wikitext.match(/\|\s*damage\s*=\s*([^\n|}]+)/i)
+          if (dmgMatch && item.category === 'weapons') {
+            item.stats.damage = dmgMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
+          }
+          const magMatch = wikitext.match(/\|\s*magazine\s*=\s*([^\n|}]+)/i)
+          if (magMatch && item.category === 'weapons') {
+            item.stats.magazine = magMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
+          }
+          const reloadMatch = wikitext.match(/\|\s*reload\s*=\s*([^\n|}]+)/i)
+          if (reloadMatch) {
+            item.stats.reload = reloadMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
+          }
+
+          // 保持离线本地图片优先
+          if (!item.imageUrl || item.imageUrl.startsWith('http')) {
+            item.imageUrl = `/equipment/${item.id}.png`
+          }
           updatedCount++
         }
       }
