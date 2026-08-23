@@ -373,6 +373,8 @@ import {
   settleLobbyReturnTransition,
   TOURNAMENT_DISPLAY_REVEAL_DURATION
 } from '../../utils/globalLuluTransition.js'
+import { fetchLeaderboardTop } from '../../utils/theFinalsApi.js'
+import { getEquipmentData } from '../../utils/theFinalsEquipmentApi.js'
 
 export default {
   setup() {
@@ -414,6 +416,9 @@ export default {
     const selectNewRoomMap = (v) => { newRoomMap.value = v }
 
     const goToLeaderboard = () => {
+      // 在点击瞬间立刻提前重载与预取数据，使转场动画与数据并行，消除转场结束后的二次刷新与卡顿
+      fetchLeaderboardTop('s11', 'ranked', 'crossplay', 10).catch(() => {})
+
       if (isNavigatingToTournament) return
       isNavigatingToTournament = true
       const navigate = () => router.push('/leaderboard')
@@ -466,6 +471,9 @@ export default {
     }
 
     const goToEquipment = () => {
+      // 在点击瞬间立刻提前重载装备全量数据至内存单例
+      try { getEquipmentData() } catch(e) {}
+
       if (isNavigatingToTournament) return
       isNavigatingToTournament = true
       const navigate = () => router.push('/equipment')
@@ -987,7 +995,7 @@ export default {
   max-width: 1720px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 68px minmax(320px, 1.2fr) minmax(240px, 0.9fr) 100px;
+  grid-template-columns: 68px 1fr auto;
   align-items: center;
   gap: 18px;
   padding: 10px 22px;
@@ -1075,23 +1083,6 @@ export default {
   line-height: 1;
   font-weight: 750;
   white-space: nowrap;
-}
-
-.sidebar-slogan {
-  position: relative;
-  min-width: 0;
-  padding: 0 0 0 16px;
-  border: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  background: transparent;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 11px;
-  line-height: 1.6;
-  font-weight: 700;
-  letter-spacing: 0;
-  text-shadow: none;
-  backdrop-filter: none;
-  transform: translateY(4px);
 }
 
 .sidebar-stats {
@@ -1679,7 +1670,7 @@ export default {
 /* 响应式适配 */
 @media (max-width: 1280px) {
   .profile-dock {
-    grid-template-columns: 72px minmax(320px, 1fr) minmax(220px, 0.8fr) 100px;
+    grid-template-columns: 68px 1fr auto;
     gap: 16px;
     padding-inline: 16px;
   }
@@ -1691,12 +1682,8 @@ export default {
 
 @media (max-width: 960px) {
   .profile-dock {
-    grid-template-columns: 64px 1fr 90px;
+    grid-template-columns: 64px 1fr auto;
     gap: 12px;
-  }
-
-  .sidebar-slogan {
-    display: none;
   }
 
   .main-content {
