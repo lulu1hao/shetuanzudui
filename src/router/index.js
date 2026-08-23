@@ -3,6 +3,7 @@ import IndexPage from '../pages/index/index.vue'
 import RoomPage from '../pages/room/room.vue'
 import TournamentPage from '../pages/tournament/tournament.vue'
 import LeaderboardPage from '../pages/leaderboard/leaderboard.vue'
+import EquipmentPage from '../pages/equipment/equipment.vue'
 
 const routes = [
   {
@@ -27,6 +28,12 @@ const routes = [
     path: '/leaderboard',
     name: 'leaderboard',
     component: LeaderboardPage,
+    meta: { transition: 'tournament-slide' }
+  },
+  {
+    path: '/equipment',
+    name: 'equipment',
+    component: EquipmentPage,
     meta: { transition: 'tournament-slide' }
   }
 ]

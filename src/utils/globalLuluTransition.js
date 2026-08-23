@@ -29,6 +29,11 @@ const DISPLAY_TARGETS = {
     mode: 'tournament',
     selector: '.hud-header',
     settledHeight: 112
+  },
+  equipment: {
+    mode: 'tournament',
+    selector: '.hud-header',
+    settledHeight: 112
   }
 }
 

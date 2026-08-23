@@ -203,6 +203,43 @@
               </div>
             </div>
 
+            <!-- THE FINALS 装备与配装中心快捷卡片 -->
+            <div class="room-card glass-panel finals-feature-card finals-equipment-card" @click="goToEquipment">
+              <div class="room-card-header">
+                <span class="room-name">
+                  <span class="trophy-prefix">🔫 </span>
+                  THE FINALS 装备与配装中心
+                </span>
+                <div class="room-card-actions">
+                  <span class="room-type-tag tag-finals-live">WIKI SYNC</span>
+                </div>
+              </div>
+              <div class="room-badge finals-feature-badge">
+                <div class="room-mode-row">
+                  <span>全职业 86 件全赛季军械库</span>
+                  <span>武器 · 特长 · 战术道具</span>
+                </div>
+                <span class="badge-text tournament-badge-text">
+                  Wiki 实时属性同步 · 自由配装模拟器
+                </span>
+              </div>
+              <div class="room-info">
+                <div class="info-label-row">
+                  <span class="info-label">Wiki 同步状态</span>
+                  <span class="info-value" style="color: #34d399">● 实时直连与离线双模</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill progress-tournament-fill" style="width: 100%"></div>
+                </div>
+              </div>
+              <div class="room-footer">
+                <span class="created-time">数据源：THE FINALS 官方 Wiki 直连</span>
+                <button class="enter-btn enter-btn-tournament">
+                  进入装备 ➡️
+                </button>
+              </div>
+            </div>
+
             <button class="create-room-tile" @click="showCreateModal" title="创建房间 / 赛事">
               <span>+</span>
             </button>
@@ -358,7 +395,7 @@ export default {
     const heroPanel = ref(null)
     const isHeroExpanded = ref(false)
     const currentLobbyTab = ref(0)
-    const lobbyTabs = ['活动 / 赛事大厅', 'THE FINALS 积分查询', '交流区', '问题反馈(与我联系)']
+    const lobbyTabs = ['活动 / 赛事大厅', 'THE FINALS 积分查询', '装备', '问题反馈(与我联系)']
     let gsapContext
     let heroTransition
     let tournamentLaunchTimeline
@@ -433,13 +470,69 @@ export default {
       }
     }
 
+    const goToEquipment = () => {
+      if (isNavigatingToTournament) return
+      isNavigatingToTournament = true
+      const navigate = () => router.push('/equipment')
+
+      if (reduceMotion || !pageRoot.value || !heroPanel.value) {
+        navigate()
+        return
+      }
+
+      pageRoot.value.classList.add('tournament-launching')
+      heroTransition?.kill()
+
+      const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
+      const profileDock = pageRoot.value.querySelector('.profile-dock')
+      const profileSection = pageRoot.value.querySelector('.profile-section')
+      const mainContentEl = pageRoot.value.querySelector('.main-content')
+      const alignmentY = profileDock && profileSection
+        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+        : 0
+
+      tournamentLaunchTimeline = gsap.timeline({
+        defaults: { overwrite: 'auto' },
+        onComplete: () => {
+          navigate()
+        }
+      })
+        .call(() => {
+          beginLuluDisplayTransition('equipment')
+        }, null, 0)
+        .to(heroPanel.value, {
+          height: expandedHeight,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'height'
+        }, 0)
+        .to(profileDock ? [profileDock] : [], {
+          y: alignmentY,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power3.inOut',
+          willChange: 'transform'
+        }, 0)
+      if (mainContentEl && !reduceMotion) {
+        tournamentLaunchTimeline.to(mainContentEl, {
+          y: 70,
+          autoAlpha: 0,
+          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+          ease: 'power2.in'
+        }, 0)
+      }
+    }
+
     const selectLobbyTab = (idx) => {
       if (idx === 1) {
         goToLeaderboard()
         return
       }
+      if (idx === 2) {
+        goToEquipment()
+        return
+      }
       currentLobbyTab.value = idx
-      if (idx >= 2) {
+      if (idx >= 3) {
         showToast(`功能“${lobbyTabs[idx]}”正在全力开发中，敬请期待！`, 'none')
       }
     }
@@ -762,7 +855,7 @@ export default {
 
     return {
       rooms, totalMembers, isCreateModalVisible, newRoomName, newRoomType,
-      pageRoot, heroPanel, isHeroExpanded, currentLobbyTab, lobbyTabs, selectLobbyTab, goToLeaderboard,
+      pageRoot, heroPanel, isHeroExpanded, currentLobbyTab, lobbyTabs, selectLobbyTab, goToLeaderboard, goToEquipment,
       newTeamCount, newRoomMode, newRoomMap, modeOptions, MAPS,
       selectNewRoomType, selectNewTeamCount, selectNewRoomMode, selectNewRoomMap,
       expandHero, collapseHero, handleHeroWheel,
