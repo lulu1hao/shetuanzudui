@@ -1,0 +1,11 @@
+{
+  "version": "3.3.0",
+  "notes": "1. 修复已知问题；\n2. 优化系统性能与使用体验；\n3. 新增在线自动更新功能。",
+  "pub_date": "2026-08-25T04:11:50.520Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "【请在此处粘贴 src-tauri/target/release/bundle/nsis/*.nsis.zip.sig 文件的内容】",
+      "url": "https://your-domain.com/updates/lulu_3.3.0_x64-setup.nsis.zip"
+    }
+  }
+}

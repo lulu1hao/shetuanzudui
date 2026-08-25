@@ -12,16 +12,30 @@
       </router-view>
     </div>
     <ToastMessage />
+    <AppUpdaterModal />
   </div>
 </template>
 
 <script>
+import { onMounted } from 'vue'
 import TitleBar from './components/TitleBar.vue'
 import ToastMessage from './components/ToastMessage.vue'
 import GlobalLuluMarquee from './components/GlobalLuluMarquee.vue'
+import AppUpdaterModal from './components/AppUpdaterModal.vue'
+import { useUpdater } from './composables/useUpdater.js'
 
 export default {
-  components: { TitleBar, ToastMessage, GlobalLuluMarquee }
+  components: { TitleBar, ToastMessage, GlobalLuluMarquee, AppUpdaterModal },
+  setup() {
+    const { checkForUpdates } = useUpdater()
+
+    onMounted(() => {
+      // 延迟 1.5 秒后在后台静默检测，确保主界面渲染顺畅不阻塞
+      setTimeout(() => {
+        checkForUpdates(true)
+      }, 1500)
+    })
+  }
 }
 </script>
 

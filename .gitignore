@@ -12,3 +12,5 @@ src-tauri/target/
 artifacts/
 *-profile/
 *-profile-*/
+*.key
+*.key.pub
