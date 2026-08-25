@@ -29,13 +29,10 @@
 
           <div class="profile-identity">
             <div class="sidebar-logo">
-              <span class="logo-title">lulu</span>
+              <span class="logo-title">lulululululululu</span>
             </div>
-            <div class="profile-tags" aria-label="创建者标签">
-              <span>系统创建者</span>
-              <span>MBTI · ENFP</span>
-              <span>文学奖读者</span>
-              <span>清华所在地学生</span>
+            <div class="profile-tags" aria-label="创建者标语">
+              <span>the finals会在N+1赛季重新火起来的</span>
             </div>
           </div>
 
@@ -281,7 +278,7 @@
                 <div class="info-row check-update-row">
                   <span class="info-label">系统版本</span>
                   <div class="version-action-box">
-                    <span class="info-val version-val">v4.0.1 (正式版)</span>
+                    <span class="info-val version-val">v{{ currentAppVersion }} (正式版)</span>
                     <button class="check-update-btn" @click="handleManualCheckUpdate" :disabled="isCheckingUpdate">
                       {{ isCheckingUpdate ? '正在检测...' : '检查更新 ⟳' }}
                     </button>
@@ -289,7 +286,7 @@
                 </div>
                 <div class="info-row">
                   <span class="info-label">系统创建者</span>
-                  <span class="info-val">lulu (ENFP / 清华所在地学生)</span>
+                  <span class="info-val">lulululululululu</span>
                 </div>
                 <div class="info-row">
                   <span class="info-label">反馈范围</span>
@@ -425,6 +422,8 @@ import { gsap } from 'gsap'
 import { roomStore, MODES, MAPS } from '../../store/roomStore.js'
 import { useToast } from '../../composables/useToast.js'
 import { useUpdater } from '../../composables/useUpdater.js'
+import { getVersion } from '@tauri-apps/api/app'
+import pkg from '../../../package.json'
 import {
   beginLuluDisplayTransition,
   consumeLobbyReturnRoomId,
@@ -613,6 +612,7 @@ export default {
 
     const { checkForUpdates } = useUpdater()
     const isCheckingUpdate = ref(false)
+    const currentAppVersion = ref(pkg.version || '4.0.3')
 
     const handleManualCheckUpdate = async () => {
       if (isCheckingUpdate.value) return
@@ -621,7 +621,7 @@ export default {
       try {
         const res = await checkForUpdates(false)
         if (res?.status === 'latest') {
-          showToast('当前已是最新版本 v4.0.1', 'success')
+          showToast(`当前已是最新版本 v${currentAppVersion.value}`, 'success')
         } else if (res?.status === 'error') {
           showToast(`检查更新提示: ${res.msg}`, 'none')
         }
@@ -641,6 +641,7 @@ export default {
     const LOBBY_HERO_SETTLED_HEIGHT = 200
 
     onMounted(() => {
+      getVersion().then(v => { if (v) currentAppVersion.value = v }).catch(() => {})
       isNavigatingToTournament = false
       isHeroExpanded.value = false
       isHeroAnimating = false
@@ -957,7 +958,7 @@ export default {
       showCreateModal, closeCreateModal, handleCreateRoom, confirmDeleteRoom, goToRoom,
       getRoomPrimaryLabel, getRoomCapacityLabel, getRoomMapLabel,
       getRoomMaxCapacity, getCompletedMatchesCount, getTotalMatchesCount,
-      copyWechat, handleManualCheckUpdate, isCheckingUpdate
+      copyWechat, handleManualCheckUpdate, isCheckingUpdate, currentAppVersion
     }
   }
 }
@@ -1106,7 +1107,7 @@ export default {
   height: 68px;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 10px;
+  border-radius: 0;
   background: #ffffff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   overflow: hidden;
@@ -1167,14 +1168,14 @@ export default {
 
 .profile-tags span {
   flex: none;
-  padding: 3px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.035);
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 10.5px;
-  line-height: 1;
-  font-weight: 750;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 11.5px;
+  line-height: 1.2;
+  font-weight: 700;
   white-space: nowrap;
 }
 
@@ -1809,7 +1810,7 @@ export default {
   color: #ffffff;
   background: #e11d48;
   padding: 3px 8px;
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .feedback-title {
@@ -1839,7 +1840,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  border-radius: 4px;
+  border-radius: 0;
   transition: all 0.2s ease;
 }
 
@@ -1858,7 +1859,7 @@ export default {
 .contact-icon-box {
   width: 48px;
   height: 48px;
-  border-radius: 8px;
+  border-radius: 0;
   background: rgba(225, 29, 72, 0.15);
   border: 1px solid rgba(225, 29, 72, 0.35);
   color: #e11d48;
@@ -1906,7 +1907,7 @@ export default {
   color: #ffffff;
   font-size: 14px;
   font-weight: 700;
-  border-radius: 4px;
+  border-radius: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1985,7 +1986,7 @@ export default {
   color: #ff3366;
   font-size: 11.5px;
   font-weight: 700;
-  border-radius: 4px;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.2s ease;
 }

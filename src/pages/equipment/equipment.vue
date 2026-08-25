@@ -876,6 +876,7 @@ import {
   beginLobbyReturnTransition,
   hasLuluDisplayTransition,
   prepareLuluDisplayArrival,
+  clearLuluDisplayArrivalStyles,
   placeGlobalLuluInDisplayTarget,
   settleLuluDisplayTransition,
   animateDisplayHeaderCopy,
@@ -1310,16 +1311,32 @@ export default {
             root: equipmentRootRef.value,
             onComplete: () => {
               isEquipmentArrival.value = false
+              nextTick(() => {
+                clearLuluDisplayArrivalStyles({ target: 'equipment', root: equipmentRootRef.value })
+                placeGlobalLuluInDisplayTarget(equipmentRootRef.value, { target: 'equipment' })
+              })
             }
           })
           animateDisplayHeaderCopy(equipmentRootRef.value, { arrival: true })
           gsap.fromTo('.equipment-body-scroll',
-            { autoAlpha: 0, y: 24 },
-            { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out', delay: 0.18, clearProps: 'all' }
+            { autoAlpha: 0, y: 20 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+              ease: 'power3.out',
+              delay: 0.08,
+              clearProps: 'transform'
+            }
           )
         } else {
+          isEquipmentArrival.value = false
           placeGlobalLuluInDisplayTarget(equipmentRootRef.value, { target: 'equipment' })
           animateDisplayHeaderCopy(equipmentRootRef.value, { arrival: false })
+          gsap.fromTo('.equipment-body-scroll',
+            { autoAlpha: 0, y: 15 },
+            { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out', clearProps: 'transform' }
+          )
         }
       }, 70)
     })
@@ -1427,7 +1444,7 @@ export default {
   height: 100vh;
   max-height: 100vh;
   overflow: hidden;
-  background: #141217;
+  background: transparent;
   color: #ffffff;
   font-family: var(--font-sans);
 }

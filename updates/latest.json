@@ -1,11 +1,11 @@
 {
-  "version": "4.0.2",
-  "notes": "1. 【热更新上线】恭喜！你已成功收到 v4.0.2 在线自动更新推送；\n2. 【功能优化】新增官方微信 zy1368921317 与一键复制功能；\n3. 【界面优化】新增“手动检查更新”按钮与暗黑红调微光视觉。",
-  "pub_date": "2026-08-25T18:15:00Z",
+  "version": "4.0.3",
+  "notes": "1. 【赛事系统升级】赛事名称与房间大厅深度双向联动，移除冗余抽屉，升级右下角直角机能配置面板（支持改名、奖品设置与随机地图）；\n2. 【战队战况全景】参赛战队实时动态计算荣誉状态（冠/亚/季/殿/半决/淘汰），荣誉高位自适应排序，点击卡片呼出全景战况总览弹窗；\n3. 【结算与录入重构】录入金钱与比分结算弹窗全新升级为直角细边暗黑电竞风，去除了所有 Emoji 图标；\n4. 【转场体验丝滑化】深度修复积分查询与装备界面在全局转场结束时的瞬间闪烁跳变缺陷，彻底消除白屏与刷新感；\n5. 【视觉与规范】系统信息规范化，全系统坚持直角细微光电竞机能设计语言。",
+  "pub_date": "2026-08-25T21:30:00Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1JSR2t5WUVlWUNOY1JJT1h5Z1dreXFlVEpGdVZQdjhmMExRdkoxYXpaaXVkWW9NY3hyeE5SNkhzY0hOYXA3V2U5ZEZ4ckNKTlZpMWtscm1LYTltQ3dBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NjUyNzMzCWZpbGU6bHVsdV80LjAuMl94NjQtc2V0dXAuZXhlCk1CdW55QmVONjRjNVAwcngrZERCM0VaYjNyRWNoa2JkZEFCVllUNGdyLzBIM1RmbjA1cGZ6K1NxQUh5U2xCd2tCV2NIZEVycm9UUmJobWwwcm5pQkJBPT0K",
-      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.2/_4.0.2_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1UzRll6VE00OFJiZjIyRFFtNzhCNXZRbGQ2M0xGOXZaRUtRTjc0WUE3YkJQeDN2TnlOa29wYkxxSS9UNHAvVnNlRXhXT0hMQStDbGNJRVpaRjFtaGdRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NjY0OTc5CWZpbGU6bHVsdV80LjAuM194NjQtc2V0dXAuZXhlCk5hcGR4YmFRK1ArWnduNHBvWFZhYmtVRGcyeUtjR2tHdTVwQTdDRzVQLzVtVmwyRDR3SFM4VzRSUmJJVEdqV0pTQjAwbzVQd1lvRmpzRzEvdGNyNERnPT0K",
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.3/lulu_4.0.3_x64-setup.exe"
     }
   }
 }

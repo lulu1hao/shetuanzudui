@@ -18,7 +18,6 @@
           <span class="map-label">MAP</span>
           <span class="map-name-val">{{ activeMapDisplay }}</span>
         </div>
-        <button class="gear-btn" :class="{ 'active': isControlPanelVisible }" @click="toggleControlPanel">赛事设置</button>
       </div>
     </div>
 
@@ -43,7 +42,7 @@
             <div class="command-flow-heading">
               <div>
                 <span class="command-eyebrow">CASHOUT TOURNAMENT</span>
-                <h2>鹿鹿杯 · {{ room.teamCount }}队赛</h2>
+                <h2>{{ room.name || '鹿鹿杯' }} · {{ room.teamCount }}队赛</h2>
               </div>
               <div class="live-status"><span></span>{{ room.matches?.some(m => m.status === 'completed') ? '赛程进行中' : '等待开赛' }}</div>
             </div>
@@ -131,36 +130,113 @@
           </main>
 
           <aside class="command-sidebar">
-            <section class="command-side-card roster-card">
-              <header><h3>参赛战队（{{ room.teamCount }}支）</h3><span>拖拽调整分组</span></header>
-              <div class="command-roster-list">
-                <div v-for="(teamId, idx) in room.slots || []" :key="teamId || idx" class="command-roster-row" :class="{ selected: selectedSlotIdx === idx }" draggable="true" @dragstart="onDragStart($event, idx)" @dragover.prevent @drop="onDrop($event, idx)" @dragend="draggedSlotIdx = null" @click="onSlotTap(idx)">
-                  <span class="roster-logo" :style="{ color: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo }}</span>
-                  <span class="roster-name">{{ getTeamById(teamId)?.name }}</span>
-                  <span class="roster-group">{{ getSlotGroupLabel(idx) }}</span>
+            <section class="command-side-card roster-card" @click="openAllTeamsStatusModal">
+              <header>
+                <h3>参赛战队（{{ room.teamCount }}支）</h3>
+                <span class="roster-view-all-tip">点击查看战况全景 ➔</span>
+              </header>
+              <div class="command-roster-list" @click.stop>
+                <div
+                  v-for="item in sortedRosterSlots"
+                  :key="item.teamId || item.originalSlotIdx"
+                  class="command-roster-row"
+                  :class="[item.status.type, { selected: selectedSlotIdx === item.originalSlotIdx }]"
+                  draggable="true"
+                  @dragstart="onDragStart($event, item.originalSlotIdx)"
+                  @dragover.prevent
+                  @drop="onDrop($event, item.originalSlotIdx)"
+                  @dragend="draggedSlotIdx = null"
+                  @click.stop="onSlotTap(item.originalSlotIdx)"
+                >
+                  <span class="roster-logo" :style="{ color: item.team?.color }">{{ item.team?.logo || '—' }}</span>
+                  <span class="roster-name">{{ item.team?.name || '待定战队' }}</span>
+                  <span class="roster-status-pill" :class="item.status.type">{{ item.status.text }}</span>
                 </div>
               </div>
             </section>
 
-            <section class="command-side-card status-card">
-              <header><h3>赛事状态</h3></header>
-              <div class="status-live-row"><span></span><strong>进行中</strong></div>
-              <p>地图：{{ activeMapDisplay }} · 点击赛程卡片录入提现金额</p>
+            <!-- 赛事信息与配置模块 (右下角核心配置) -->
+            <section class="command-side-card tournament-config-card">
+              <header>
+                <h3>赛事信息配置</h3>
+                <span class="config-badge">LIVE CONFIG</span>
+              </header>
+
+              <div class="config-form">
+                <!-- 赛事名称 -->
+                <div class="config-field">
+                  <label class="config-label">赛事名称</label>
+                  <div class="config-input-wrap">
+                    <input
+                      v-model="roomNameDraft"
+                      class="config-text-input"
+                      placeholder="输入赛事名称"
+                      maxlength="30"
+                      @blur="handleSaveRoomName"
+                      @keyup.enter="handleSaveRoomName"
+                    />
+                    <svg viewBox="0 0 24 24" class="field-icon" aria-hidden="true"><path d="m4 20 4.5-1L19 8.5 15.5 5 5 15.5 4 20ZM13.5 7l3.5 3.5"/></svg>
+                  </div>
+                </div>
+
+                <!-- 赛事奖励 -->
+                <div class="config-field">
+                  <label class="config-label">赛事奖励</label>
+                  <div class="config-input-wrap">
+                    <input
+                      v-model="roomRewardDraft"
+                      class="config-text-input"
+                      placeholder="例: 专属冠军奖杯 / 奖池 ¥500"
+                      maxlength="50"
+                      @blur="handleSaveRoomReward"
+                      @keyup.enter="handleSaveRoomReward"
+                    />
+                    <span class="reward-tag-badge">赛事奖品</span>
+                  </div>
+                </div>
+
+                <!-- 赛事地图选择 -->
+                <div class="config-field">
+                  <div class="config-label-row">
+                    <label class="config-label">赛事地图选择</label>
+                    <span class="current-map-tag">{{ activeMapDisplay }}</span>
+                  </div>
+                  <div class="map-select-grid">
+                    <button
+                      v-for="mapName in MAPS"
+                      :key="mapName"
+                      class="map-btn"
+                      :class="{ active: room.map === mapName }"
+                      @click="changeMap(mapName)"
+                    >{{ mapName }}</button>
+                    <button
+                      class="map-btn random-map-btn"
+                      :class="{ active: room.map === 'random' }"
+                      @click="changeMap('random')"
+                    >随机地图</button>
+                  </div>
+                </div>
+              </div>
             </section>
 
+            <!-- 冠军之路 (联动展示动态奖励与冠军) -->
             <section class="command-side-card champion-card">
               <div class="trophy-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M20 8h24v12c0 12-5 20-12 20S20 32 20 20zM20 12H9v7c0 8 5 13 13 14M44 12h11v7c0 8-5 13-13 14M32 40v9M22 55h20M26 49h12" /></svg></div>
-              <div><span>冠军之路</span><strong>{{ championTeam?.name || '等待冠军诞生' }}</strong><small>专属冠军奖杯 & 荣誉称号</small></div>
+              <div>
+                <span>冠军之路</span>
+                <strong>{{ championTeam?.name || '等待冠军诞生' }}</strong>
+                <small>{{ room.reward || '专属冠军奖杯 & 荣誉称号' }}</small>
+              </div>
             </section>
           </aside>
         </div>
 
-        <!-- 💰 提现锦标赛 -->
+        <!-- 提现锦标赛 -->
         <div class="flowchart-section glass-panel legacy-flowchart" v-else-if="false">
           <div class="screenshot-bar" v-if="!isScreenshotViewActive">
-            <span class="screenshot-tip">📸 全景截图模式便于分享</span>
+            <span class="screenshot-tip">全景截图模式便于分享</span>
             <button class="btn-screenshot" @click="toggleScreenshotView">
-              🎯 全图模式
+              全图模式
             </button>
           </div>
           <button v-else class="btn-screenshot floating-exit-btn" @click="toggleScreenshotView">
@@ -200,11 +276,11 @@
               <!-- Tier 1: Grand Final + 季军赛 (4 teams) -->
               <div v-if="room.teamCount === 4" class="flowchart-tier tier-final" style="gap: 40px;">
                 <div class="match-node-wrap" style="flex-direction:column;align-items:center;">
-                  <div class="tier-label glow-gold">🏆 冠亚决赛</div>
+                  <div class="tier-label glow-gold">冠亚决赛</div>
                   <div class="cashout-match-node final-match-node" style="width:300px;" :class="{ 'node-completed': getMatch('final_grand')?.status === 'completed' }" @click="openCashoutScoreModal(getMatch('final_grand'))">
                     <div class="node-header">
                       <span class="node-title finals-text-glow">冠亚决赛</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_grand')?.status === 'completed' }">{{ getMatch('final_grand')?.status === 'completed' ? '已完赛 🏁' : '进行中 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_grand')?.status === 'completed' }">{{ getMatch('final_grand')?.status === 'completed' ? '已完赛' : '进行中' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('final_grand')?.teams || [null,null]" :key="idx" class="node-team-row" :class="{ 'tbd-row': !teamId, 'rank-1': getMatch('final_grand')?.status==='completed'&&getMatch('final_grand')?.rankings[0]===teamId }">
@@ -212,15 +288,15 @@
                         <template v-else><span class="tbd-text">待定 (TBD)</span></template>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
                 <div class="match-node-wrap" style="flex-direction:column;align-items:center;">
-                  <div class="tier-label" style="color:#a855f7;">🥉 季军决赛</div>
+                  <div class="tier-label" style="color:#a855f7;">季军决赛</div>
                   <div class="cashout-match-node" style="width:300px;border-color:rgba(168,85,247,0.4);" :class="{ 'node-completed': getMatch('final_3rd')?.status === 'completed' }" @click="openCashoutScoreModal(getMatch('final_3rd'))">
                     <div class="node-header">
                       <span class="node-title" style="color:#a855f7;">季军决赛</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_3rd')?.status === 'completed' }">{{ getMatch('final_3rd')?.status === 'completed' ? '已完赛 🏁' : '进行中 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_3rd')?.status === 'completed' }">{{ getMatch('final_3rd')?.status === 'completed' ? '已完赛' : '进行中' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('final_3rd')?.teams || [null,null]" :key="idx" class="node-team-row" :class="{ 'tbd-row': !teamId, 'rank-1': getMatch('final_3rd')?.status==='completed'&&getMatch('final_3rd')?.rankings[0]===teamId }">
@@ -228,7 +304,7 @@
                         <template v-else><span class="tbd-text">待定 (TBD)</span></template>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
               </div>
@@ -236,11 +312,11 @@
               <!-- Tier 1: Grand Final + 季军赛 (5+ teams) -->
               <div v-else class="flowchart-tier tier-final" style="flex-direction: row; gap: 40px;">
                 <div class="match-node-wrap" style="flex-direction:column;align-items:center;">
-                  <div class="tier-label glow-gold">🏆 冠亚决赛</div>
+                  <div class="tier-label glow-gold">冠亚决赛</div>
                   <div class="cashout-match-node final-match-node" style="width:300px;" :class="{ 'node-completed': getMatch('final_grand')?.status === 'completed' }" @click="openCashoutScoreModal(getMatch('final_grand'))">
                     <div class="node-header">
                       <span class="node-title finals-text-glow">冠亚决赛</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_grand')?.status === 'completed' }">{{ getMatch('final_grand')?.status === 'completed' ? '已完赛 🏁' : '进行中 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_grand')?.status === 'completed' }">{{ getMatch('final_grand')?.status === 'completed' ? '已完赛' : '进行中' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('final_grand')?.teams || [null,null]" :key="idx" class="node-team-row" :class="{ 'tbd-row': !teamId, 'rank-1': getMatch('final_grand')?.status==='completed'&&getMatch('final_grand')?.rankings[0]===teamId }">
@@ -248,15 +324,15 @@
                         <template v-else><span class="tbd-text">待定 (TBD)</span></template>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
                 <div v-if="room.teamCount >= 6" class="match-node-wrap" style="flex-direction:column;align-items:center;">
-                  <div class="tier-label" style="color:#a855f7;">🥉 季军决赛</div>
+                  <div class="tier-label" style="color:#a855f7;">季军决赛</div>
                   <div class="cashout-match-node" style="width:300px;border-color:rgba(168,85,247,0.4);" :class="{ 'node-completed': getMatch('final_3rd')?.status === 'completed' }" @click="openCashoutScoreModal(getMatch('final_3rd'))">
                     <div class="node-header">
                       <span class="node-title" style="color:#a855f7;">季军决赛</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_3rd')?.status === 'completed' }">{{ getMatch('final_3rd')?.status === 'completed' ? '已完赛 🏁' : '进行中 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_3rd')?.status === 'completed' }">{{ getMatch('final_3rd')?.status === 'completed' ? '已完赛' : '进行中' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('final_3rd')?.teams || [null,null]" :key="idx" class="node-team-row" :class="{ 'tbd-row': !teamId, 'rank-1': getMatch('final_3rd')?.status==='completed'&&getMatch('final_3rd')?.rankings[0]===teamId }">
@@ -264,14 +340,14 @@
                         <template v-else><span class="tbd-text">待定 (TBD)</span></template>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
                 <div v-else class="match-node-wrap" style="flex-direction:column;align-items:center;">
                   <div class="cashout-match-node final-match-node" style="width:420px;" :class="{ 'node-completed': getMatch('final_grand')?.status === 'completed' }" @click="openCashoutScoreModal(getMatch('final_grand'))">
                     <div class="node-header">
                       <span class="node-title finals-text-glow">GRAND FINAL 决战局</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_grand')?.status === 'completed' }">{{ getMatch('final_grand')?.status === 'completed' ? '已完赛 🏁' : '进行中 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('final_grand')?.status === 'completed' }">{{ getMatch('final_grand')?.status === 'completed' ? '已完赛' : '进行中' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('final_grand')?.teams || [null,null,null,null]" :key="idx" class="node-team-row" :class="{ 'tbd-row': !teamId, 'rank-1': getMatch('final_grand')?.status==='completed'&&getMatch('final_grand')?.rankings[0]===teamId, 'rank-2': getMatch('final_grand')?.status==='completed'&&getMatch('final_grand')?.rankings[1]===teamId, 'rank-3': getMatch('final_grand')?.status==='completed'&&getMatch('final_grand')?.rankings[2]===teamId }">
@@ -279,7 +355,7 @@
                         <template v-else><span class="tbd-text">待定晋级席位 (TBD)</span></template>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
               </div>
@@ -288,11 +364,11 @@
               <div class="flowchart-tier tier-semis">
                 <!-- 4 teams / 6 teams / 8 teams: show semifinal_4 node -->
                 <div v-if="room.teamCount === 4 || room.teamCount === 6 || room.teamCount === 8" class="semis-col" style="width:600px;">
-                  <div class="tier-label glow-red">⚡ 4强对决 (4队同场, Top 2 晋级)</div>
+                  <div class="tier-label glow-red">4强对决 (4队同场, Top 2 晋级)</div>
                   <div class="cashout-match-node" style="width:460px;" :class="{ 'node-completed': getMatch('semifinal_4')?.status === 'completed' }" @click="handleMatchClick(getMatch('semifinal_4'))">
                     <div class="node-header">
                        <span class="node-title">{{ room.teamCount === 4 ? '半决赛 (Top 2 进冠亚, Bottom 2 进季军)' : '4强半决赛 (Top 2 进冠亚, Bottom 2 进季军)' }}</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('semifinal_4')?.status === 'completed' }">{{ getMatch('semifinal_4')?.status === 'completed' ? '已完赛 🏁' : '未开赛 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('semifinal_4')?.status === 'completed' }">{{ getMatch('semifinal_4')?.status === 'completed' ? '已完赛' : '未开赛' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('semifinal_4')?.teams || [null, null, null, null]" :key="idx" class="node-team-row" :class="{ 'tbd-row': !teamId, 'promoted-row': getMatch('semifinal_4')?.status==='completed'&&getMatch('semifinal_4')?.promoted.includes(teamId), 'eliminated-row': getMatch('semifinal_4')?.status==='completed'&&!getMatch('semifinal_4')?.promoted.includes(teamId), 'slot-placeable-row': selectedSlotIdx !== -1 }" @click.stop="handleMatchTeamClick('semifinal_4', idx)">
@@ -302,14 +378,14 @@
                           <span class="team-logo-badge" :style="{ borderColor: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo }}</span>
                           <span class="team-name-text">{{ getTeamById(teamId)?.name }}</span>
                           <span class="team-cashout-amount">${{ formatCashout(getMatch('semifinal_4')?.cashouts[teamId]) }}</span>
-                          <span class="status-icon" v-if="getMatch('semifinal_4')?.status==='completed'">{{ getMatch('semifinal_4')?.promoted.includes(teamId) ? '晋级 🚀' : '淘汰' }}</span>
+                          <span class="status-icon" v-if="getMatch('semifinal_4')?.status==='completed'">{{ getMatch('semifinal_4')?.promoted.includes(teamId) ? '晋级' : '淘汰' }}</span>
                         </template>
                         <template v-else>
                           <span class="tbd-text">待定晋级席位 (TBD)</span>
                         </template>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
               </div>
@@ -317,11 +393,11 @@
               <!-- Tier 3: 分组半决赛 (6/8队专属) -->
               <div v-if="room.teamCount === 6 || room.teamCount === 8" class="flowchart-tier tier-groups">
                 <div class="semis-col">
-                  <div class="tier-label glow-red">⚡ 半决赛 A组 (Top 2 晋级)</div>
+                  <div class="tier-label glow-red">半决赛 A组 (Top 2 晋级)</div>
                   <div class="cashout-match-node" :class="{ 'node-completed': getMatch('semifinal_a')?.status === 'completed' }" @click="handleMatchClick(getMatch('semifinal_a'))">
                     <div class="node-header">
                       <span class="node-title">{{ getMatch('semifinal_a')?.teams?.length }}队对决 (Top 2 晋级)</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('semifinal_a')?.status === 'completed' }">{{ getMatch('semifinal_a')?.status === 'completed' ? '已完赛 🏁' : '未开赛 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('semifinal_a')?.status === 'completed' }">{{ getMatch('semifinal_a')?.status === 'completed' ? '已完赛' : '未开赛' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('semifinal_a')?.teams || []" :key="idx" class="node-team-row" :class="{ 'promoted-row': getMatch('semifinal_a')?.status==='completed'&&getMatch('semifinal_a')?.promoted.includes(teamId), 'eliminated-row': getMatch('semifinal_a')?.status==='completed'&&!getMatch('semifinal_a')?.promoted.includes(teamId), 'slot-placeable-row': selectedSlotIdx !== -1 }" @click.stop="handleMatchTeamClick('semifinal_a', idx)">
@@ -330,18 +406,18 @@
                         <span class="team-logo-badge" :style="{ borderColor: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo }}</span>
                         <span class="team-name-text">{{ getTeamById(teamId)?.name }}</span>
                         <span class="team-cashout-amount">${{ formatCashout(getMatch('semifinal_a')?.cashouts[teamId]) }}</span>
-                        <span class="status-icon" v-if="getMatch('semifinal_a')?.status==='completed'">{{ getMatch('semifinal_a')?.promoted.includes(teamId) ? '晋级 🚀' : '淘汰' }}</span>
+                        <span class="status-icon" v-if="getMatch('semifinal_a')?.status==='completed'">{{ getMatch('semifinal_a')?.promoted.includes(teamId) ? '晋级' : '淘汰' }}</span>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
                 <div class="semis-col">
-                  <div class="tier-label glow-blue">⚡ 半决赛 B组 (Top 2 晋级)</div>
+                  <div class="tier-label glow-blue">半决赛 B组 (Top 2 晋级)</div>
                   <div class="cashout-match-node" :class="{ 'node-completed': getMatch('semifinal_b')?.status === 'completed' }" @click="handleMatchClick(getMatch('semifinal_b'))">
                     <div class="node-header">
                       <span class="node-title">{{ getMatch('semifinal_b')?.teams?.length }}队对决 (Top 2 晋级)</span>
-                      <span class="node-status-badge" :class="{ 'completed': getMatch('semifinal_b')?.status === 'completed' }">{{ getMatch('semifinal_b')?.status === 'completed' ? '已完赛 🏁' : '未开赛 ⚔️' }}</span>
+                      <span class="node-status-badge" :class="{ 'completed': getMatch('semifinal_b')?.status === 'completed' }">{{ getMatch('semifinal_b')?.status === 'completed' ? '已完赛' : '未开赛' }}</span>
                     </div>
                     <div class="node-teams-list">
                       <div v-for="(teamId, idx) in getMatch('semifinal_b')?.teams || []" :key="idx" class="node-team-row" :class="{ 'promoted-row': getMatch('semifinal_b')?.status==='completed'&&getMatch('semifinal_b')?.promoted.includes(teamId), 'eliminated-row': getMatch('semifinal_b')?.status==='completed'&&!getMatch('semifinal_b')?.promoted.includes(teamId), 'slot-placeable-row': selectedSlotIdx !== -1 }" @click.stop="handleMatchTeamClick('semifinal_b', idx)">
@@ -350,17 +426,17 @@
                         <span class="team-logo-badge" :style="{ borderColor: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo }}</span>
                         <span class="team-name-text">{{ getTeamById(teamId)?.name }}</span>
                         <span class="team-cashout-amount">${{ formatCashout(getMatch('semifinal_b')?.cashouts[teamId]) }}</span>
-                        <span class="status-icon" v-if="getMatch('semifinal_b')?.status==='completed'">{{ getMatch('semifinal_b')?.promoted.includes(teamId) ? '晋级 🚀' : '淘汰' }}</span>
+                        <span class="status-icon" v-if="getMatch('semifinal_b')?.status==='completed'">{{ getMatch('semifinal_b')?.promoted.includes(teamId) ? '晋级' : '淘汰' }}</span>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 点击录入局分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">点击录入局分</span></div>
                   </div>
                 </div>
               </div>
 
               <!-- Tier 4: 参赛战队槽位 -->
               <div class="flowchart-tier tier-slots" :style="{ top: (room.teamCount === 6 || room.teamCount === 8) ? '1140px' : '780px' }">
-                <div class="tier-label">🛡️ 参赛战队 (点击或拖拽互换分组位置)</div>
+                <div class="tier-label">参赛战队 (点击或拖拽互换分组位置)</div>
                 <div class="slots-grid">
                   <div v-for="(teamId, idx) in room.slots || []" :key="idx" class="team-slot-wrapper">
                     <div class="team-slot-card"
@@ -392,15 +468,15 @@
           </div>
         </div>
 
-        <!-- ⚔️ 单败淘汰赛 -->
+        <!-- 单败淘汰赛 -->
         <div class="flowchart-section glass-panel" v-else-if="room.tournamentType === 'single_elimination'">
           <div class="se-layout">
             <!-- Grand Final + 3rd Place -->
             <div class="se-finals-row">
               <div class="se-match-col">
-                <div class="tier-label finals-text-glow">🏆 冠亚军总决赛</div>
+                <div class="tier-label finals-text-glow">冠亚军总决赛</div>
                 <div v-if="gfMatch" class="cashout-match-node final-match-node" :class="{ 'node-completed': gfMatch.status === 'completed' }" @click="openScoreModal(gfMatch)">
-                  <div class="node-header"><span class="node-title finals-text-glow">GRAND FINAL</span><span class="node-status-badge" :class="{ 'completed': gfMatch.status === 'completed' }">{{ gfMatch.status === 'completed' ? '已完赛 🏁' : '决胜中 ⚔️' }}</span></div>
+                  <div class="node-header"><span class="node-title finals-text-glow">GRAND FINAL</span><span class="node-status-badge" :class="{ 'completed': gfMatch.status === 'completed' }">{{ gfMatch.status === 'completed' ? '已完赛' : '决胜中' }}</span></div>
                   <div class="node-teams-list">
                     <div class="node-team-row" :class="{ 'winner-row': gfMatch.status === 'completed' && gfMatch.winnerId === gfMatch.teamA, 'eliminated-row': gfMatch.status === 'completed' && gfMatch.winnerId !== gfMatch.teamA }">
                       <div class="team-color-dot" :style="{ backgroundColor: getTeamById(gfMatch.teamA)?.color || '#ff2e93' }"></div>
@@ -413,13 +489,13 @@
                       <span class="team-cashout-amount">{{ gfMatch.scoreB !== null ? gfMatch.scoreB : '-' }}</span>
                     </div>
                   </div>
-                  <div class="tap-overlay"><span class="tap-text">📝 录入总冠军成绩</span></div>
+                  <div class="tap-overlay"><span class="tap-text">录入总冠军成绩</span></div>
                 </div>
               </div>
               <div class="se-match-col" v-if="m3rdMatch">
-                <div class="tier-label" style="color:#a855f7;">🥉 季军争夺战</div>
+                <div class="tier-label" style="color:#a855f7;">季军争夺战</div>
                 <div class="cashout-match-node final-match-node" style="border-color:rgba(168,85,247,0.45);" :class="{ 'node-completed': m3rdMatch.status === 'completed' }" @click="openScoreModal(m3rdMatch)">
-                  <div class="node-header"><span class="node-title" style="color:#a855f7;">季军争夺战</span><span class="node-status-badge" :class="{ 'completed': m3rdMatch.status === 'completed' }">{{ m3rdMatch.status === 'completed' ? '已完赛 🏁' : '决胜中 ⚔️' }}</span></div>
+                  <div class="node-header"><span class="node-title" style="color:#a855f7;">季军争夺战</span><span class="node-status-badge" :class="{ 'completed': m3rdMatch.status === 'completed' }">{{ m3rdMatch.status === 'completed' ? '已完赛' : '决胜中' }}</span></div>
                   <div class="node-teams-list">
                     <div class="node-team-row" :class="{ 'winner-row': m3rdMatch.status === 'completed' && m3rdMatch.winnerId === m3rdMatch.teamA, 'eliminated-row': m3rdMatch.status === 'completed' && m3rdMatch.winnerId !== m3rdMatch.teamA }">
                       <div class="team-color-dot" :style="{ backgroundColor: getTeamById(m3rdMatch.teamA)?.color || '#a855f7' }"></div>
@@ -432,7 +508,7 @@
                       <span class="team-cashout-amount" style="color:#a855f7;">{{ m3rdMatch.scoreB !== null ? m3rdMatch.scoreB : '-' }}</span>
                     </div>
                   </div>
-                  <div class="tap-overlay"><span class="tap-text">📝 录入季军成绩</span></div>
+                  <div class="tap-overlay"><span class="tap-text">录入季军成绩</span></div>
                 </div>
               </div>
             </div>
@@ -441,7 +517,7 @@
               <div class="se-round-label">半决赛</div>
               <div class="se-matches-row">
                 <div v-for="m in sfMatches" :key="m.id" class="cashout-match-node" :class="{ 'node-completed': m.status === 'completed' }" @click="openScoreModal(m)">
-                  <div class="node-header"><span class="node-title">{{ m.label || '半决赛' }}</span><span class="node-status-badge" :class="{ 'completed': m.status === 'completed' }">{{ m.status === 'completed' ? '已完赛 🏁' : '未开赛 ⚔️' }}</span></div>
+                  <div class="node-header"><span class="node-title">{{ m.label || '半决赛' }}</span><span class="node-status-badge" :class="{ 'completed': m.status === 'completed' }">{{ m.status === 'completed' ? '已完赛' : '未开赛' }}</span></div>
                   <div class="node-teams-list">
                     <div class="node-team-row" :class="{ 'winner-row': m.status === 'completed' && m.winnerId === m.teamA, 'eliminated-row': m.status === 'completed' && m.winnerId !== m.teamA }">
                       <div class="team-color-dot" :style="{ backgroundColor: getTeamById(m.teamA)?.color || '#6b7280' }"></div>
@@ -454,7 +530,7 @@
                       <span class="team-cashout-amount">{{ m.scoreB !== null ? m.scoreB : '-' }}</span>
                     </div>
                   </div>
-                  <div class="tap-overlay"><span class="tap-text">📝 录入局分</span></div>
+                  <div class="tap-overlay"><span class="tap-text">录入局分</span></div>
                 </div>
               </div>
               <div v-if="room.teamCount > 4">
@@ -474,7 +550,7 @@
                         <span class="team-cashout-amount" style="font-size:11px;">{{ m.scoreB !== null ? m.scoreB : '-' }}</span>
                       </div>
                     </div>
-                    <div class="tap-overlay"><span class="tap-text">📝 比分</span></div>
+                    <div class="tap-overlay"><span class="tap-text">比分</span></div>
                   </div>
                 </div>
               </div>
@@ -482,11 +558,11 @@
           </div>
         </div>
 
-        <!-- 📊 循环联赛积分榜 -->
+        <!-- 循环联赛积分榜 -->
         <div class="flowchart-section glass-panel" v-else-if="room.tournamentType === 'round_robin'">
           <div class="standings-scroll">
             <div class="standings-section" v-if="room.teamCount !== 8">
-              <div class="section-table-title">🏆 联赛积分榜 (单循环常规赛)</div>
+              <div class="section-table-title">联赛积分榜 (单循环常规赛)</div>
               <div class="standings-table">
                 <div class="table-tr table-thead">
                   <div class="table-th col-rank">排名</div>
@@ -499,9 +575,7 @@
                 </div>
                 <div v-for="(row, idx) in leagueStandings" :key="row.id" class="table-tr" :class="{ 'top-tr': idx === 0, 'second-tr': idx === 1 }">
                   <div class="table-td col-rank">
-                    <span class="rank-trophy" v-if="idx===0">🥇</span>
-                    <span class="rank-trophy" v-else-if="idx===1">🥈</span>
-                    <span class="rank-trophy" v-else-if="idx===2">🥉</span>
+                    <span class="rank-trophy rank-top-badge" v-if="idx < 3">TOP {{ idx + 1 }}</span>
                     <span v-else>{{ idx + 1 }}</span>
                   </div>
                   <div class="table-td col-name">
@@ -518,7 +592,7 @@
             </div>
             <!-- 循环赛对阵列表 -->
             <div class="matches-list-section">
-              <div class="section-table-title">📅 对阵列表</div>
+              <div class="section-table-title">对阵列表</div>
               <div class="matches-list">
                 <div v-for="m in sortedMatches" :key="m.id" class="match-list-row" :class="{ 'match-completed': m.status === 'completed' }" @click="openScoreModal(m)">
                   <div class="match-stage-badge">{{ getStageLabel(m) }}</div>
@@ -527,7 +601,7 @@
                     <span class="match-vs">{{ m.status === 'completed' ? `${m.scoreA} : ${m.scoreB}` : 'VS' }}</span>
                     <span class="match-team-b">{{ getTeamName(m.teamB) }}</span>
                   </div>
-                  <div class="match-winner" v-if="m.status === 'completed'">🏆 {{ getTeamName(m.winnerId) }}</div>
+                  <div class="match-winner" v-if="m.status === 'completed'">胜者: {{ getTeamName(m.winnerId) }}</div>
                   <div class="match-click-hint" v-else>点击录入</div>
                 </div>
               </div>
@@ -660,81 +734,121 @@
                 </div>
                 <span class="match-team-b-lg">{{ getTeamName(m.teamB) }}</span>
               </div>
-              <div class="match-winner-lg" v-if="m.status === 'completed'">胜者：{{ getTeamName(m.winnerId) }} 🏆</div>
-              <div class="match-map-lg" v-if="m.activeMap && m.activeMap !== '无'">🗺️ {{ m.activeMap }}</div>
-              <div class="match-pending-lg" v-if="m.status !== 'completed'">📝 点击录入比分</div>
+              <div class="match-winner-lg" v-if="m.status === 'completed'">胜者: {{ getTeamName(m.winnerId) }}</div>
+              <div class="match-map-lg" v-if="m.activeMap && m.activeMap !== '无'">地图: {{ m.activeMap }}</div>
+              <div class="match-pending-lg" v-if="m.status !== 'completed'">点击录入比分</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 控制面板 Drawer -->
-    <div class="drawer-mask" v-if="isControlPanelVisible" @click="toggleControlPanel"></div>
-    <div class="control-drawer" :class="{ 'drawer-visible': isControlPanelVisible }">
-      <div class="drawer-header">
-        <span class="drawer-title">⚙️ 赛事控制中心</span>
-        <button class="drawer-close" @click="toggleControlPanel">✕</button>
-      </div>
-      <div class="drawer-body">
-        <div class="drawer-section">
-          <div class="ds-title">⚡ 快速操作</div>
-          <button class="ds-btn btn-gold" @click="handleRandomizeSlots">🎟️ 队伍抽签</button>
-          <button class="ds-btn btn-red" @click="handleResetAllMatches">🔄 重置全部局分</button>
-          <span class="ds-tip">队伍抽签将重排签位并清空比分和晋级数据；重置局分保留当前签位。</span>
+
+
+    <!-- 战队全景战况总览弹窗 -->
+    <div v-if="isAllTeamsStatusModalVisible" class="modal-mask" @click.self="closeAllTeamsStatusModal">
+      <div class="modal-content all-teams-modal">
+        <div class="modal-header">
+          <div class="modal-title-box">
+            <span class="modal-badge">TOURNAMENT STANDINGS</span>
+            <span class="modal-title">参赛战队战况全景</span>
+          </div>
+          <button class="modal-close" @click="closeAllTeamsStatusModal">✕</button>
         </div>
-        <div class="drawer-section">
-          <div class="ds-title">🗺️ 比赛地图</div>
-          <div class="map-grid-hud">
-            <div v-for="mapName in MAPS" :key="mapName" class="map-cap-hud" :class="{ 'active': room.map === mapName }" @click="changeMap(mapName)">{{ mapName }}</div>
-            <div class="map-cap-hud random-map-hud" :class="{ 'active': room.map === 'random' }" @click="changeMap('random')">🎲 随机地图</div>
+
+        <div class="modal-body">
+          <div class="teams-overview-grid">
+            <div
+              v-for="item in sortedRosterSlots"
+              :key="item.teamId || item.originalSlotIdx"
+              class="team-overview-card"
+              :style="{ '--team-accent': item.team?.color || '#e11d48' }"
+            >
+              <div class="toc-header">
+                <div class="toc-team-info">
+                  <span class="toc-logo" :style="{ color: item.team?.color }">{{ item.team?.logo || '—' }}</span>
+                  <span class="toc-name">{{ item.team?.name || '待定战队' }}</span>
+                </div>
+                <span class="toc-status-badge" :class="item.status.type">{{ item.status.text }}</span>
+              </div>
+
+              <div class="toc-body">
+                <div class="toc-members-label">战队成员 ({{ item.team?.members?.length || 0 }}人)</div>
+                <div class="toc-members-wrap">
+                  <div
+                    v-for="(member, mIdx) in item.team?.members || []"
+                    :key="member.id || mIdx"
+                    class="toc-member-pill"
+                  >
+                    <span class="m-name">{{ member.name }}</span>
+                    <span class="m-body" v-if="member.bodyType">{{ member.bodyType }}</span>
+                  </div>
+                  <span v-if="!item.team?.members?.length" class="toc-no-members">暂无配置成员</span>
+                </div>
+              </div>
+
+              <div class="toc-footer">
+                <span class="toc-slot-label">初始签位: 签位 {{ getDrawPosition(item.teamId) }}</span>
+                <span class="toc-group-label">{{ getSlotGroupLabel(item.originalSlotIdx) }}</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="drawer-section">
-          <div class="ds-title">🛡️ 战队管理</div>
-          <div v-for="team in room.teams" :key="team.id" class="team-manage-row" @click="openEditTeamModal(team)">
-            <div class="team-color-dot" :style="{ backgroundColor: team.color }"></div>
-            <span class="team-manage-name">{{ team.name }}</span>
-            <span style="margin-left:auto;color:#ffcc00;">✏️</span>
-          </div>
+
+        <div class="modal-footer">
+          <button class="modal-btn-confirm" @click="closeAllTeamsStatusModal">完成并返回</button>
         </div>
       </div>
     </div>
 
-    <!-- 💰 提现录入弹窗 -->
+    <!-- 提现对局金钱录入弹窗 -->
     <div v-if="isCashoutScoreModalVisible" class="modal-mask" @click.self="closeCashoutScoreModal">
-      <div class="modal-content">
+      <div class="modal-content cashout-modal">
         <div class="modal-header">
-          <span class="modal-title">录入对局金钱 & 判定晋级</span>
+          <div class="modal-title-box">
+            <span class="modal-badge">CASHOUT SETTLEMENT</span>
+            <span class="modal-title">录入对局金钱 · 判定晋级</span>
+          </div>
           <button class="modal-close" @click="closeCashoutScoreModal">✕</button>
         </div>
         <div class="modal-body" v-if="activeCashoutMatch">
-          <p class="cashout-desc">输入各战队本局提现金额，系统自动降序排定晋级。</p>
-          <div v-for="teamId in activeCashoutMatch.teams" :key="teamId" class="cashout-row">
-            <div class="cashout-row-left">
-              <div class="team-color-dot" :style="{ backgroundColor: getTeamById(teamId)?.color }"></div>
-              <span class="team-logo-badge" :style="{ borderColor: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo }}</span>
-              <span class="team-name-text">{{ getTeamById(teamId)?.name }}</span>
-            </div>
-            <div class="cashout-row-right">
-              <span class="currency-tag">$</span>
-              <input type="number" class="cashout-input-field" v-model="cashoutInputs[teamId]" placeholder="0" />
+          <p class="cashout-desc">输入各战队本局获得的提现总金额（$），系统将自动按金额降序排定晋级席位。</p>
+          <div class="cashout-rows-container">
+            <div v-for="teamId in activeCashoutMatch.teams" :key="teamId" class="cashout-row">
+              <div class="cashout-row-left">
+                <div class="team-color-indicator" :style="{ backgroundColor: getTeamById(teamId)?.color }"></div>
+                <span class="team-logo-badge" :style="{ color: getTeamById(teamId)?.color }">{{ getTeamById(teamId)?.logo || '—' }}</span>
+                <span class="team-name-text">{{ getTeamById(teamId)?.name || '待定战队' }}</span>
+              </div>
+              <div class="cashout-row-right">
+                <span class="currency-tag">$</span>
+                <input
+                  type="number"
+                  class="cashout-input-field"
+                  v-model="cashoutInputs[teamId]"
+                  placeholder="0"
+                  min="0"
+                />
+              </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button class="modal-btn-cancel" @click="closeCashoutScoreModal">取消</button>
-          <button class="modal-btn-reset" v-if="activeCashoutMatch?.status === 'completed'" @click="resetMatchScore">重置成绩</button>
-          <button class="modal-btn-confirm" @click="saveCashoutScore">保存结果</button>
+          <button class="modal-btn-reset" v-if="activeCashoutMatch?.status === 'completed'" @click="resetMatchScore">重置对局成绩</button>
+          <button class="modal-btn-confirm" @click="saveCashoutScore">确认保存结果</button>
         </div>
       </div>
     </div>
 
-    <!-- 📊 比分录入弹窗 -->
+    <!-- 比分录入弹窗 -->
     <div v-if="isScoreModalVisible" class="modal-mask" @click.self="closeScoreModal">
-      <div class="modal-content">
+      <div class="modal-content score-modal">
         <div class="modal-header">
-          <span class="modal-title">录入比赛数据</span>
+          <div class="modal-title-box">
+            <span class="modal-badge">MATCH SCORE</span>
+            <span class="modal-title">录入比赛数据</span>
+          </div>
           <button class="modal-close" @click="closeScoreModal">✕</button>
         </div>
         <div class="modal-body" v-if="activeMatch">
@@ -758,8 +872,8 @@
           <div class="form-group">
             <label class="form-label">裁定胜者</label>
             <div class="winner-select-row">
-              <div class="winner-opt" :class="{ 'active': inputWinnerId === activeMatch.teamA }" @click="inputWinnerId = activeMatch.teamA">{{ getTeamName(activeMatch.teamA) }} 🏆</div>
-              <div class="winner-opt" :class="{ 'active': inputWinnerId === activeMatch.teamB }" @click="inputWinnerId = activeMatch.teamB">{{ getTeamName(activeMatch.teamB) }} 🏆</div>
+              <div class="winner-opt" :class="{ 'active': inputWinnerId === activeMatch.teamA }" @click="inputWinnerId = activeMatch.teamA">{{ getTeamName(activeMatch.teamA) }} (胜者)</div>
+              <div class="winner-opt" :class="{ 'active': inputWinnerId === activeMatch.teamB }" @click="inputWinnerId = activeMatch.teamB">{{ getTeamName(activeMatch.teamB) }} (胜者)</div>
             </div>
           </div>
           <div class="form-group">
@@ -909,7 +1023,7 @@ export default {
 
     const tabs = computed(() => {
       if (!room.value || !room.value.tournamentType) return ['赛事大厅']
-      return ['赛事大厅', '我的战队']
+      return ['赛事大厅', '战队设置']
     })
 
     watch([inputScoreA, inputScoreB], ([valA, valB]) => {
@@ -933,10 +1047,37 @@ export default {
           roomStore.syncCashoutMatchesLocal(data)
         }
         room.value = data
+        roomNameDraft.value = data.name || ''
+        roomRewardDraft.value = data.reward || ''
         data.teams.forEach(team => {
           if (teamMemberDrafts.value[team.id] === undefined) teamMemberDrafts.value[team.id] = ''
           if (!teamBodyTypeDrafts.value[team.id]) teamBodyTypeDrafts.value[team.id] = '中'
         })
+      }
+    }
+
+    const roomNameDraft = ref('')
+    const roomRewardDraft = ref('')
+
+    const handleSaveRoomName = () => {
+      const trimmed = (roomNameDraft.value || '').trim()
+      if (!trimmed) {
+        roomNameDraft.value = room.value.name || ''
+        return
+      }
+      if (trimmed !== room.value.name) {
+        room.value.name = trimmed
+        roomStore.updateTournamentRoomMeta(roomId.value, { name: trimmed })
+        showToast('赛事名称已更新', 'success')
+      }
+    }
+
+    const handleSaveRoomReward = () => {
+      const trimmed = (roomRewardDraft.value || '').trim()
+      if (trimmed !== (room.value.reward || '')) {
+        room.value.reward = trimmed
+        roomStore.updateTournamentRoomMeta(roomId.value, { reward: trimmed })
+        showToast('赛事奖励已更新', 'success')
       }
     }
 
@@ -1270,9 +1411,98 @@ export default {
       const res = roomStore.updateTournamentMap(roomId.value, mapVal, forceReroll)
       if (res.success) {
         room.value.map = mapVal; room.value.activeMap = res.activeMap
-        showToast(mapVal === 'random' ? `🎲 抽中 ${res.activeMap}` : `地图切换为 ${mapVal}`)
+        showToast(mapVal === 'random' ? `已抽选地图: ${res.activeMap}` : `地图已切换为: ${mapVal}`)
       }
     }
+
+    const isAllTeamsStatusModalVisible = ref(false)
+    const openAllTeamsStatusModal = () => { isAllTeamsStatusModalVisible.value = true }
+    const closeAllTeamsStatusModal = () => { isAllTeamsStatusModalVisible.value = false }
+
+    const getTeamTournamentStatus = (teamId) => {
+      if (!teamId || !room.value || !room.value.matches) return { text: '待定', type: 'pending', priority: 50 }
+
+      const grandFinal = room.value.matches.find(m => m.stage === 'grand_final' || m.stage === 'finals_grand')
+      const thirdFinal = room.value.matches.find(m => m.stage === '3rd_place' || m.stage === 'finals_3rd')
+      const sf4 = room.value.matches.find(m => m.id === 'semifinal_4')
+      const sfA = room.value.matches.find(m => m.id === 'semifinal_a')
+      const sfB = room.value.matches.find(m => m.id === 'semifinal_b')
+
+      // 1. 检查总决赛排名 (冠军 / 亚军)
+      if (grandFinal && grandFinal.status === 'completed' && grandFinal.rankings?.length) {
+        if (grandFinal.rankings[0] === teamId) return { text: '冠军', type: 'champion', priority: 1 }
+        if (grandFinal.rankings[1] === teamId) return { text: '亚军', type: 'runner_up', priority: 2 }
+      }
+
+      // 2. 检查季军赛排名 (季军 / 殿军)
+      if (thirdFinal && thirdFinal.status === 'completed' && thirdFinal.rankings?.length) {
+        if (thirdFinal.rankings[0] === teamId) return { text: '季军', type: 'third', priority: 3 }
+        if (thirdFinal.rankings[1] === teamId) return { text: '殿军', type: 'fourth', priority: 4 }
+      }
+
+      // 3. 检查是否正在总决赛
+      if (grandFinal && (grandFinal.teams || []).includes(teamId)) {
+        return { text: '决赛', type: 'finalist', priority: 5 }
+      }
+
+      // 4. 检查是否正在季军赛
+      if (thirdFinal && (thirdFinal.teams || []).includes(teamId)) {
+        return { text: '季军战', type: 'third_match', priority: 6 }
+      }
+
+      // 5. 检查 4 强半决赛
+      if (sf4) {
+        if (sf4.status === 'completed') {
+          if (sf4.promoted?.includes(teamId)) {
+            return { text: '决赛', type: 'finalist', priority: 5 }
+          } else if ((sf4.teams || []).includes(teamId)) {
+            if (thirdFinal && (thirdFinal.teams || []).includes(teamId)) {
+              return { text: '季军战', type: 'third_match', priority: 6 }
+            }
+            return { text: '淘汰', type: 'eliminated', priority: 99 }
+          }
+        } else if ((sf4.teams || []).includes(teamId)) {
+          return { text: '半决', type: 'semifinal', priority: 10 }
+        }
+      }
+
+      // 6. 检查 A/B 组初赛
+      if (sfA && sfA.status === 'completed' && (sfA.teams || []).includes(teamId)) {
+        if (sfA.promoted?.includes(teamId)) return { text: '半决', type: 'semifinal', priority: 10 }
+        return { text: '淘汰', type: 'eliminated', priority: 99 }
+      }
+      if (sfB && sfB.status === 'completed' && (sfB.teams || []).includes(teamId)) {
+        if (sfB.promoted?.includes(teamId)) return { text: '半决', type: 'semifinal', priority: 10 }
+        return { text: '淘汰', type: 'eliminated', priority: 99 }
+      }
+
+      // 7. 初始待赛状态
+      const slotIdx = (room.value.slots || []).indexOf(teamId)
+      if (slotIdx >= 0) {
+        return { text: '待赛', type: 'ongoing', priority: 20 }
+      }
+
+      return { text: '待定', type: 'pending', priority: 30 }
+    }
+
+    const sortedRosterSlots = computed(() => {
+      const slots = room.value.slots || []
+      return slots.map((teamId, idx) => {
+        const team = getTeamById(teamId)
+        const status = getTeamTournamentStatus(teamId)
+        return {
+          teamId,
+          originalSlotIdx: idx,
+          team,
+          status
+        }
+      }).sort((a, b) => {
+        if (a.status.priority !== b.status.priority) {
+          return a.status.priority - b.status.priority
+        }
+        return a.originalSlotIdx - b.originalSlotIdx
+      })
+    })
 
     const getTeamById = (teamId) => { if (!teamId) return null; return room.value.teams ? room.value.teams.find(t => t.id === teamId) : null }
     const getTeamName = (teamId) => { if (!teamId) return '待定'; if (teamId === 'bye') return '轮空'; const team = getTeamById(teamId); return team ? team.name : '未知战队' }
@@ -1313,17 +1543,17 @@ export default {
       const idx = match.rankings.indexOf(teamId)
       if (idx === -1) return ''
       if (match.id === 'final_3rd' || match.stage === '3rd_place') {
-        if (idx === 0) return '🥉 季军 🥉'
-        if (idx === 1) return '🏅 第四名'
+        if (idx === 0) return '季军'
+        if (idx === 1) return '第四名'
         return ''
       }
-      if (idx === 0) return '🏆 冠军 🥇'
-      if (idx === 1) return '🥈 亚军'
-      if (idx === 2) return '🥉 季军'
+      if (idx === 0) return '冠军'
+      if (idx === 1) return '亚军'
+      if (idx === 2) return '季军'
       if (idx === 3) return '殿军'
       return ''
     }
-    const getStageLabel = (match) => { if (match.stage === 'group') return `小组赛 - Group ${match.group}`; if (match.stage === 'league') return '常规联赛'; if (match.stage === 'semifinal' || match.stage === 'semifinals') return '半决赛阶段'; if (match.stage === 'quarterfinals') return match.label || '首轮淘汰赛'; if (match.stage === 'finals_3rd' || match.stage === '3rd_place') return '季军争夺战'; if (match.stage === 'finals_grand' || match.stage === 'grand_final') return '🏆 冠亚军总决赛'; return match.label || '对决场' }
+    const getStageLabel = (match) => { if (match.stage === 'group') return `小组赛 - Group ${match.group}`; if (match.stage === 'league') return '常规联赛'; if (match.stage === 'semifinal' || match.stage === 'semifinals') return '半决赛阶段'; if (match.stage === 'quarterfinals') return match.label || '首轮淘汰赛'; if (match.stage === 'finals_3rd' || match.stage === '3rd_place') return '季军争夺战'; if (match.stage === 'finals_grand' || match.stage === 'grand_final') return '冠亚军总决赛'; return match.label || '对决场' }
     const isSlotInGroupA = (idx) => { const tc = room.value.teamCount; if (tc === 4) return true; if (tc === 5) return idx < 3; if (tc === 6) return idx < 3; return idx < 4 }
     const isSlotInGroupB = (idx) => { const tc = room.value.teamCount; if (tc <= 5) return false; if (tc === 6) return idx >= 3 && idx < 6; if (tc === 7) return idx >= 4 && idx < 7; return idx >= 4 && idx < 8 }
     const isSlotInBye = (idx) => room.value.teamCount === 5 && idx >= 3
@@ -1343,7 +1573,7 @@ export default {
       if (fromIndex !== null && fromIndex !== undefined) {
         if (fromIndex === toIndex) return
         const res = roomStore.swapSlots(roomId.value, fromIndex, toIndex)
-        if (res.success) { showToast('位置对调成功 🛡️', 'success'); loadRoomData() }
+        if (res.success) { showToast('位置对调成功', 'success'); loadRoomData() }
       }
       draggedSlotIdx.value = null
     }
@@ -1353,7 +1583,7 @@ export default {
       else if (selectedSlotIdx.value === index) { selectedSlotIdx.value = -1 }
       else {
         const res = roomStore.swapSlots(roomId.value, selectedSlotIdx.value, index)
-        if (res.success) { showToast('对阵互换完成 🛡️', 'success'); selectedSlotIdx.value = -1; loadRoomData() }
+        if (res.success) { showToast('对阵互换完成', 'success'); selectedSlotIdx.value = -1; loadRoomData() }
       }
     }
 
@@ -1522,7 +1752,10 @@ export default {
       openEditTeamModal, closeEditTeamModal, saveTeamDetails, loadRoomData, handleMatchClick, handleMatchTeamClick,
       getDrawPosition, saveInlineTeamName, addTournamentMember, removeTournamentMember, updateMemberName,
       updateMemberBodyType, handleMemberDragStart, handleMemberDrop, handleGlobalRandomMembers,
-      handleTeamCountChange, handleResetArrangement
+      handleTeamCountChange, handleResetArrangement,
+      roomNameDraft, roomRewardDraft, handleSaveRoomName, handleSaveRoomReward,
+      isAllTeamsStatusModalVisible, openAllTeamsStatusModal, closeAllTeamsStatusModal,
+      sortedRosterSlots, getTeamTournamentStatus
     }
   }
 }
@@ -1927,13 +2160,13 @@ export default {
   grid-template-columns: minmax(260px, 1fr) auto minmax(440px, 1fr);
   align-items: center;
   gap: 22px;
-  min-height: 72px;
-  padding: 10px 18px;
-  border: 1px solid rgba(236, 22, 72, 0.58);
-  background:
-    linear-gradient(90deg, rgba(236, 22, 72, 0.09), transparent 32%),
-    rgba(13, 13, 15, 0.94);
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  min-height: 64px;
+  padding: 12px 20px;
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  background: rgba(22, 22, 25, 0.95);
+  clip-path: none;
+  border-radius: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 .global-team-summary,
 .global-team-actions,
@@ -1943,118 +2176,360 @@ export default {
   display: flex;
   align-items: center;
 }
-.global-team-summary { gap: 12px; min-width: 0; }
+.global-team-summary {
+  gap: 14px;
+  min-width: 0;
+}
 .global-team-summary > svg {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   flex: none;
   fill: none;
-  stroke: #ec1648;
+  stroke: #e11d48;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.global-team-summary h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+.global-team-summary p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.team-count-switch {
+  display: grid;
+  grid-template-columns: repeat(3, 72px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+}
+.team-count-switch button {
+  min-height: 38px;
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+.team-count-switch button:last-child {
+  border-right: 0;
+}
+.team-count-switch button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.team-count-switch button.active {
+  background: #e11d48;
+  color: #fff;
+}
+.global-team-actions {
+  justify-content: flex-end;
+  gap: 10px;
+}
+.global-action-btn,
+.global-reset-btn {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid rgba(225, 29, 72, 0.45);
+  border-radius: 0;
+  clip-path: none;
+  background: rgba(225, 29, 72, 0.12);
+  color: #ff3366;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+.global-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.global-action-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
   stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.global-team-summary h2 { margin: 0; font-size: 22px; line-height: 1; font-weight: 1000; letter-spacing: 0.03em; }
-.global-team-summary p { margin: 5px 0 0; color: rgba(255,255,255,0.5); font-size: 11px; font-family: monospace; }
-.team-count-switch { display: grid; grid-template-columns: repeat(3, 72px); border: 1px solid rgba(255,255,255,0.14); }
-.team-count-switch button {
-  min-height: 40px;
-  border: 0;
-  border-right: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.025);
-  color: rgba(255,255,255,0.48);
-  font-size: 13px;
-  font-weight: 900;
-  cursor: pointer;
-  transition: color 180ms ease, background-color 180ms ease;
+.global-action-btn:hover {
+  color: #fff;
+  background: #e11d48;
+  border-color: #e11d48;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+  transform: translateY(-1px);
 }
-.team-count-switch button:last-child { border-right: 0; }
-.team-count-switch button:hover { color: #fff; }
-.team-count-switch button.active { background: linear-gradient(135deg, #9b0a27, #ec1648); color: #fff; }
-.global-team-actions { justify-content: flex-end; gap: 10px; }
-.global-action-btn,
 .global-reset-btn {
-  min-height: 42px;
-  padding: 0 18px;
-  border: 1px solid rgba(236, 22, 72, 0.72);
-  background: linear-gradient(135deg, rgba(139, 7, 31, 0.48), rgba(236, 22, 72, 0.12));
-  color: #ff315e;
-  font-size: 13px;
-  font-weight: 900;
-  cursor: pointer;
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
-  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.6);
 }
-.global-action-btn { display: inline-flex; align-items: center; gap: 8px; }
-.global-action-btn svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.global-action-btn:hover { color: #fff; background: #b70d34; border-color: #ff315e; }
-.global-reset-btn { border-color: rgba(255,255,255,0.16); background: rgba(255,255,255,0.025); color: rgba(255,255,255,0.5); }
-.global-reset-btn:hover { color: #fff; border-color: rgba(255,255,255,0.34); }
-.global-drag-tip { display: flex; align-items: center; gap: 8px; margin: 10px 4px 8px; color: rgba(255,255,255,0.5); font-size: 11px; }
-.global-drag-tip span { color: #ec1648; font-size: 18px; line-height: 1; }
-.global-team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; padding-bottom: 10px; }
+.global-reset-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+}
+.global-drag-tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 4px 10px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.global-drag-tip span {
+  color: #e11d48;
+  font-size: 16px;
+  line-height: 1;
+}
+.global-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+  padding-bottom: 12px;
+}
 .global-team-card {
   position: relative;
   min-width: 0;
-  padding: 14px 16px 15px 20px;
-  border: 1px solid color-mix(in srgb, var(--team-accent) 78%, #4b101e);
-  background:
-    linear-gradient(120deg, color-mix(in srgb, var(--team-accent) 7%, transparent), transparent 36%),
-    rgba(17, 15, 16, 0.97);
-  clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px));
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-left: 3px solid var(--team-accent, #e11d48);
+  border-radius: 0;
+  clip-path: none;
+  background: rgba(24, 24, 27, 0.92);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.global-team-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  border-left-color: var(--team-accent, #e11d48);
+  background: rgba(30, 30, 34, 0.96);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 .global-team-card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 18px;
-  bottom: 18px;
-  width: 5px;
-  background: var(--team-accent);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--team-accent) 58%, transparent);
+  display: none;
 }
-.global-team-card-header { gap: 10px; margin-bottom: 11px; }
-.team-index { flex: none; min-width: 112px; color: #fff; font-size: 17px; font-weight: 1000; letter-spacing: 0.03em; }
-.team-name-editor { position: relative; flex: 1; min-width: 120px; }
+.global-team-card-header {
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.team-index {
+  flex: none;
+  min-width: 80px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+.team-name-editor {
+  position: relative;
+  flex: 1;
+  min-width: 120px;
+}
 .team-name-editor input,
 .member-name-input,
 .global-team-card-footer input,
 .global-team-card-footer select {
-  border: 1px solid rgba(255,255,255,0.14);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
   outline: none;
-  background: rgba(255,255,255,0.025);
+  background: rgba(0, 0, 0, 0.35);
   color: #fff;
   font-family: inherit;
-  transition: border-color 180ms ease, background-color 180ms ease;
+  transition: border-color 160ms ease, background-color 160ms ease;
 }
-.team-name-editor input { width: 100%; height: 36px; padding: 0 38px 0 12px; font-size: 12px; font-weight: 800; }
+.team-name-editor input {
+  width: 100%;
+  height: 34px;
+  padding: 0 34px 0 12px;
+  font-size: 12.5px;
+  font-weight: 800;
+}
 .team-name-editor input:focus,
 .member-name-input:focus,
 .global-team-card-footer input:focus,
-.global-team-card-footer select:focus { border-color: var(--team-accent); background: rgba(255,255,255,0.045); }
-.team-name-editor svg { position: absolute; right: 10px; top: 9px; width: 17px; height: 17px; fill: none; stroke: rgba(255,255,255,0.55); stroke-width: 2; pointer-events: none; }
-.team-member-count { min-width: 42px; color: rgba(255,255,255,0.62); font-family: monospace; font-size: 12px; font-weight: 800; text-align: center; }
-.draw-position { flex: none; padding: 7px 11px; border: 1px solid rgba(233,177,55,0.55); color: #e9b137; background: rgba(233,177,55,0.07); font-size: 11px; font-weight: 900; }
-.global-member-list { display: flex; flex-direction: column; gap: 5px; min-height: 102px; }
-.global-member-row { min-height: 37px; padding: 0 8px; gap: 8px; border: 1px solid rgba(255,255,255,0.09); background: rgba(255,255,255,0.025); }
-.global-member-row:hover { border-color: color-mix(in srgb, var(--team-accent) 48%, rgba(255,255,255,0.12)); }
-.member-drag-handle { flex: none; color: rgba(255,255,255,0.42); font-size: 18px; line-height: 1; cursor: grab; user-select: none; }
-.global-member-row:active .member-drag-handle { cursor: grabbing; }
-.member-name-input { flex: 1; min-width: 80px; height: 29px; padding: 0 8px; border-color: transparent; background: transparent; font-size: 12px; font-weight: 800; }
-.body-type-switch { display: grid; grid-template-columns: repeat(3, 31px); border: 1px solid rgba(255,255,255,0.12); }
-.body-type-switch button { height: 27px; border: 0; border-right: 1px solid rgba(255,255,255,0.1); background: transparent; color: rgba(255,255,255,0.4); font-size: 11px; font-weight: 900; cursor: pointer; }
-.body-type-switch button:last-child { border-right: 0; }
-.body-type-switch button:hover { color: #fff; }
-.body-type-switch button.active { background: var(--team-accent); color: #09090b; }
-.remove-member-btn { width: 30px; height: 30px; border: 0; background: transparent; color: #ff315e; font-size: 20px; line-height: 1; cursor: pointer; }
-.remove-member-btn:hover { background: rgba(236,22,72,0.12); }
-.empty-team-members { display: grid; place-items: center; min-height: 102px; border: 1px dashed rgba(255,255,255,0.1); color: rgba(255,255,255,0.28); font-size: 11px; }
-.global-team-card-footer { gap: 8px; margin-top: 9px; }
-.global-team-card-footer input { flex: 1; min-width: 100px; height: 36px; padding: 0 11px; font-size: 12px; }
-.global-team-card-footer select { width: 82px; height: 36px; padding: 0 8px; font-size: 11px; cursor: pointer; }
-.global-team-card-footer select option { background: #151517; color: #fff; }
-.global-team-card-footer > button { width: 70px; height: 36px; border: 1px solid #ff315e; background: linear-gradient(135deg, #9b0a27, #ec1648); color: #fff; font-size: 12px; font-weight: 900; cursor: pointer; }
-.global-team-card-footer > button:hover { filter: brightness(1.12); }
+.global-team-card-footer select:focus {
+  border-color: var(--team-accent, #e11d48);
+  background: rgba(0, 0, 0, 0.55);
+}
+.team-name-editor svg {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 2;
+  pointer-events: none;
+}
+.team-member-count {
+  min-width: 42px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+.draw-position {
+  flex: none;
+  padding: 5px 10px;
+  border: 1px solid rgba(233, 177, 55, 0.45);
+  border-radius: 0;
+  color: #e9b137;
+  background: rgba(233, 177, 55, 0.08);
+  font-size: 11px;
+  font-weight: 800;
+}
+.global-member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 96px;
+}
+.global-member-row {
+  min-height: 36px;
+  padding: 0 10px;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.15s ease;
+}
+.global-member-row:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+}
+.member-drag-handle {
+  flex: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 16px;
+  line-height: 1;
+  cursor: grab;
+  user-select: none;
+}
+.global-member-row:active .member-drag-handle {
+  cursor: grabbing;
+}
+.member-name-input {
+  flex: 1;
+  min-width: 80px;
+  height: 28px;
+  padding: 0 8px;
+  border-color: transparent;
+  border-radius: 0;
+  background: transparent;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.body-type-switch {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+}
+.body-type-switch button {
+  height: 26px;
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.body-type-switch button:last-child {
+  border-right: 0;
+}
+.body-type-switch button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.body-type-switch button.active {
+  background: var(--team-accent, #e11d48);
+  color: #ffffff;
+  font-weight: 900;
+}
+.remove-member-btn {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.remove-member-btn:hover {
+  background: rgba(225, 29, 72, 0.15);
+  color: #ff3366;
+}
+.empty-team-members {
+  display: grid;
+  place-items: center;
+  min-height: 96px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+}
+.global-team-card-footer {
+  gap: 8px;
+  margin-top: 10px;
+}
+.global-team-card-footer input {
+  flex: 1;
+  min-width: 100px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 12px;
+  border-radius: 0;
+}
+.global-team-card-footer select {
+  width: 86px;
+  height: 34px;
+  padding: 0 8px;
+  font-size: 11.5px;
+  border-radius: 0;
+  cursor: pointer;
+}
+.global-team-card-footer select option {
+  background: #151517;
+  color: #fff;
+}
+.global-team-card-footer > button {
+  width: 72px;
+  height: 34px;
+  border: 1px solid #e11d48;
+  border-radius: 0;
+  background: #e11d48;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.global-team-card-footer > button:hover {
+  background: #f43f5e;
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.4);
+}
 
 @media (max-width: 1180px) {
   .global-team-toolbar { grid-template-columns: 1fr auto; }
@@ -2101,49 +2576,364 @@ export default {
 .team-manage-row:hover { border-color: rgba(255,204,0,0.3); }
 .team-manage-name { font-size: 13px; font-weight: 700; color: #fff; text-transform: uppercase; }
 
-/* Modals */
-.modal-mask { position: fixed; inset: 0; background: rgba(9,13,22,0.78); backdrop-filter: blur(8px); z-index: 200; display: flex; align-items: center; justify-content: center; }
-.modal-content { width: 480px; max-height: 85vh; background: rgba(16,24,39,0.98); border: 1px solid rgba(251,191,36,0.36); box-shadow: var(--shadow-panel), 0 0 24px rgba(251,191,36,0.1); border-radius: var(--radius-lg); display: flex; flex-direction: column; overflow: hidden; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
-.modal-title { font-size: 14px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
-.modal-close { background: transparent; color: rgba(255,255,255,0.4); font-size: 16px; padding: 4px 8px; border-radius: 4px; }
-.modal-close:hover { color: #fff; background: rgba(255,255,255,0.08); }
-.modal-body { padding: 16px 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px; }
-.modal-footer { display: flex; gap: 8px; padding: 12px 20px 16px; border-top: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
-.modal-btn-cancel { flex: 1; height: 38px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #e5e7eb; font-size: 13px; border-radius: 7px; }
-.modal-btn-reset { flex: 1; height: 38px; background: rgba(242,0,60,0.08); border: 1px solid rgba(242,0,60,0.2); color: #ff2e93; font-size: 13px; border-radius: 7px; }
-.modal-btn-confirm { flex: 2; height: 38px; background: linear-gradient(135deg, #ffcc00, #ff9900); color: #1a0206; font-size: 13px; font-weight: 700; border-radius: 7px; border: none; }
-.modal-btn-confirm:hover { filter: brightness(1.05); }
+/* Modals 全面直角机能暗黑风 */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 10, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-content {
+  width: 520px;
+  max-width: 95vw;
+  max-height: 85vh;
+  background: rgba(18, 18, 22, 0.98);
+  border: 1px solid rgba(225, 29, 72, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(225, 29, 72, 0.15);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+.modal-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.modal-badge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #ff3366;
+  font-family: monospace;
+}
+.modal-title {
+  font-size: 15px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+.modal-close {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 16px;
+  padding: 6px 10px;
+  border-radius: 0;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.modal-close:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+.modal-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  background: rgba(0, 0, 0, 0.25);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+.modal-btn-cancel {
+  flex: 1;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.modal-btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+}
+.modal-btn-reset {
+  flex: 1;
+  height: 38px;
+  background: rgba(225, 29, 72, 0.1);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  color: #ff3366;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.modal-btn-reset:hover {
+  background: rgba(225, 29, 72, 0.2);
+  border-color: #e11d48;
+}
+.modal-btn-confirm {
+  flex: 2;
+  height: 38px;
+  background: #e11d48;
+  border: 1px solid #e11d48;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+}
+.modal-btn-confirm:hover {
+  background: #f43f5e;
+  border-color: #f43f5e;
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
+}
 
 /* Cashout form */
-.cashout-desc { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5; }
-.cashout-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.cashout-row-left { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
-.cashout-row-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.currency-tag { font-size: 16px; font-weight: 900; color: #ffcc00; }
-.cashout-input-field { width: 100px; height: 36px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 0 10px; color: #fff; font-size: 16px; font-weight: 700; font-family: monospace; text-align: right; }
+.cashout-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  margin: 0;
+}
+.cashout-rows-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cashout-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.cashout-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+.cashout-row-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+.team-color-indicator {
+  width: 4px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.cashout-row-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.currency-tag {
+  font-size: 16px;
+  font-weight: 900;
+  color: #fbbf24;
+  font-family: monospace;
+}
+.cashout-input-field {
+  width: 130px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+  padding: 0 12px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  font-family: monospace;
+  text-align: right;
+  outline: none;
+  transition: all 0.15s ease;
+}
+.cashout-input-field:focus {
+  border-color: #e11d48;
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 10px rgba(225, 29, 72, 0.4);
+}
+
+/* 战队全景弹窗 */
+.all-teams-modal {
+  width: 760px;
+}
+.teams-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.team-overview-card {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--team-accent, #e11d48);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 8px;
+}
+.toc-team-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toc-logo {
+  font-size: 16px;
+  font-weight: 1000;
+  font-style: italic;
+}
+.toc-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+}
+.toc-status-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 0;
+}
+.toc-status-badge.champion {
+  background: rgba(235, 177, 55, 0.2);
+  color: #e9b137;
+  border: 1px solid rgba(235, 177, 55, 0.45);
+}
+.toc-status-badge.runner_up {
+  background: rgba(200, 200, 210, 0.2);
+  color: #e2e8f0;
+  border: 1px solid rgba(200, 200, 210, 0.45);
+}
+.toc-status-badge.third,
+.toc-status-badge.third_match {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.45);
+}
+.toc-status-badge.finalist {
+  background: rgba(225, 29, 72, 0.2);
+  color: #ff3366;
+  border: 1px solid rgba(225, 29, 72, 0.45);
+}
+.toc-status-badge.semifinal {
+  background: rgba(56, 189, 248, 0.18);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+.toc-status-badge.eliminated {
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.toc-status-badge.ongoing {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}
+.toc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.toc-members-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+}
+.toc-members-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.toc-member-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  font-size: 11px;
+}
+.toc-member-pill .m-name {
+  color: #ffffff;
+  font-weight: 700;
+}
+.toc-member-pill .m-body {
+  font-size: 9px;
+  font-weight: 800;
+  color: #ff3366;
+  background: rgba(225, 29, 72, 0.18);
+  padding: 1px 4px;
+}
+.toc-no-members {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+.toc-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top: 6px;
+}
 
 /* Score form */
 .score-input-section { display: flex; align-items: center; gap: 16px; }
 .score-team-col { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 .score-team-name { font-size: 13px; font-weight: 800; color: #ffffff; text-transform: uppercase; text-align: center; }
 .score-field-label { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 700; text-transform: uppercase; }
-.score-field { width: 100%; height: 44px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; padding: 0 12px; color: #fff; font-size: 22px; font-weight: 900; font-family: monospace; text-align: center; }
-.score-vs { font-size: 20px; font-weight: 900; color: #ffcc00; padding: 0 4px; flex-shrink: 0; }
+.score-field { width: 100%; height: 40px; background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.14); border-radius: 0; padding: 0 12px; color: #fff; font-size: 20px; font-weight: 900; font-family: monospace; text-align: center; outline: none; }
+.score-field:focus { border-color: #e11d48; box-shadow: 0 0 10px rgba(225,29,72,0.35); }
+.score-vs { font-size: 18px; font-weight: 900; color: #ff3366; padding: 0 4px; flex-shrink: 0; }
 
 .form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-label { font-size: 11px; color: #ffcc00; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-.form-input { height: 38px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; padding: 0 12px; color: #fff; font-size: 13px; }
-.form-input:focus { border-color: rgba(255,204,0,0.5); outline: none; }
-.form-textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; padding: 10px 12px; color: #fff; font-size: 13px; resize: vertical; font-family: inherit; }
-.form-textarea:focus { border-color: rgba(255,204,0,0.5); outline: none; }
-.map-select { height: 38px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 7px; padding: 0 12px; color: #fff; font-size: 13px; cursor: pointer; }
-.map-select option { background: #1a0206; color: #fff; }
+.form-label { font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+.form-input { height: 36px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 0; padding: 0 12px; color: #fff; font-size: 13px; outline: none; }
+.form-input:focus { border-color: #e11d48; }
+.form-textarea { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 0; padding: 10px 12px; color: #fff; font-size: 13px; resize: vertical; font-family: inherit; outline: none; }
+.form-textarea:focus { border-color: #e11d48; }
+.map-select { height: 36px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.14); border-radius: 0; padding: 0 12px; color: #fff; font-size: 13px; cursor: pointer; outline: none; }
+.map-select option { background: #18181c; color: #fff; }
 
 .winner-select-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.winner-opt { padding: 10px; text-align: center; font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 7px; cursor: pointer; color: rgba(255,255,255,0.7); transition: all 0.2s; }
-.winner-opt:hover { border-color: rgba(255,204,0,0.3); }
-.winner-opt.active { background: rgba(255,204,0,0.12); border-color: #ffcc00; color: #ffcc00; }
+.winner-opt { padding: 10px; text-align: center; font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 0; cursor: pointer; color: rgba(255,255,255,0.7); transition: all 0.15s ease; }
+.winner-opt:hover { border-color: rgba(255,255,255,0.25); color: #fff; }
+.winner-opt.active { background: rgba(225,29,72,0.2); border-color: #e11d48; color: #ff3366; font-weight: 800; }
 
 .slot-placeable-row {
   cursor: cell !important;
@@ -2395,38 +3185,274 @@ export default {
 .command-side-card { padding: 13px; }
 .command-side-card > header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
 .command-side-card h3 { margin: 0; color: #fff; font-size: 15px; font-weight: 1000; }
-.command-side-card header span { color: rgba(255, 255, 255, 0.3); font-size: 9px; }
-.command-roster-list { display: flex; flex-direction: column; }
+.command-side-card header span { color: rgba(255, 255, 255, 0.4); font-size: 10px; }
+
+.roster-card { cursor: pointer; }
+.roster-view-all-tip {
+  color: #ff3366 !important;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.roster-view-all-tip:hover { opacity: 0.8; }
+
+.command-roster-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 230px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+.command-roster-list::-webkit-scrollbar {
+  width: 4px;
+}
+.command-roster-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+.command-roster-list::-webkit-scrollbar-thumb {
+  background: rgba(225, 29, 72, 0.4);
+  border-radius: 0;
+}
+.command-roster-list::-webkit-scrollbar-thumb:hover {
+  background: #e11d48;
+}
+
 .command-roster-row {
   display: grid;
-  grid-template-columns: 38px minmax(0, 1fr) auto;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
   align-items: center;
-  min-height: 40px;
-  padding: 0 5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  min-height: 38px;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   cursor: grab;
   transition: background-color 160ms ease, border-color 160ms ease;
 }
 .command-roster-row:hover { background: rgba(232, 20, 70, 0.08); }
 .command-roster-row.selected { background: rgba(232, 20, 70, 0.16); box-shadow: inset 3px 0 #e81446; }
-.roster-logo { font-size: 16px; font-weight: 1000; font-style: italic; }
-.roster-name { overflow: hidden; color: rgba(255, 255, 255, 0.84); font-size: 10px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
-.roster-group { margin-left: 8px; color: rgba(255, 255, 255, 0.34); font-size: 8px; text-align: right; }
-.status-card { margin-top: auto; }
-.status-live-row { display: flex; align-items: center; gap: 8px; margin: 13px 0 6px; color: #ff315d; font-size: 13px; }
-.status-card p { margin: 0; color: rgba(255, 255, 255, 0.4); font-size: 10px; line-height: 1.5; }
-.champion-card { display: flex; align-items: center; gap: 14px; min-height: 112px; }
-.trophy-mark { flex: 0 0 72px; color: #e9b137; }
-.trophy-mark svg { width: 72px; height: 72px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 4px 12px rgba(233, 177, 55, 0.2)); }
-.champion-card > div:last-child { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.command-roster-row.champion { background: rgba(235, 177, 55, 0.06); }
+.command-roster-row.runner_up { background: rgba(200, 200, 210, 0.04); }
+.command-roster-row.eliminated { opacity: 0.55; }
+
+.roster-logo { font-size: 15px; font-weight: 1000; font-style: italic; }
+.roster-name { overflow: hidden; color: rgba(255, 255, 255, 0.9); font-size: 11px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+
+.roster-status-pill {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 0;
+  white-space: nowrap;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.roster-status-pill.champion {
+  background: rgba(235, 177, 55, 0.22);
+  color: #e9b137;
+  border: 1px solid rgba(235, 177, 55, 0.5);
+}
+.roster-status-pill.runner_up {
+  background: rgba(200, 200, 210, 0.2);
+  color: #e2e8f0;
+  border: 1px solid rgba(200, 200, 210, 0.4);
+}
+.roster-status-pill.third,
+.roster-status-pill.third_match {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+.roster-status-pill.finalist {
+  background: rgba(225, 29, 72, 0.22);
+  color: #ff3366;
+  border: 1px solid rgba(225, 29, 72, 0.45);
+}
+.roster-status-pill.semifinal {
+  background: rgba(56, 189, 248, 0.18);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+.roster-status-pill.ongoing {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}
+.roster-status-pill.eliminated {
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.roster-status-pill.pending {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.3);
+}
+/* 右下角赛事信息与配置卡片 */
+.tournament-config-card {
+  padding: 14px 16px;
+  background: rgba(22, 22, 25, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tournament-config-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 10px;
+}
+.tournament-config-card header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+.config-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 6px;
+  background: rgba(225, 29, 72, 0.18);
+  border: 1px solid rgba(225, 29, 72, 0.4);
+  color: #ff3366;
+  border-radius: 0;
+  letter-spacing: 0.06em;
+}
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.config-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.config-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.config-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+}
+.current-map-tag {
+  font-size: 11px;
+  font-weight: 800;
+  color: #38bdf8;
+  font-family: inherit;
+}
+.config-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.config-text-input {
+  width: 100%;
+  height: 32px;
+  padding: 0 32px 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  outline: none;
+  background: rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+.config-text-input:focus {
+  border-color: #e11d48;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 8px rgba(225, 29, 72, 0.3);
+}
+.field-icon {
+  position: absolute;
+  right: 9px;
+  width: 14px;
+  height: 14px;
+  stroke: rgba(255, 255, 255, 0.4);
+  fill: none;
+  stroke-width: 2;
+  pointer-events: none;
+}
+.reward-tag-badge {
+  position: absolute;
+  right: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  padding: 2px 6px;
+  pointer-events: none;
+}
+.map-select-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.map-btn {
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px;
+}
+.map-btn:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+.map-btn.active {
+  background: #e11d48;
+  border-color: #e11d48;
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+}
+.map-btn.random-map-btn {
+  grid-column: 1 / -1;
+  background: rgba(225, 29, 72, 0.1);
+  border-color: rgba(225, 29, 72, 0.3);
+  color: #ff3366;
+}
+.map-btn.random-map-btn:hover {
+  background: rgba(225, 29, 72, 0.2);
+  border-color: #e11d48;
+  color: #ffffff;
+}
+.map-btn.random-map-btn.active {
+  background: #e11d48;
+  border-color: #e11d48;
+  color: #ffffff;
+}
+
+.champion-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 100px;
+  border-radius: 0;
+}
+.trophy-mark { flex: 0 0 64px; color: #e9b137; }
+.trophy-mark svg { width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 4px 12px rgba(233, 177, 55, 0.2)); }
+.champion-card > div:last-child { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .champion-card span { color: #fff; font-size: 15px; font-weight: 1000; }
 .champion-card strong { overflow: hidden; color: #e9b137; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
-.champion-card small { color: rgba(233, 177, 55, 0.62); font-size: 9px; }
+.champion-card small { color: rgba(233, 177, 55, 0.72); font-size: 10.5px; font-weight: 600; }
 
 @media (max-width: 1240px) {
   .tournament-command-center { grid-template-columns: 1fr; }
-  .command-sidebar { display: grid; grid-template-columns: 1.5fr 1fr 1fr; align-items: stretch; }
-  .status-card { margin-top: 0; }
+  .command-sidebar { display: grid; grid-template-columns: 1.2fr 1.4fr 1fr; align-items: stretch; }
 }
 
 @media (prefers-reduced-motion: reduce) {

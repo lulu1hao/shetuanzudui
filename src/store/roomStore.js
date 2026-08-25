@@ -348,6 +348,14 @@ export const roomStore = {
     return { success: true, activeMap: room.activeMap }
   },
 
+  updateTournamentRoomMeta(roomId, updates = {}) {
+    const room = this.getRoom(roomId)
+    if (!room) return { success: false, msg: '房间未找到' }
+    if (updates.name !== undefined) room.name = updates.name.trim()
+    if (updates.reward !== undefined) room.reward = updates.reward.trim()
+    return { success: true }
+  },
+
   updateTournamentTeam(roomId, teamId, newName, membersArray) {
     const room = this.getRoom(roomId)
     if (!room) return { success: false, msg: '房间未找到' }

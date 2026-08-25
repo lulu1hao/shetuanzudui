@@ -345,6 +345,7 @@ import {
   beginLobbyReturnTransition,
   hasLuluDisplayTransition,
   prepareLuluDisplayArrival,
+  clearLuluDisplayArrivalStyles,
   placeGlobalLuluInDisplayTarget,
   settleLuluDisplayTransition,
   animateDisplayHeaderCopy,
@@ -581,16 +582,32 @@ export default {
             root: leaderboardRootRef.value,
             onComplete: () => {
               isLeaderboardArrival.value = false
+              nextTick(() => {
+                clearLuluDisplayArrivalStyles({ target: 'leaderboard', root: leaderboardRootRef.value })
+                placeGlobalLuluInDisplayTarget(leaderboardRootRef.value, { target: 'leaderboard' })
+              })
             }
           })
           animateDisplayHeaderCopy(leaderboardRootRef.value, { arrival: true })
           gsap.fromTo('.leaderboard-body-scroll',
-            { autoAlpha: 0, y: 24 },
-            { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power2.out', delay: 0.18, clearProps: 'all' }
+            { autoAlpha: 0, y: 20 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+              ease: 'power3.out',
+              delay: 0.08,
+              clearProps: 'transform'
+            }
           )
         } else {
+          isLeaderboardArrival.value = false
           placeGlobalLuluInDisplayTarget(leaderboardRootRef.value, { target: 'leaderboard' })
           animateDisplayHeaderCopy(leaderboardRootRef.value, { arrival: false })
+          gsap.fromTo('.leaderboard-body-scroll',
+            { autoAlpha: 0, y: 15 },
+            { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out', clearProps: 'transform' }
+          )
         }
       }, 70)
     })
