@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "lulu",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "identifier": "com.lulu.desktop",
   "build": {
     "frontendDist": "../dist",
@@ -46,7 +46,8 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDQ5NjM2RDZFQjlBQTZGN0EKUldSNmI2cTVibTFqU2QydjFzdFl5YjJuSDZuamxBaitGajZoSE0yclBZSllRTENhNzdxRmdpS3YK",
       "endpoints": [
-        "https://raw.githubusercontent.com/lulu/shetuan-app/main/updates/latest.json"
+        "https://cdn.jsdelivr.net/gh/lulu1hao/shetuanzudui@version2/updates/latest.json",
+        "https://raw.githubusercontent.com/lulu1hao/shetuanzudui/version2/updates/latest.json"
       ]
     }
   }

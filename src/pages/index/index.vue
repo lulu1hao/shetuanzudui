@@ -244,6 +244,57 @@
           </div>
         </template>
 
+        <!-- 问题反馈(与我联系) Tab (Tab 3) -->
+        <template v-else-if="currentLobbyTab === 3">
+          <div class="feedback-container glass-panel">
+            <div class="feedback-header">
+              <div class="feedback-badge">CONTACT & FEEDBACK</div>
+              <h2 class="feedback-title">问题反馈与联系作者</h2>
+              <p class="feedback-subtitle">如果你在使用《社团组队系统》过程中遇到任何问题，或有新功能建议与社团赛事合作意向，欢迎直接与作者取得联系！</p>
+            </div>
+
+            <div class="feedback-cards-grid">
+              <!-- 微信联系卡片 -->
+              <div class="contact-card">
+                <div class="contact-card-top">
+                  <div class="contact-icon-box">
+                    <svg viewBox="0 0 24 24" class="wechat-svg" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                  </div>
+                  <div class="contact-info-block">
+                    <span class="contact-type-tag">官方微信 (WECHAT)</span>
+                    <span class="contact-value">zy1368921317</span>
+                  </div>
+                </div>
+                <div class="contact-actions">
+                  <button class="copy-wechat-btn" @click="copyWechat('zy1368921317')">
+                    <svg viewBox="0 0 24 24" class="copy-svg"><path d="M8 4v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.242a2 2 0 0 0-.602-1.43L16.083 2.57A2 2 0 0 0 14.685 2H10a2 2 0 0 0-2 2z"/><path d="M16 18v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2"/></svg>
+                    <span>一键复制微信号</span>
+                  </button>
+                  <span class="copy-hint">添加好友时请备注：<strong>社团组队反馈</strong></span>
+                </div>
+              </div>
+
+              <!-- 软件与作者信息卡片 -->
+              <div class="contact-card system-info-card">
+                <div class="info-row">
+                  <span class="info-label">系统版本</span>
+                  <span class="info-val version-val">v4.0.1 (正式版 · 支持在线更新)</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">系统创建者</span>
+                  <span class="info-val">lulu (ENFP / 清华所在地学生)</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">反馈范围</span>
+                  <span class="info-val">Bug 修复 / 赛制扩展 / 装备属性纠错 / 赞助合作</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
         <!-- 其它暂未开放 Tab -->
         <template v-else>
           <div class="empty-state glass-panel dev-tab-state">
@@ -531,8 +582,26 @@ export default {
         return
       }
       currentLobbyTab.value = idx
-      if (idx >= 3) {
+      if (idx > 3) {
         showToast(`功能“${lobbyTabs[idx]}”正在全力开发中，敬请期待！`, 'none')
+      }
+    }
+
+    const copyWechat = async (id) => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(id)
+        } else {
+          const input = document.createElement('input')
+          input.value = id
+          document.body.appendChild(input)
+          input.select()
+          document.execCommand('copy')
+          document.body.removeChild(input)
+        }
+        showToast(`微信号已复制: ${id}，去微信添加好友吧！`, 'success')
+      } catch (e) {
+        showToast(`微信号: ${id}`, 'none')
       }
     }
 
@@ -860,7 +929,8 @@ export default {
       expandHero, collapseHero, handleHeroWheel,
       showCreateModal, closeCreateModal, handleCreateRoom, confirmDeleteRoom, goToRoom,
       getRoomPrimaryLabel, getRoomCapacityLabel, getRoomMapLabel,
-      getRoomMaxCapacity, getCompletedMatchesCount, getTotalMatchesCount
+      getRoomMaxCapacity, getCompletedMatchesCount, getTotalMatchesCount,
+      copyWechat
     }
   }
 }
@@ -1683,6 +1753,196 @@ export default {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
+}
+
+/* 问题反馈与联系作者模块 */
+.feedback-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(26, 26, 28, 0.85);
+  border: 1px solid rgba(225, 29, 72, 0.4);
+  padding: 32px 36px;
+  gap: 24px;
+  overflow-y: auto;
+}
+
+.feedback-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feedback-badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  background: #e11d48;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.feedback-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.feedback-subtitle {
+  margin: 0;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+}
+
+.feedback-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.contact-card {
+  background: rgba(36, 36, 38, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.contact-card:hover {
+  border-color: rgba(225, 29, 72, 0.5);
+  background: rgba(42, 36, 38, 0.95);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.contact-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: rgba(225, 29, 72, 0.15);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  color: #e11d48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wechat-svg {
+  width: 26px;
+  height: 26px;
+}
+
+.contact-info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-type-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.05em;
+}
+
+.contact-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+.contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.copy-wechat-btn {
+  height: 42px;
+  background: #e11d48;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.3);
+}
+
+.copy-wechat-btn:hover {
+  background: #f43f5e;
+  box-shadow: 0 8px 24px rgba(225, 29, 72, 0.45);
+  transform: translateY(-1px);
+}
+
+.copy-svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.copy-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.copy-hint strong {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.system-info-card {
+  justify-content: center;
+  gap: 14px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+}
+
+.info-val {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.version-val {
+  color: #34d399;
 }
 
 /* 响应式适配 */

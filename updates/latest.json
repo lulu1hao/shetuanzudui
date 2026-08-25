@@ -1,0 +1,11 @@
+{
+  "version": "4.0.1",
+  "notes": "1. 【新增】问题反馈模块上线，添加官方微信号 zy1368921317；\n2. 【优化】主页布局与暗黑红调微光视觉；\n3. 【更新】全线启用商业级在线自动更新机制。",
+  "pub_date": "2026-08-25T14:30:00Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1JIWEVVT25uMnhJeHMxSFh3anBEdW1ndUtubmU2dkh3dFVqVUVpa1EwWDJtMU1XakE2ejU5cmhYdlZ1Z3Urdno4eHpRcTk4WEp5eGUybHRHMk93cHc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NjM5Mjg5CWZpbGU6bHVsdV80LjAuMV94NjQtc2V0dXAuZXhlCkxiM0NOT0pVY0hGMGFNbVdSNkI1K2FxOGhGdy9oNk9NMU9lbHF2RUZJK0lsTEJhbm95ZGlQZEVNc2dycG85K2FDdFhXZ2p3dXVUY0NiYklWVGJLSUFBPT0K",
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.1/lulu_4.0.1_x64-setup.exe"
+    }
+  }
+}
