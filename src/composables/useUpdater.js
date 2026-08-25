@@ -41,18 +41,15 @@ export function useUpdater() {
         }
         updateHandle = update
         state.hasUpdate = true
+        return { status: 'found', version: update.version }
       } else {
-        if (!silent) {
-          state.hasUpdate = false
-          return { status: 'latest', msg: '当前已是最新版本' }
-        }
+        state.hasUpdate = false
+        return { status: 'latest', msg: '当前已是最新版本' }
       }
     } catch (err) {
       console.warn('[Updater] 检查更新失败:', err)
       state.error = err?.message || String(err)
-      if (!silent) {
-        return { status: 'error', msg: '检查更新时发生错误' }
-      }
+      return { status: 'error', msg: err?.message || String(err) }
     } finally {
       state.checking = false
     }

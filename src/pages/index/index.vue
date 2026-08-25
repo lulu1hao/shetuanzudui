@@ -278,9 +278,14 @@
 
               <!-- 软件与作者信息卡片 -->
               <div class="contact-card system-info-card">
-                <div class="info-row">
+                <div class="info-row check-update-row">
                   <span class="info-label">系统版本</span>
-                  <span class="info-val version-val">v4.0.1 (正式版 · 支持在线更新)</span>
+                  <div class="version-action-box">
+                    <span class="info-val version-val">v4.0.1 (正式版)</span>
+                    <button class="check-update-btn" @click="handleManualCheckUpdate" :disabled="isCheckingUpdate">
+                      {{ isCheckingUpdate ? '正在检测...' : '检查更新 ⟳' }}
+                    </button>
+                  </div>
                 </div>
                 <div class="info-row">
                   <span class="info-label">系统创建者</span>
@@ -419,6 +424,7 @@ import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { roomStore, MODES, MAPS } from '../../store/roomStore.js'
 import { useToast } from '../../composables/useToast.js'
+import { useUpdater } from '../../composables/useUpdater.js'
 import {
   beginLuluDisplayTransition,
   consumeLobbyReturnRoomId,
@@ -602,6 +608,27 @@ export default {
         showToast(`微信号已复制: ${id}，去微信添加好友吧！`, 'success')
       } catch (e) {
         showToast(`微信号: ${id}`, 'none')
+      }
+    }
+
+    const { checkForUpdates } = useUpdater()
+    const isCheckingUpdate = ref(false)
+
+    const handleManualCheckUpdate = async () => {
+      if (isCheckingUpdate.value) return
+      isCheckingUpdate.value = true
+      showToast('正在向云端检查最新版本...', 'none')
+      try {
+        const res = await checkForUpdates(false)
+        if (res?.status === 'latest') {
+          showToast('当前已是最新版本 v4.0.1', 'success')
+        } else if (res?.status === 'error') {
+          showToast(`检查更新提示: ${res.msg}`, 'none')
+        }
+      } catch (err) {
+        showToast(`检查更新异常: ${err?.message || err}`, 'none')
+      } finally {
+        isCheckingUpdate.value = false
       }
     }
 
@@ -930,7 +957,7 @@ export default {
       showCreateModal, closeCreateModal, handleCreateRoom, confirmDeleteRoom, goToRoom,
       getRoomPrimaryLabel, getRoomCapacityLabel, getRoomMapLabel,
       getRoomMaxCapacity, getCompletedMatchesCount, getTotalMatchesCount,
-      copyWechat
+      copyWechat, handleManualCheckUpdate, isCheckingUpdate
     }
   }
 }
@@ -1943,6 +1970,36 @@ export default {
 
 .version-val {
   color: #34d399;
+}
+
+.version-action-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.check-update-btn {
+  padding: 4px 12px;
+  background: rgba(225, 29, 72, 0.15);
+  border: 1px solid rgba(225, 29, 72, 0.4);
+  color: #ff3366;
+  font-size: 11.5px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.check-update-btn:hover:not(:disabled) {
+  background: #e11d48;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.4);
+  transform: translateY(-1px);
+}
+
+.check-update-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
 /* 响应式适配 */

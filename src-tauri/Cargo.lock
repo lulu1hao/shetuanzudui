@@ -1933,7 +1933,7 @@ dependencies = [
 
 [[package]]
 name = "lulu"
-version = "4.0.1"
+version = "4.0.2"
 dependencies = [
  "log",
  "serde",

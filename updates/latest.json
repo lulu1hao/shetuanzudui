@@ -1,11 +1,11 @@
 {
-  "version": "4.0.1",
-  "notes": "1. 【新增】问题反馈模块上线，添加官方微信号 zy1368921317；\n2. 【优化】主页布局与暗黑红调微光视觉；\n3. 【更新】全线启用商业级在线自动更新机制。",
-  "pub_date": "2026-08-25T14:30:00Z",
+  "version": "4.0.2",
+  "notes": "1. 【热更新上线】恭喜！你已成功收到 v4.0.2 在线自动更新推送；\n2. 【功能优化】新增官方微信 zy1368921317 与一键复制功能；\n3. 【界面优化】新增“手动检查更新”按钮与暗黑红调微光视觉。",
+  "pub_date": "2026-08-25T18:15:00Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1JIWEVVT25uMnhJeHMxSFh3anBEdW1ndUtubmU2dkh3dFVqVUVpa1EwWDJtMU1XakE2ejU5cmhYdlZ1Z3Urdno4eHpRcTk4WEp5eGUybHRHMk93cHc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NjM5Mjg5CWZpbGU6bHVsdV80LjAuMV94NjQtc2V0dXAuZXhlCkxiM0NOT0pVY0hGMGFNbVdSNkI1K2FxOGhGdy9oNk9NMU9lbHF2RUZJK0lsTEJhbm95ZGlQZEVNc2dycG85K2FDdFhXZ2p3dXVUY0NiYklWVGJLSUFBPT0K",
-      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.1/lulu_4.0.1_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1JSR2t5WUVlWUNOY1JJT1h5Z1dreXFlVEpGdVZQdjhmMExRdkoxYXpaaXVkWW9NY3hyeE5SNkhzY0hOYXA3V2U5ZEZ4ckNKTlZpMWtscm1LYTltQ3dBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NjUyNzMzCWZpbGU6bHVsdV80LjAuMl94NjQtc2V0dXAuZXhlCk1CdW55QmVONjRjNVAwcngrZERCM0VaYjNyRWNoa2JkZEFCVllUNGdyLzBIM1RmbjA1cGZ6K1NxQUh5U2xCd2tCV2NIZEVycm9UUmJobWwwcm5pQkJBPT0K",
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.2/lulu_4.0.2_x64-setup.exe"
     }
   }
 }
