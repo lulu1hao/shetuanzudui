@@ -76,7 +76,11 @@
         <template v-if="currentLobbyTab === 0">
           <!-- 空状态 -->
           <div v-if="rooms.length === 0" class="empty-state glass-panel">
-            <span class="empty-emoji">👽</span>
+            <div class="empty-icon-wrap">
+              <svg viewBox="0 0 24 24" class="empty-svg" aria-hidden="true">
+                <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7M3 7l9 6 9-6M3 7l9-4 9 4" />
+              </svg>
+            </div>
             <span class="empty-title">暂无活动房间</span>
             <span class="empty-desc">赶紧点击下方按钮创建一个吧！</span>
             <button class="create-btn-lg" @click="showCreateModal">创建第一个房间 / 赛事</button>
@@ -157,7 +161,7 @@
                 <span class="created-time">创建时间：{{ room.createdAt }}</span>
                 <span class="updated-time">最后更新：{{ room.updatedAt || room.createdAt }}</span>
                 <button class="enter-btn" :class="{ 'enter-btn-tournament': room.type === 'tournament' }">
-                  {{ room.type === 'tournament' ? '进入赛事 🏆' : '进入组队 ➡️' }}
+                  {{ room.type === 'tournament' ? '进入赛事' : '进入组队' }}
                 </button>
               </div>
             </div>
@@ -166,7 +170,6 @@
             <div class="room-card glass-panel finals-feature-card" @click="goToLeaderboard">
               <div class="room-card-header">
                 <span class="room-name">
-                  <span class="trophy-prefix">🏆 </span>
                   THE FINALS 实时战绩中心
                 </span>
                 <div class="room-card-actions">
@@ -194,7 +197,7 @@
               <div class="room-footer">
                 <span class="created-time">数据源：Embark 官方公开排行榜</span>
                 <button class="enter-btn enter-btn-tournament">
-                  进入查询 🏆
+                  进入查询
                 </button>
               </div>
             </div>
@@ -244,7 +247,11 @@
         <!-- 其它暂未开放 Tab -->
         <template v-else>
           <div class="empty-state glass-panel dev-tab-state">
-            <span class="empty-emoji">🚧</span>
+            <div class="empty-icon-wrap">
+              <svg viewBox="0 0 24 24" class="empty-svg" aria-hidden="true">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+              </svg>
+            </div>
             <span class="empty-title">“{{ lobbyTabs[currentLobbyTab] }}” 模块全力开发中</span>
             <span class="empty-desc">更多社团专属交流与活动板块即将上线，敬请期待！</span>
             <button class="create-btn-lg" @click="selectLobbyTab(0)">返回活动大厅</button>
@@ -280,11 +287,9 @@
               <label class="form-label">房间类型</label>
               <div class="modal-mode-grid">
                 <div class="modal-mode-card" :class="{ 'active': newRoomType === 'normal' }" @click="selectNewRoomType('normal')">
-                  <span class="modal-mode-icon">👥</span>
                   <span class="modal-mode-name">普通组队</span>
                 </div>
                 <div class="modal-mode-card type-tournament-card" :class="{ 'active': newRoomType === 'tournament' }" @click="selectNewRoomType('tournament')">
-                  <span class="modal-mode-icon">🏆</span>
                   <span class="modal-mode-name">赛事房间</span>
                 </div>
               </div>
@@ -293,7 +298,7 @@
             <!-- 赛事专属 -->
             <template v-if="newRoomType === 'tournament'">
               <div class="form-item">
-                <label class="form-label">💰 提现锦标赛 · 参赛队伍数量</label>
+                <label class="form-label">提现锦标赛 · 参赛队伍数量</label>
                 <div class="modal-teams-grid">
                   <div
                     v-for="count in [4, 6, 8]"
@@ -321,7 +326,6 @@
                     :class="{ 'active': newRoomMode === opt.key }"
                     @click="selectNewRoomMode(opt.key)"
                   >
-                    <span class="modal-mode-icon">{{ opt.icon }}</span>
                     <span class="modal-mode-name">{{ opt.shortName }}</span>
                   </div>
                 </div>
@@ -336,7 +340,7 @@
                   class="modal-map-capsule"
                   :class="{ 'active': newRoomMap === 'random' }"
                   @click="selectNewRoomMap('random')"
-                >🎲 随机地图</div>
+                >随机地图</div>
                 <div
                   v-for="mapName in MAPS"
                   :key="mapName"
@@ -399,9 +403,9 @@ export default {
     let isNavigatingToTournament = false
 
     const modeOptions = [
-      { key: 'cashout', icon: '💰', shortName: '提现' },
-      { key: 'quickcash', icon: '💥', shortName: '金爆点' },
-      { key: 'team', icon: '🛡️', shortName: '团队' }
+      { key: 'cashout', shortName: '提现模式' },
+      { key: 'quickcash', shortName: '金爆点' },
+      { key: 'team', shortName: '团队模式' }
     ]
 
     const totalMembers = computed(() => {
@@ -1189,7 +1193,29 @@ export default {
   padding: 40px;
 }
 
-.empty-emoji { font-size: 60px; color: #e11d48; }
+.empty-icon-wrap {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(225, 29, 72, 0.12);
+  border: 1px solid rgba(225, 29, 72, 0.32);
+  color: #e11d48;
+  margin-bottom: 4px;
+}
+
+.empty-svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .empty-title { font-size: 20px; font-weight: 700; color: #e5e7eb; }
 .empty-desc { font-size: 13px; color: #9ca3af; }
 

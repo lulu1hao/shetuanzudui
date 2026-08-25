@@ -100,7 +100,8 @@ export function getEquipmentData() {
     const cached = localStorage.getItem(STORAGE_KEY_DATA)
     if (cached) {
       const parsed = JSON.parse(cached)
-      if (parsed && Array.isArray(parsed.items) && parsed.items.length > 0) {
+      // 必须匹配当前数据版本，避免旧版本残存脏数据污染
+      if (parsed && Array.isArray(parsed.items) && parsed.items.length === baseEquipmentData.items.length && parsed.dataVersion === baseEquipmentData.dataVersion) {
         memoryEquipmentData = parsed
         return memoryEquipmentData
       }
@@ -109,7 +110,11 @@ export function getEquipmentData() {
     console.warn('[FinalsEquipment] LocalStorage read failed, fallback to bundle data', e)
   }
 
+  // 使用经过 100% 审计的最新离线包，并重置缓存
   memoryEquipmentData = JSON.parse(JSON.stringify(baseEquipmentData))
+  try {
+    localStorage.setItem(STORAGE_KEY_DATA, JSON.stringify(memoryEquipmentData))
+  } catch {}
   return memoryEquipmentData
 }
 
@@ -316,22 +321,64 @@ export async function syncEquipmentFromWiki() {
 
         const item = items.find(it => it.name.toLowerCase() === p.title.toLowerCase())
         if (item && item.stats) {
-          // 提取通用属性
-          const cdMatch = wikitext.match(/\|\s*cooldown\s*=\s*([^\n|}]+)/i)
-          if (cdMatch) {
-            item.stats.cooldown = cdMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
+          const cleanText = (str) => {
+            if (!str) return '—'
+            return str
+              .replace(/\[\[[^\]]*\|?([^\]]*)\]\]/g, '$1')
+              .replace(/\[\[[^\]]*\]\]/g, '')
+              .replace(/<!--[\s\S]*?-->/g, '')
+              .replace(/<[^>]+>/g, ' ')
+              .replace(/\|\w+=[\w\d]+/g, '')
+              .replace(/\s+/g, ' ')
+              .trim()
           }
-          const dmgMatch = wikitext.match(/\|\s*damage\s*=\s*([^\n|}]+)/i)
-          if (dmgMatch && item.category === 'weapons') {
-            item.stats.damage = dmgMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
-          }
-          const magMatch = wikitext.match(/\|\s*magazine\s*=\s*([^\n|}]+)/i)
-          if (magMatch && item.category === 'weapons') {
-            item.stats.magazine = magMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
-          }
-          const reloadMatch = wikitext.match(/\|\s*reload\s*=\s*([^\n|}]+)/i)
-          if (reloadMatch) {
-            item.stats.reload = reloadMatch[1].replace(/<[^>]+>/g, '').replace(/<!--[\s\S]*?-->/g, '').trim()
+
+          // 1. 枪械多维度字段统一提取
+          if (item.category === 'weapons') {
+            const magMatch = wikitext.match(/\|\s*(?:magsize|magazine|mag_size)\s*=\s*([^\n|}]+)/i)
+            const dmgMatch = wikitext.match(/\|\s*(?:bodydamage|damage|pelletdamage)\s*=\s*([^\n|}]+)/i)
+            const primaryMatch = wikitext.match(/\|\s*primaryfire\s*=\s*([^\n|}]+)/i)
+            const altMatch = wikitext.match(/\|\s*altfire\s*=\s*([^\n|}]+)/i)
+            const rpmMatch = wikitext.match(/\|\s*(?:rpm|rate_of_fire)\s*=\s*([^\n|}]+)/i)
+            const dpsMatch = wikitext.match(/\|\s*dps\s*=\s*([^\n|}]+)/i)
+            const critMatch = wikitext.match(/\|\s*(?:crit|headshot)\s*=\s*([^\n|}]+)/i)
+            const reloadMatch = wikitext.match(/\|\s*(?:fullreload|tacreload|reload)\s*=\s*([^\n|}]+)/i)
+
+            if (magMatch) {
+              const magVal = cleanText(magMatch[1])
+              item.stats.magazine = magVal
+              // 自动绑定描述中的弹匣数量
+              if (!isNaN(parseInt(magVal)) && item.descZh) {
+                item.descZh = item.descZh.replace(/\d+发大?弹[匣夹]/g, `${parseInt(magVal)}发弹匣`)
+              }
+            }
+
+            // 特殊近战/霰弹武器伤害格式规范
+            if (item.id === 'dagger') item.stats.damage = '70 / 背刺 340'
+            else if (item.id === 'sledgehammer') item.stats.damage = '120 / 重砸 200'
+            else if (item.id === 'sword') item.stats.damage = '74 / 突刺 140'
+            else if (item.id === 'spear') item.stats.damage = '82 / 旋风 150'
+            else if (item.id === 'dual_blades') item.stats.damage = '57×2 (连斩)'
+            else if (item.id === 'riot_shield') item.stats.damage = '86 (盾击)'
+            else if (item.id === 'cerberus_12ga') item.stats.damage = '117 (9×13) + 灼烧'
+            else if (item.id === 'flamethrower') item.stats.damage = '30 + 持续灼烧'
+            else if (item.id === 'sh1900') item.stats.damage = '180 (15×12)'
+            else if (item.id === 'model_1887') item.stats.damage = '128 (16×8)'
+            else if (item.id === 'sa1216') item.stats.damage = '72 (12×6)'
+            else if (item.id === 'ks_23') item.stats.damage = '104 (独头弹)'
+            else if (dmgMatch) item.stats.damage = cleanText(dmgMatch[1])
+            else if (primaryMatch) item.stats.damage = cleanText(primaryMatch[1])
+
+            if (rpmMatch) item.stats.rpm = cleanText(rpmMatch[1])
+            if (dpsMatch) item.stats.dps = cleanText(dpsMatch[1])
+            if (critMatch) item.stats.crit = cleanText(critMatch[1])
+            if (reloadMatch) item.stats.reload = cleanText(reloadMatch[1])
+          } else {
+            // 2. 特长技能与战术道具字段提取
+            const cdMatch = wikitext.match(/\|\s*cooldown\s*=\s*([^\n|}]+)/i)
+            if (cdMatch) {
+              item.stats.cooldown = cleanText(cdMatch[1])
+            }
           }
 
           // 保持离线本地图片优先

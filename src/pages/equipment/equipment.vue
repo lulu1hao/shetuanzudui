@@ -200,7 +200,7 @@
                 <div class="equip-mini-stats">
                   <div v-if="item.category === 'weapons'" class="mini-stat-cell">
                     <span class="stat-lbl">伤害</span>
-                    <strong class="stat-val">{{ item.stats?.damage || '—' }}</strong>
+                    <strong class="stat-val" :title="item.stats?.damage">{{ formatCardMiniDamage(item) }}</strong>
                   </div>
                   <div v-if="item.category === 'weapons'" class="mini-stat-cell">
                     <span class="stat-lbl">DPS</span>
@@ -208,7 +208,7 @@
                   </div>
                   <div v-if="item.category === 'weapons'" class="mini-stat-cell">
                     <span class="stat-lbl">弹匣</span>
-                    <strong class="stat-val">{{ item.stats?.magazine || '—' }}</strong>
+                    <strong class="stat-val">{{ formatCardMiniMag(item) }}</strong>
                   </div>
 
                   <div v-if="item.category !== 'weapons'" class="mini-stat-cell full-width-stat">
@@ -1370,6 +1370,34 @@ export default {
         }, null, TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
     }
 
+    // 卡片 mini 状态紧凑格式化（防止近战/多段伤害撑爆卡片）
+    const formatCardMiniDamage = (item) => {
+      if (!item?.stats?.damage) return '—'
+      const dmg = String(item.stats.damage)
+      if (item.id === 'dagger') return '70 / 340'
+      if (item.id === 'sledgehammer') return '120 / 200'
+      if (item.id === 'sword') return '74 / 140'
+      if (item.id === 'spear') return '82 / 150'
+      if (item.id === 'dual_blades') return '57×2'
+      if (item.id === 'riot_shield') return '86'
+      if (item.id === 'cerberus_12ga') return '117+灼烧'
+      if (item.id === 'flamethrower') return '30+灼烧'
+      if (item.id === 'sh1900') return '180'
+      if (item.id === 'model_1887') return '128'
+      if (item.id === 'sa1216') return '72'
+      if (item.id === 'ks_23') return '104'
+      return dmg.length > 10 ? dmg.replace(/\s*\(.*\)/, '') : dmg
+    }
+
+    const formatCardMiniMag = (item) => {
+      if (!item?.stats?.magazine) return '—'
+      const mag = String(item.stats.magazine)
+      if (mag.includes('无限')) return '无限'
+      if (mag.includes('热量')) return '热量槽'
+      const num = parseInt(mag)
+      return isNaN(num) ? mag : `${num}`
+    }
+
     return {
       equipmentRootRef, isEquipmentArrival, goBack,
       mainTabs, currentMainTab,
@@ -1383,6 +1411,7 @@ export default {
       compareWeaponIds, compareWeaponList, isInCompare, toggleCompareWeapon, removeFromCompare, clearCompareList,
       getBuildBadgeLabel, getCategoryBadgeLabel, handleImgError, copyEquipmentSummary,
       getWeaponProfileShots, getWeaponProfileTTK,
+      formatCardMiniDamage, formatCardMiniMag,
       switchBuilderBuild, loadItemIntoBuilder, openSlotPicker, selectItemForSlot, removeGadgetSlot,
       handleResetBuilder, handleSaveCurrentLoadout, handleDeleteSavedLoadout, applySavedLoadout, applyPreset,
       handleExportLoadoutCode, copyPresetCode, getEquipmentById
@@ -2039,25 +2068,34 @@ export default {
 
 .mini-stat-cell {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+  text-align: center;
 }
 
 .mini-stat-cell.full-width-stat {
   align-items: flex-start;
+  text-align: left;
 }
 
 .stat-lbl {
   font-size: 9px;
   color: rgba(255, 255, 255, 0.4);
   font-weight: 750;
+  white-space: nowrap;
 }
 
 .stat-val {
   font-size: 11px;
   font-weight: 850;
   color: #ffffff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 .stat-highlight {
