@@ -1,11 +1,11 @@
 {
-  "version": "4.0.3",
-  "notes": "1. 【赛事系统升级】赛事名称与房间大厅深度双向联动，移除冗余抽屉，升级右下角直角机能配置面板（支持改名、奖品设置与随机地图）；\n2. 【战队战况全景】参赛战队实时动态计算荣誉状态（冠/亚/季/殿/半决/淘汰），荣誉高位自适应排序，点击卡片呼出全景战况总览弹窗；\n3. 【结算与录入重构】录入金钱与比分结算弹窗全新升级为直角细边暗黑电竞风，去除了所有 Emoji 图标；\n4. 【转场体验丝滑化】深度修复积分查询与装备界面在全局转场结束时的瞬间闪烁跳变缺陷，彻底消除白屏与刷新感；\n5. 【视觉与规范】系统信息规范化，全系统坚持直角细微光电竞机能设计语言。",
-  "pub_date": "2026-08-25T21:30:00Z",
+  "version": "4.0.4",
+  "notes": "1. 【天梯战绩时序抓取】直连 DavG25 底层时序接口，支持 24h / 7d / 30d / 全赛季历史对局秒级切片与净胜负分（±ΔRS）统计；\n2. 【电竞走势折线升级】统一阶梯折线，彻底优化光标滑动吸附性能（120FPS 丝滑不卡顿），支持点击任意节点放大高亮并展开深度对局透视面板；\n3. 【战队名称官方对齐】活动房间队伍名称与标志色彩全面对齐《THE FINALS》官方战队（THE RETROS 复古队、THE OVERDOGS 狂犬队、THE STEAMROLLERS 压路机队、THE SHOCK & AWE 震慑队）；\n4. 【观战席位轻量化】观战席位宽幅缩减一半，视觉重心深度轻量化，界面层级更加主次分明。",
+  "pub_date": "2026-08-29T20:30:00Z",
   "platforms": {
     "windows-x86_64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1UzRll6VE00OFJiZjIyRFFtNzhCNXZRbGQ2M0xGOXZaRUtRTjc0WUE3YkJQeDN2TnlOa29wYkxxSS9UNHAvVnNlRXhXT0hMQStDbGNJRVpaRjFtaGdRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NjY0OTc5CWZpbGU6bHVsdV80LjAuM194NjQtc2V0dXAuZXhlCk5hcGR4YmFRK1ArWnduNHBvWFZhYmtVRGcyeUtjR2tHdTVwQTdDRzVQLzVtVmwyRDR3SFM4VzRSUmJJVEdqV0pTQjAwbzVQd1lvRmpzRzEvdGNyNERnPT0K",
-      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.3/lulu_4.0.3_x64-setup.exe"
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.4/lulu_4.0.4_x64-setup.exe"
     }
   }
 }

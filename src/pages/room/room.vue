@@ -175,10 +175,10 @@
             </div>
           </div>
 
-          <!-- 观战席 -->
+          <!-- 观战席 (缩小紧凑型辅助席位) -->
           <div
             id="team-zone-spectator"
-            class="pool-section glass-panel"
+            class="pool-section spectator-section glass-panel"
             :class="{ 'drag-over': hoverTeamId === 'spectator' }"
             @dragover.prevent="onDragOver($event, 'spectator')"
             @dragenter="onDragEnter($event, 'spectator')"
@@ -186,18 +186,18 @@
             @drop="onDrop($event, 'spectator')"
             @click="handleTeamClick('spectator')"
           >
-            <div class="pool-header">
+            <div class="pool-header spectator-header">
               <div class="pool-title-left">
                 <div class="pool-indicator spec-indicator"></div>
-                <span class="pool-title">观战席 ({{ getTeamMembers('spectator').length }})</span>
+                <span class="pool-title spec-title">观战席 ({{ getTeamMembers('spectator').length }})</span>
               </div>
-              <span class="pool-tip">旁观席位</span>
+              <span class="pool-tip spec-tip">旁观席位</span>
             </div>
-            <div class="pool-members-scroll">
-              <div v-if="getTeamMembers('spectator').length === 0" class="pool-empty">
+            <div class="pool-members-scroll spectator-scroll">
+              <div v-if="getTeamMembers('spectator').length === 0" class="pool-empty spectator-empty">
                 <span class="pool-empty-text">无观战人员</span>
               </div>
-              <div class="pool-members-list" v-else>
+              <div class="pool-members-list spectator-members-list" v-else>
                 <div
                   v-for="member in getTeamMembers('spectator')"
                   :key="member.id"
@@ -211,7 +211,7 @@
                   <div class="member-avatar spectator-avatar">{{ getMemberInitial(member) }}</div>
                   <div class="member-pill-left">
                     <span class="member-pill-name">{{ member.name }}</span>
-                    <span class="member-pill-id">ID: {{ member.id }} <em>在线</em></span>
+                    <span class="member-pill-id">ID: {{ member.id }}</span>
                   </div>
                   <span class="member-role-tag watch-role">观战</span>
                   <span class="drag-indicator">⠿</span>
@@ -1109,7 +1109,7 @@ export default {
   letter-spacing: 0.5px;
 }
 
-.bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-shrink: 0; height: 180px; }
+.bottom-grid { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 10px; flex-shrink: 0; height: 180px; }
 
 /* 最终比分录入 */
 .score-panel {
@@ -1397,9 +1397,63 @@ export default {
   user-select: none;
 }
 .member-pill:hover { background: rgba(255,255,255,0.07); }
-.member-pill:active { cursor: grabbing; }
 .member-pill.team-member { border-left-width: 3px; }
-.member-pill.spectator-member { border-left: 3px solid #9ca3af; }
+.member-pill.spectator-member { border-left: 2px solid #64748b; }
+
+/* 观战席 (缩小紧凑型辅助席位，降低视觉重心) */
+.spectator-section {
+  background: rgba(10, 12, 18, 0.6) !important;
+  border: 1px dashed rgba(255, 255, 255, 0.12) !important;
+  padding: 8px 10px;
+}
+.spectator-section.drag-over {
+  border-color: rgba(100, 116, 139, 0.5) !important;
+  background: rgba(100, 116, 139, 0.1) !important;
+}
+.spectator-section .spec-indicator {
+  background: #64748b !important;
+  width: 2.5px;
+  height: 12px;
+}
+.spectator-section .spec-title {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: rgba(255, 255, 255, 0.7);
+}
+.spectator-section .spec-tip {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.32);
+}
+.spectator-section .spectator-empty {
+  padding: 14px 0;
+}
+.spectator-section .member-pill {
+  padding: 4px 6px;
+  min-height: 28px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.spectator-section .spectator-avatar {
+  width: 20px;
+  height: 20px;
+  font-size: 9.5px;
+  border-radius: 3px;
+  margin-right: 5px;
+  background: rgba(100, 116, 139, 0.25);
+  color: #94a3b8;
+}
+.spectator-section .member-pill-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+.spectator-section .member-pill-id {
+  display: none;
+}
+.spectator-section .watch-role {
+  font-size: 9px;
+  padding: 1px 4px;
+}
 .selected-pill {
   border-color: #a78bfa !important;
   box-shadow: 0 0 12px rgba(167, 139, 250, 0.4);
@@ -2042,7 +2096,8 @@ export default {
 }
 
 .bottom-grid {
-  height: 270px;
+  height: 240px;
+  grid-template-columns: minmax(0, 1fr) 280px;
   gap: 16px;
 }
 

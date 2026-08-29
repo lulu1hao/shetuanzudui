@@ -13,16 +13,6 @@
       </div>
 
       <div class="header-right">
-        <!-- 赛季切换 -->
-        <div class="hud-select-box">
-          <span class="select-label">SEASON</span>
-          <select v-model="selectedSeason" class="select-control" @change="handleFilterChange">
-            <option v-for="s in FINALS_SEASONS" :key="s.key" :value="s.key">
-              {{ s.label }}
-            </option>
-          </select>
-        </div>
-
         <!-- 模式切换 -->
         <div class="hud-select-box">
           <span class="select-label">MODE</span>
@@ -163,12 +153,13 @@
             </div>
           </div>
 
-          <!-- 积分升降走势折线图 -->
+          <!-- 积分升降走势折线图 (已接入 DavG25 全时序爬取与分析) -->
           <LeaderboardTrendChart
             :player-name="activePlayer.name"
             :current-score="activePlayer.mainScore"
             :score-unit="activePlayer.scoreUnit"
             :league-title="activePlayer.leagueInfo?.title"
+            :season-key="selectedSeason"
           />
         </section>
 

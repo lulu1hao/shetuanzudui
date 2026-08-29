@@ -389,3 +389,203 @@ export async function fetchLeaderboardTop(seasonKey = 's11', modeKey = 'ranked',
 
   return fallbackTop.map(item => normalizeLeaderboardItem(item, modeKey))
 }
+
+/**
+ * 5. 从 DavG25 内部接口爬取玩家历史积分走势与时序曲线 (Player History & Progress Tracker)
+ * 包含：各时间点积分 (RS)、排名 (Rank)、段位、胜负场分差 (Delta RS)、峰值与净胜负分统计
+ */
+const DAVG25_API_BASE = 'https://www.davg25.com/app/the-finals-leaderboard-tracker/api/vaiiya'
+const davgHistoryCache = new Map()
+const DAVG_CACHE_TTL = 3 * 60 * 1000 // 3 分钟本地缓存
+
+export async function fetchPlayerHistoryFromDavG25(playerId, seasonKey = 's11', timeRange = 'all') {
+  const cleanId = (playerId || '').trim()
+  if (!cleanId) {
+    throw new FinalsQueryError(FinalsErrorType.PARAM_INVALID, '请输入玩家 Embark ID')
+  }
+
+  const cacheKey = `${cleanId}_${seasonKey}`
+  const now = Date.now()
+  let rawData = null
+
+  if (davgHistoryCache.has(cacheKey)) {
+    const cached = davgHistoryCache.get(cacheKey)
+    if (now - cached.timestamp < DAVG_CACHE_TTL) {
+      rawData = cached.data
+    }
+  }
+
+  if (!rawData) {
+    const url = `${DAVG25_API_BASE}/player-overview/?stats=true&history=true&timestamps=true&seasonal=true&leagues=true&season=${seasonKey}`
+    
+    // 构造 DavG25 标准 POST 载荷 (请求全量 180 天数据以便本地秒级切换 24h / 7d / 30d / 全赛季)
+    const payload = {
+      meta: {
+        id: cleanId,
+        range: 15552000,
+        time: Intl.DateTimeFormat?.().resolvedOptions?.().timeZone || 'Asia/Shanghai'
+      },
+      stats: {
+        extended: true,
+        rename: true,
+        latest: false,
+        ban: true
+      },
+      history: {
+        name: true
+      },
+      leagues: {
+        unranked: false,
+        elite: false
+      }
+    }
+
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 12000)
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Origin': 'https://www.davg25.com',
+          'Referer': `https://www.davg25.com/app/the-finals-leaderboard-tracker/player-stats/?id=${encodeURIComponent(cleanId)}&season=${seasonKey}`,
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        },
+        body: JSON.stringify(payload)
+      })
+
+      clearTimeout(timeoutId)
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new FinalsQueryError(
+            FinalsErrorType.NOT_FOUND,
+            `未查询到玩家 [${cleanId}] 在 ${seasonKey.toUpperCase()} 赛季的历史走势（可能未进入前 10,000 名或无公开记录）`
+          )
+        }
+        throw new FinalsQueryError(
+          FinalsErrorType.SERVER_ERROR,
+          `DavG25 历史接口响应异常 (HTTP ${response.status})`
+        )
+      }
+
+      rawData = await response.json()
+      davgHistoryCache.set(cacheKey, { timestamp: now, data: rawData })
+    } catch (err) {
+      clearTimeout(timeoutId)
+      if (err instanceof FinalsQueryError) throw err
+      if (err.name === 'AbortError') {
+        throw new FinalsQueryError(FinalsErrorType.NETWORK_ERROR, '连接 DavG25 战绩服务器超时，请检查代理网络')
+      }
+      throw new FinalsQueryError(FinalsErrorType.NETWORK_ERROR, '获取历史战绩走势失败，请检查网络连接', err)
+    }
+  }
+
+  const rawHistory = Array.isArray(rawData?.history) ? rawData.history : []
+  if (rawHistory.length === 0) {
+    throw new FinalsQueryError(
+      FinalsErrorType.NOT_FOUND,
+      `该玩家暂无 ${seasonKey.toUpperCase()} 赛季历史打点记录`
+    )
+  }
+
+  // 1. 全量数据按时间升序排序
+  const sorted = [...rawHistory].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+
+  // 2. 解析全量打点（带对局差分 Delta 计算）
+  const allParsedPoints = []
+  for (let i = 0; i < sorted.length; i++) {
+    const curr = sorted[i]
+    const prev = i > 0 ? sorted[i - 1] : null
+    const delta = prev ? (curr.points - prev.points) : 0
+
+    const dateObj = new Date(curr.timestamp)
+    const formattedDate = dateObj.toLocaleDateString('zh-CN', {
+      month: '2-digit',
+      day: '2-digit'
+    })
+    const formattedTime = dateObj.toLocaleTimeString('zh-CN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    })
+
+    allParsedPoints.push({
+      timestamp: curr.timestamp,
+      timestampMs: dateObj.getTime(),
+      dateFormatted: `${formattedDate} ${formattedTime}`,
+      timeOnly: formattedTime,
+      points: curr.points,
+      rank: curr.rank,
+      league: curr.league,
+      leagueName: curr.leagueName || 'Ranked',
+      leagueInfo: getLeagueInfo(curr.leagueName, curr.league, curr.points),
+      delta,
+      deltaFormatted: delta > 0 ? `+${delta.toLocaleString()}` : (delta < 0 ? `${delta.toLocaleString()}` : '0'),
+      isDeltaPoint: delta !== 0
+    })
+  }
+
+  // 3. 根据所选时间区间进行范围切片
+  let cutoffTime = 0
+  if (timeRange === '24h') {
+    cutoffTime = now - 24 * 3600 * 1000
+  } else if (timeRange === '7d') {
+    cutoffTime = now - 7 * 24 * 3600 * 1000
+  } else if (timeRange === '30d') {
+    cutoffTime = now - 30 * 24 * 3600 * 1000
+  }
+
+  let filtered = cutoffTime > 0
+    ? allParsedPoints.filter(item => item.timestampMs >= cutoffTime)
+    : allParsedPoints
+
+  // 若时间段内数据少于 5 条，但全量有数据，则返回最近至少 20 条
+  if (filtered.length < 5 && allParsedPoints.length >= 5) {
+    filtered = allParsedPoints.slice(-Math.min(allParsedPoints.length, 30))
+  }
+
+  // 4. 统计指标计算
+  let maxPoints = -Infinity
+  let minPoints = Infinity
+  let positiveDeltasCount = 0
+  let negativeDeltasCount = 0
+
+  for (let i = 0; i < filtered.length; i++) {
+    const item = filtered[i]
+    if (item.points > maxPoints) maxPoints = item.points
+    if (item.points < minPoints) minPoints = item.points
+    if (item.delta > 0) positiveDeltasCount++
+    else if (item.delta < 0) negativeDeltasCount++
+  }
+
+  const firstPoint = filtered[0] || allParsedPoints[0]
+  const latestPoint = filtered[filtered.length - 1] || allParsedPoints[allParsedPoints.length - 1]
+  const netGain = latestPoint.points - firstPoint.points
+
+  return {
+    playerId: cleanId,
+    seasonKey,
+    stats: rawData?.stats || {},
+    allPoints: allParsedPoints,
+    points: filtered,
+    summary: {
+      currentPoints: latestPoint.points,
+      currentRank: latestPoint.rank,
+      currentLeague: latestPoint.leagueName,
+      maxPoints: maxPoints === -Infinity ? latestPoint.points : maxPoints,
+      minPoints: minPoints === Infinity ? latestPoint.points : minPoints,
+      netGain,
+      netGainFormatted: netGain > 0 ? `+${netGain.toLocaleString()}` : netGain.toLocaleString(),
+      totalTrackedPoints: filtered.length,
+      allTotalNodes: allParsedPoints.length,
+      positiveDeltasCount,
+      negativeDeltasCount
+    }
+  }
+}
+
+

@@ -612,7 +612,7 @@ export default {
 
     const { checkForUpdates } = useUpdater()
     const isCheckingUpdate = ref(false)
-    const currentAppVersion = ref(pkg.version || '4.0.3')
+    const currentAppVersion = ref(pkg.version || '4.0.4')
 
     const handleManualCheckUpdate = async () => {
       if (isCheckingUpdate.value) return

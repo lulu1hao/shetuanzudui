@@ -2,7 +2,7 @@ import { reactive, watch } from 'vue'
 
 const STORAGE_KEY = 'CLUB_TEAM_MATCHER_ROOMS'
 
-// 1. 定义三种房间模式配置
+// 1. 定义三种房间模式配置 (与 THE FINALS 游戏官方对阵战队深度对齐)
 export const MODES = {
   cashout: {
     key: 'cashout',
@@ -11,10 +11,10 @@ export const MODES = {
     teamCapacity: 3,
     maxMembers: 12,
     teams: [
-      { id: 1, name: '烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
-      { id: 2, name: '极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' },
-      { id: 3, name: '翡翠绿队', color: '#10b981', gradient: 'linear-gradient(135deg, #10b981, #14b8a6)' },
-      { id: 4, name: '星云紫队', color: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6, #ec4899)' }
+      { id: 1, name: 'THE RETROS (复古队)', shortName: 'THE RETROS', nameZh: '复古队', logo: 'TR', color: '#ff2e93', gradient: 'linear-gradient(135deg, #ff2e93, #f43f5e)' },
+      { id: 2, name: 'THE OVERDOGS (狂犬队)', shortName: 'THE OVERDOGS', nameZh: '狂犬队', logo: 'OD', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
+      { id: 3, name: 'THE STEAMROLLERS (压路机队)', shortName: 'THE STEAMROLLERS', nameZh: '压路机队', logo: 'SR', color: '#06b6d4', gradient: 'linear-gradient(135deg, #06b6d4, #3b82f6)' },
+      { id: 4, name: 'THE SHOCK & AWE (震慑队)', shortName: 'THE SHOCK & AWE', nameZh: '震慑队', logo: 'SA', color: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6, #a855f7)' }
     ]
   },
   quickcash: {
@@ -24,8 +24,8 @@ export const MODES = {
     teamCapacity: 8,
     maxMembers: 16,
     teams: [
-      { id: 1, name: '烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
-      { id: 2, name: '极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' }
+      { id: 1, name: 'THE OVERDOGS (狂犬队)', shortName: 'THE OVERDOGS', nameZh: '狂犬队', logo: 'OD', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
+      { id: 2, name: 'THE RETROS (复古队)', shortName: 'THE RETROS', nameZh: '复古队', logo: 'TR', color: '#ff2e93', gradient: 'linear-gradient(135deg, #ff2e93, #ec4899)' }
     ]
   },
   team: {
@@ -35,8 +35,8 @@ export const MODES = {
     teamCapacity: 5,
     maxMembers: 10,
     teams: [
-      { id: 1, name: '烈焰红队', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
-      { id: 2, name: '极光蓝队', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #6366f1)' }
+      { id: 1, name: 'THE OVERDOGS (狂犬队)', shortName: 'THE OVERDOGS', nameZh: '狂犬队', logo: 'OD', color: '#ef4444', gradient: 'linear-gradient(135deg, #ef4444, #f97316)' },
+      { id: 2, name: 'THE STEAMROLLERS (压路机队)', shortName: 'THE STEAMROLLERS', nameZh: '压路机队', logo: 'SR', color: '#06b6d4', gradient: 'linear-gradient(135deg, #06b6d4, #3b82f6)' }
     ]
   }
 }
