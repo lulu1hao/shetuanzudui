@@ -1,11 +1,11 @@
 {
-  "version": "4.0.0",
+  "version": "4.0.4",
   "notes": "1. 修复已知问题；\n2. 优化系统性能与使用体验；\n3. 新增在线自动更新功能。",
-  "pub_date": "2026-08-25T06:10:29.849Z",
+  "pub_date": "2026-09-15T14:32:32.278Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "【请在此处粘贴 src-tauri/target/release/bundle/nsis/*.nsis.zip.sig 文件的内容】",
-      "url": "https://your-domain.com/updates/lulu_4.0.0_x64-setup.nsis.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU2NnN1AxTXVlaG9QbjBvUGFDdkN5dXJZOG80UWV4d1h1NXFtRytFUkY2ZUFHSEFRZFhSVERQZWFqVWEySFQxNzIrc2lmVzdpTjFnMUlIczFaWUg2dVFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5NDgyNTE0CWZpbGU6bHVsdV80LjAuNF94NjQtc2V0dXAuZXhlCkVwMWlEVVJMbXlSaDlmQ094cWdPeW9QL0RFYmNERkx5amtmMXpUbmJPdjdLZmZST0lnSW84OXVBNkJlWUxzZmxpcThMU3p4MzVpNzN1aGMyV1Jwc0FBPT0K",
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.4/lulu_4.0.4_x64-setup.exe"
     }
   }
 }

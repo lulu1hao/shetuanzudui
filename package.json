@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "release:template": "node scripts/generate-release.js"
+    "release:template": "node scripts/generate-release.js",
+    "release:validate": "node scripts/validate-update-manifest.js"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.0.0",

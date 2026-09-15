@@ -13,6 +13,32 @@ const rootDir = path.resolve(__dirname, '..')
 const pkgPath = path.join(rootDir, 'package.json')
 const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 const version = pkg.version
+const artifactName = `lulu_${version}_x64-setup.exe`
+const signaturePath = path.join(
+  rootDir,
+  'src-tauri',
+  'target',
+  'release',
+  'bundle',
+  'nsis',
+  `${artifactName}.sig`
+)
+
+if (!fs.existsSync(signaturePath)) {
+  console.error(`❌ 未找到当前版本签名文件: ${signaturePath}`)
+  console.error('请先设置 TAURI_SIGNING_PRIVATE_KEY_PATH 并执行 npm run tauri build。')
+  process.exit(1)
+}
+
+const signature = fs.readFileSync(signaturePath, 'utf-8').trim()
+const signedFile = Buffer.from(signature, 'base64')
+  .toString('utf-8')
+  .match(/file:([^\r\n]+)/)?.[1]
+
+if (signedFile !== artifactName) {
+  console.error(`❌ 签名属于 ${signedFile || '未知文件'}，当前版本安装包应为 ${artifactName}`)
+  process.exit(1)
+}
 
 console.log('====================================================')
 console.log(`🚀 正在为版本 v${version} 生成线上 latest.json 配置模板`)
@@ -24,8 +50,8 @@ const template = {
   pub_date: new Date().toISOString(),
   platforms: {
     "windows-x86_64": {
-      signature: "【请在此处粘贴 src-tauri/target/release/bundle/nsis/*.nsis.zip.sig 文件的内容】",
-      url: `https://your-domain.com/updates/lulu_${version}_x64-setup.nsis.zip`
+      signature,
+      url: `https://github.com/lulu1hao/shetuanzudui/releases/download/v${version}/${artifactName}`
     }
   }
 }
@@ -38,5 +64,6 @@ console.log('\n📝 发布 3 步走简易指引：')
 console.log('1. 执行打包命令：')
 console.log('   $env:TAURI_SIGNING_PRIVATE_KEY_PATH = "src-tauri/lulu.key"')
 console.log('   npm run tauri build')
-console.log('2. 打包完成后，在 src-tauri/target/release/bundle/nsis/ 下找到生成的 .nsis.zip 和 .sig 文件')
-console.log('3. 将 .sig 文件的内容复制填入 latest.template.json 的 signature 字段，并将 .zip 和 .json 上传到服务器/GitHub Releases 即可！\n')
+console.log(`2. 确认 GitHub Release 已上传 ${artifactName}`)
+console.log('3. 修改 latest.template.json 的 notes 后复制为 updates/latest.json')
+console.log('4. 执行 npm run release:validate，通过后再发布更新清单\n')

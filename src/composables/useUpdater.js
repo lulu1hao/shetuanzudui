@@ -20,6 +20,25 @@ const state = reactive({
 
 let updateHandle = null
 
+function getUpdateErrorMessage(error) {
+  const details = error?.message || String(error || '')
+  const normalized = details.toLowerCase()
+
+  if (/signature|verification|public key|invalid key|crypto/.test(normalized)) {
+    return '更新包安全校验失败，请联系开发者重新发布更新包'
+  }
+
+  if (/network|fetch|connection|dns|timed? out|http|download/.test(normalized)) {
+    return '下载更新包失败，请检查网络连接后重试'
+  }
+
+  if (/install|permission|access denied|拒绝访问|os error 5/.test(normalized)) {
+    return '安装更新失败，请关闭占用程序后重试，或以管理员身份运行'
+  }
+
+  return '更新安装失败，请稍后重试'
+}
+
 export function useUpdater() {
   /**
    * 检查线上更新
@@ -85,16 +104,21 @@ export function useUpdater() {
             }
             break
           case 'Finished':
-            state.downloading = false
-            state.isDownloaded = true
             state.progress = 100
             break
         }
       })
+
+      // Finished 事件仅代表下载完成；必须等 downloadAndInstall 整体成功后，
+      // 才能把更新标记为已安装并允许用户重启。
+      state.downloading = false
+      state.isDownloaded = true
+      state.progress = 100
     } catch (err) {
       console.error('[Updater] 下载或安装更新失败:', err)
       state.downloading = false
-      state.error = '下载更新包失败，请检查网络连接后重试'
+      state.isDownloaded = false
+      state.error = getUpdateErrorMessage(err)
     }
   }
 
