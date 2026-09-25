@@ -1,11 +1,11 @@
 {
-  "version": "4.0.4",
-  "notes": "1. 【天梯战绩时序抓取】直连 DavG25 底层时序接口，支持 24h / 7d / 30d / 全赛季历史对局秒级切片与净胜负分（±ΔRS）统计；\n2. 【电竞走势折线升级】统一阶梯折线，彻底优化光标滑动吸附性能（120FPS 丝滑不卡顿），支持点击任意节点放大高亮并展开深度对局透视面板；\n3. 【战队名称官方对齐】活动房间队伍名称与标志色彩全面对齐《THE FINALS》官方战队（THE RETROS 复古队、THE OVERDOGS 狂犬队、THE STEAMROLLERS 压路机队、THE SHOCK & AWE 震慑队）；\n4. 【观战席位轻量化】观战席位宽幅缩减一半，视觉重心深度轻量化，界面层级更加主次分明。",
-  "pub_date": "2026-08-29T20:30:00Z",
+  "version": "4.0.5",
+  "notes": "1. 【Twitch 掉宝自动化挂机】全新上线 Twitch Drops 掉宝模块，自动检测在线掉宝频道，支持静音极低资源流播放、官方掉宝进度精准捕获与奖励自动认领；\n2. 【多账户隔离管理】支持多 Twitch 账户无缝切换与登录态独立隔离，已深度绑定用户名，切换零冲突；\n3. 【网络直连与代理探测】内置 Twitch 网络直连与本地代理 (如 Clash 7890) 连通性测速探针，握手延迟一目了然；\n4. 【全局转场深度优化】重构并统一活动大厅、天梯榜单、装备库及掉宝页面的直角电竞机能转场动效，杜绝界面闪烁，操作体验丝滑一致。",
+  "pub_date": "2026-09-25T15:55:12.549Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU2NnN1AxTXVlaG9QbjBvUGFDdkN5dXJZOG80UWV4d1h1NXFtRytFUkY2ZUFHSEFRZFhSVERQZWFqVWEySFQxNzIrc2lmVzdpTjFnMUlIczFaWUg2dVFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5NDgyNTE0CWZpbGU6bHVsdV80LjAuNF94NjQtc2V0dXAuZXhlCkVwMWlEVVJMbXlSaDlmQ094cWdPeW9QL0RFYmNERkx5amtmMXpUbmJPdjdLZmZST0lnSW84OXVBNkJlWUxzZmxpcThMU3p4MzVpNzN1aGMyV1Jwc0FBPT0K",
-      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.4/lulu_4.0.4_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1o4Vjh2a2MyYTVJMFh1OVp6bTBWRTZDbXdJUTNtVngwcTNuL3d4QmVsZVY1VS9neG9aaG9IaUpxK1VSNEU3QkYzdkUveXIvN2RnMWJZUXZlMC9ES2dnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkwMzUxNjgyCWZpbGU6bHVsdV80LjAuNV94NjQtc2V0dXAuZXhlCmVrV2JVaEl5d3dvM3ZPcWErQ0FkYXZhdWxxb0F6YVV4Q083Wk9YanRaNFNaaUlZV3RDZEJ3ci84elNkTlZEUDJIM1Y1ZXdhU0FKbldoaWdMMTJ6QUJ3PT0K",
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.5/lulu_4.0.5_x64-setup.exe"
     }
   }
 }

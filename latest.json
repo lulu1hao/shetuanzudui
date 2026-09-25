@@ -1,11 +1,11 @@
 {
-  "version": "4.0.1",
-  "notes": "1. 【新增】问题反馈模块上线，添加官方微信号 zy1368921317；\n2. 【优化】主页布局与暗黑红调微光视觉；\n3. 【更新】全线启用商业级在线自动更新机制。",
-  "pub_date": "2026-08-25T14:30:00Z",
+  "version": "4.0.5",
+  "notes": "1. 【Twitch 掉宝自动化挂机】全新上线 Twitch Drops 掉宝模块，自动检测在线掉宝频道，支持静音极低资源流播放、官方掉宝进度精准捕获与奖励自动认领；\n2. 【多账户隔离管理】支持多 Twitch 账户无缝切换与登录态独立隔离，已深度绑定用户名，切换零冲突；\n3. 【网络直连与代理探测】内置 Twitch 网络直连与本地代理 (如 Clash 7890) 连通性测速探针，握手延迟一目了然；\n4. 【全局转场深度优化】重构并统一活动大厅、天梯榜单、装备库及掉宝页面的直角电竞机能转场动效，杜绝界面闪烁，操作体验丝滑一致。",
+  "pub_date": "2026-09-25T15:55:12.549Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1JIWEVVT25uMnhJeHMxSFh3anBEdW1ndUtubmU2dkh3dFVqVUVpa1EwWDJtMU1XakE2ejU5cmhYdlZ1Z3Urdno4eHpRcTk4WEp5eGUybHRHMk93cHc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NjM5Mjg5CWZpbGU6bHVsdV80LjAuMV94NjQtc2V0dXAuZXhlCkxiM0NOT0pVY0hGMGFNbVdSNkI1K2FxOGhGdy9oNk9NMU9lbHF2RUZJK0lsTEJhbm95ZGlQZEVNc2dycG85K2FDdFhXZ2p3dXVUY0NiYklWVGJLSUFBPT0K",
-      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.1/lulu_4.0.1_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1o4Vjh2a2MyYTVJMFh1OVp6bTBWRTZDbXdJUTNtVngwcTNuL3d4QmVsZVY1VS9neG9aaG9IaUpxK1VSNEU3QkYzdkUveXIvN2RnMWJZUXZlMC9ES2dnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkwMzUxNjgyCWZpbGU6bHVsdV80LjAuNV94NjQtc2V0dXAuZXhlCmVrV2JVaEl5d3dvM3ZPcWErQ0FkYXZhdWxxb0F6YVV4Q083Wk9YanRaNFNaaUlZV3RDZEJ3ci84elNkTlZEUDJIM1Y1ZXdhU0FKbldoaWdMMTJ6QUJ3PT0K",
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.5/lulu_4.0.5_x64-setup.exe"
     }
   }
 }
