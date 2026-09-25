@@ -14,3 +14,9 @@ artifacts/
 *-profile-*/
 *.key
 *.key.pub
+.antigravitycli/
+twitch-accounts*.json
+*.tmp
+*.local
+*.sqlite
+*.db

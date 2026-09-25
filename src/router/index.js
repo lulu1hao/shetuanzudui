@@ -4,6 +4,7 @@ import RoomPage from '../pages/room/room.vue'
 import TournamentPage from '../pages/tournament/tournament.vue'
 import LeaderboardPage from '../pages/leaderboard/leaderboard.vue'
 import EquipmentPage from '../pages/equipment/equipment.vue'
+import DropsPage from '../pages/drops/drops.vue'
 
 const routes = [
   {
@@ -34,6 +35,12 @@ const routes = [
     path: '/equipment',
     name: 'equipment',
     component: EquipmentPage,
+    meta: { transition: 'tournament-slide' }
+  },
+  {
+    path: '/drops',
+    name: 'drops',
+    component: DropsPage,
     meta: { transition: 'tournament-slide' }
   }
 ]

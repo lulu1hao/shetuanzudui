@@ -1,12 +1,13 @@
 {
   "name": "lulu",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "type": "module",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "test:drops": "node --test scripts/tests/twitch-drops.test.js",
     "tauri": "tauri",
     "release:template": "node scripts/generate-release.js",
     "release:validate": "node scripts/validate-update-manifest.js"

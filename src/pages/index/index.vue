@@ -235,14 +235,50 @@
               </div>
             </div>
 
+            <!-- THE FINALS 掉宝与挂机中心快捷卡片 -->
+            <div class="room-card glass-panel finals-feature-card finals-drops-card" @click="goToDrops">
+              <div class="room-card-header">
+                <span class="room-name">
+                  THE FINALS 掉宝与挂机中心
+                </span>
+                <div class="room-card-actions">
+                  <span class="room-type-tag tag-finals-live">DROPS AUTO</span>
+                </div>
+              </div>
+              <div class="room-badge finals-feature-badge">
+                <div class="room-mode-row">
+                  <span>WebView2 独立沙箱挂机</span>
+                  <span>独立账户 · 可选低画质与静音</span>
+                </div>
+                <span class="badge-text tournament-badge-text">
+                  官方库存监控 · 自动领取 · 下播轮转
+                </span>
+              </div>
+              <div class="room-info">
+                <div class="info-label-row">
+                  <span class="info-label">挂宝引擎状态</span>
+                  <span class="info-value" style="color: #34d399">● 原生沙箱守护就绪</span>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill progress-tournament-fill" style="width: 100%"></div>
+                </div>
+              </div>
+              <div class="room-footer">
+                <span class="created-time">数据源：Twitch 官方库存页面</span>
+                <button class="enter-btn enter-btn-tournament">
+                  进入挂宝 →
+                </button>
+              </div>
+            </div>
+
             <button class="create-room-tile" @click="showCreateModal" title="创建房间 / 赛事">
               <span>+</span>
             </button>
           </div>
         </template>
 
-        <!-- 问题反馈(与我联系) Tab (Tab 3) -->
-        <template v-else-if="currentLobbyTab === 3">
+        <!-- 问题反馈(与我联系) Tab (Tab 4) -->
+        <template v-else-if="currentLobbyTab === 4">
           <div class="feedback-container glass-panel">
             <div class="feedback-header">
               <div class="feedback-badge">CONTACT & FEEDBACK</div>
@@ -431,6 +467,8 @@ import {
   placeGlobalLuluInLobby,
   resetGlobalLuluState,
   settleLobbyReturnTransition,
+  launchLobbyDisplayTransition,
+  isLobbyTransitioning,
   TOURNAMENT_DISPLAY_REVEAL_DURATION
 } from '../../utils/globalLuluTransition.js'
 
@@ -450,7 +488,7 @@ export default {
     const heroPanel = ref(null)
     const isHeroExpanded = ref(false)
     const currentLobbyTab = ref(0)
-    const lobbyTabs = ['活动 / 赛事大厅', 'THE FINALS 积分查询', '装备', '问题反馈(与我联系)']
+    const lobbyTabs = ['活动 / 赛事大厅', 'THE FINALS 积分查询', '装备', 'Twitch 挂宝', '问题反馈(与我联系)']
     let gsapContext
     let heroTransition
     let tournamentLaunchTimeline
@@ -474,107 +512,36 @@ export default {
     const selectNewRoomMap = (v) => { newRoomMap.value = v }
 
     const goToLeaderboard = () => {
-      if (isNavigatingToTournament) return
-      isNavigatingToTournament = true
-      const navigate = () => router.push('/leaderboard')
-
-      if (reduceMotion || !pageRoot.value || !heroPanel.value) {
-        navigate()
-        return
-      }
-
-      pageRoot.value.classList.add('tournament-launching')
-      heroTransition?.kill()
-
-      const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
-      const profileDock = pageRoot.value.querySelector('.profile-dock')
-      const profileSection = pageRoot.value.querySelector('.profile-section')
-      const mainContentEl = pageRoot.value.querySelector('.main-content')
-      const alignmentY = profileDock && profileSection
-        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
-        : 0
-
-      tournamentLaunchTimeline = gsap.timeline({
-        defaults: { overwrite: 'auto' },
-        onComplete: () => {
-          navigate()
-        }
+      launchLobbyDisplayTransition({
+        router,
+        id: 'leaderboard',
+        path: '/leaderboard',
+        pageRoot: pageRoot.value,
+        heroPanel: heroPanel.value,
+        reduceMotion
       })
-        .call(() => {
-          beginLuluDisplayTransition('leaderboard')
-        }, null, 0)
-        .to(heroPanel.value, {
-          height: expandedHeight,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'height'
-        }, 0)
-        .to(profileDock ? [profileDock] : [], {
-          y: alignmentY,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'transform'
-        }, 0)
-      if (mainContentEl && !reduceMotion) {
-        tournamentLaunchTimeline.to(mainContentEl, {
-          y: 70,
-          autoAlpha: 0,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power2.in'
-        }, 0)
-      }
     }
 
     const goToEquipment = () => {
-      if (isNavigatingToTournament) return
-      isNavigatingToTournament = true
-      const navigate = () => router.push('/equipment')
-
-      if (reduceMotion || !pageRoot.value || !heroPanel.value) {
-        navigate()
-        return
-      }
-
-      pageRoot.value.classList.add('tournament-launching')
-      heroTransition?.kill()
-
-      const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
-      const profileDock = pageRoot.value.querySelector('.profile-dock')
-      const profileSection = pageRoot.value.querySelector('.profile-section')
-      const mainContentEl = pageRoot.value.querySelector('.main-content')
-      const alignmentY = profileDock && profileSection
-        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
-        : 0
-
-      tournamentLaunchTimeline = gsap.timeline({
-        defaults: { overwrite: 'auto' },
-        onComplete: () => {
-          navigate()
-        }
+      launchLobbyDisplayTransition({
+        router,
+        id: 'equipment',
+        path: '/equipment',
+        pageRoot: pageRoot.value,
+        heroPanel: heroPanel.value,
+        reduceMotion
       })
-        .call(() => {
-          beginLuluDisplayTransition('equipment')
-        }, null, 0)
-        .to(heroPanel.value, {
-          height: expandedHeight,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'height'
-        }, 0)
-        .to(profileDock ? [profileDock] : [], {
-          y: alignmentY,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'transform'
-        }, 0)
-      if (mainContentEl && !reduceMotion) {
-        tournamentLaunchTimeline.to(mainContentEl, {
-          y: 70,
-          autoAlpha: 0,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power2.in'
-        }, 0)
-      }
+    }
+
+    const goToDrops = () => {
+      launchLobbyDisplayTransition({
+        router,
+        id: 'drops',
+        path: '/drops',
+        pageRoot: pageRoot.value,
+        heroPanel: heroPanel.value,
+        reduceMotion
+      })
     }
 
     const selectLobbyTab = (idx) => {
@@ -586,8 +553,12 @@ export default {
         goToEquipment()
         return
       }
+      if (idx === 3) {
+        goToDrops()
+        return
+      }
       currentLobbyTab.value = idx
-      if (idx > 3) {
+      if (idx > 4) {
         showToast(`功能“${lobbyTabs[idx]}”正在全力开发中，敬请期待！`, 'none')
       }
     }
@@ -612,7 +583,7 @@ export default {
 
     const { checkForUpdates } = useUpdater()
     const isCheckingUpdate = ref(false)
-    const currentAppVersion = ref(pkg.version || '4.0.4')
+    const currentAppVersion = ref(pkg.version || '4.0.5')
 
     const handleManualCheckUpdate = async () => {
       if (isCheckingUpdate.value) return
@@ -633,7 +604,7 @@ export default {
     }
 
     const syncLobbyMarquee = () => {
-      if (heroPanel.value && !isHeroExpanded.value && !isNavigatingToTournament) {
+      if (heroPanel.value && !isHeroExpanded.value && !isNavigatingToTournament && !isLobbyTransitioning()) {
         placeGlobalLuluInLobby(heroPanel.value)
       }
     }
@@ -872,58 +843,15 @@ export default {
     }
 
     const goToRoom = (room) => {
-      if (isNavigatingToTournament) return
-      isNavigatingToTournament = true
-      const navigate = () => router.push({
+      launchLobbyDisplayTransition({
+        router,
+        id: room.id,
         path: room.type === 'tournament' ? '/tournament' : '/room',
-        query: { id: room.id }
+        query: { id: room.id },
+        pageRoot: pageRoot.value,
+        heroPanel: heroPanel.value,
+        reduceMotion
       })
-
-      if (reduceMotion || !pageRoot.value || !heroPanel.value) {
-        navigate()
-        return
-      }
-
-      pageRoot.value.classList.add('tournament-launching')
-      heroTransition?.kill()
-
-      const expandedHeight = pageRoot.value.clientHeight || window.innerHeight || 500
-      const profileDock = pageRoot.value.querySelector('.profile-dock')
-      const profileSection = pageRoot.value.querySelector('.profile-section')
-      const mainContentEl = pageRoot.value.querySelector('.main-content')
-      const alignmentY = profileDock && profileSection
-        ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
-        : 0
-
-      tournamentLaunchTimeline = gsap.timeline({
-        defaults: { overwrite: 'auto' },
-        onComplete: () => {
-          navigate()
-        }
-      })
-        .call(() => {
-          beginLuluDisplayTransition(room.id)
-        }, null, 0)
-        .to(heroPanel.value, {
-          height: expandedHeight,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'height'
-        }, 0)
-        .to(profileDock ? [profileDock] : [], {
-          y: alignmentY,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut',
-          willChange: 'transform'
-        }, 0)
-      if (mainContentEl && !reduceMotion) {
-        tournamentLaunchTimeline.to(mainContentEl, {
-          y: 70,
-          autoAlpha: 0,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power2.in'
-        }, 0)
-      }
     }
 
     const getRoomPrimaryLabel = (room) => {
@@ -951,7 +879,7 @@ export default {
 
     return {
       rooms, totalMembers, isCreateModalVisible, newRoomName, newRoomType,
-      pageRoot, heroPanel, isHeroExpanded, currentLobbyTab, lobbyTabs, selectLobbyTab, goToLeaderboard, goToEquipment,
+      pageRoot, heroPanel, isHeroExpanded, currentLobbyTab, lobbyTabs, selectLobbyTab, goToLeaderboard, goToEquipment, goToDrops,
       newTeamCount, newRoomMode, newRoomMap, modeOptions, MAPS,
       selectNewRoomType, selectNewTeamCount, selectNewRoomMode, selectNewRoomMap,
       expandHero, collapseHero, handleHeroWheel,

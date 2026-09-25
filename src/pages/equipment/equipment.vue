@@ -872,16 +872,7 @@ import {
   PRESET_LOADOUTS
 } from '../../utils/theFinalsEquipmentApi.js'
 import { useToast } from '../../composables/useToast.js'
-import {
-  beginLobbyReturnTransition,
-  hasLuluDisplayTransition,
-  prepareLuluDisplayArrival,
-  clearLuluDisplayArrivalStyles,
-  placeGlobalLuluInDisplayTarget,
-  settleLuluDisplayTransition,
-  animateDisplayHeaderCopy,
-  TOURNAMENT_DISPLAY_REVEAL_DURATION
-} from '../../utils/globalLuluTransition.js'
+import { useHudPageTransition } from '../../utils/globalLuluTransition.js'
 
 export default {
   setup() {
@@ -890,10 +881,14 @@ export default {
     const { showToast } = useToast()
 
     const equipmentRootRef = ref(null)
-    const isEquipmentArrival = ref(false)
-    let isReturningToLobby = false
-    let lobbyReturnTimeline = null
-    let entranceTimer = null
+
+    // 使用统一转场 Composable
+    const { isArrival: isEquipmentArrival, goBack } = useHudPageTransition({
+      id: 'equipment',
+      rootRef: equipmentRootRef,
+      bodySelector: '.equipment-body-scroll',
+      router
+    })
 
     // 主选项卡 (无 Emoji)
     const mainTabs = [
@@ -1297,95 +1292,12 @@ export default {
       if (navigator.onLine) {
         syncEquipmentFromWiki().catch(() => {})
       }
-
-      isEquipmentArrival.value = hasLuluDisplayTransition('equipment')
-      if (isEquipmentArrival.value) {
-        prepareLuluDisplayArrival({ target: 'equipment', root: equipmentRootRef.value })
-      }
-
-      entranceTimer = setTimeout(() => {
-        if (isEquipmentArrival.value) {
-          settleLuluDisplayTransition({
-            id: 'equipment',
-            target: 'equipment',
-            root: equipmentRootRef.value,
-            onComplete: () => {
-              isEquipmentArrival.value = false
-              nextTick(() => {
-                clearLuluDisplayArrivalStyles({ target: 'equipment', root: equipmentRootRef.value })
-                placeGlobalLuluInDisplayTarget(equipmentRootRef.value, { target: 'equipment' })
-              })
-            }
-          })
-          animateDisplayHeaderCopy(equipmentRootRef.value, { arrival: true })
-          gsap.fromTo('.equipment-body-scroll',
-            { autoAlpha: 0, y: 20 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-              ease: 'power3.out',
-              delay: 0.08,
-              clearProps: 'transform'
-            }
-          )
-        } else {
-          isEquipmentArrival.value = false
-          placeGlobalLuluInDisplayTarget(equipmentRootRef.value, { target: 'equipment' })
-          animateDisplayHeaderCopy(equipmentRootRef.value, { arrival: false })
-          gsap.fromTo('.equipment-body-scroll',
-            { autoAlpha: 0, y: 15 },
-            { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out', clearProps: 'transform' }
-          )
-        }
-      }, 70)
     })
 
     onUnmounted(() => {
       window.removeEventListener('online', updateOnlineStatus)
       window.removeEventListener('offline', updateOnlineStatus)
-      if (entranceTimer) clearTimeout(entranceTimer)
-      lobbyReturnTimeline?.kill()
     })
-
-    const goBack = () => {
-      if (isReturningToLobby) return
-      const navigateHome = () => router.push('/')
-      const root = equipmentRootRef.value
-      const header = root?.querySelector('.hud-header')
-      const headerLeft = root?.querySelector('.header-left')
-      const headerRight = root?.querySelector('.header-right')
-      root?.classList.add('tournament-leaving')
-
-      isReturningToLobby = true
-      let transitionStarted = false
-      lobbyReturnTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
-        .call(() => {
-          transitionStarted = beginLobbyReturnTransition('equipment')
-          if (!transitionStarted) navigateHome()
-        }, null, 0)
-        .to(headerLeft ? [headerLeft] : [], {
-          xPercent: -105,
-          autoAlpha: 0,
-          duration: 0.4,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(headerRight ? [headerRight] : [], {
-          xPercent: 105,
-          autoAlpha: 0,
-          duration: 0.4,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(header ? [header] : [], {
-          height: root?.clientHeight || window.innerHeight,
-          minHeight: root?.clientHeight || window.innerHeight,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut'
-        }, 0)
-        .call(() => {
-          if (transitionStarted) navigateHome()
-        }, null, TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
-    }
 
     // 卡片 mini 状态紧凑格式化（防止近战/多段伤害撑爆卡片）
     const formatCardMiniDamage = (item) => {

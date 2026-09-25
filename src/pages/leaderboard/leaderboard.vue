@@ -332,16 +332,7 @@ import {
   queryPlayerProfile
 } from '../../utils/theFinalsApi.js'
 import { useToast } from '../../composables/useToast.js'
-import {
-  beginLobbyReturnTransition,
-  hasLuluDisplayTransition,
-  prepareLuluDisplayArrival,
-  clearLuluDisplayArrivalStyles,
-  placeGlobalLuluInDisplayTarget,
-  settleLuluDisplayTransition,
-  animateDisplayHeaderCopy,
-  TOURNAMENT_DISPLAY_REVEAL_DURATION
-} from '../../utils/globalLuluTransition.js'
+import { useHudPageTransition } from '../../utils/globalLuluTransition.js'
 
 export default {
   components: {
@@ -355,10 +346,14 @@ export default {
     const sampleNames = ['Ace#1301', 'Martás', 'GojoSatoru#1613', 'Shroud', 'FizzyEgg#3201', 'ZHORA']
 
     const leaderboardRootRef = ref(null)
-    const isLeaderboardArrival = ref(false)
-    let isReturningToLobby = false
-    let lobbyReturnTimeline = null
-    let entranceTimer = null
+
+    // 使用统一转场 Composable
+    const { isArrival: isLeaderboardArrival, goBack } = useHudPageTransition({
+      id: 'leaderboard',
+      rootRef: leaderboardRootRef,
+      bodySelector: '.leaderboard-body-scroll',
+      router
+    })
 
     const selectedSeason = ref('s11')
     const selectedMode = ref('ranked')
@@ -559,94 +554,7 @@ export default {
     onMounted(() => {
       refreshFavorites()
       loadTopLeaderboardData()
-      isLeaderboardArrival.value = hasLuluDisplayTransition('leaderboard')
-
-      if (isLeaderboardArrival.value) {
-        prepareLuluDisplayArrival({ target: 'leaderboard', root: leaderboardRootRef.value })
-      }
-
-      entranceTimer = setTimeout(() => {
-        if (isLeaderboardArrival.value) {
-          settleLuluDisplayTransition({
-            id: 'leaderboard',
-            target: 'leaderboard',
-            root: leaderboardRootRef.value,
-            onComplete: () => {
-              isLeaderboardArrival.value = false
-              nextTick(() => {
-                clearLuluDisplayArrivalStyles({ target: 'leaderboard', root: leaderboardRootRef.value })
-                placeGlobalLuluInDisplayTarget(leaderboardRootRef.value, { target: 'leaderboard' })
-              })
-            }
-          })
-          animateDisplayHeaderCopy(leaderboardRootRef.value, { arrival: true })
-          gsap.fromTo('.leaderboard-body-scroll',
-            { autoAlpha: 0, y: 20 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-              ease: 'power3.out',
-              delay: 0.08,
-              clearProps: 'transform'
-            }
-          )
-        } else {
-          isLeaderboardArrival.value = false
-          placeGlobalLuluInDisplayTarget(leaderboardRootRef.value, { target: 'leaderboard' })
-          animateDisplayHeaderCopy(leaderboardRootRef.value, { arrival: false })
-          gsap.fromTo('.leaderboard-body-scroll',
-            { autoAlpha: 0, y: 15 },
-            { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power2.out', clearProps: 'transform' }
-          )
-        }
-      }, 70)
     })
-
-    onUnmounted(() => {
-      if (entranceTimer) clearTimeout(entranceTimer)
-      lobbyReturnTimeline?.kill()
-    })
-
-    const goBack = () => {
-      if (isReturningToLobby) return
-
-      const navigateHome = () => router.push('/')
-      const root = leaderboardRootRef.value
-      const header = root?.querySelector('.hud-header')
-      const headerLeft = root?.querySelector('.header-left')
-      const headerRight = root?.querySelector('.header-right')
-      root?.classList.add('tournament-leaving')
-
-      isReturningToLobby = true
-      let transitionStarted = false
-      lobbyReturnTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
-        .call(() => {
-          transitionStarted = beginLobbyReturnTransition('leaderboard')
-          if (!transitionStarted) navigateHome()
-        }, null, 0)
-        .to(headerLeft ? [headerLeft] : [], {
-          xPercent: -105,
-          autoAlpha: 0,
-          duration: 0.4,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(headerRight ? [headerRight] : [], {
-          xPercent: 105,
-          autoAlpha: 0,
-          duration: 0.4,
-          ease: 'power3.inOut'
-        }, 0)
-        .to(header ? [header] : [], {
-          height: root?.clientHeight || window.innerHeight,
-          minHeight: root?.clientHeight || window.innerHeight,
-          duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
-          ease: 'power3.inOut'
-        }, 0)
-        .call(() => {
-          if (transitionStarted) navigateHome()
-        }, null, TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
-    }
 
     return {
       leaderboardRootRef, isLeaderboardArrival, goBack,

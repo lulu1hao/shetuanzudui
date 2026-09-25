@@ -1,4 +1,5 @@
 import { gsap } from 'gsap'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 
 const NORMAL_DURATION = 156
 const LAUNCH_TIMESCALE = 3
@@ -13,6 +14,7 @@ let pendingLayout = null
 let displayTransitionId = null
 let activeDisplayReturnId = null
 let returningToLobby = false
+let isLobbyLaunching = false
 
 const DISPLAY_TARGETS = {
   tournament: {
@@ -31,6 +33,11 @@ const DISPLAY_TARGETS = {
     settledHeight: 112
   },
   equipment: {
+    mode: 'tournament',
+    selector: '.hud-header',
+    settledHeight: 112
+  },
+  drops: {
     mode: 'tournament',
     selector: '.hud-header',
     settledHeight: 112
@@ -56,7 +63,7 @@ const getLayoutRect = (element) => {
   return {
     left,
     top,
-    width: element.offsetWidth,
+    width: element.offsetWidth || appContent.offsetWidth,
     height: element.offsetHeight
   }
 }
@@ -182,6 +189,7 @@ export const registerGlobalLuluMarquee = ({ viewport, word, groups }) => {
 }
 
 export const resetGlobalLuluState = () => {
+  isLobbyLaunching = false
   displayTransitionId = null
   activeDisplayReturnId = null
   returningToLobby = false
@@ -444,7 +452,7 @@ export const animateDisplayHeaderCopy = (root, { arrival = false, duration } = {
 }
 
 export const placeGlobalLuluInDisplayTarget = (root, { target, duration = 0 } = {}) => {
-  const config = DISPLAY_TARGETS[target]
+  const config = DISPLAY_TARGETS[target] || DISPLAY_TARGETS.leaderboard
   if (!config) return false
   const header = root?.querySelector(config.selector)
   const rect = getLayoutRect(header)
@@ -459,11 +467,223 @@ export const placeGlobalLuluInDisplayTarget = (root, { target, duration = 0 } = 
     left: rect.left,
     top: rect.top,
     width: rect.width,
-    height: rect.height,
+    height: config.settledHeight || rect.height || 112,
     fontSize: 138,
     lineHeight: 0.82,
     skewX: -5,
     wordY: 0,
     wordOpacity: 1
   }, { duration, timeScale: 1 })
+}
+
+/**
+ * 查询大厅是否正在执行转场启动动画
+ */
+export const isLobbyTransitioning = () => isLobbyLaunching
+
+/**
+ * 通用大厅离开转场动画（供 index.vue 复用，统一所有子页面跳转效果）
+ */
+export const launchLobbyDisplayTransition = ({
+  router,
+  id,
+  path,
+  query,
+  pageRoot,
+  heroPanel,
+  reduceMotion = false,
+  onComplete
+}) => {
+  if (isLobbyLaunching) return false
+  isLobbyLaunching = true
+
+  const navigate = () => {
+    isLobbyLaunching = false
+    if (query) {
+      router.push({ path, query })
+    } else {
+      router.push(path)
+    }
+  }
+
+  if (reduceMotion || !pageRoot || !heroPanel) {
+    navigate()
+    return true
+  }
+
+  pageRoot.classList.add('tournament-launching')
+
+  const expandedHeight = pageRoot.clientHeight || window.innerHeight || 500
+  const profileDock = pageRoot.querySelector('.profile-dock')
+  const profileSection = pageRoot.querySelector('.profile-section')
+  const mainContentEl = pageRoot.querySelector('.main-content')
+  const alignmentY = profileDock && profileSection
+    ? profileSection.getBoundingClientRect().top - profileDock.getBoundingClientRect().top
+    : 0
+
+  const timeline = gsap.timeline({
+    defaults: { overwrite: 'auto' },
+    onComplete: () => {
+      navigate()
+      onComplete?.()
+    }
+  })
+    .call(() => {
+      beginLuluDisplayTransition(id)
+    }, null, 0)
+    .to(heroPanel, {
+      height: expandedHeight,
+      duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+      ease: 'power3.inOut',
+      willChange: 'height'
+    }, 0)
+    .to(profileDock ? [profileDock] : [], {
+      y: alignmentY,
+      duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+      ease: 'power3.inOut',
+      willChange: 'transform'
+    }, 0)
+
+  if (mainContentEl && !reduceMotion) {
+    timeline.to(mainContentEl, {
+      y: 70,
+      autoAlpha: 0,
+      duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+      ease: 'power2.in'
+    }, 0)
+  }
+
+  return timeline
+}
+
+/**
+ * 通用 HUD 页面转场生命周期 Composable
+ * 供 leaderboard, equipment, drops 等所有子页面无感复用，绝不出现生命周期时序错乱。
+ */
+export function useHudPageTransition({
+  id,
+  target = id,
+  rootRef,
+  bodySelector,
+  router,
+  delay = 70,
+  onArrivalComplete
+}) {
+  const isArrival = ref(false)
+  let entranceTimer = null
+  let lobbyReturnTimeline = null
+  let isReturningToLobby = false
+
+  // 1. 同步进行转场准备：在 onMounted 时同步检测并设置展开态，彻底杜绝任何 async 造成的闪烁或尺寸计算错误
+  onMounted(() => {
+    const hasTransition = hasLuluDisplayTransition(id)
+    isArrival.value = hasTransition
+
+    if (hasTransition) {
+      prepareLuluDisplayArrival({ target, root: rootRef.value })
+    }
+
+    entranceTimer = setTimeout(() => {
+      const root = rootRef.value
+      if (!root) return
+
+      if (isArrival.value) {
+        settleLuluDisplayTransition({
+          id,
+          target,
+          root,
+          onComplete: () => {
+            isArrival.value = false
+            nextTick(() => {
+              clearLuluDisplayArrivalStyles({ target, root })
+              placeGlobalLuluInDisplayTarget(root, { target })
+              onArrivalComplete?.()
+            })
+          }
+        })
+        animateDisplayHeaderCopy(root, { arrival: true })
+        if (bodySelector) {
+          gsap.fromTo(bodySelector,
+            { autoAlpha: 0, y: 20 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+              ease: 'power3.out',
+              delay: 0.08,
+              clearProps: 'transform'
+            }
+          )
+        }
+      } else {
+        isArrival.value = false
+        placeGlobalLuluInDisplayTarget(root, { target })
+        animateDisplayHeaderCopy(root, { arrival: false })
+        if (bodySelector) {
+          gsap.fromTo(bodySelector,
+            { autoAlpha: 0, y: 15 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.35,
+              ease: 'power2.out',
+              clearProps: 'transform'
+            }
+          )
+        }
+        onArrivalComplete?.()
+      }
+    }, delay)
+  })
+
+  onUnmounted(() => {
+    if (entranceTimer) clearTimeout(entranceTimer)
+    lobbyReturnTimeline?.kill()
+  })
+
+  const goBack = () => {
+    if (isReturningToLobby) return
+    isReturningToLobby = true
+
+    const navigateHome = () => router.push('/')
+    const root = rootRef.value
+    const config = DISPLAY_TARGETS[target] || DISPLAY_TARGETS.leaderboard
+    const header = root?.querySelector(config.selector)
+    const headerLeft = root?.querySelector('.header-left')
+    const headerRight = root?.querySelector('.header-right')
+    root?.classList.add('tournament-leaving')
+
+    let transitionStarted = false
+    lobbyReturnTimeline = gsap.timeline({ defaults: { overwrite: 'auto' } })
+      .call(() => {
+        transitionStarted = beginLobbyReturnTransition(id)
+        if (!transitionStarted) navigateHome()
+      }, null, 0)
+      .to(headerLeft ? [headerLeft] : [], {
+        xPercent: -105,
+        autoAlpha: 0,
+        duration: 0.4,
+        ease: 'power3.inOut'
+      }, 0)
+      .to(headerRight ? [headerRight] : [], {
+        xPercent: 105,
+        autoAlpha: 0,
+        duration: 0.4,
+        ease: 'power3.inOut'
+      }, 0)
+      .to(header ? [header] : [], {
+        height: root?.clientHeight || window.innerHeight,
+        minHeight: root?.clientHeight || window.innerHeight,
+        duration: TOURNAMENT_DISPLAY_REVEAL_DURATION,
+        ease: 'power3.inOut'
+      }, 0)
+      .call(() => {
+        if (transitionStarted) navigateHome()
+      }, null, TOURNAMENT_DISPLAY_REVEAL_DURATION + 0.04)
+  }
+
+  return {
+    isArrival,
+    goBack
+  }
 }
