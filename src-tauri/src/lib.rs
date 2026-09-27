@@ -3,6 +3,7 @@ use std::net::{TcpStream, ToSocketAddrs};
 use std::time::{Duration, Instant};
 use tauri::Manager;
 mod twitch_drops;
+mod equipment_wiki;
 
 #[tauri::command]
 async fn test_twitch_network(
@@ -193,6 +194,7 @@ pub fn run() {
       twitch_drops::refresh_twitch_miner_state,
       twitch_drops::close_twitch_miner_window,
       test_twitch_network,
+      equipment_wiki::fetch_equipment_wiki,
     ])
     .setup(|app| {
       if let Some(main_window) = app.get_webview_window("main") {

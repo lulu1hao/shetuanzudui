@@ -1,6 +1,6 @@
 {
   "name": "lulu",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "type": "module",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:drops": "node --test scripts/tests/twitch-drops.test.js",
+    "test:equipment": "node --test scripts/tests/equipment-wiki.test.js scripts/tests/weapon-combat.test.js",
     "tauri": "tauri",
     "release:template": "node scripts/generate-release.js",
     "release:validate": "node scripts/validate-update-manifest.js"

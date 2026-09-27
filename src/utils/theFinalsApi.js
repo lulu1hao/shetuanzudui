@@ -207,8 +207,6 @@ async function fetchWithTimeout(url, timeoutMs = DEFAULT_TIMEOUT_MS) {
       }
     })
 
-    clearTimeout(timeoutId)
-
     if (!response.ok) {
       if (response.status === 404) {
         throw new FinalsQueryError(
@@ -226,14 +224,20 @@ async function fetchWithTimeout(url, timeoutMs = DEFAULT_TIMEOUT_MS) {
     cacheStore.set(url, { timestamp: Date.now(), data })
     return data
   } catch (err) {
-    clearTimeout(timeoutId)
-
     if (err instanceof FinalsQueryError) throw err
 
-    if (err.name === 'AbortError') {
+    if (err?.name === 'AbortError') {
       throw new FinalsQueryError(
         FinalsErrorType.NETWORK_ERROR,
         '连接超时：战绩服务位于海外 Cloudflare 节点，请检查网络或开启代理后重试',
+        err
+      )
+    }
+
+    if (err instanceof SyntaxError) {
+      throw new FinalsQueryError(
+        FinalsErrorType.SERVER_ERROR,
+        '天梯数据格式异常，请稍后重试',
         err
       )
     }
@@ -243,6 +247,9 @@ async function fetchWithTimeout(url, timeoutMs = DEFAULT_TIMEOUT_MS) {
       '战绩服务位于海外节点，连接失败。请检查网络或开启本地代理后重试',
       err
     )
+  } finally {
+    // 超时必须覆盖响应体下载和 JSON 解析，不能只覆盖响应头。
+    clearTimeout(timeoutId)
   }
 }
 
@@ -360,34 +367,24 @@ export async function queryPlayerProfile(exactEmbarkName) {
 }
 
 /**
- * 4. 获取排行榜 Top 数据列表 (包含网络容错与默认顶尖数据)
+ * 4. 获取排行榜 Top 数据列表
  */
 export async function fetchLeaderboardTop(seasonKey = 's11', modeKey = 'ranked', platform = 'crossplay', count = 10) {
   const lbId = buildLeaderboardId(seasonKey, modeKey)
   const url = `${API_BASE_URL}/v1/leaderboard/${lbId}/${platform}`
 
-  try {
-    const rawData = await fetchWithTimeout(url, 6000)
-    const list = Array.isArray(rawData) ? rawData : (Array.isArray(rawData?.data) ? rawData.data : [])
-    if (list && list.length > 0) {
-      return list.slice(0, count).map(item => normalizeLeaderboardItem(item, modeKey))
-    }
-  } catch (err) {
-    // 降级使用顶尖天梯数据
+  // 完整 Top 10K 响应体较大，为代理或跨境网络预留足够下载时间。
+  const rawData = await fetchWithTimeout(url, 15000)
+  const list = Array.isArray(rawData) ? rawData : (Array.isArray(rawData?.data) ? rawData.data : [])
+
+  if (!list.length) {
+    throw new FinalsQueryError(
+      FinalsErrorType.SERVER_ERROR,
+      '天梯数据服务返回了空榜单，请稍后重试'
+    )
   }
 
-  const fallbackTop = [
-    { rank: 1, name: 'Ace#1301', league: 'Ruby', leagueNumber: 24, rankScore: 58742, change: 0, region: '亚洲 / Crossplay', steamName: 'Ace' },
-    { rank: 2, name: 'Martás', league: 'Ruby', leagueNumber: 24, rankScore: 57321, change: 0, region: '欧洲 / Crossplay', steamName: 'Martás' },
-    { rank: 3, name: 'GojoSatoru#1613', league: 'Ruby', leagueNumber: 24, rankScore: 56908, change: 1, region: '亚洲 / Crossplay', steamName: 'Gojo Satoru' },
-    { rank: 4, name: 'Shroud', league: 'Diamond 1', leagueNumber: 23, rankScore: 41276, change: -1, region: '北美 / Crossplay', steamName: 'shroud' },
-    { rank: 5, name: 'FizzyEgg#3201', league: 'Diamond 2', leagueNumber: 22, rankScore: 39820, change: 2, region: '欧洲 / Crossplay', steamName: 'FizzyEgg' },
-    { rank: 6, name: 'ZHORA', league: 'Diamond 2', leagueNumber: 22, rankScore: 38910, change: -2, region: '亚洲 / Crossplay', steamName: 'ZHORA' },
-    { rank: 7, name: 'balise#2431', league: 'Diamond 3', leagueNumber: 21, rankScore: 37450, change: 3, region: '北美 / Crossplay', steamName: 'balise' },
-    { rank: 8, name: 'Vortex#8812', league: 'Diamond 4', leagueNumber: 20, rankScore: 36120, change: 0, region: '欧洲 / Crossplay', steamName: 'Vortex' }
-  ]
-
-  return fallbackTop.map(item => normalizeLeaderboardItem(item, modeKey))
+  return list.slice(0, count).map(item => normalizeLeaderboardItem(item, modeKey))
 }
 
 /**

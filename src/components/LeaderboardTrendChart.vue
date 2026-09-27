@@ -5,12 +5,11 @@
       <div class="chart-title-group">
         <div class="chart-badge">
           <span class="pulse-red-dot"></span>
-          <span class="chart-eyebrow">DAVG25 CLOUD TIMELINE · 战绩时序历史</span>
+          <span class="chart-eyebrow">CLOUD TIMELINE · 战绩时序历史</span>
         </div>
         <h3 class="chart-player-heading">
           {{ playerName }} · 历史积分走势
           <span class="curr-score-tag">{{ latestScoreFormatted }} {{ scoreUnit }}</span>
-          <span v-if="dataSourceBadge" class="source-badge">{{ dataSourceBadge }}</span>
         </h3>
       </div>
 
@@ -36,7 +35,7 @@
           class="sync-btn"
           :disabled="loading"
           @click="loadHistoryData(true)"
-          title="重新从 DavG25 抓取最新全量时序数据"
+          title="重新同步最新时序数据"
         >
           <span v-if="loading" class="btn-spinner-mini"></span>
           <span v-else>↻ 抓取同步</span>
@@ -81,7 +80,7 @@
     <!-- 加载态骨架 -->
     <div v-if="loading && displayPoints.length === 0" class="chart-loading-overlay">
       <div class="radar-mini-spinner"></div>
-      <span>正在从 DavG25 云端抓取 [{{ playerName }}] 全赛季时序战绩...</span>
+      <span>正在同步 [{{ playerName }}] 历史时序战绩...</span>
     </div>
 
     <!-- SVG 高清图表主体 -->
@@ -267,9 +266,6 @@
               <span>段位: </span><strong :style="{ color: hoveredPoint.leagueInfo?.color || '#ff2a55' }">{{ hoveredPoint.leagueName }}</strong>
             </div>
           </div>
-          <div class="tooltip-tip-row">
-            <span>💡 点击该节点查看完整对局明细</span>
-          </div>
         </div>
       </div>
 
@@ -438,7 +434,7 @@ export default {
           allSeasonPoints.value = result.allPoints
           isFromDavG25.value = true
           if (forceRefresh) {
-            showToast(`已从 DavG25 成功同步 ${result.allPoints.length} 条全赛季对局打点`, 'success')
+            showToast(`已成功同步 ${result.allPoints.length} 条全赛季对局打点`, 'success')
           }
         } else if (result && result.points && result.points.length > 0) {
           allSeasonPoints.value = result.points
@@ -450,7 +446,7 @@ export default {
         // 2. 降级使用本地 LocalStorage 快照
         fallbackToLocalSnapshots()
         if (forceRefresh) {
-          showToast(err.message || 'DavG25 暂无该玩家公开历史，已展示本地记录', 'none')
+          showToast(err.message || '暂无该玩家历史公开打点，已展示本地记录', 'none')
         }
       } finally {
         loading.value = false
@@ -487,7 +483,7 @@ export default {
         }
       })
 
-      emptyStateMessage.value = '该玩家在 DavG25 上暂无历史公开打点，已启用本地实时战绩追踪。'
+      emptyStateMessage.value = '该玩家暂无历史公开打点，已启用本地实时战绩追踪。'
     }
 
     watch(() => props.playerName, () => {
@@ -541,13 +537,6 @@ export default {
       const pts = displayPoints.value
       const lastScore = pts.length > 0 ? pts[pts.length - 1].points : (Number(props.currentScore) || 0)
       return Number(lastScore).toLocaleString()
-    })
-
-    const dataSourceBadge = computed(() => {
-      if (isFromDavG25.value) {
-        return `DavG25 全量时序 (${displayPoints.value.length} 节点)`
-      }
-      return '本地快照'
     })
 
     // 统计指标计算 (最高峰值、最低谷值、净胜负分、升降场次)
@@ -809,7 +798,6 @@ export default {
       timeTabs,
       displayPoints,
       latestScoreFormatted,
-      dataSourceBadge,
       emptyStateMessage,
       isFavorite,
       stats,

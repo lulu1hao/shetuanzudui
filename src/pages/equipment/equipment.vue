@@ -13,17 +13,18 @@
       </div>
 
       <div class="header-right">
-        <!-- 模块切换 (百科 / 枪械对比 / 配装器 / 热门推荐) -->
+        <!-- 模块切换 (百科 / 枪械对比 / 配装实验室) -->
         <div class="hud-tab-switcher">
           <button
             v-for="tab in mainTabs"
             :key="tab.key"
             type="button"
             class="hud-tab-btn"
-            :class="{ active: currentMainTab === tab.key }"
-            @click="currentMainTab = tab.key"
+            :class="{ active: currentMainTab === tab.key, 'is-locked': tab.locked }"
+            @click="handleTabClick(tab)"
           >
             <span>{{ tab.label }}</span>
+            <span v-if="tab.locked" class="tab-lock-badge">未开发完全</span>
             <span v-if="tab.key === 'compare' && compareWeaponList.length" class="tab-count-badge">
               {{ compareWeaponList.length }}/3
             </span>
@@ -31,9 +32,9 @@
         </div>
 
         <!-- Wiki 同步状态 -->
-        <div class="wiki-sync-box" :title="`上次同步: ${formatSyncTime(lastSyncTime)}`">
+        <div class="wiki-sync-box" :title="syncDetails">
           <div class="sync-status-indicator">
-            <span class="pulse-dot" :class="{ green: isOnline && !isSyncing, yellow: isSyncing, gray: !isOnline }"></span>
+            <span class="pulse-dot" :class="{ green: isOnline && syncState.phase === 'success', yellow: isSyncing || ['error', 'partial'].includes(syncState.phase), gray: !isOnline || syncState.phase === 'idle' }"></span>
             <span class="sync-status-text">{{ syncStatusLabel }}</span>
           </div>
           <button
@@ -65,9 +66,26 @@
           </div>
           <div class="equipment-stats-badge">
             <span class="pulse-dot"></span>
-            <span>全职业（轻型/中型/重型）数据源自 THE FINALS Wiki 官方实测</span>
+            <span>THE FINALS 社区 Wiki · 联网自动检查数值</span>
           </div>
         </section>
+
+        <details class="wiki-sync-report">
+          <summary>{{ syncStatusLabel }} · 同步详情</summary>
+          <p>运行期间每 30 分钟自动检查；恢复联网时重试。数值更新无需重新安装应用。Wiki 未提供的参数显示 —。</p>
+          <p>最近全量检查成功：{{ formatSyncTime(lastSyncTime) }}</p>
+          <p v-if="syncState.storageError">{{ syncState.storageError }}</p>
+          <p v-if="syncState.phase === 'success'">本次 {{ syncState.updatedCount }} 件装备有数值变化。</p>
+          <ul v-if="syncState.errors.length">
+            <li v-for="error in syncState.errors" :key="error.id || error.message">{{ error.name }}：{{ error.message }}</li>
+          </ul>
+          <ul v-if="syncState.changes.length">
+            <li v-for="change in syncState.changes" :key="change.id">
+              {{ change.name }}：
+              <span v-for="(field, index) in change.fields" :key="field.field">{{ index ? '；' : '' }}{{ EQUIPMENT_STAT_LABELS[field.field] || (field.field === 'combat' ? '攻击时序' : '击杀表') }} {{ field.before }} → {{ field.after }}</span>
+            </li>
+          </ul>
+        </details>
 
         <!-- ========================================================= -->
         <!-- 模块 1：军械库百科 (ARMORY ENCYCLOPEDIA) -->
@@ -128,8 +146,8 @@
                 <span class="sort-label">SORT</span>
                 <select v-model="selectedSortBy" class="sort-select-control">
                   <option value="default">默认推荐</option>
-                  <option value="damage">单发伤害 (高到低)</option>
-                  <option value="dps">秒伤 DPS (高到低)</option>
+                  <option value="damage">默认模式伤害 (高到低)</option>
+                  <option value="dps">默认模式 DPS (高到低)</option>
                   <option value="name">名称字母 (A-Z)</option>
                 </select>
               </div>
@@ -191,7 +209,7 @@
                 <div class="equip-info-box">
                   <div class="equip-name-row">
                     <span class="equip-title">{{ item.name }}</span>
-                    <span class="equip-role">{{ item.role }}</span>
+                    <span class="equip-role">{{ item.wiki ? 'Wiki · ' + formatSyncTime(item.wiki.checkedAt) : item.role }}</span>
                   </div>
                   <span class="equip-zh-sub">{{ item.nameZh }}</span>
                 </div>
@@ -203,8 +221,8 @@
                     <strong class="stat-val" :title="item.stats?.damage">{{ formatCardMiniDamage(item) }}</strong>
                   </div>
                   <div v-if="item.category === 'weapons'" class="mini-stat-cell">
-                    <span class="stat-lbl">DPS</span>
-                    <strong class="stat-val stat-highlight">{{ item.stats?.dps || '—' }}</strong>
+                    <span class="stat-lbl">默认模式 DPS</span>
+                    <strong class="stat-val stat-highlight" :title="getWeaponDpsSummary(item).mode + ' · 不含完整换弹'">{{ getWeaponDpsSummary(item).text }}</strong>
                   </div>
                   <div v-if="item.category === 'weapons'" class="mini-stat-cell">
                     <span class="stat-lbl">弹匣</span>
@@ -213,7 +231,7 @@
 
                   <div v-if="item.category !== 'weapons'" class="mini-stat-cell full-width-stat">
                     <span class="stat-lbl">冷却 / 充能</span>
-                    <strong class="stat-val">{{ item.stats?.cooldown || '—' }} ({{ item.stats?.charges || 1 }}次)</strong>
+                    <strong class="stat-val" :title="item.stats?.cooldown">{{ item.stats?.cooldown || '—' }}<template v-if="item.stats?.charges && item.stats.charges !== '—'"> ({{ item.stats.charges }} 次)</template></strong>
                   </div>
                 </div>
 
@@ -247,118 +265,27 @@
 
                 <!-- 简要定位说明 -->
                 <div class="inspector-quote-box">
-                  <p class="quote-text">{{ activeInspectorItem.descZh || activeInspectorItem.description }}</p>
+                  <p class="quote-text">{{ activeInspectorItem.wiki ? (activeInspectorItem.wiki.summary || '以当前 Wiki 参数为准。') : (activeInspectorItem.descZh || activeInspectorItem.description) }}</p>
                 </div>
 
-                <!-- ================= 1. WIKI 官方标准击杀数据表 (DAMAGE PROFILE) ================= -->
-                <div v-if="activeInspectorItem.category === 'weapons'" class="inspector-wiki-profile-section">
-                  <div class="profile-section-head">
-                    <span class="matrix-title">WIKI 击杀数据档案 (DAMAGE PROFILE)</span>
-                    <span class="ttk-subtitle">基于社区实测与游戏内帧率</span>
-                  </div>
+                <WeaponCombatPanel v-if="activeInspectorItem.category === 'weapons'" :weapon="activeInspectorItem" />
 
-                  <table class="wiki-table-matrix">
-                    <thead>
-                      <tr>
-                        <th class="th-part">部位</th>
-                        <th class="th-target th-light">轻型 (150 HP)</th>
-                        <th class="th-target th-medium">中型 (250 HP)</th>
-                        <th class="th-target th-heavy">重型 (350 HP)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- 爆头行 -->
-                      <tr>
-                        <td class="td-part text-gold">全爆头 (Head)</td>
-                        <td class="td-target">
-                          <div class="dmg-cell">
-                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'head', 'light') }}</span>
-                            <strong class="cell-ttk text-gold">{{ getWeaponProfileTTK(activeInspectorItem, 'head', 'light') }}</strong>
-                          </div>
-                        </td>
-                        <td class="td-target">
-                          <div class="dmg-cell">
-                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'head', 'medium') }}</span>
-                            <strong class="cell-ttk text-gold">{{ getWeaponProfileTTK(activeInspectorItem, 'head', 'medium') }}</strong>
-                          </div>
-                        </td>
-                        <td class="td-target">
-                          <div class="dmg-cell">
-                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'head', 'heavy') }}</span>
-                            <strong class="cell-ttk text-gold">{{ getWeaponProfileTTK(activeInspectorItem, 'head', 'heavy') }}</strong>
-                          </div>
-                        </td>
-                      </tr>
-                      <!-- 身体行 -->
-                      <tr>
-                        <td class="td-part">全身体 (Body)</td>
-                        <td class="td-target">
-                          <div class="dmg-cell">
-                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'body', 'light') }}</span>
-                            <strong class="cell-ttk">{{ getWeaponProfileTTK(activeInspectorItem, 'body', 'light') }}</strong>
-                          </div>
-                        </td>
-                        <td class="td-target">
-                          <div class="dmg-cell">
-                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'body', 'medium') }}</span>
-                            <strong class="cell-ttk">{{ getWeaponProfileTTK(activeInspectorItem, 'body', 'medium') }}</strong>
-                          </div>
-                        </td>
-                        <td class="td-target">
-                          <div class="dmg-cell">
-                            <span class="cell-shots">{{ getWeaponProfileShots(activeInspectorItem, 'body', 'heavy') }}</span>
-                            <strong class="cell-ttk">{{ getWeaponProfileTTK(activeInspectorItem, 'body', 'heavy') }}</strong>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="wiki-calc-footnote">
-                    <span>* 测算标准：首发于 t = 0.00s 击发，TTK 为 (弹数 - 1) × 循环射击间隔</span>
-                  </div>
-                </div>
-
-                <!-- ================= 2. 完整数据矩阵 (MediaWiki 官方实测数值) ================= -->
+                <!-- ================= 2. Wiki 原文数据矩阵 ================= -->
                 <div class="inspector-stats-matrix">
                   <h4 class="matrix-title">WIKI 核心战斗参数</h4>
+                  <p class="wiki-source-note">
+                    {{ activeInspectorItem.wiki ? 'Wiki 修订 #' + activeInspectorItem.wiki.revisionId + ' · 检查于 ' + formatSyncTime(activeInspectorItem.wiki.checkedAt) : '内置离线数据 · 尚未从 Wiki 验证' }}
+                  </p>
                   <div class="stats-grid">
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">基础伤害</span>
-                      <strong class="m-val">{{ activeInspectorItem.stats?.damage || '—' }}</strong>
-                    </div>
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">爆头倍率</span>
-                      <strong class="m-val text-gold">{{ activeInspectorItem.stats?.crit || '—' }}</strong>
-                    </div>
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">秒伤 (DPS)</span>
-                      <strong class="m-val text-red">{{ activeInspectorItem.stats?.dps || '—' }}</strong>
-                    </div>
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">射速 (RPM)</span>
-                      <strong class="m-val">{{ activeInspectorItem.stats?.rpm || '—' }}</strong>
-                    </div>
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">弹药容量</span>
-                      <strong class="m-val">{{ activeInspectorItem.stats?.magazine || '—' }}</strong>
-                    </div>
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">换弹速度</span>
-                      <strong class="m-val">{{ activeInspectorItem.stats?.reload || '—' }}</strong>
-                    </div>
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">射程衰减</span>
-                      <strong class="m-val">{{ activeInspectorItem.stats?.falloff || '—' }}</strong>
-                    </div>
-                    <div class="matrix-stat-item">
-                      <span class="m-lbl">环境破坏</span>
-                      <strong class="m-val">{{ activeInspectorItem.stats?.destruction || 'Low' }}</strong>
+                    <div v-for="stat in inspectorStats" :key="stat.key" class="matrix-stat-item">
+                      <span class="m-lbl">{{ stat.label }}</span>
+                      <strong class="m-val">{{ stat.value }}</strong>
                     </div>
                   </div>
                 </div>
 
                 <!-- 实战建议 -->
-                <div class="inspector-tips-box">
+                <div v-if="!activeInspectorItem.wiki" class="inspector-tips-box">
                   <h4 class="tips-title">战术协同指南</h4>
                   <ul class="tips-list">
                     <li v-for="(tip, idx) in activeInspectorItem.tips" :key="idx">{{ tip }}</li>
@@ -404,7 +331,7 @@
             <div class="compare-header-bar">
               <div>
                 <h3 class="compare-main-title">枪械深度多维对比 (最多支持 3 把)</h3>
-                <span class="compare-sub-desc">直观比对 Wiki 实测伤害、DPS、换弹效率与轻/中/重型击杀时间 (TTK)</span>
+                <span class="compare-sub-desc">按当前 Wiki 数值与各武器攻击模式，推算 DPS、换弹效率和轻 / 中 / 重型击杀时间</span>
               </div>
               <div class="compare-header-actions">
                 <button type="button" class="btn-clear-compare" @click="clearCompareList">清空对比列表</button>
@@ -445,16 +372,16 @@
                   <div class="c-metrics-block">
                     <h5 class="c-block-heading">基础作战参数</h5>
                     <div class="c-metric-row">
-                      <span class="c-m-label">单发基础伤害</span>
+                      <span class="c-m-label">主攻击伤害</span>
                       <strong class="c-m-value">{{ w.stats?.damage || '—' }}</strong>
                     </div>
                     <div class="c-metric-row">
-                      <span class="c-m-label">爆头倍率</span>
+                      <span class="c-m-label">爆头伤害 / 倍率</span>
                       <strong class="c-m-value text-gold">{{ w.stats?.crit || '—' }}</strong>
                     </div>
                     <div class="c-metric-row">
-                      <span class="c-m-label">理论秒伤 (DPS)</span>
-                      <strong class="c-m-value text-red">{{ w.stats?.dps || '—' }}</strong>
+                      <span class="c-m-label">默认模式输出 DPS</span>
+                      <strong class="c-m-value text-red">{{ getWeaponDpsSummary(w).text }}</strong>
                     </div>
                     <div class="c-metric-row">
                       <span class="c-m-label">射速 (RPM)</span>
@@ -474,71 +401,8 @@
                     </div>
                   </div>
 
-                  <!-- Wiki 标准 Damage Profile 击杀时间对比 -->
-                  <div class="c-metrics-block c-ttk-block">
-                    <h5 class="c-block-heading">WIKI 击杀数据 (DAMAGE PROFILE)</h5>
+                  <WeaponCombatPanel :weapon="w" />
 
-                    <!-- 对 轻型 150 HP -->
-                    <div class="c-ttk-target-box ttk-light-border">
-                      <div class="c-target-head">
-                        <span>轻型 (150 HP)</span>
-                      </div>
-                      <div class="c-sub-row">
-                        <span>全爆头:</span>
-                        <strong class="text-gold">
-                          {{ getWeaponProfileShots(w, 'head', 'light') }} ({{ getWeaponProfileTTK(w, 'head', 'light') }})
-                        </strong>
-                      </div>
-                      <div class="c-sub-row">
-                        <span>全身体:</span>
-                        <strong>
-                          {{ getWeaponProfileShots(w, 'body', 'light') }} ({{ getWeaponProfileTTK(w, 'body', 'light') }})
-                        </strong>
-                      </div>
-                    </div>
-
-                    <!-- 对 中型 250 HP -->
-                    <div class="c-ttk-target-box ttk-medium-border">
-                      <div class="c-target-head">
-                        <span>中型 (250 HP)</span>
-                      </div>
-                      <div class="c-sub-row">
-                        <span>全爆头:</span>
-                        <strong class="text-gold">
-                          {{ getWeaponProfileShots(w, 'head', 'medium') }} ({{ getWeaponProfileTTK(w, 'head', 'medium') }})
-                        </strong>
-                      </div>
-                      <div class="c-sub-row">
-                        <span>全身体:</span>
-                        <strong>
-                          {{ getWeaponProfileShots(w, 'body', 'medium') }} ({{ getWeaponProfileTTK(w, 'body', 'medium') }})
-                        </strong>
-                      </div>
-                    </div>
-
-                    <!-- 对 重型 350 HP -->
-                    <div class="c-ttk-target-box ttk-heavy-border">
-                      <div class="c-target-head">
-                        <span>重型 (350 HP)</span>
-                      </div>
-                      <div class="c-sub-row">
-                        <span>全爆头:</span>
-                        <strong class="text-gold">
-                          {{ getWeaponProfileShots(w, 'head', 'heavy') }} ({{ getWeaponProfileTTK(w, 'head', 'heavy') }})
-                        </strong>
-                      </div>
-                      <div class="c-sub-row">
-                        <span>全身体:</span>
-                        <strong>
-                          {{ getWeaponProfileShots(w, 'body', 'heavy') }} ({{ getWeaponProfileTTK(w, 'body', 'heavy') }})
-                        </strong>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="c-footer-actions">
-                    <button class="btn-c-loadout" @click="loadItemIntoBuilder(w)">填入配装器 →</button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -546,266 +410,37 @@
         </template>
 
         <!-- ========================================================= -->
-        <!-- 模块 3：自由配装实验室 (CONTESTANT LOADOUT BUILDER) -->
+        <!-- 模块 3：配装实验室 (CONTESTANT LOADOUT BUILDER) - 未开发完全 (锁定状态) -->
         <!-- ========================================================= -->
         <template v-else-if="currentMainTab === 'builder'">
-          <section class="builder-workspace-card glass-panel">
-            <!-- 配装器顶栏 -->
-            <div class="builder-header-bar">
-              <div class="builder-title-group">
-                <div class="build-type-selector">
-                  <span class="builder-label">CONTESTANT BUILD:</span>
-                  <button
-                    v-for="b in ['Light', 'Medium', 'Heavy']"
-                    :key="b"
-                    type="button"
-                    class="btn-build-toggle"
-                    :class="{ active: currentBuilderBuild === b, [`btn-${b.toLowerCase()}`]: true }"
-                    @click="switchBuilderBuild(b)"
-                  >
-                    <span>{{ b === 'Light' ? '轻型 (150 HP)' : (b === 'Medium' ? '中型 (250 HP)' : '重型 (350 HP)') }}</span>
-                  </button>
-                </div>
+          <section class="builder-locked-card glass-panel">
+            <div class="locked-inner-box">
+              <div class="locked-icon-shield">
+                <span class="locked-icon-glyph">🔒</span>
               </div>
-
-              <div class="builder-actions-right">
-                <input
-                  type="text"
-                  v-model="currentLoadoutTitle"
-                  class="loadout-title-input"
-                  placeholder="配装名称（如: S11 突击先锋流）"
-                />
-                <button type="button" class="btn-builder-save" @click="handleSaveCurrentLoadout">保存配装</button>
-                <button type="button" class="btn-builder-export" @click="handleExportLoadoutCode">复制分享码</button>
-                <button type="button" class="btn-builder-reset" @click="handleResetBuilder">清空重置</button>
-              </div>
-            </div>
-
-            <!-- 配装槽位核心布局 -->
-            <div class="loadout-slots-grid">
-              <!-- 槽位 1：特殊能力 Specialization -->
-              <div class="slot-column">
-                <div class="slot-header">
-                  <span class="slot-badge-specialization">特殊能力 (SPECIALIZATION)</span>
-                  <span class="slot-hint">1 个主技能</span>
+              <div class="locked-text-group">
+                <span class="locked-eyebrow">MODULE LOCKED · 模块研发中</span>
+                <h3 class="locked-headline">配装实验室 · 未开发完全</h3>
+                <p class="locked-desc">
+                  配装实验室正在进行底层战术协同度算法与平衡性数值调优，暂未完全开放。<br />
+                  敬请期待后续版本上线自由配装槽位、战术雷达测算与配装代码分享功能！
+                </p>
+                <div class="locked-tag-list">
+                  <span class="locked-tag-item">自由配装槽位 (开发中)</span>
+                  <span class="locked-tag-item">战术雷达协同测算 (开发中)</span>
+                  <span class="locked-tag-item">云端配装码共享 (开发中)</span>
                 </div>
-                <div
-                  class="slot-card"
-                  :class="{ filled: activeBuilderSpecialization, empty: !activeBuilderSpecialization }"
-                  @click="openSlotPicker('specialization')"
-                >
-                  <template v-if="activeBuilderSpecialization">
-                    <img :src="activeBuilderSpecialization.imageUrl" class="slot-icon-img" />
-                    <div class="slot-meta">
-                      <strong class="slot-name">{{ activeBuilderSpecialization.name }}</strong>
-                      <span class="slot-zh">{{ activeBuilderSpecialization.nameZh }}</span>
-                      <span class="slot-desc-mini">{{ activeBuilderSpecialization.role }}</span>
-                    </div>
-                    <button class="btn-slot-clear" @click.stop="activeBuilderSpecialization = null">✕</button>
-                  </template>
-                  <template v-else>
-                    <div class="slot-empty-content">
-                      <span class="empty-slot-plus">+</span>
-                      <span>选择特殊能力</span>
-                    </div>
-                  </template>
-                </div>
-              </div>
-
-              <!-- 槽位 2：主武器 Weapon -->
-              <div class="slot-column">
-                <div class="slot-header">
-                  <span class="slot-badge-weapon">主武器 (WEAPON)</span>
-                  <span class="slot-hint">1 把核心枪械/近战</span>
-                </div>
-                <div
-                  class="slot-card"
-                  :class="{ filled: activeBuilderWeapon, empty: !activeBuilderWeapon }"
-                  @click="openSlotPicker('weapon')"
-                >
-                  <template v-if="activeBuilderWeapon">
-                    <img :src="activeBuilderWeapon.imageUrl" class="slot-icon-img" />
-                    <div class="slot-meta">
-                      <strong class="slot-name">{{ activeBuilderWeapon.name }}</strong>
-                      <span class="slot-zh">{{ activeBuilderWeapon.nameZh }}</span>
-                      <span class="slot-stat-mini">DPS: {{ activeBuilderWeapon.stats?.dps || '—' }} | 伤害: {{ activeBuilderWeapon.stats?.damage || '—' }}</span>
-                    </div>
-                    <button class="btn-slot-clear" @click.stop="activeBuilderWeapon = null">✕</button>
-                  </template>
-                  <template v-else>
-                    <div class="slot-empty-content">
-                      <span class="empty-slot-plus">+</span>
-                      <span>选择主武器</span>
-                    </div>
-                  </template>
-                </div>
-              </div>
-
-              <!-- 槽位 3：随身战术道具 (3个) -->
-              <div class="slot-column slot-column-gadgets">
-                <div class="slot-header">
-                  <span class="slot-badge-gadget">随身道具 (GADGETS)</span>
-                  <span class="slot-hint">3 个战术道具</span>
-                </div>
-                <div class="gadgets-sub-grid">
-                  <div
-                    v-for="(g, gIdx) in 3"
-                    :key="gIdx"
-                    class="slot-card mini-gadget-slot"
-                    :class="{ filled: activeBuilderGadgets[gIdx], empty: !activeBuilderGadgets[gIdx] }"
-                    @click="openSlotPicker('gadget', gIdx)"
-                  >
-                    <template v-if="activeBuilderGadgets[gIdx]">
-                      <img :src="activeBuilderGadgets[gIdx].imageUrl" class="slot-icon-img" />
-                      <div class="slot-meta">
-                        <strong class="slot-name">{{ activeBuilderGadgets[gIdx].name }}</strong>
-                        <span class="slot-zh">{{ activeBuilderGadgets[gIdx].nameZh }}</span>
-                      </div>
-                      <button class="btn-slot-clear" @click.stop="removeGadgetSlot(gIdx)">✕</button>
-                    </template>
-                    <template v-else>
-                      <div class="slot-empty-content">
-                        <span class="empty-slot-plus">+</span>
-                        <span>道具 {{ gIdx + 1 }}</span>
-                      </div>
-                    </template>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 战术协同雷达与能力综合评分 -->
-            <div class="loadout-analytics-bar">
-              <div class="analytics-title-col">
-                <span class="radar-title">战术能力雷达</span>
-                <span class="radar-subtitle">基于选定装备综合测算</span>
-              </div>
-
-              <div class="synergy-bars-grid">
-                <div class="synergy-bar-item">
-                  <div class="bar-label-row">
-                    <span>机动突击</span>
-                    <strong>{{ calculatedSynergy.mobility }}%</strong>
-                  </div>
-                  <div class="bar-track">
-                    <div class="bar-fill mobility-fill" :style="{ width: calculatedSynergy.mobility + '%' }"></div>
-                  </div>
-                </div>
-
-                <div class="synergy-bar-item">
-                  <div class="bar-label-row">
-                    <span>瞬间火力</span>
-                    <strong>{{ calculatedSynergy.firepower }}%</strong>
-                  </div>
-                  <div class="bar-track">
-                    <div class="bar-fill firepower-fill" :style="{ width: calculatedSynergy.firepower + '%' }"></div>
-                  </div>
-                </div>
-
-                <div class="synergy-bar-item">
-                  <div class="bar-label-row">
-                    <span>团队支援</span>
-                    <strong>{{ calculatedSynergy.support }}%</strong>
-                  </div>
-                  <div class="bar-track">
-                    <div class="bar-fill support-fill" :style="{ width: calculatedSynergy.support + '%' }"></div>
-                  </div>
-                </div>
-
-                <div class="synergy-bar-item">
-                  <div class="bar-label-row">
-                    <span>阵地防御</span>
-                    <strong>{{ calculatedSynergy.defense }}%</strong>
-                  </div>
-                  <div class="bar-track">
-                    <div class="bar-fill defense-fill" :style="{ width: calculatedSynergy.defense + '%' }"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- 用户自定义已存配装列表 -->
-          <section v-if="savedCustomLoadouts.length" class="saved-loadouts-section">
-            <h3 class="section-subheading">我的自定义配装存档 ({{ savedCustomLoadouts.length }})</h3>
-            <div class="preset-cards-grid">
-              <div v-for="loadout in savedCustomLoadouts" :key="loadout.id" class="preset-card glass-panel">
-                <div class="preset-topbar">
-                  <span class="preset-build-badge" :class="`tag-${loadout.build.toLowerCase()}`">{{ loadout.build }}</span>
-                  <button class="btn-delete-preset" @click="handleDeleteSavedLoadout(loadout.id)" title="删除存档">✕</button>
-                </div>
-                <h4 class="preset-name">{{ loadout.title }}</h4>
-                <div class="preset-slots-preview">
-                  <span v-if="loadout.specialization" class="preview-pill">{{ getEquipmentById(loadout.specialization)?.name || loadout.specialization }}</span>
-                  <span v-if="loadout.weapon" class="preview-pill">{{ getEquipmentById(loadout.weapon)?.name || loadout.weapon }}</span>
-                </div>
-                <div class="preset-card-footer">
-                  <button type="button" class="btn-apply-preset" @click="applySavedLoadout(loadout)">应用到配装器 →</button>
-                </div>
-              </div>
-            </div>
-          </section>
-        </template>
-
-        <!-- ========================================================= -->
-        <!-- 模块 4：天梯热门竞技配装推荐 (COMPETITIVE META BUILDS) -->
-        <!-- ========================================================= -->
-        <template v-else-if="currentMainTab === 'presets'">
-          <section class="meta-presets-section">
-            <div class="presets-intro-banner">
-              <h3 class="presets-banner-title">THE FINALS S11 全球高分段主流竞技配装</h3>
-              <p class="presets-banner-desc">汇集排位 Ruby/Diamond 职业选手与锦标赛夺冠战队标准配装，点击即可一键载入并模拟测试。</p>
-            </div>
-
-            <div class="preset-cards-grid">
-              <div
-                v-for="preset in PRESET_LOADOUTS"
-                :key="preset.id"
-                class="preset-card glass-panel meta-preset-highlight"
-              >
-                <div class="preset-topbar">
-                  <span class="preset-build-badge" :class="`tag-${preset.build.toLowerCase()}`">
-                    {{ preset.build === 'Light' ? '轻型' : (preset.build === 'Medium' ? '中型' : '重型') }}
-                  </span>
-                  <span class="preset-author">{{ preset.author }}</span>
-                </div>
-
-                <h4 class="preset-name">{{ preset.title }}</h4>
-                <p class="preset-desc">{{ preset.desc }}</p>
-
-                <!-- 配装清单展示 -->
-                <div class="preset-items-lineup">
-                  <div class="lineup-item">
-                    <span class="lineup-lbl">特长:</span>
-                    <strong class="lineup-val">{{ getEquipmentById(preset.specialization)?.nameZh || preset.specialization }}</strong>
-                  </div>
-                  <div class="lineup-item">
-                    <span class="lineup-lbl">武器:</span>
-                    <strong class="lineup-val">{{ getEquipmentById(preset.weapon)?.nameZh || preset.weapon }}</strong>
-                  </div>
-                  <div class="lineup-item">
-                    <span class="lineup-lbl">道具:</span>
-                    <div class="lineup-tags">
-                      <span v-for="gId in preset.gadgets" :key="gId" class="lineup-tag">
-                        {{ getEquipmentById(gId)?.name || gId }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 配装底部操作 -->
-                <div class="preset-card-footer">
-                  <button type="button" class="btn-apply-preset" @click="applyPreset(preset)">
-                    载入配装器测试 →
-                  </button>
-                  <button type="button" class="btn-copy-preset" @click="copyPresetCode(preset)">
-                    分享码
+                <div class="locked-actions-row">
+                  <button type="button" class="btn-locked-back" @click="currentMainTab = 'armory'">
+                    ← 返回军械百科
                   </button>
                 </div>
               </div>
             </div>
           </section>
         </template>
+
+
 
       </div>
     </main>
@@ -839,7 +474,7 @@
             <div class="picker-item-details">
               <strong class="p-name">{{ item.name }}</strong>
               <span class="p-zh">{{ item.nameZh }}</span>
-              <span class="p-role">{{ item.role }}</span>
+              <span class="p-role">{{ item.wiki ? 'Wiki · ' + formatSyncTime(item.wiki.checkedAt) : item.role }}</span>
             </div>
             <span class="p-select-arrow">选择 →</span>
           </div>
@@ -857,6 +492,8 @@ import { gsap } from 'gsap'
 import {
   getEquipmentData,
   getLastSyncTime,
+  getEquipmentSyncState,
+  EQUIPMENT_STAT_LABELS,
   formatSyncTime,
   syncEquipmentFromWiki,
   filterEquipment,
@@ -868,13 +505,15 @@ import {
   importLoadoutCode,
   getSavedCompareWeaponIds,
   saveCompareWeaponIds,
-  calculateWikiWeaponTTK,
   PRESET_LOADOUTS
 } from '../../utils/theFinalsEquipmentApi.js'
+import WeaponCombatPanel from '../../components/WeaponCombatPanel.vue'
+import { getWeaponDpsSummary } from '../../utils/weaponCombat.js'
 import { useToast } from '../../composables/useToast.js'
 import { useHudPageTransition } from '../../utils/globalLuluTransition.js'
 
 export default {
+  components: { WeaponCombatPanel },
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -894,10 +533,16 @@ export default {
     const mainTabs = [
       { key: 'armory', label: '军械百科' },
       { key: 'compare', label: '枪械对比' },
-      { key: 'builder', label: '配装实验室' },
-      { key: 'presets', label: '天梯热门推荐' }
+      { key: 'builder', label: '配装实验室', locked: true }
     ]
     const currentMainTab = ref('armory')
+
+    const handleTabClick = (tab) => {
+      currentMainTab.value = tab.key
+      if (tab.locked) {
+        showToast('配装实验室未开发完全，暂未开放', 'none')
+      }
+    }
 
     // 筛选状态 (无 Emoji)
     const selectedBuild = ref('all')
@@ -920,15 +565,32 @@ export default {
     ]
 
     // 检视器
-    const activeInspectorItem = ref(null)
+    const activeInspectorId = ref(null)
+    const activeInspectorItem = computed({
+      get: () => getEquipmentById(activeInspectorId.value),
+      set: item => { activeInspectorId.value = item?.id || null }
+    })
 
     // 武器对比列表 (最多3把)
     const compareWeaponIds = ref(getSavedCompareWeaponIds())
 
     // 网络与 Wiki 同步状态
     const isOnline = ref(typeof navigator !== 'undefined' ? navigator.onLine : true)
-    const isSyncing = ref(false)
-    const lastSyncTime = ref(getLastSyncTime())
+    const syncState = computed(() => getEquipmentSyncState())
+    const isSyncing = computed(() => syncState.value.phase === 'syncing')
+    const lastSyncTime = computed(() => getLastSyncTime())
+    const syncDetails = computed(() => {
+      const state = syncState.value
+      return [
+        '运行期间每 30 分钟检查，恢复联网后自动重试',
+        `最近全量检查成功：${formatSyncTime(lastSyncTime.value)}`,
+        ...state.errors.map(error => `${error.name || 'Wiki'}：${error.message}`),
+        state.storageError
+      ].filter(Boolean).join('\n')
+    })
+    const inspectorStats = computed(() => Object.entries(EQUIPMENT_STAT_LABELS)
+      .filter(([key]) => activeInspectorItem.value?.stats?.[key] && activeInspectorItem.value.stats[key] !== '—')
+      .map(([key, label]) => ({ key, label, value: activeInspectorItem.value.stats[key] })))
 
     // 配装模拟器状态
     const currentBuilderBuild = ref('Medium')
@@ -964,23 +626,14 @@ export default {
     })
 
     const syncStatusLabel = computed(() => {
-      if (isSyncing.value) return '正在连接 Wiki 同步最新数据...'
-      if (!isOnline.value) return '离线模式 (使用本地最新缓存)'
-      return `Wiki 数据已同步 (${formatSyncTime(lastSyncTime.value)})`
+      const state = syncState.value
+      if (isSyncing.value) return '正在检查 Wiki 数值…'
+      if (!isOnline.value) return '离线 · 使用已保存数据'
+      if (state.phase === 'error') return 'Wiki 连接或解析失败 · 已保留数据'
+      if (state.phase === 'partial') return `部分同步：${state.checkedCount} 成功 / ${state.failedCount} 失败`
+      if (state.phase === 'success') return `已检查 ${state.checkedCount} 件 · ${formatSyncTime(lastSyncTime.value)}`
+      return '内置数据 · 尚未验证 Wiki'
     })
-
-    // Wiki 标准 Damage Profile 获取函数 (100% 具备本地数学与帧率兜底)
-    const getWeaponProfileShots = (weapon, hitType, buildKey) => {
-      if (!weapon) return '—'
-      const res = calculateWikiWeaponTTK(weapon, hitType, buildKey)
-      return res.shots !== undefined && res.shots !== '—' ? `${res.shots} 发` : '—'
-    }
-
-    const getWeaponProfileTTK = (weapon, hitType, buildKey) => {
-      if (!weapon) return '—'
-      const res = calculateWikiWeaponTTK(weapon, hitType, buildKey)
-      return res.ttk || '—'
-    }
 
     // 配装协同能力雷达计算
     const calculatedSynergy = computed(() => {
@@ -1094,27 +747,21 @@ export default {
       event.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="%23222" width="100" height="100"/><text fill="%23e11d48" font-size="28" font-family="sans-serif" x="50%" y="55%" text-anchor="middle">TF</text></svg>'
     }
 
-    // 手动与自动网络同步
+    // Manual checks bypass revision skipping; automatic checks belong to App.
     const handleManualSync = async () => {
       if (isSyncing.value) return
-      isSyncing.value = true
-      showToast('正在连接 THE FINALS Wiki 同步最新装备补丁...', 'none')
-
-      try {
-        const res = await syncEquipmentFromWiki()
-        lastSyncTime.value = res.lastUpdated
-        showToast(`Wiki 数据已更新，成功同步 ${res.itemCount} 件装备属性！`, 'success')
-      } catch (err) {
-        showToast('连接 Wiki 超时，已切换至本地最新离线数据', 'none')
-      } finally {
-        isSyncing.value = false
+      const result = await syncEquipmentFromWiki({ force: true })
+      if (result.success) {
+        showToast(result.updatedCount ? `已检查 ${result.checkedCount} 件装备，${result.updatedCount} 件数值变化` : `已检查 ${result.checkedCount} 件装备，数值无变化`, 'success')
+      } else {
+        showToast(result.offline ? '当前离线，继续使用已保存的数据' : `同步未完成：${result.checkedCount} 件成功，${result.failedCount} 件失败；失败项保留原数据`, 'none')
       }
     }
 
     // 复制装备数据
     const copyEquipmentSummary = async (item) => {
       if (!item) return
-      const text = `【THE FINALS 装备档案】${item.name} (${item.nameZh}) | 职业: ${item.build} | 类别: ${getCategoryBadgeLabel(item.category)} | 伤害: ${item.stats?.damage || '—'} | DPS: ${item.stats?.dps || '—'} | 弹匣: ${item.stats?.magazine || '—'}`
+      const text = `【THE FINALS 装备档案】${item.name} (${item.nameZh}) | 职业: ${item.build} | 类别: ${getCategoryBadgeLabel(item.category)} | 伤害: ${item.stats?.damage || '—'} | DPS: ${getWeaponDpsSummary(item).text} (${getWeaponDpsSummary(item).mode}) | 弹匣: ${item.stats?.magazine || '—'}`
       try {
         if (navigator.clipboard?.writeText) {
           await navigator.clipboard.writeText(text)
@@ -1144,23 +791,7 @@ export default {
     }
 
     const loadItemIntoBuilder = (item) => {
-      currentMainTab.value = 'builder'
-      if (item.build !== 'All' && item.build !== 'Medium & Heavy' && item.build !== currentBuilderBuild.value) {
-        currentBuilderBuild.value = item.build
-      }
-      if (item.category === 'specializations') {
-        activeBuilderSpecialization.value = item
-      } else if (item.category === 'weapons') {
-        activeBuilderWeapon.value = item
-      } else if (item.category === 'gadgets') {
-        const emptyIdx = activeBuilderGadgets.value.findIndex(g => g === null)
-        if (emptyIdx >= 0) {
-          activeBuilderGadgets.value[emptyIdx] = item
-        } else {
-          activeBuilderGadgets.value[0] = item
-        }
-      }
-      showToast(`已将 [${item.name}] 载入配装器`, 'success')
+      showToast('配装实验室未开发完全，暂未开放', 'none')
     }
 
     const openSlotPicker = (type, gadgetIdx = 0) => {
@@ -1272,9 +903,6 @@ export default {
     // 网络状态监听
     const updateOnlineStatus = () => {
       isOnline.value = navigator.onLine
-      if (isOnline.value) {
-        handleManualSync()
-      }
     }
 
     onMounted(() => {
@@ -1287,11 +915,6 @@ export default {
       if (defaultItem) {
         activeInspectorItem.value = defaultItem
       }
-
-      // 自动联网轻量同步
-      if (navigator.onLine) {
-        syncEquipmentFromWiki().catch(() => {})
-      }
     })
 
     onUnmounted(() => {
@@ -1302,44 +925,27 @@ export default {
     // 卡片 mini 状态紧凑格式化（防止近战/多段伤害撑爆卡片）
     const formatCardMiniDamage = (item) => {
       if (!item?.stats?.damage) return '—'
-      const dmg = String(item.stats.damage)
-      if (item.id === 'dagger') return '70 / 340'
-      if (item.id === 'sledgehammer') return '120 / 200'
-      if (item.id === 'sword') return '74 / 140'
-      if (item.id === 'spear') return '82 / 150'
-      if (item.id === 'dual_blades') return '57×2'
-      if (item.id === 'riot_shield') return '86'
-      if (item.id === 'cerberus_12ga') return '117+灼烧'
-      if (item.id === 'flamethrower') return '30+灼烧'
-      if (item.id === 'sh1900') return '180'
-      if (item.id === 'model_1887') return '128'
-      if (item.id === 'sa1216') return '72'
-      if (item.id === 'ks_23') return '104'
-      return dmg.length > 10 ? dmg.replace(/\s*\(.*\)/, '') : dmg
+      return String(item.stats.damage)
     }
 
     const formatCardMiniMag = (item) => {
       if (!item?.stats?.magazine) return '—'
-      const mag = String(item.stats.magazine)
-      if (mag.includes('无限')) return '无限'
-      if (mag.includes('热量')) return '热量槽'
-      const num = parseInt(mag)
-      return isNaN(num) ? mag : `${num}`
+      return String(item.stats.magazine)
     }
 
     return {
       equipmentRootRef, isEquipmentArrival, goBack,
-      mainTabs, currentMainTab,
+      mainTabs, currentMainTab, handleTabClick,
       selectedBuild, selectedCategory, searchKeyword, selectedSortBy,
       buildFilterOptions, categoryFilterOptions,
       totalEquipmentCount, filteredEquipmentList, activeInspectorItem, inspectItem, resetFilters,
-      isOnline, isSyncing, lastSyncTime, syncStatusLabel, formatSyncTime, handleManualSync,
+      isOnline, isSyncing, lastSyncTime, syncState, syncDetails, inspectorStats, EQUIPMENT_STAT_LABELS, syncStatusLabel, formatSyncTime, handleManualSync,
       currentBuilderBuild, currentLoadoutTitle, activeBuilderSpecialization, activeBuilderWeapon, activeBuilderGadgets,
       calculatedSynergy, savedCustomLoadouts, PRESET_LOADOUTS,
       isSlotPickerOpen, pickerSlotTitle, availablePickerItems, pickerSearchKeyword,
       compareWeaponIds, compareWeaponList, isInCompare, toggleCompareWeapon, removeFromCompare, clearCompareList,
       getBuildBadgeLabel, getCategoryBadgeLabel, handleImgError, copyEquipmentSummary,
-      getWeaponProfileShots, getWeaponProfileTTK,
+      getWeaponDpsSummary,
       formatCardMiniDamage, formatCardMiniMag,
       switchBuilderBuild, loadItemIntoBuilder, openSlotPicker, selectItemForSlot, removeGadgetSlot,
       handleResetBuilder, handleSaveCurrentLoadout, handleDeleteSavedLoadout, applySavedLoadout, applyPreset,
@@ -1350,6 +956,11 @@ export default {
 </script>
 
 <style scoped>
+.wiki-sync-report { margin: 12px 0 20px; padding: 12px 16px; border: 1px solid #41434c; border-radius: 8px; color: #c9ced9; font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+.wiki-sync-report summary { cursor: pointer; color: #eef0f5; }
+.wiki-sync-report ul { padding-left: 20px; }
+.wiki-source-note { color: #aeb5c2; font-size: 11px; line-height: 1.6; margin: 0 0 12px; }
+.matrix-stat-item .m-val { overflow-wrap: anywhere; white-space: normal; }
 .container {
   display: flex;
   flex-direction: column;
@@ -1528,6 +1139,16 @@ export default {
   padding: 1px 5px;
   font-weight: 850;
   color: #fbbf24;
+}
+
+.tab-lock-badge {
+  background: rgba(225, 29, 72, 0.2);
+  border: 1px solid rgba(225, 29, 72, 0.45);
+  font-size: 9.5px;
+  padding: 1px 5px;
+  font-weight: 850;
+  color: #fca5a5;
+  letter-spacing: 0.02em;
 }
 
 /* 同步状态小部件 */
@@ -3248,5 +2869,113 @@ export default {
   .loadout-slots-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ================= 锁定状态卡片 (未开发完全) ================= */
+.builder-locked-card {
+  padding: 60px 30px;
+  background: rgba(14, 17, 23, 0.94);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  border-top: 3px solid #e11d48;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 440px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+}
+
+.locked-inner-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 580px;
+  gap: 20px;
+}
+
+.locked-icon-shield {
+  width: 76px;
+  height: 76px;
+  background: rgba(225, 29, 72, 0.12);
+  border: 2px solid rgba(225, 29, 72, 0.45);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(225, 29, 72, 0.25);
+}
+
+.locked-icon-glyph {
+  font-size: 34px;
+}
+
+.locked-text-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.locked-eyebrow {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #fb7185;
+}
+
+.locked-headline {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.locked-desc {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.locked-tag-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.locked-tag-item {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.locked-actions-row {
+  margin-top: 12px;
+}
+
+.btn-locked-back {
+  padding: 9px 24px;
+  background: #e11d48;
+  border: 1px solid #ff3b68;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 850;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 0;
+}
+
+.btn-locked-back:hover {
+  background: #f43f5e;
+  box-shadow: 0 0 15px rgba(225, 29, 72, 0.5);
+  transform: translateY(-1px);
 }
 </style>

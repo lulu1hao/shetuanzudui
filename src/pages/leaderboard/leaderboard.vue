@@ -47,9 +47,9 @@
               <span class="badge-stage-tag">TOP 10,000</span>
             </div>
           </div>
-          <div class="leaderboard-status-badge">
-            <span class="pulse-dot"></span>
-            <span>官方天梯实时同步中 (每10分钟自动刷新)</span>
+          <div class="leaderboard-status-badge" :class="`is-${tableSyncState}`">
+            <span class="pulse-dot" :class="{ green: tableSyncState === 'ready', amber: tableSyncState === 'error' }"></span>
+            <span>{{ tableSyncLabel }}</span>
           </div>
         </section>
 
@@ -85,22 +85,6 @@
               <span v-else>搜索战绩</span>
             </button>
           </form>
-
-          <!-- 热门搜索推荐 -->
-          <div class="hot-search-row">
-            <span class="hot-title">热门选手:</span>
-            <div class="hot-chips-list">
-              <button
-                v-for="sample in sampleNames"
-                :key="sample"
-                type="button"
-                class="hot-chip-btn"
-                @click="quickSearch(sample)"
-              >
-                <span>{{ sample }}</span>
-              </button>
-            </div>
-          </div>
         </section>
 
         <!-- 2. 焦点选手战绩与积分走势卡片 (赛场冠军渐变流光动效) -->
@@ -179,6 +163,15 @@
             <div v-if="tableLoading" class="table-loading-box">
               <div class="radar-mini-spinner"></div>
               <span>正在连接官方天梯同步最新榜单...</span>
+            </div>
+
+            <!-- 数据加载失败态 -->
+            <div v-else-if="tableError" class="table-error-box" role="alert">
+              <strong>天梯同步失败</strong>
+              <span>{{ tableError }}</span>
+              <button type="button" class="table-retry-btn" @click="loadTopLeaderboardData">
+                重新同步
+              </button>
             </div>
 
             <!-- 数据表格 -->
@@ -263,12 +256,20 @@
                   :key="favName"
                   class="fav-player-row"
                   @click="quickSearch(favName)"
+                  :title="`点击检索 ${favName}`"
                 >
                   <span class="fav-acronym" :style="{ backgroundColor: getAcronymColor(favName) }">
                     {{ getPlayerAcronym(favName) }}
                   </span>
-                  <span class="fav-name">{{ favName }}</span>
-                  <span class="fav-arrow">→</span>
+                  <span class="fav-name" :title="favName">{{ favName }}</span>
+                  <button
+                    type="button"
+                    class="fav-unfollow-btn"
+                    @click.stop="handleRemoveFavorite(favName)"
+                    title="取消关注"
+                  >
+                    取消关注
+                  </button>
                 </div>
               </div>
               <p v-else class="side-card-desc">
@@ -294,12 +295,17 @@
               </div>
               <div class="side-status-box">
                 <div class="live-status-line">
-                  <span class="pulse-dot green"></span>
-                  <strong>实时同步中</strong>
+                  <span class="pulse-dot" :class="{ green: tableSyncState === 'ready', amber: tableSyncState === 'error' }"></span>
+                  <strong>{{ tableSyncLabel }}</strong>
                 </div>
                 <p class="status-desc-text">
-                  数据来源: Embark Studios 官方 API<br />
-                  跨平台 (Steam / PS5 / Xbox) 数据已合并计算。
+                  <template v-if="tableError">
+                    {{ tableError }}<br />可点击左侧“重新同步”再次尝试。
+                  </template>
+                  <template v-else>
+                    数据通道: THE FINALS Leaderboard API<br />
+                    榜单来源: Embark 公开天梯数据。
+                  </template>
                 </p>
               </div>
             </div>
@@ -319,6 +325,7 @@ import {
   recordPlayerSnapshot,
   getFavoritePlayers,
   toggleFavoritePlayer,
+  removeFavoritePlayer,
   isPlayerFavorite
 } from '../../utils/finalsHistoryTracker.js'
 import {
@@ -363,6 +370,7 @@ export default {
 
     const loading = ref(false)
     const tableLoading = ref(false)
+    const tableError = ref('')
     const topPlayersList = ref([])
     const activePlayer = ref(null)
     const playerProfile = ref(null)
@@ -371,9 +379,6 @@ export default {
 
     const refreshFavorites = () => {
       favoriteList.value = getFavoritePlayers()
-      if (!favoriteList.value.length) {
-        favoriteList.value = ['Ace#1301', 'Marťas', 'Shroud']
-      }
     }
 
     const isFav = (name) => {
@@ -386,6 +391,13 @@ export default {
       const isNowFav = toggleFavoritePlayer(player.name)
       refreshFavorites()
       showToast(isNowFav ? `已重点关注 [${player.name}]` : `已取消关注 [${player.name}]`, 'success')
+    }
+
+    const handleRemoveFavorite = (name) => {
+      if (!name) return
+      removeFavoritePlayer(name)
+      refreshFavorites()
+      showToast(`已取消关注 [${name}]`, 'success')
     }
 
     const getPlayerAcronym = (name = '') => {
@@ -423,12 +435,26 @@ export default {
       return topPlayersList.value
     })
 
+    const tableSyncState = computed(() => {
+      if (tableLoading.value) return 'loading'
+      if (tableError.value) return 'error'
+      return topPlayersList.value.length > 0 ? 'ready' : 'idle'
+    })
+
+    const tableSyncLabel = computed(() => {
+      if (tableSyncState.value === 'loading') return '正在连接天梯数据服务'
+      if (tableSyncState.value === 'error') return '天梯同步失败'
+      if (tableSyncState.value === 'ready') return '天梯数据已同步'
+      return '等待同步天梯数据'
+    })
+
     const getTierGlyph = () => {
       return ''
     }
 
     const loadTopLeaderboardData = async () => {
       tableLoading.value = true
+      tableError.value = ''
       try {
         const list = await fetchLeaderboardTop(
           selectedSeason.value,
@@ -441,8 +467,11 @@ export default {
           activePlayer.value = list[0]
           recordPlayerSnapshot(list[0])
         }
-      } catch {
-        // fallback
+      } catch (err) {
+        topPlayersList.value = []
+        activePlayer.value = null
+        tableError.value = err?.message || '无法连接天梯数据服务，请检查网络后重试'
+        showToast(tableError.value, 'none')
       } finally {
         tableLoading.value = false
       }
@@ -560,11 +589,12 @@ export default {
       leaderboardRootRef, isLeaderboardArrival, goBack,
       FINALS_SEASONS, FINALS_MODES, FINALS_PLATFORMS, FINALS_TIERS, FinalsErrorType,
       selectedSeason, selectedMode, selectedPlatform, inputPlayerName, searchInputRef,
-      loading, tableLoading, displayTopPlayers, activePlayer, playerProfile, errorType, sampleNames, favoriteList,
+      loading, tableLoading, tableError, tableSyncState, tableSyncLabel,
+      displayTopPlayers, activePlayer, playerProfile, errorType, sampleNames, favoriteList,
       currentSeasonLabel, currentModeLabel, getTierGlyph,
-      handleSearch, handleFilterChange, quickSearch, handleRowClick, clearInput,
+      loadTopLeaderboardData, handleSearch, handleFilterChange, quickSearch, handleRowClick, clearInput,
       copyPlayerRecord, fillToRoomMember, showRuleToast,
-      isFav, toggleFavorite, getPlayerAcronym, getAcronymColor
+      isFav, toggleFavorite, handleRemoveFavorite, getPlayerAcronym, getAcronymColor
     }
   }
 }
@@ -825,6 +855,16 @@ export default {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.leaderboard-status-badge.is-ready {
+  border-color: rgba(16, 185, 129, 0.35);
+  border-left-color: #10b981;
+}
+
+.leaderboard-status-badge.is-error {
+  border-color: rgba(251, 191, 36, 0.4);
+  border-left-color: #fbbf24;
+}
+
 .pulse-dot {
   width: 7px;
   height: 7px;
@@ -838,6 +878,12 @@ export default {
 .pulse-dot.green {
   background: #10b981;
   box-shadow: 0 0 8px #10b981;
+}
+
+.pulse-dot.amber {
+  background: #fbbf24;
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.85);
+  animation: none;
 }
 
 @keyframes pulseDot {
@@ -1310,6 +1356,47 @@ export default {
   color: rgba(255, 255, 255, 0.5);
 }
 
+.table-error-box {
+  min-height: 132px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  background: rgba(251, 191, 36, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+  font-size: 12px;
+}
+
+.table-error-box strong {
+  color: #fbbf24;
+  font-size: 14px;
+}
+
+.table-retry-btn {
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 0 18px;
+  border: 1px solid rgba(251, 191, 36, 0.72);
+  border-radius: 0;
+  background: rgba(251, 191, 36, 0.12);
+  color: #fff4c2;
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.table-retry-btn:hover,
+.table-retry-btn:focus-visible {
+  border-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.22);
+  outline: none;
+}
+
 .radar-mini-spinner {
   width: 16px;
   height: 16px;
@@ -1504,24 +1591,46 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  max-height: 172px; /* 限制最多同时展示4个，多余的通过鼠标滑动显示 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 3px;
+}
+
+.fav-players-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.fav-players-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.fav-players-list::-webkit-scrollbar-thumb {
+  background: rgba(225, 29, 72, 0.45);
+  border-radius: 2px;
+}
+
+.fav-players-list::-webkit-scrollbar-thumb:hover {
+  background: #e11d48;
 }
 
 .fav-player-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 8px 10px;
   background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(225, 29, 72, 0.2);
   border-radius: 0;
   cursor: pointer;
   transition: all 0.2s ease;
+  min-height: 38px;
+  box-sizing: border-box;
 }
 
 .fav-player-row:hover {
   background: rgba(225, 29, 72, 0.2);
   border-color: #e11d48;
-  transform: translateX(3px);
 }
 
 .fav-acronym {
@@ -1534,18 +1643,39 @@ export default {
   font-size: 10px;
   font-weight: 900;
   color: #ffffff;
+  flex-shrink: 0;
 }
 
 .fav-name {
   flex: 1;
+  min-width: 0;
   font-size: 12px;
   font-weight: 800;
   color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.fav-arrow {
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 12px;
+.fav-unfollow-btn {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.fav-unfollow-btn:hover {
+  color: #ffffff;
+  background: #e11d48;
+  border-color: #f43f5e;
+  box-shadow: 0 0 8px rgba(225, 29, 72, 0.5);
 }
 
 .side-card-desc {

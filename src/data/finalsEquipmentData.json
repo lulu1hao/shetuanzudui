@@ -1,6 +1,6 @@
 {
-  "version": "Season 11 Live (Wiki Sync)",
-  "lastUpdated": "2026-08-24T04:29:17.034Z",
+  "version": "Season 11 Live (Wiki Sync 2026.09)",
+  "lastUpdated": "2026-09-26T03:42:00.584Z",
   "itemCount": 86,
   "builds": [
     {
@@ -2069,11 +2069,11 @@
       "unlock": "Engineer",
       "wtype": "Shotgun",
       "stats": {
-        "damage": "128 (16×8)",
+        "damage": "117 (13×9)",
         "crit": "1.0×",
         "dps": "147",
-        "rpm": "69 RPM",
-        "magazine": "6 发",
+        "rpm": "72 RPM",
+        "magazine": "7",
         "reload": "单发 0.45s (全装 2.7s)",
         "falloff": "12m~18m",
         "destruction": "Medium",
@@ -2679,12 +2679,12 @@
       "unlock": "500",
       "wtype": "Special",
       "stats": {
-        "damage": "30 + 持续灼烧",
+        "damage": "30 (直接) + 15/s (持续灼烧)",
         "crit": "1.0×",
         "dps": "165",
-        "rpm": "330 RPM",
+        "rpm": "170 RPM",
         "magazine": "30 罐",
-        "reload": "3.0s",
+        "reload": "3.55s",
         "falloff": "有效射程 12m",
         "destruction": "Low",
         "cooldown": "—",
@@ -2780,7 +2780,7 @@
         "dps": "135",
         "rpm": "78 RPM",
         "magazine": "6 发",
-        "reload": "单发 0.5s",
+        "reload": "单发 0.5s (全装 4.36s)",
         "falloff": "18m~25m (精确破障)",
         "destruction": "High",
         "cooldown": "—",
@@ -2961,18 +2961,18 @@
       "build": "Heavy",
       "role": "预热1500射速/火力风暴",
       "description": "六管加特林重机枪，预热后爆发1500 RPM狂暴射速与150发弹箱，摧毁一切肉身与掩体。",
-      "descZh": "六管加特林重机枪，预热后爆发1500 RPM狂暴射速与150发弹箱，摧毁一切肉身与掩体。",
+      "descZh": "高射速重型转轮机枪，拥有 300 发大容量弹箱与极强的火力压制力，射击前需短暂预热。",
       "imageFile": "M134 Minigun_Rank_1.png",
       "imageUrl": "/equipment/m134_minigun.png",
       "unlock": "Demolisher",
       "wtype": "LMG",
       "stats": {
-        "damage": "16",
+        "damage": "11",
         "crit": "21.3 (1.33×)",
         "dps": "400 (最高速)",
         "rpm": "1500 RPM (0.8s预热)",
-        "magazine": "热量条 (过热自冷)",
-        "reload": "过热 3.5s",
+        "magazine": "300",
+        "reload": "5.25s (过热)",
         "falloff": "25m~35m",
         "destruction": "High",
         "cooldown": "—",
@@ -3680,7 +3680,7 @@
         "reload": "单段恢复 8s",
         "falloff": "单次位移 8m",
         "destruction": "None",
-        "cooldown": "6s",
+        "cooldown": "5s",
         "charges": "3"
       },
       "tips": [
@@ -3812,7 +3812,7 @@
         "reload": "过热冷却 4s / 自然散热",
         "falloff": "有效连接距离 15m",
         "destruction": "None",
-        "cooldown": "过热 4s",
+        "cooldown": "过热 5.5s",
         "charges": "1"
       },
       "tips": [
@@ -4164,13 +4164,13 @@
     },
     {
       "id": "infuser",
-      "name": "Infuser",
-      "nameZh": "强心注射器 (H+ Infuser)",
+      "name": "H+ Infuser",
+      "nameZh": "H+ 医疗注射枪",
       "category": "gadgets",
       "build": "Light",
       "role": "急速回血",
       "description": "Rapid-fire healing device. Restores teammate health on hit and regenerates ammunition over time",
-      "descZh": "刺激 contestant 生命体征，在交火中强行加速自愈。",
+      "descZh": "轻型速射治愈装置。击中队友可恢复其生命值，并随时间自动恢复弹药。",
       "imageFile": "Infuser_Rank_1.png",
       "imageUrl": "/equipment/infuser.png",
       "unlock": "500",
@@ -4192,7 +4192,7 @@
         "注意射程衰减与弹道散布，在最佳交战距离发挥最大威力。",
         "合理利用物理破坏特性打乱敌方防守阵型。"
       ],
-      "wikiUrl": "https://thefinals.wiki/wiki/Infuser",
+      "wikiUrl": "https://thefinals.wiki/wiki/H%2B_Infuser",
       "localImageUrl": "/equipment/infuser.png",
       "remoteImageUrl": "https://www.thefinals.wiki/w/images/thumb/Infuser_Sideview.png/300px-Infuser_Sideview.png"
     },
@@ -4218,7 +4218,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "18sReload - 1.9s",
+        "cooldown": "18s (装填 1.9s)",
         "charges": "1"
       },
       "tips": [
@@ -4286,7 +4286,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "High",
-        "cooldown": "25sReload - 2.6s",
+        "cooldown": "25s (装填 2.6s)",
         "charges": "1"
       },
       "tips": [
@@ -4354,7 +4354,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "12sReload - 2.1s",
+        "cooldown": "12s (装填 2.1s)",
         "charges": "1"
       },
       "tips": [
@@ -4626,7 +4626,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "Destroyed - 11sPicked up - 3.5s",
+        "cooldown": "被毁 11s / 回收 3.5s",
         "charges": "1"
       },
       "tips": [
@@ -4694,7 +4694,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "37s",
+        "cooldown": "30s",
         "charges": "1"
       },
       "tips": [
@@ -4898,7 +4898,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "Low",
-        "cooldown": "30sReload - 2.3s",
+        "cooldown": "30s (装填 2.3s)",
         "charges": "1"
       },
       "tips": [
@@ -4966,7 +4966,7 @@
         "reload": "2.5s",
         "falloff": "—",
         "destruction": "High",
-        "cooldown": "45sReload - 2.15s",
+        "cooldown": "45s (装填 2.15s)",
         "charges": "1"
       },
       "tips": [

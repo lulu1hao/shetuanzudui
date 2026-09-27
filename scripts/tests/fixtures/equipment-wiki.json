@@ -1,0 +1,1292 @@
+[
+  {
+    "title": "M11",
+    "pageid": 22,
+    "revisions": [
+      {
+        "revid": 65255,
+        "timestamp": "2026-08-23T11:48:21Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=Duelist\n|wtype=SMG\n|bodydamage=16\n|crit=24\n|environmentaldmgbar=5\n|falloffmin=10m\n|falloffmax=20m\n|falloffmulti=0.45\n|rpm=1000\n|magsize=40\n|fullreload=1.85s\n|tacreload=1.55s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 7\n| 0.360\n| 11\n| 0.60\n| 15\n| 0.84\n|-\n| Body\n| 10\n| 0.540\n| 16\n| 0.90\n| 22\n| 1.260\n|}\n<small>Values are approximate and determined by community testing. ([[Update:10.0.0|10.0.0]])</small>\n\n{{WeaponSights|IronSights|CompactReflector|Holographic\n|CompactReflectorPrice=300|HolographicPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "SH1900",
+    "pageid": 27,
+    "revisions": [
+      {
+        "revid": 62956,
+        "timestamp": "2026-08-09T13:46:05Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=500\n|wtype=Shotgun\n|bodydamage=12×15 (Max - 180)\n|environmentaldmg=6×15\n|falloffmin=10m\n|falloffmax=15m\n|falloffmulti=0.62\n|rpm=80\n|magsize=2\n|fullreload=2.60s\n|tacreload=2.20s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 1\n| 0.000\n| 2\n| 0.750\n| 2\n| 0.750\n|}\n<small>Values are approximate and determined by community testing (</small>[[Update:10.0.0|10.0.0]]<small>).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "AKM",
+    "pageid": 33,
+    "revisions": [
+      {
+        "revid": 64863,
+        "timestamp": "2026-08-20T18:48:46Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|unlock=Free\n|wtype=Assault Rifle\n|bodydamage=21\n|crit=31.5 (1.5×)\n|environmentaldmgbar=10\n|falloffmin=30m\n|falloffmax=37.5m\n|falloffmulti=0.55\n|dps=200\n|rpm=600\n|magsize=34\n|fullreload=2.35s\n|tacreload=2.35s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.4\n| 8\n| 0.7\n| 12\n| 1.1\n|-\n| Body\n| 8\n| 0.7\n| 12\n| 1.1\n| 17\n| 1.6\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small> \n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "V9S",
+    "pageid": 95,
+    "revisions": [
+      {
+        "revid": 62961,
+        "timestamp": "2026-08-09T13:54:59Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=Free\n|wtype=Handgun\n|bodydamage=38\n|crit=57\n|environmentaldmgbar=8\n|falloffmin=15m\n|falloffmax=20m\n|falloffmulti=0.65\n|rpm=360\n|magsize=18\n|fullreload=1.50s\n|tacreload=1.25s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 3\n| 0.333\n| 5\n| 0.667\n| 7\n| 1.000\n|-\n| Body\n| 4\n| 0.500\n| 7\n| 1.000\n| 10\n| 1.500\n|}<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>\n\n{{WeaponSights|IronSights|CompactReflector|Quickspark\n|CompactReflectorPrice=300|QuicksparkPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "LH1",
+    "pageid": 96,
+    "revisions": [
+      {
+        "revid": 64649,
+        "timestamp": "2026-08-19T11:54:07Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=500\n|wtype=Marksman Rifle\n|bodydamage=44\n|crit=88 (2.0×)\n|falloffmin=50m\n|falloffmax=55m\n|falloffmulti=0.75\n|rpm=270\n|magsize=15\n|fullreload=2.85s\n|tacreload=1.95s\n|environmentaldmg=14\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.222\n| 3\n| 0.444\n| 4\n| 0.667\n|-\n| Body\n| 4\n| 0.667\n| 6\n| 1.111\n| 8\n| 1.556\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>\n{{WeaponSights|Iron Sights|Adder Reflex|AdderReflexPrice=300|Compact Reflector|CompactReflectorPrice=300|Holographic|HolographicPrice=300|Looking Glass|LookingGlassPrice=300|MagnifexPrice=600|Magnifex|Reflector|ReflectorPrice=600}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "SR-84",
+    "pageid": 97,
+    "revisions": [
+      {
+        "revid": 62958,
+        "timestamp": "2026-08-09T13:49:00Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=Free\n|wtype=Marksman Rifle\n|bodydamage=118\n|crit=236\n|environmentaldmgbar=27\n|falloffmin=80m\n|falloffmax=100m\n|falloffmulti=0.75\n|rpm=45\n|magsize=6\n|fullreload=3.35\n|tacreload=1.95\n}}\n===Damage Profile===\n\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 1\n| 0.000\n| 2\n| 1.333\n| 2\n| 1.333\n|-\n| Body\n| 2\n| 1.333\n| 3\n| 2.667\n| 3\n| 2.667\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Dagger",
+    "pageid": 98,
+    "revisions": [
+      {
+        "revid": 65252,
+        "timestamp": "2026-08-23T11:45:10Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=500\n|wtype=Melee\n|primaryfire=Precise - 70 <br>Glancing blow - 49\n|altfire=Precise - 85<br>Backstab - 340\n|lunge=5m\n|precision=9°\n|environmentaldmg=33\n|environmentalaltdmg=33\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n|-\n| Back (Alt-Fire)\n| 1\n| -\n| 1\n| -\n| 2\n| -\n|-\n| Body (Alt-Fire)\n| 2\n| -\n| 4\n| -\n| 5\n| -\n|-\n| Body\n| 3\n| -\n| 5\n| -\n| 6\n| -\n|}\n<small>Values are approximate and determined by community testing ([[Update:6.6.0|6.6.0]]).</small> "
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Sword",
+    "pageid": 100,
+    "revisions": [
+      {
+        "revid": 63525,
+        "timestamp": "2026-08-13T11:44:33Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|wtype=Melee\n|unlock=Free\n|altfire=Precise - 120 <br>Glancing blow - 78\n|lunge=4.25m\n|precision=9°\n|environmentaldmg=33\n|environmentalaltdmg=33\n|primaryfire=Precise - 110 <br>Glancing blow - 71.5\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n|-\n| Body (Alt-Fire)\n| 2\n| -\n| 3\n| -\n| 3\n| -\n|-\n| Body\n| 2\n| -\n| 3\n| -\n| 4\n| -\n|-\n|Optimal Combo\n|2, Lunge → Quick Melee\n| -\n|3,  3x Slash \n| -\n|4, Lunge → 3x Slash¹ \n| -\n|}\n¹, Heavy is much harder to fully combo owing to the larger health pool of 350. Leading with a lunge is usually best to initially get in range but 4x Slash will also kill in the same time.\n\n<small>Values are approximate and determined by community testing ([[Update:7.9.0|7.9.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "CL-40",
+    "pageid": 102,
+    "revisions": [
+      {
+        "revid": 63094,
+        "timestamp": "2026-08-10T17:56:58Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|unlock=Free\n|wtype=Grenade Launcher\n|bodydamage=Direct - 105 <br>Splash- from 79 to 11\n|dmgradius=Inner - 0.5m <br>Outer - 3m\n|environmentaldmgbar=300\n|rpm=73\n|magsize=5\n|fullreload=4.75s\n|tacreload=[[#Segmented_Reload|Segmented]]\n}}\n===Damage Profile===\n\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Blast Type\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Direct\n| 2\n| 0.80\n| 3\n| 1.60\n| 4\n| 2.40\n|-\n| Splash\n| 2\n| 0.80\n| 3\n| 1.60\n| 4\n| 2.40\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]). </small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "XP-54",
+    "pageid": 737,
+    "revisions": [
+      {
+        "revid": 65258,
+        "timestamp": "2026-08-23T11:55:26Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=Free\n|wtype=SMG\n|bodydamage=16\n|crit=24\n|environmentaldmgbar=8\n|falloffmin=22.5m\n|falloffmax=32.5m\n|falloffmulti=0.52\n|rpm=880\n|magsize=36\n|fullreload=2.50s\n|tacreload=2.25s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 7\n| 0.409\n| 11\n| 0.682\n| 15\n| 0.955\n|-\n| Body\n| 10\n| 0.614\n| 16\n| 1.023\n| 22\n| 1.432\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>\n{{WeaponSights|Reflector|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|IronSightsPrice=150|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300\n}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Throwing Knives",
+    "pageid": 1220,
+    "revisions": [
+      {
+        "revid": 65315,
+        "timestamp": "2026-08-23T22:43:57Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|wtype=Miscellaneous\n|unlock=Assassin\n|bodydamage=60\n|crit=90\n|altfirebody=140\n|altfirehead=210\n|rpm=89丨545.45丨27.7\n|magsize=∞\n|environmentaldmg=20\n|environmentalaltdmg=40\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n|-\n| Head (Alt-Fire)\n| 1\n| 0.000\n| 2\n| 2.166\n| 2\n| 2.166\n|-\n| Body (Alt-Fire)\n| 2\n| 2.166\n| 2\n| 2.166\n| 3\n| 4.332\n|-\n| Head\n| 2\n| 0.110\n| 3\n| 0.784\n| 4\n| 0.894\n|-\n| Body\n| 3\n| 0.784\n| 5\n| 1.568\n| 6\n| 1.678\n|}\n<small>Values are approximate and determined by community testing (</small>[[Update:10.0.0|10.0.0]]<small>).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "93R",
+    "pageid": 3061,
+    "revisions": [
+      {
+        "revid": 62947,
+        "timestamp": "2026-08-09T11:08:01Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|wtype=Handgun\n|unlock=500\n|bodydamage=24\n|crit=36 (1.5×)\n|environmentaldmgbar=7\n|falloffmin=30m\n|falloffmax=37.5m\n|falloffmulti=0.5\n|rpm=210｜1000\n|magsize=27\n|fullreload=1.75s\n|tacreload=1.45s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.46\n| 7\n| 0.81\n| 10\n| 1.21\n|-\n| Body\n| 7\n| 0.81\n| 11\n| 1.27\n| 15\n| 1.74\n|}\n<small>Values are approximate and determined by community testing. ([[Update:11.0.0|11.0.0]])</small>\n\n{{WeaponSights|IronSights|CompactReflector|CompactReflectorPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "FAMAS",
+    "pageid": 3063,
+    "revisions": [
+      {
+        "revid": 63096,
+        "timestamp": "2026-08-10T18:07:43Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Assault Rifle\n|unlock=Hacker\n|bodydamage=24\n|crit=36\n|environmentaldmgbar=9\n|falloffmin=33.5m\n|falloffmax=42.5m\n|falloffmulti=0.50\n|rpm=220｜1080\n|magsize=27\n|fullreload=2.40s\n|tacreload=2.15s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.44\n| 7\n| 0.76\n| 10\n| 1.14\n|-\n| Body\n| 7\n| 0.76\n| 11\n| 1.20\n| 15\n| 1.64\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>\n\n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass|Reflector\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300|ReflectorPrice=600}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Recurve Bow",
+    "pageid": 4192,
+    "revisions": [
+      {
+        "revid": 64872,
+        "timestamp": "2026-08-20T19:46:49Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=500\n|wtype=Marksman Rifle\n|bodydamage=60\n|crit=90 (1.5×)\n|altfirebody=Max Draw - 126\n|altfirehead=Max Draw - 189 (1.5×)\n|magsize=∞\n|rpm=78丨48\n|reloadbar=0.75s\n|environmentaldmg=12.125\n|environmentalaltdmg=Max Draw - 25\n}}\n===Damage Profile===\n\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n|-\n| Head (Max Draw)\n| 1\n| 0.000\n| 2\n| 1.250\n| 2\n| 1.250\n|-\n| Body (Max Draw)\n| 2\n| 1.250\n| 2\n| 1.250\n| 3\n| 2.500\n|-\n| Head\n| 2\n| 0.769\n| 3\n| 1.538\n| 4\n| 2.308\n|-\n| Body\n| 3\n| 1.538\n| 5\n| 3.077\n| 6\n| 3.846\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small> "
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Dual Blades",
+    "pageid": 4201,
+    "revisions": [
+      {
+        "revid": 65611,
+        "timestamp": "2026-08-30T17:25:30Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Melee\n|unlock=500\n|primaryfire=Precise - 57×2<br>Glancing blow - 37×2\n|altfire=[[Dual_Blades#Stats|Deflect]]\n|lunge=5m\n|precision=12°\n|environmentaldmgbar=20×2 → 25×2 → 30\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "M26 Matter",
+    "pageid": 5261,
+    "revisions": [
+      {
+        "revid": 62953,
+        "timestamp": "2026-08-09T13:39:32Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=500\n|wtype=Shotgun\n|bodydamage=11×11 (Max - 121)\n|falloffmin=15m\n|falloffmax=25m\n|falloffmulti=0.65\n|rpm=84\n|magsize=8\n|fullreload=2.45s\n|tacreload=2.05s\n|environmentaldmg=9×11 (Max - 99)\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.714\n| 3\n| 1.429\n| 3\n| 1.4\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>\n\n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Cerberus 12GA",
+    "pageid": 6763,
+    "revisions": [
+      {
+        "revid": 64871,
+        "timestamp": "2026-08-20T19:28:08Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Shotgun\n|unlock=500\n|bodydamage=9×13 (Max - 117) <br>Burn - 15/s\n|environmentaldmg=7×13\n|falloffmin=10m\n|falloffmax=20m\n|falloffmulti=0.65\n|rpm=100\n|magsize=3\n|fullreload=2.85s\n|tacreload=[[#Segmented_Reload|Segmented]]\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.60\n| 3\n| 1.20\n| 3\n| 1.20\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "ARN-220",
+    "pageid": 7649,
+    "revisions": [
+      {
+        "revid": 64870,
+        "timestamp": "2026-08-20T19:02:03Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=500\n|wtype=Assault Rifle\n|bodydamage=17\n|crit=25.5 (1.5×)\n|falloffmin=37.5m\n|falloffmax=42.5m\n|falloffmulti=0.72\n|rpm=750\n|magsize=30×2\n|fullreload=Full reload - 2.7s <br> Magazine swap - 0.66s\n|tacreload=2.45s\n|environmentaldmgbar=3.5\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 6\n| 0.40\n| 10\n| 0.72\n| 14\n| 1.04\n|-\n| Body\n| 9\n| 0.64\n| 15\n| 1.12\n| 21\n| 1.60\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.6.0|11.6.0]]).</small>\n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300\n}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "CB-01 Repeater",
+    "pageid": 7650,
+    "revisions": [
+      {
+        "revid": 63082,
+        "timestamp": "2026-08-10T16:53:14Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Marksman Rifle\n|unlock=500\n|bodydamage=84\n|crit=126 (1.5×)\n|environmentaldmgbar=25\n|falloffmin=35m\n|falloffmax=40m\n|falloffmulti=0.64\n|rpm=78\n|magsize=8\n|fullreload=4.95s\n|tacreload=[[#Segmented_Reload|Segmented]]\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.77\n| 2\n| 0.77\n| 3\n| 1.54\n|-\n| Body\n| 2\n| 0.77\n| 3\n| 1.54\n| 5\n| 3.08\n|}\n<small>Values are approximate and determined by community testing ([[Update:9.9.0|9.9.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Chimera-XB",
+    "pageid": 17654,
+    "revisions": [
+      {
+        "revid": 67239,
+        "timestamp": "2026-09-23T06:44:28Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Marksman Rifle\n|unlock=Aerialist\n|bodydamage=45\n|crit=67.5 (1.5×)\n|environmentaldmgbar=12\n|falloffmin=17.5m\n|falloffmax=27.5m\n|falloffmulti=0.53\n|rpm=260\n|magsize=15\n|fullreload=2.15s\n|tacreload=2.15s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n|3\n| 0.462\n| 4\n| 0.692\n| 6\n| 1.154\n|-\n| Body\n| 4\n| 0.692\n| 6\n| 1.154\n| 8\n| 1.615\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.0.0|10.0.0]]).</small>\n\n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "M60",
+    "pageid": 19,
+    "revisions": [
+      {
+        "revid": 63110,
+        "timestamp": "2026-08-10T18:54:51Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=LMG\n|unlock=Free\n|bodydamage=20\n|crit=30\n|environmentaldmgbar=9\n|magsize=70\n|falloffmin=25m\n|falloffmax=35m\n|falloffmulti=0.50\n|rpm=580\n|fullreload=3.55s\n|tacreload=3.55s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.414\n| 9\n| 0.828\n| 12\n| 1.138\n|-\n| Body\n| 8\n| 0.724\n| 13\n| 1.241\n| 18\n| 1.759\n|}\n<small>Values are approximate and determined by community testing ([[Update:10.3.0|10.3.0]]).</small>\n\n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "R .357",
+    "pageid": 31,
+    "revisions": [
+      {
+        "revid": 63102,
+        "timestamp": "2026-08-10T18:23:04Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Handgun\n|unlock=Free\n|bodydamage=74\n|crit=148\n|environmentaldmgbar=25\n|falloffmin=27.5m\n|falloffmax=44m\n|falloffmulti=0.4\n|rpm=140\n|magsize=6\n|fullreload=2.50s\n|tacreload=2.20s\n}}\n=== Damage Profile ===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.43\n| 2\n| 0.43\n| 3\n| 0.86\n|-\n| Body\n| 3\n| 0.86\n| 4\n| 1.29\n| 5\n| 1.71\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>\n{{WeaponSights|IronSights|Quickspark|CompactReflector|CompactReflectorPrice=300|QuicksparkPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Model 1887",
+    "pageid": 101,
+    "revisions": [
+      {
+        "revid": 63098,
+        "timestamp": "2026-08-10T18:13:57Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Shotgun\n|unlock=Engineer\n|bodydamage=13×9\n|environmentaldmg=6×9\n|falloffmin=20m\n|falloffmax=30m\n|falloffmulti=0.65\n|rpm=72\n|magsize=7\n|fullreload=4.4s\n|tacreload=[[#Segmented_Reload|Segmented]]\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.87\n| 3\n| 1.74\n| 3\n| 1.74\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Riot Shield",
+    "pageid": 103,
+    "revisions": [
+      {
+        "revid": 65256,
+        "timestamp": "2026-08-23T11:51:30Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Melee\n|unlock=500\n|altfire=[[#Block|Blocking]] <br> [[#Bash|Shield Bash]] - 50\n|precision=10°\n|lunge=5m\n|environmentaldmgbar=Primary Attack - 50  <br> [[#Bash|Shield Bash]] - 100\n|primaryfire=Precise - 86 <br>Glancing blow - 60\n}}\n=== Damage Profile ===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n! Hits to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| -\n| 3\n| -\n| 4\n| -\n|}\n<small>Values are approximate and determined by community testing ([[Update:6.6.0|6.6.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Flamethrower",
+    "pageid": 104,
+    "revisions": [
+      {
+        "revid": 63106,
+        "timestamp": "2026-08-10T18:42:57Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Miscellaneous\n|unlock=500\n|bodydamage=Hit - 30 <br>Burn - 15/s\n|environmentaldmg=2\n|rpm=170\n|magsize=30\n|fullreload=3.55s\n|tacreload=3.55s\n|falloffmax=7.4m\n|falloffmulti=0\n|falloffmin=7.4m\n}}\n===Damage Profile ===\n{{{!}} class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" {{!}} <center/>Blast Type\n! colspan=\"2\" {{!}} <center/>Light (150 HP)\n! colspan=\"2\" {{!}} <center/>Medium (250 HP)\n! colspan=\"2\" {{!}} <center/>Heavy (350 HP)\n{{!}}-\n! Ammo to kill\n! Time to kill (s)\n! Ammo to kill\n! Time to kill (s)\n! Ammo to kill\n! Time to kill (s)\n{{!}}-\n{{!}} Splash\n{{!}} 5\n{{!}} 1.41\n{{!}} 9\n{{!}} 2.82\n{{!}} 12\n{{!}} 3.88\n{{!}}}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "SA1216",
+    "pageid": 105,
+    "revisions": [
+      {
+        "revid": 63113,
+        "timestamp": "2026-08-10T19:00:35Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Shotgun\n|unlock=Free\n|bodydamage=6×12\n|environmentaldmg=1×12\n|falloffmin=12.5m\n|falloffmax=20m\n|falloffmulti=0.62\n|rpm=190\n|magsize=4×4\n|fullreload=3.25s\n|tacreload=2.35s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 3\n| 0.63\n| 4\n| 0.95\n| 5\n| 1.75\n|}\nValues are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]). "
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "MGL32",
+    "pageid": 106,
+    "revisions": [
+      {
+        "revid": 63111,
+        "timestamp": "2026-08-10T18:57:39Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Grenade Launcher\n|unlock=500\n|bodydamage=Direct - 83 <br>\n'''Splash''' <br>\nFrom (Inner) - 75 (90%)<br>\nTo (Outer) - 10 (12%)\n|environmentaldmgbar=300\n|dmgradius=Inner - 2m\n<br>Outer - 4m\n|rpm=90\n|magsize=6\n|fullreload=3.10s\n|tacreload=2.85s\n}}\n===Damage Profile===\n\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Blast Type\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Splash\n| 2\n| 0.67\n| 4\n| 2.00\n| 5\n| 2.67\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small> "
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Sledgehammer",
+    "pageid": 107,
+    "revisions": [
+      {
+        "revid": 65618,
+        "timestamp": "2026-09-01T09:16:47Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Melee\n|unlock=Free\n|altfire=Precise - 200<br>Glancing blow - 150\n|lunge=5m\n|precision=10°\n|environmentaldmg=685\n|environmentalaltdmg=Over 2000\n|primaryfire=Precise - 120<br>Glancing blow - 90\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Evasive Dash",
+    "pageid": 332,
+    "revisions": [
+      {
+        "revid": 66203,
+        "timestamp": "2026-09-10T22:48:33Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|type=Specialization\n|build=Light\n|unlock=Duelist\n|cooldown=5s\n|ammo=2\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Cloaking Device",
+    "pageid": 341,
+    "revisions": [
+      {
+        "revid": 66200,
+        "timestamp": "2026-09-10T22:43:30Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|unlock=Assassin\n|type=Specialization\n|cooldownbar=[[Cloaking_Device#Energy-Based_Cooldown|Energy-Based]]\n|duration=Min - 11s <br> Max - 29s\n|costs=33% of energy\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Lewis Gun",
+    "pageid": 738,
+    "revisions": [
+      {
+        "revid": 63108,
+        "timestamp": "2026-08-10T18:50:21Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=LMG\n|unlock=500\n|bodydamage=23\n|crit=34.5\n|environmentaldmgbar=12\n|falloffmin=35m\n|falloffmax=40m\n|falloffmulti=0.67\n|rpm=500\n|magsize=47\n|fullreload=3.55s\n|tacreload=3.25s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.48\n| 8\n| 0.84\n| 11\n| 1.20\n|-\n| Body\n| 7\n| 0.72\n| 11\n| 1.20\n| 16\n| 1.80\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0]]).</small> \n\n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "FCAR",
+    "pageid": 739,
+    "revisions": [
+      {
+        "revid": 63097,
+        "timestamp": "2026-08-10T18:09:24Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Assault Rifle\n|unlock=Free\n|bodydamage=23\n|crit=34.5\n|environmentaldmgbar=11\n|falloffmin=35m\n|falloffmax=40m\n|falloffmulti=0.55\n|dps=198\n|rpm=530\n|magsize=25\n|fullreload=2.10s\n|tacreload=2.10s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 5\n| 0.45\n| 8\n| 0.79\n| 11\n| 1.13\n|-\n| Body\n| 7\n| 0.68\n| 11\n| 1.13\n| 16\n| 1.70\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>\n\n{{WeaponSights|Holographic|IronSights|AdderReflex|CompactReflector||LookingGlass\n|IronSightsPrice=150|AdderReflexPrice=300|CompactReflectorPrice=300|LookingGlassPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "KS-23",
+    "pageid": 3066,
+    "revisions": [
+      {
+        "revid": 65254,
+        "timestamp": "2026-08-23T11:47:40Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|unlock=Strategist\n|wtype=Shotgun\n|bodydamage=104\n|environmentaldmg=1000\n|falloffmin=12m\n|falloffmax=22m\n|falloffmulti=0.58\n|rpm=78\n|magsize=6\n|fullreload=4.36s\n|tacreload=[[#Segmented_Reload|Segmented]]\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n! Shells to kill\n! Time to kill (s)\n|-\n| Body\n| 2\n| 0.77\n| 3\n| 1.54\n| 4\n| 2.31\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Spear",
+    "pageid": 4193,
+    "revisions": [
+      {
+        "revid": 66971,
+        "timestamp": "2026-09-17T08:11:07Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Melee\n|unlock=500\n|primaryfire=Precise - 82<br>Glancing blow - 57\n|altfire=75 → 125 → 150\n|lunge=6.5m\n|precision=8°\n|environmentaldmg=?\n|environmentalaltdmg=?\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Pike-556",
+    "pageid": 5262,
+    "revisions": [
+      {
+        "revid": 63101,
+        "timestamp": "2026-08-10T18:21:01Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=Marksman Rifle\n|unlock=500\n|bodydamage=49\n|crit=85.75 (1.75×)\n|environmentaldmgbar=22\n|falloffmin=40m\n|falloffmax=50m\n|falloffmulti=0.8\n|rpm=200\n|magsize=12\n|fullreload=3.25s\n|tacreload=2.10s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.30\n| 3\n| 0.60\n| 5\n| 1.20\n|-\n| Body\n| 4\n| 0.90\n| 6\n| 1.50\n| 8\n| 2.10\n|}\n<small>Values are approximate and determined by community testing. ([[Update:11.0.0|11.0.0]])</small>\n\n{{WeaponSights|Scout|IronSights|IronVantage\n|IronSightsPrice=150|IronVantagePrice=150}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": ".50 Akimbo",
+    "pageid": 5263,
+    "revisions": [
+      {
+        "revid": 63104,
+        "timestamp": "2026-08-10T18:31:31Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Handgun\n|unlock=Free\n|bodydamage=46\n|crit=92\n|environmentaldmgbar=18\n|falloffmin=32m\n|falloffmax=39m\n|falloffmulti=0.50\n|rpm=230\n|magsize=14\n|fullreload=3.00s\n|tacreload=2.20s\n}}\n=== Damage Profile ===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.26\n| 3\n| 0.52\n| 4\n| 0.78\n|-\n| Body\n| 4\n| 0.78\n| 6\n| 1.30\n| 8\n| 1.82\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "ShAK-50",
+    "pageid": 6766,
+    "revisions": [
+      {
+        "revid": 65598,
+        "timestamp": "2026-08-29T08:28:42Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Assault Rifle\n|unlock=Enforcer\n|bodydamage=15×2\n|crit=22.5×2\n|environmentaldmgbar=7×2\n|falloffmin=15m\n|falloffmax=25m\n|falloffmulti=0.65\n|rpm=420\n|magsize=20\n|fullreload=3.20s\n|tacreload=2.40s\n}}\n===Damage Profile===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n! Shots to kill\n! Time to kill (s)\n|-\n| Head\n| 4\n| 0.43\n| 6\n| 0.71\n| 8\n| 1.00\n|-\n| Body\n| 5\n| 0.57\n| 9\n| 1.14\n| 12\n| 1.57\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>\n\n{{WeaponSights|IronSights|AdderReflex|CompactReflector|Holographic|LookingGlass\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300|LookingGlassPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "M134 Minigun",
+    "pageid": 7651,
+    "revisions": [
+      {
+        "revid": 63109,
+        "timestamp": "2026-08-10T18:51:59Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=HMG\n|unlock=Demolisher\n|bodydamage=11\n|crit=14.63 (1.33×)\n|environmentaldmgbar=35\n|falloffmin=30m\n|falloffmax=50m\n|falloffmulti=0.40\n|rpm=1500\n|magsize=300\n|fullreload=5.25s\n|tacreload=5.00s\n}}\n===Damage Profile===\n<tabber>\n|-|Full spin up =\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 11\n| 0.40\n| 18\n| 0.68\n| 24\n| 0.92\n|-\n| Body\n| 14\n| 0.52\n| 23\n| 0.88\n| 32\n| 1.24\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>\n\n|-|No spin up=\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 11\n| 1.62\n| 18\n| 1.91\n| 24\n| 2.15\n|-\n| Body\n| 14\n| 1.75\n| 23\n| 2.27\n| 32\n| 2.47\n|}\n<small>'''Note''': Time to kill is measured from the moment '''Fire''' button is pressed, not from the first bullet shot.\nValues are approximate and determined by community testing ([[Update:11.0.0|11.0.0]]).</small>\n\n</tabber>"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "P90",
+    "pageid": 9111,
+    "revisions": [
+      {
+        "revid": 63100,
+        "timestamp": "2026-08-10T18:17:50Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|wtype=SMG\n|unlock=500\n|bodydamage=14\n|crit=21\n|environmentaldmgbar=6\n|rpm=900\n|magsize=50\n|falloffmax=24m\n|falloffmin=18m\n|falloffmulti=0.62\n|fullreload=2.6\n|tacreload=2.35\n}}\n=== Damage Profile ===\n{| class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" |<center></center>Body Part\n! colspan=\"2\" |<center></center>Light (150 HP)\n! colspan=\"2\" |<center></center>Medium (250 HP)\n! colspan=\"2\" |<center></center>Heavy (350 HP)\n|-\n!Shots to kill\n!Time to kill (s)\n!Shots to kill\n!Time to kill (s)\n!Shots to kill\n!Time to kill (s)\n|-\n|Head\n|8\n|0.47\n|12\n|0.73\n|17\n|1.07\n|-\n|Body\n|11\n|0.67\n|18\n|1.13\n|25\n|1.60\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>\n{{WeaponSights|BoxPrism|AdderReflex|CompactReflector|Holographic\n|AdderReflexPrice=300|CompactReflectorPrice=300|HolographicPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "BFR Titan",
+    "pageid": 9112,
+    "revisions": [
+      {
+        "revid": 65314,
+        "timestamp": "2026-08-23T22:37:57Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|wtype=Handgun\n|unlock=500\n|bodydamage=90\n|crit=135 (1.5×)\n|environmentaldmgbar=95\n|rpm=71\n|magsize=5\n|fullreload=4.75\n|tacreload=[[#Segmented_Reload|Segmented]]\n|falloffmulti=0.7\n|falloffmax=40m\n|falloffmin=25m\n}}\n=== Damage Profile ===\n{|class=\"wikitable\" style=\"text-align: center;\"\n! rowspan=\"2\" | <center/>Body Part\n! colspan=\"2\" | <center/>Light (150 HP)\n! colspan=\"2\" | <center/>Medium (250 HP)\n! colspan=\"2\" | <center/>Heavy (350 HP)\n|-\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n! Bullets to kill\n! Time to kill (s)\n|-\n| Head\n| 2\n| 0.81\n| 2\n| 0.81\n| 3\n| 1.62\n|-\n| Body\n| 2\n| 0.81\n| 3\n| 1.62\n| 4\n| 2.43\n|}\n<small>Values are approximate and determined by community testing ([[Update:11.3.0|11.3.0]]).</small>\n{{WeaponSights|IronSights|CompactReflector|Quickspark\n|CompactReflectorPrice=300|QuicksparkPrice=300}}"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Charge 'N' Slam",
+    "pageid": 199,
+    "revisions": [
+      {
+        "revid": 65210,
+        "timestamp": "2026-08-22T19:59:52Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Specialization\n|unlock=Demolisher\n|cooldownbar=12s\n|damage=100 Initial<br>40 Subsequent<br>50-200 Ground Slam\n|dmgradius=4m (Ground Slam)\n|duration=3s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Healing Beam",
+    "pageid": 333,
+    "revisions": [
+      {
+        "revid": 65216,
+        "timestamp": "2026-08-22T20:24:09Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Specialization\n|unlock=Free\n|cooldownbar=<p>'''[[#Charge-Based Cooldown|Charge-Based Cooldown]]''' <br> No overheating - 0.5s → 40 charge per second <br> Overheating - 7.5s</p>\n|maxrange=10m<br>13m while healing\n|duration=5.5s\n|healing=46 per second\n|health=253 charge\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Mesh Shield",
+    "pageid": 336,
+    "revisions": [
+      {
+        "revid": 65221,
+        "timestamp": "2026-08-22T20:35:33Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Specialization\n|unlock=Free\n|cooldownbar=<p>'''[[Mesh Shield#Energy-Based Cooldown|Energy-Based]]''' <br> Not destroyed - 5s → 10 energy per second <br> Destroyed - 15s → Restored to 300 energy</p>\n|health=850 energy\n|costs=<small>225 energy when shield lowered</small>\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Breach Charge",
+    "pageid": 340,
+    "revisions": [
+      {
+        "revid": 65592,
+        "timestamp": "2026-08-29T07:40:59Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=Assassin\n|cooldown=20s\n|ammo=3\n|damage=80\n|dmgradius=2.5m\n|primetime=1s\n|maxdeploy=3\n|envdmg=Over 2000\n|health=25\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Grappling Hook",
+    "pageid": 359,
+    "revisions": [
+      {
+        "revid": 62934,
+        "timestamp": "2026-08-09T10:34:02Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|type=Specialization\n|build=Light\n|unlock=Free\n|cooldown=6s\n|ammo=1\n|maxrange=25m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Guardian Turret",
+    "pageid": 360,
+    "revisions": [
+      {
+        "revid": 65300,
+        "timestamp": "2026-08-23T21:52:02Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Specialization\n|unlock=Engineer\n|cooldownbar=Destroyed - '''35s'''<br>Picked up manually - '''3s'''<br>Picked up remotely - '''10s'''\n|damage=6\n|maxrange=20m\n|health=300\n|rpm=400\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Glitch Grenade",
+    "pageid": 371,
+    "revisions": [
+      {
+        "revid": 63130,
+        "timestamp": "2026-08-10T20:58:27Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Offensive\n|unlock=Duelist\n|cooldown=25s\n|ammo=2\n|duration=5s\n|primetime=1.5s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Nullifier",
+    "pageid": 378,
+    "revisions": [
+      {
+        "revid": 65719,
+        "timestamp": "2026-09-02T18:25:36Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=Duelist\n|cooldown=18s<br>Reload - 1.9s\n|ammo=1\n|duration=3.75s\n|maxrange=16m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Recon Senses",
+    "pageid": 379,
+    "revisions": [
+      {
+        "revid": 65223,
+        "timestamp": "2026-08-22T21:00:00Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Specialization\n|unlock={{prices|800}}\n|cooldownbar=2x activation duration\n|duration=10s\n|costs=1.5s\n|maxrange=30m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Goo Gun",
+    "pageid": 382,
+    "revisions": [
+      {
+        "revid": 62943,
+        "timestamp": "2026-08-09T10:56:40Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Specialization\n|unlock=Strategist\n|ammo=20\n|health=240 per Goo Blob\n|rpm=230\n|cooldown=Reload - 2.4s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Sonar Grenade",
+    "pageid": 390,
+    "revisions": [
+      {
+        "revid": 65318,
+        "timestamp": "2026-08-23T22:48:40Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=Scout\n|cooldown=34s\n|ammo=2\n|duration=5.25s\n|radius=12m\n|health=25\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Tracking Dart",
+    "pageid": 392,
+    "revisions": [
+      {
+        "revid": 63177,
+        "timestamp": "2026-08-10T23:03:35Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=500\n|cooldown=12s<br>Reload - 2.1s\n|ammo=4\n|damage=5\n|duration=13s\n|envdmg=5\n|rpm=120\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Thermal Vision",
+    "pageid": 396,
+    "revisions": [
+      {
+        "revid": 63170,
+        "timestamp": "2026-08-10T22:55:53Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=500\n|cooldown=10s\n|ammo=1\n|duration=20s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Gateway",
+    "pageid": 3052,
+    "revisions": [
+      {
+        "revid": 63385,
+        "timestamp": "2026-08-12T12:16:07Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=500\n|cooldown=40s\n|ammo=2\n|duration=20s\n|maxrange=50m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Dematerializer",
+    "pageid": 3056,
+    "revisions": [
+      {
+        "revid": 65224,
+        "timestamp": "2026-08-22T21:00:54Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Specialization\n|unlock=Hacker\n|cooldown=15s\n|ammo=3\n|duration=15s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Thermal Bore",
+    "pageid": 4194,
+    "revisions": [
+      {
+        "revid": 63169,
+        "timestamp": "2026-08-10T22:40:17Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=Scout\n|cooldown=25s<br>Reload - 2.6s\n|ammo=2\n|damage=25\n|dmgradius=Inner - 2.5m <br> Outer - 3m\n|envdmg=Over 3000\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Winch Claw",
+    "pageid": 4195,
+    "revisions": [
+      {
+        "revid": 65220,
+        "timestamp": "2026-08-22T20:33:14Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Specialization\n|unlock=Enforcer\n|damage=5\n|cooldownbar=Miss - 10s<br/>Low-value Target - 14s<br/>High-value Target - 18s\n|maxrange=12m\n|duration='''Stun:''' <br>3m or less - 0.1s<br>Max range - 0.5s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Gravity Vortex",
+    "pageid": 6757,
+    "revisions": [
+      {
+        "revid": 65593,
+        "timestamp": "2026-08-29T07:43:00Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=500\n|cooldown=20s\n|ammo=1\n|duration=Min - 7s <br> Max - 10s\n|health=60\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "H+ Infuser",
+    "pageid": 8311,
+    "revisions": [
+      {
+        "revid": 65739,
+        "timestamp": "2026-09-02T19:03:44Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=500\n|cooldown=Starts recharging - 10s <br> \nFully recharged - 12s\n|ammo=20\n|healing=Per shot - 11<br>Full magazine - 220\n|rpm=800\n|envdmg=1\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Shockwave",
+    "pageid": 17651,
+    "revisions": [
+      {
+        "revid": 65610,
+        "timestamp": "2026-08-30T04:03:35Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Specialization\n|unlock=Aerialist\n|cooldown=12s\n|ammo=2\n|duration=Glitch - 2s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Flashbang",
+    "pageid": 193,
+    "revisions": [
+      {
+        "revid": 63117,
+        "timestamp": "2026-08-10T19:12:06Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=All\n|type=Offensive\n|unlock=Free\n|cooldown=18s\n|ammo=2\n|duration=4.5s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "C4",
+    "pageid": 197,
+    "revisions": [
+      {
+        "revid": 65589,
+        "timestamp": "2026-08-29T07:29:54Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Offensive\n|unlock=Strategist\n|cooldown=45s\n|ammo=1\n|damage=155\n|dmgradius=Inner - 1.6m <br>\nOuter - 6.5m\n|health=25\n|maxdeploy=2\n|primetime=1.9s\n|envdmg=Over 2000\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Defibrillator",
+    "pageid": 335,
+    "revisions": [
+      {
+        "revid": 65212,
+        "timestamp": "2026-08-22T20:04:16Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Utility\n|unlock=Medic\n|cooldown=45s\n|ammo=1\n|damage=50\n|duration=[[Defibrillator#Effects|Revive Sickness]] - 5s\n|healing=50% HP on Revive\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Frag Grenade",
+    "pageid": 357,
+    "revisions": [
+      {
+        "revid": 63118,
+        "timestamp": "2026-08-10T19:14:36Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=All\n|type=Offensive\n|unlock=Free\n|cooldown=20s\n|ammo=1\n|damage=140\n|envdmg=900\n|dmgradius=Inner - 2.75m <br> Outer - 5.5m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "RPG-7",
+    "pageid": 358,
+    "revisions": [
+      {
+        "revid": 65213,
+        "timestamp": "2026-08-22T20:08:48Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Offensive\n|unlock=Demolisher\n|cooldown=45s<br>Reload - 2.15s\n|ammo=1\n|damage=110\n|dmgradius=Inner - 1.5m <br> Outer - 5.5m\n|envdmg=Over 2000\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "APS Turret",
+    "pageid": 362,
+    "revisions": [
+      {
+        "revid": 63179,
+        "timestamp": "2026-08-10T23:06:48Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Defensive\n|unlock=Engineer\n|cooldownbar=Destroyed - '''30s'''<br>Picked up manually - '''5s'''<br>Picked up remotely - '''15s'''\n|health=175\n|radius=3m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Dome Shield",
+    "pageid": 367,
+    "revisions": [
+      {
+        "revid": 65329,
+        "timestamp": "2026-08-24T14:12:01Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Defensive\n|unlock=Guardian\n|health=Shield - 250 <br> Projectile - ?\n|cooldown=30s\n|ammo=1\n|duration=5.5s\n|radius=4m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Jump Pad",
+    "pageid": 374,
+    "revisions": [
+      {
+        "revid": 63186,
+        "timestamp": "2026-08-11T00:11:38Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Utility\n|unlock=Medic\n|cooldown=40s\n|ammo=1\n|maxdeploy=1\n|health=250\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Zipline",
+    "pageid": 375,
+    "revisions": [
+      {
+        "revid": 66201,
+        "timestamp": "2026-09-10T22:46:35Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Utility\n|unlock=Hacker\n|cooldown=30s\n|ammo=1\n|maxdeploy=1\n|health=100 (Environmental)\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Gas Mine",
+    "pageid": 376,
+    "revisions": [
+      {
+        "revid": 65310,
+        "timestamp": "2026-08-23T22:33:40Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Defensive\n|unlock=Free\n|cooldown=27s\n|ammo=2\n|damage=Trigger - 30 <br> Gas - 30/s→60/s <small>(within 2s)</small>\n|duration=Gas - 10s\n|primetime=1.6s\n|maxdeploy=2\n|health=25\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Glitch Trap",
+    "pageid": 380,
+    "revisions": [
+      {
+        "revid": 65309,
+        "timestamp": "2026-08-23T22:31:31Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Defensive\n|unlock=Engineer\n|cooldown=20s\n|ammo=1\n|maxrange=5m\n|maxdeploy=2\n|primetime=1.6s\n|health=25\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Pyro Mine",
+    "pageid": 386,
+    "revisions": [
+      {
+        "revid": 65312,
+        "timestamp": "2026-08-23T22:34:49Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Defensive\n|unlock=500\n|cooldown=27s\n|ammo=2\n|damage=Explosion - 55 <br>Flame - 20/s <br>Burn - 15/s\n|duration=10s\n|primetime=1.6s\n|maxdeploy=2\n|envdmg=500\n|health=25\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Barricade",
+    "pageid": 387,
+    "revisions": [
+      {
+        "revid": 65211,
+        "timestamp": "2026-08-22T20:03:12Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Defensive\n|unlock=Strategist\n|cooldown=30s\n|ammo=2\n|health=800 per panel (environmental)\n|maxdeploy=4\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Vanishing Bomb",
+    "pageid": 1221,
+    "revisions": [
+      {
+        "revid": 63178,
+        "timestamp": "2026-08-10T23:04:04Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Light\n|type=Utility\n|unlock=Assassin\n|cooldown=25s\n|ammo=1\n|duration=Self - 5s<br>Teammates - 6.5s\n|radius=4m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Data Reshaper",
+    "pageid": 3054,
+    "revisions": [
+      {
+        "revid": 63181,
+        "timestamp": "2026-08-10T23:29:57Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Utility\n|unlock=Hacker\n|cooldown=26s\n|ammo=2\n|maxrange=21m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Anti-Gravity Cube",
+    "pageid": 3068,
+    "revisions": [
+      {
+        "revid": 63188,
+        "timestamp": "2026-08-11T00:39:59Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Utility\n|unlock=500\n|cooldown=28s\n|ammo=1\n|duration=20s\n|radius=High - 7m <br>Wide - 4m\n|health=150\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Lockbolt",
+    "pageid": 6760,
+    "revisions": [
+      {
+        "revid": 66220,
+        "timestamp": "2026-09-11T06:30:11Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Utility\n|unlock=Enforcer\n|cooldown=30s<br>Reload - 2.3s\n|ammo=1\n|duration=7s\n|maxrange=6m\n|damage=5\n|health=Anchor - 200\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Breach Drill",
+    "pageid": 8439,
+    "revisions": [
+      {
+        "revid": 63180,
+        "timestamp": "2026-08-10T23:17:33Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Utility\n|unlock=500\n|cooldown=15s\n|ammo=1\n|envdmg=Over 2000\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Healing Emitter",
+    "pageid": 8440,
+    "revisions": [
+      {
+        "revid": 65218,
+        "timestamp": "2026-08-22T20:27:24Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Heavy\n|type=Utility\n|unlock=Guardian\n|cooldown=30s\n|ammo=1\n|radius=4m\n|healing=10/s → 20/s <small>(over 2s)</small>\n|health=200\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Hover Pad",
+    "pageid": 17653,
+    "revisions": [
+      {
+        "revid": 63185,
+        "timestamp": "2026-08-10T23:59:04Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium\n|type=Utility\n|unlock=Aerialist\n|cooldown=Destroyed - 11s<br>Picked up - 3.5s\n|ammo=1\n|maxdeploy=1\n|health=425\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Goo Grenade",
+    "pageid": 194,
+    "revisions": [
+      {
+        "revid": 63353,
+        "timestamp": "2026-08-12T08:04:18Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=All\n|type=Defensive\n|unlock=Free\n|cooldown=30s\n|ammo=2\n|health=240 per Goo blob\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Explosive Mine",
+    "pageid": 338,
+    "revisions": [
+      {
+        "revid": 65308,
+        "timestamp": "2026-08-23T22:31:00Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium Heavy\n|type=Defensive\n|unlock=Demolisher\n|cooldown=15s\n|ammo=1\n|damage=120\n|envdmg=1025\n|dmgradius=4.25m\n|primetime=1.6s\n|maxdeploy=2\n|health=25\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Gas Grenade",
+    "pageid": 368,
+    "revisions": [
+      {
+        "revid": 63119,
+        "timestamp": "2026-08-10T19:19:21Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=All\n|type=Offensive\n|unlock=Free\n|cooldown=24s\n|ammo=1\n|damage=30/s→60/s(over 2s)\n|duration=12s\n|primetime=0.5s\n|radius=5m\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Pyro Grenade",
+    "pageid": 370,
+    "revisions": [
+      {
+        "revid": 63121,
+        "timestamp": "2026-08-10T19:24:47Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=All\n|type=Offensive\n|unlock=Free\n|cooldown=24s\n|ammo=1\n|damage=Flame - 20/s <br>Burn - 15/s\n|duration=12s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Smoke Grenade",
+    "pageid": 372,
+    "revisions": [
+      {
+        "revid": 63122,
+        "timestamp": "2026-08-10T19:28:24Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=All\n|type=Defensive\n|unlock=Free\n|cooldown=50s\n|ammo=2\n|duration=9s\n}}\n"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "title": "Proximity Sensor",
+    "pageid": 391,
+    "revisions": [
+      {
+        "revid": 65311,
+        "timestamp": "2026-08-23T22:34:16Z",
+        "slots": {
+          "main": {
+            "content": "{{Infobox gadgets\n|build=Medium Heavy\n|type=Utility\n|unlock=Enforcer\n|cooldown=20s\n|ammo=2\n|radius=11m\n|maxdeploy=2\n|health=25\n}}\n"
+          }
+        }
+      }
+    ]
+  }
+]

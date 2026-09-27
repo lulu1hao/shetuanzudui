@@ -163,114 +163,6 @@
               </div>
             </div>
 
-            <!-- THE FINALS 实时战绩中心快捷卡片 -->
-            <div class="room-card glass-panel finals-feature-card" @click="goToLeaderboard">
-              <div class="room-card-header">
-                <span class="room-name">
-                  THE FINALS 实时战绩中心
-                </span>
-                <div class="room-card-actions">
-                  <span class="room-type-tag tag-finals-live">S11 LIVE</span>
-                </div>
-              </div>
-              <div class="room-badge finals-feature-badge">
-                <div class="room-mode-row">
-                  <span>全球前 10,000 名实时天梯</span>
-                  <span>S1~S11 全覆盖</span>
-                </div>
-                <span class="badge-text tournament-badge-text">
-                  排位 RS · 世界巡回赛 · 赞助商争霸
-                </span>
-              </div>
-              <div class="room-info">
-                <div class="info-label-row">
-                  <span class="info-label">数据状态</span>
-                  <span class="info-value" style="color: #34d399">● 实时同步中</span>
-                </div>
-                <div class="progress-bar-bg">
-                  <div class="progress-bar-fill progress-tournament-fill" style="width: 100%"></div>
-                </div>
-              </div>
-              <div class="room-footer">
-                <span class="created-time">数据源：Embark 官方公开排行榜</span>
-                <button class="enter-btn enter-btn-tournament">
-                  进入查询
-                </button>
-              </div>
-            </div>
-
-            <!-- THE FINALS 装备与配装中心快捷卡片 -->
-            <div class="room-card glass-panel finals-feature-card finals-equipment-card" @click="goToEquipment">
-              <div class="room-card-header">
-                <span class="room-name">
-                  THE FINALS 装备与配装中心
-                </span>
-                <div class="room-card-actions">
-                  <span class="room-type-tag tag-finals-live">WIKI SYNC</span>
-                </div>
-              </div>
-              <div class="room-badge finals-feature-badge">
-                <div class="room-mode-row">
-                  <span>全职业 86 件全赛季军械库</span>
-                  <span>武器 · 特长 · 战术道具</span>
-                </div>
-                <span class="badge-text tournament-badge-text">
-                  Wiki 实时属性同步 · 自由配装模拟器
-                </span>
-              </div>
-              <div class="room-info">
-                <div class="info-label-row">
-                  <span class="info-label">Wiki 同步状态</span>
-                  <span class="info-value" style="color: #34d399">● 实时直连与离线双模</span>
-                </div>
-                <div class="progress-bar-bg">
-                  <div class="progress-bar-fill progress-tournament-fill" style="width: 100%"></div>
-                </div>
-              </div>
-              <div class="room-footer">
-                <span class="created-time">数据源：THE FINALS 官方 Wiki 直连</span>
-                <button class="enter-btn enter-btn-tournament">
-                  进入装备 →
-                </button>
-              </div>
-            </div>
-
-            <!-- THE FINALS 掉宝与挂机中心快捷卡片 -->
-            <div class="room-card glass-panel finals-feature-card finals-drops-card" @click="goToDrops">
-              <div class="room-card-header">
-                <span class="room-name">
-                  THE FINALS 掉宝与挂机中心
-                </span>
-                <div class="room-card-actions">
-                  <span class="room-type-tag tag-finals-live">DROPS AUTO</span>
-                </div>
-              </div>
-              <div class="room-badge finals-feature-badge">
-                <div class="room-mode-row">
-                  <span>WebView2 独立沙箱挂机</span>
-                  <span>独立账户 · 可选低画质与静音</span>
-                </div>
-                <span class="badge-text tournament-badge-text">
-                  官方库存监控 · 自动领取 · 下播轮转
-                </span>
-              </div>
-              <div class="room-info">
-                <div class="info-label-row">
-                  <span class="info-label">挂宝引擎状态</span>
-                  <span class="info-value" style="color: #34d399">● 原生沙箱守护就绪</span>
-                </div>
-                <div class="progress-bar-bg">
-                  <div class="progress-bar-fill progress-tournament-fill" style="width: 100%"></div>
-                </div>
-              </div>
-              <div class="room-footer">
-                <span class="created-time">数据源：Twitch 官方库存页面</span>
-                <button class="enter-btn enter-btn-tournament">
-                  进入挂宝 →
-                </button>
-              </div>
-            </div>
-
             <button class="create-room-tile" @click="showCreateModal" title="创建房间 / 赛事">
               <span>+</span>
             </button>
@@ -583,7 +475,7 @@ export default {
 
     const { checkForUpdates } = useUpdater()
     const isCheckingUpdate = ref(false)
-    const currentAppVersion = ref(pkg.version || '4.0.5')
+    const currentAppVersion = ref(pkg.version || '4.0.6')
 
     const handleManualCheckUpdate = async () => {
       if (isCheckingUpdate.value) return

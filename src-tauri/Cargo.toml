@@ -1,6 +1,6 @@
 [package]
 name = "lulu"
-version = "4.0.5"
+version = "4.0.6"
 description = "lulu"
 authors = ["you"]
 license = ""
@@ -25,3 +25,4 @@ tauri = { version = "2.11.2", features = [] }
 tauri-plugin-log = "2"
 tauri-plugin-updater = "2"
 tauri-plugin-process = "2"
+reqwest = { version = "0.13", default-features = false, features = ["rustls", "json", "query"] }

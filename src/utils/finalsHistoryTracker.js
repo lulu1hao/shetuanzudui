@@ -41,7 +41,12 @@ function saveAllHistoryPool(pool) {
 export function getFavoritePlayers() {
   try {
     const raw = localStorage.getItem(FAVORITES_KEY)
-    return raw ? JSON.parse(raw) : []
+    if (raw === null) {
+      const defaults = ['Knob#1965', 'normalize#0130', 'carnifex#7330']
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(defaults))
+      return defaults
+    }
+    return JSON.parse(raw) || []
   } catch {
     return []
   }
@@ -64,6 +69,20 @@ export function toggleFavoritePlayer(playerName) {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs.slice(0, 20)))
   } catch {}
   return !exists
+}
+
+/**
+ * 移除关注玩家
+ */
+export function removeFavoritePlayer(playerName) {
+  if (!playerName) return []
+  const trimmed = playerName.trim().toLowerCase()
+  let favs = getFavoritePlayers()
+  favs = favs.filter(n => n.trim().toLowerCase() !== trimmed)
+  try {
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs))
+  } catch {}
+  return favs
 }
 
 /**
