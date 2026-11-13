@@ -1,7 +1,7 @@
 {
-  "version": "Season 11 Live (Wiki Sync 2026.09)",
-  "lastUpdated": "2026-09-26T03:42:00.584Z",
-  "itemCount": 86,
+  "version": "Season 12 Live (PRIME TIME)",
+  "lastUpdated": "2026-11-13T07:04:39.879Z",
+  "itemCount": 89,
   "builds": [
     {
       "key": "all",
@@ -54,15 +54,31 @@
       "wtype": "Handgun",
       "stats": {
         "damage": "24",
+        "altDamage": "—",
         "crit": "36 (1.5×)",
-        "dps": "185",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "210｜1000",
         "magazine": "27",
         "reload": "1.75s",
-        "falloff": "25m - 35m",
-        "destruction": "Low",
+        "tacticalReload": "1.45s",
+        "destruction": "7",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.5",
+        "falloff": "30m - 37.5m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -106,7 +122,7 @@
         "head": {
           "light": {
             "shots": 5,
-            "ttk": "0.46s"
+            "ttk": "0.47s"
           },
           "medium": {
             "shots": 7,
@@ -114,21 +130,21 @@
           },
           "heavy": {
             "shots": 10,
-            "ttk": "1.21s"
+            "ttk": "1.22s"
           }
         },
         "body": {
           "light": {
-            "shots": 7,
-            "ttk": "0.81s"
+            "shots": 8,
+            "ttk": "0.87s"
           },
           "medium": {
             "shots": 11,
-            "ttk": "1.27s"
+            "ttk": "1.28s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "1.74s"
+            "shots": 14,
+            "ttk": "1.68s"
           }
         }
       },
@@ -150,15 +166,31 @@
       "wtype": "Assault Rifle",
       "stats": {
         "damage": "17",
+        "altDamage": "—",
         "crit": "25.5 (1.5×)",
-        "dps": "212",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "750",
         "magazine": "30×2",
-        "reload": "Full reload - 2.7s Magazine swap - 0.66s",
-        "falloff": "30m - 40m",
-        "destruction": "Low",
+        "reload": "Full reload - 2.7s / Magazine swap - 0.66s",
+        "tacticalReload": "2.45s",
+        "destruction": "3.5",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.72",
+        "falloff": "37.5m - 42.5m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -201,30 +233,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 6,
-            "ttk": "0.40s"
+            "shots": 7,
+            "ttk": "0.48s"
           },
           "medium": {
             "shots": 10,
             "ttk": "0.72s"
           },
           "heavy": {
-            "shots": 14,
-            "ttk": "1.04s"
+            "shots": 13,
+            "ttk": "0.96s"
           }
         },
         "body": {
           "light": {
-            "shots": 9,
-            "ttk": "0.64s"
+            "shots": 11,
+            "ttk": "0.80s"
           },
           "medium": {
             "shots": 15,
             "ttk": "1.12s"
           },
           "heavy": {
-            "shots": 21,
-            "ttk": "1.60s"
+            "shots": 20,
+            "ttk": "1.52s"
           }
         }
       },
@@ -245,16 +277,32 @@
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
-        "damage": "70 / 背刺 340",
-        "crit": "1.0× (背刺固定 340)",
-        "dps": "150~340",
-        "rpm": "120 RPM",
-        "magazine": "无限",
+        "damage": "Precise - 70 / Glancing blow - 49",
+        "altDamage": "Precise - 90 / Backstab - 315",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "近战 (背刺瞬秒轻中型)",
-        "destruction": "Low",
+        "tacticalReload": "—",
+        "destruction": "33",
+        "altDestruction": "33",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "4.25m",
+        "precision": "9°",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -294,38 +342,24 @@
           }
         }
       },
+      "localImageUrl": "/equipment/dagger.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/8/86/Dagger_Rank_1.png",
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 1,
-            "ttk": "0.00s (背刺秒杀)"
-          },
-          "medium": {
-            "shots": 1,
-            "ttk": "0.00s (背刺秒杀)"
-          },
-          "heavy": {
-            "shots": 2,
-            "ttk": "0.50s (背刺+平A)"
-          }
-        },
         "body": {
           "light": {
-            "shots": 2,
-            "ttk": "0.50s"
+            "shots": 3,
+            "ttk": "1.50s"
           },
           "medium": {
             "shots": 4,
-            "ttk": "1.50s"
+            "ttk": "2.08s"
           },
           "heavy": {
             "shots": 5,
-            "ttk": "2.00s"
+            "ttk": "2.65s"
           }
         }
-      },
-      "localImageUrl": "/equipment/dagger.png",
-      "remoteImageUrl": "https://www.thefinals.wiki/w/images/8/86/Dagger_Rank_1.png"
+      }
     },
     {
       "id": "lh1",
@@ -341,16 +375,32 @@
       "unlock": "500",
       "wtype": "Marksman Rifle",
       "stats": {
-        "damage": "44",
-        "crit": "88 (2.0×)",
-        "dps": "198",
+        "damage": "40",
+        "altDamage": "—",
+        "crit": "80 (2.0×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "270",
         "magazine": "15",
         "reload": "2.85s",
-        "falloff": "35m - 50m",
-        "destruction": "Low",
+        "tacticalReload": "1.95s",
+        "destruction": "14",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.75",
+        "falloff": "35m - 45m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -393,30 +443,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 2,
-            "ttk": "0.22s"
-          },
-          "medium": {
             "shots": 3,
             "ttk": "0.44s"
           },
-          "heavy": {
+          "medium": {
             "shots": 4,
             "ttk": "0.67s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "0.89s"
           }
         },
         "body": {
           "light": {
-            "shots": 4,
-            "ttk": "0.67s"
+            "shots": 5,
+            "ttk": "0.89s"
           },
           "medium": {
-            "shots": 6,
-            "ttk": "1.11s"
+            "shots": 7,
+            "ttk": "1.33s"
           },
           "heavy": {
-            "shots": 8,
-            "ttk": "1.56s"
+            "shots": 9,
+            "ttk": "1.78s"
           }
         }
       },
@@ -438,15 +488,31 @@
       "wtype": "SMG",
       "stats": {
         "damage": "16",
-        "crit": "24",
-        "dps": "266",
+        "altDamage": "—",
+        "crit": "24 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "1000",
         "magazine": "40",
         "reload": "1.85s",
-        "falloff": "15m - 25m",
-        "destruction": "Low",
+        "tacticalReload": "1.55s",
+        "destruction": "5",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.45",
+        "falloff": "10m - 20m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -489,30 +555,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 7,
-            "ttk": "0.36s"
+            "shots": 8,
+            "ttk": "0.42s"
           },
           "medium": {
             "shots": 11,
             "ttk": "0.60s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "0.84s"
+            "shots": 14,
+            "ttk": "0.78s"
           }
         },
         "body": {
           "light": {
-            "shots": 10,
-            "ttk": "0.54s"
+            "shots": 11,
+            "ttk": "0.60s"
           },
           "medium": {
             "shots": 16,
             "ttk": "0.90s"
           },
           "heavy": {
-            "shots": 22,
-            "ttk": "1.26s"
+            "shots": 21,
+            "ttk": "1.20s"
           }
         }
       },
@@ -534,15 +600,31 @@
       "wtype": "Shotgun",
       "stats": {
         "damage": "11×11 (Max - 121)",
-        "crit": "1.0× (无爆头加成)",
-        "dps": "169",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "84",
         "magazine": "8",
         "reload": "2.45s",
-        "falloff": "12m - 20m",
-        "destruction": "Low",
+        "tacticalReload": "2.05s",
+        "destruction": "9×11 (Max - 99)",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.65",
+        "falloff": "15m - 25m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -583,20 +665,6 @@
         }
       },
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.71s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.43s"
-          },
-          "heavy": {
-            "shots": 3,
-            "ttk": "1.43s"
-          }
-        },
         "body": {
           "light": {
             "shots": 2,
@@ -630,15 +698,31 @@
       "wtype": "Bow",
       "stats": {
         "damage": "60",
+        "altDamage": "Max Draw - 126",
         "crit": "90 (1.5×)",
-        "dps": "120",
+        "altCrit": "Max Draw - 189 (1.5×)",
+        "dps": "—",
         "rpm": "78丨48",
         "magazine": "∞",
-        "reload": "—",
-        "falloff": "40m - 60m",
-        "destruction": "Low",
+        "reload": "0.75s",
+        "tacticalReload": "—",
+        "destruction": "12.125",
+        "altDestruction": "Max Draw - 25",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -725,16 +809,32 @@
       "unlock": "500",
       "wtype": "Shotgun",
       "stats": {
-        "damage": "180 (15×12)",
-        "crit": "1.0×",
-        "dps": "240",
-        "rpm": "80 RPM",
-        "magazine": "2 发",
-        "reload": "2.5s",
-        "falloff": "8m~12m (贴脸爆发)",
-        "destruction": "Medium",
+        "damage": "12×15 (Max - 180)",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "80",
+        "magazine": "2",
+        "reload": "2.60s",
+        "tacticalReload": "2.20s",
+        "destruction": "6×15",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.62",
+        "falloff": "10m - 15m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -775,24 +875,10 @@
         }
       },
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 1,
-            "ttk": "0.00s (瞬秒)"
-          },
-          "medium": {
-            "shots": 2,
-            "ttk": "0.75s"
-          },
-          "heavy": {
-            "shots": 2,
-            "ttk": "0.75s"
-          }
-        },
         "body": {
           "light": {
             "shots": 1,
-            "ttk": "0.00s (瞬秒)"
+            "ttk": "0.00s"
           },
           "medium": {
             "shots": 2,
@@ -821,16 +907,32 @@
       "unlock": "Free",
       "wtype": "Sniper Rifle",
       "stats": {
-        "damage": "118",
-        "crit": "236",
-        "dps": "88",
+        "damage": "122",
+        "altDamage": "—",
+        "crit": "244 (2×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "45",
         "magazine": "6",
         "reload": "3.35",
-        "falloff": "100m+",
-        "destruction": "Low",
+        "tacticalReload": "1.95",
+        "destruction": "27",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.75",
+        "falloff": "80m - 100m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -874,7 +976,7 @@
         "head": {
           "light": {
             "shots": 1,
-            "ttk": "0.00s (爆头秒杀)"
+            "ttk": "0.00s"
           },
           "medium": {
             "shots": 2,
@@ -917,16 +1019,32 @@
       "unlock": "Free",
       "wtype": "Melee",
       "stats": {
-        "damage": "74 / 突刺 140",
-        "crit": "1.0×",
-        "dps": "148",
-        "rpm": "120 RPM",
-        "magazine": "无限",
+        "damage": "Precise - 100 / Glancing blow - 65",
+        "altDamage": "Precise - 120 / Glancing blow - 78",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "近战 (突刺位移 5m)",
-        "destruction": "Low",
+        "tacticalReload": "—",
+        "destruction": "33",
+        "altDestruction": "33",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "4m",
+        "precision": "9°",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -966,38 +1084,24 @@
           }
         }
       },
+      "localImageUrl": "/equipment/sword.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cf/Sword_Rank_1.png",
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.50s (突刺+平A)"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.00s"
-          },
-          "heavy": {
-            "shots": 4,
-            "ttk": "1.50s"
-          }
-        },
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "0.50s (突刺+平A)"
+            "ttk": "1.13s"
           },
           "medium": {
             "shots": 3,
-            "ttk": "1.00s"
+            "ttk": "1.85s"
           },
           "heavy": {
             "shots": 4,
-            "ttk": "1.50s"
+            "ttk": "2.58s"
           }
         }
-      },
-      "localImageUrl": "/equipment/sword.png",
-      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cf/Sword_Rank_1.png"
+      }
     },
     {
       "id": "throwing_knives",
@@ -1014,15 +1118,31 @@
       "wtype": "Marksman",
       "stats": {
         "damage": "60",
-        "crit": "90",
-        "dps": "180",
+        "altDamage": "140",
+        "crit": "90 (1.5×)",
+        "altCrit": "210 (1.5×)",
+        "dps": "—",
         "rpm": "89丨545.45丨27.7",
         "magazine": "∞",
         "reload": "—",
-        "falloff": "30m - 45m",
-        "destruction": "Low",
+        "tacticalReload": "—",
+        "destruction": "20",
+        "altDestruction": "40",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1110,15 +1230,31 @@
       "wtype": "Handgun",
       "stats": {
         "damage": "38",
-        "crit": "57",
-        "dps": "228",
+        "altDamage": "—",
+        "crit": "57 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "360",
         "magazine": "18",
         "reload": "1.50s",
-        "falloff": "20m - 35m",
-        "destruction": "Low",
+        "tacticalReload": "1.25s",
+        "destruction": "8",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.65",
+        "falloff": "15m - 20m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1161,30 +1297,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 3,
-            "ttk": "0.33s"
+            "shots": 4,
+            "ttk": "0.50s"
           },
           "medium": {
             "shots": 5,
             "ttk": "0.67s"
           },
           "heavy": {
-            "shots": 7,
-            "ttk": "1.00s"
+            "shots": 6,
+            "ttk": "0.83s"
           }
         },
         "body": {
           "light": {
-            "shots": 4,
-            "ttk": "0.50s"
+            "shots": 5,
+            "ttk": "0.67s"
           },
           "medium": {
             "shots": 7,
             "ttk": "1.00s"
           },
           "heavy": {
-            "shots": 10,
-            "ttk": "1.50s"
+            "shots": 9,
+            "ttk": "1.33s"
           }
         }
       },
@@ -1206,15 +1342,31 @@
       "wtype": "SMG",
       "stats": {
         "damage": "16",
-        "crit": "24",
-        "dps": "264",
+        "altDamage": "—",
+        "crit": "24 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "880",
-        "magazine": "36",
+        "magazine": "34",
         "reload": "2.50s",
-        "falloff": "20m - 30m",
-        "destruction": "Low",
+        "tacticalReload": "2.25s",
+        "destruction": "8",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.52",
+        "falloff": "22.5m - 32.5m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1257,30 +1409,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 7,
-            "ttk": "0.41s"
+            "shots": 8,
+            "ttk": "0.48s"
           },
           "medium": {
             "shots": 11,
             "ttk": "0.68s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "0.96s"
+            "shots": 14,
+            "ttk": "0.89s"
           }
         },
         "body": {
           "light": {
-            "shots": 10,
-            "ttk": "0.61s"
+            "shots": 11,
+            "ttk": "0.68s"
           },
           "medium": {
             "shots": 16,
             "ttk": "1.02s"
           },
           "heavy": {
-            "shots": 22,
-            "ttk": "1.43s"
+            "shots": 21,
+            "ttk": "1.36s"
           }
         }
       },
@@ -1302,15 +1454,31 @@
       "wtype": "Assault Rifle",
       "stats": {
         "damage": "21",
+        "altDamage": "—",
         "crit": "31.5 (1.5×)",
+        "altCrit": "—",
         "dps": "200",
         "rpm": "600",
-        "magazine": "34",
+        "magazine": "36",
         "reload": "2.35s",
-        "falloff": "30m - 40m",
-        "destruction": "Low",
+        "tacticalReload": "2.35s",
+        "destruction": "10",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.55",
+        "falloff": "30m - 37.5m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1353,30 +1521,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 5,
-            "ttk": "0.40s"
+            "shots": 6,
+            "ttk": "0.50s"
           },
           "medium": {
             "shots": 8,
             "ttk": "0.70s"
           },
           "heavy": {
-            "shots": 12,
-            "ttk": "1.10s"
+            "shots": 11,
+            "ttk": "1.00s"
           }
         },
         "body": {
           "light": {
-            "shots": 8,
-            "ttk": "0.70s"
+            "shots": 9,
+            "ttk": "0.80s"
           },
           "medium": {
             "shots": 12,
             "ttk": "1.10s"
           },
           "heavy": {
-            "shots": 17,
-            "ttk": "1.60s"
+            "shots": 16,
+            "ttk": "1.50s"
           }
         }
       },
@@ -1397,16 +1565,32 @@
       "unlock": "500",
       "wtype": "Marksman Rifle",
       "stats": {
-        "damage": "84",
-        "crit": "126 (1.5×)",
-        "dps": "109",
+        "damage": "85",
+        "altDamage": "—",
+        "crit": "132 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "78",
         "magazine": "8",
         "reload": "4.95s",
-        "falloff": "40m - 55m",
-        "destruction": "Low",
+        "tacticalReload": "Segmented",
+        "destruction": "25",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.66",
+        "falloff": "35m - 40m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1471,8 +1655,8 @@
             "ttk": "1.54s"
           },
           "heavy": {
-            "shots": 5,
-            "ttk": "3.08s"
+            "shots": 4,
+            "ttk": "2.31s"
           }
         }
       },
@@ -1493,16 +1677,32 @@
       "unlock": "500",
       "wtype": "Shotgun",
       "stats": {
-        "damage": "117 (9×13) + 灼烧",
-        "crit": "1.0×",
-        "dps": "195",
-        "rpm": "100 RPM",
-        "magazine": "3 发",
-        "reload": "2.4s",
-        "falloff": "10m~15m (龙息燃烧)",
-        "destruction": "Low",
+        "damage": "9×13 (Max - 117) / Burn - 15.75/s",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "100",
+        "magazine": "3",
+        "reload": "2.85s",
+        "tacticalReload": "Segmented",
+        "destruction": "7×13",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.65",
+        "falloff": "10m - 20m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1543,20 +1743,6 @@
         }
       },
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.60s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.20s"
-          },
-          "heavy": {
-            "shots": 3,
-            "ttk": "1.20s"
-          }
-        },
         "body": {
           "light": {
             "shots": 2,
@@ -1589,16 +1775,32 @@
       "unlock": "Aerialist",
       "wtype": "Marksman",
       "stats": {
-        "damage": "45",
-        "crit": "67.5 (1.5×)",
-        "dps": "195",
-        "rpm": "260",
+        "damage": "48",
+        "altDamage": "—",
+        "crit": "72 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "280",
         "magazine": "15",
-        "reload": "2.15",
-        "falloff": "35m - 50m",
-        "destruction": "Low",
+        "reload": "2.15s",
+        "tacticalReload": "2.15s",
+        "destruction": "12",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.53",
+        "falloff": "17.5m - 27.5m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1642,29 +1844,29 @@
         "head": {
           "light": {
             "shots": 3,
-            "ttk": "0.46s"
+            "ttk": "0.42s"
           },
           "medium": {
             "shots": 4,
-            "ttk": "0.69s"
+            "ttk": "0.63s"
           },
           "heavy": {
-            "shots": 6,
-            "ttk": "1.15s"
+            "shots": 5,
+            "ttk": "0.84s"
           }
         },
         "body": {
           "light": {
             "shots": 4,
-            "ttk": "0.69s"
+            "ttk": "0.63s"
           },
           "medium": {
             "shots": 6,
-            "ttk": "1.15s"
+            "ttk": "1.05s"
           },
           "heavy": {
-            "shots": 8,
-            "ttk": "1.62s"
+            "shots": 7,
+            "ttk": "1.26s"
           }
         }
       },
@@ -1685,16 +1887,32 @@
       "unlock": "Free",
       "wtype": "Grenade Launcher",
       "stats": {
-        "damage": "Direct - 105 Splash- from 79 to 11",
-        "crit": "1.0× (无爆头加成)",
-        "dps": "128",
+        "damage": "Direct - 105 / Splash- from 79 to 11",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "73",
         "magazine": "5",
         "reload": "4.75s",
-        "falloff": "溅射范围 3.5m",
-        "destruction": "High",
+        "tacticalReload": "Segmented",
+        "destruction": "300",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "Inner - 0.5m / Outer - 3m",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1734,36 +1952,6 @@
           }
         }
       },
-      "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.82s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.64s"
-          },
-          "heavy": {
-            "shots": 4,
-            "ttk": "2.47s"
-          }
-        },
-        "body": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.82s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.64s"
-          },
-          "heavy": {
-            "shots": 4,
-            "ttk": "2.47s"
-          }
-        }
-      },
       "localImageUrl": "/equipment/cl_40.png",
       "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/b3/CL-40_Rank_1.png"
     },
@@ -1781,16 +1969,32 @@
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
-        "damage": "57×2 (连斩)",
-        "crit": "1.0×",
-        "dps": "124",
-        "rpm": "130 RPM",
-        "magazine": "无限",
+        "damage": "Precise - 60×2 / Glancing blow - 39×2",
+        "altDamage": "Precise - 155 / Glancing blow - 100 / Deflect",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "近战 (可反弹子弹)",
-        "destruction": "Low",
+        "tacticalReload": "—",
+        "destruction": "?",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "5m",
+        "precision": "14°",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1830,38 +2034,24 @@
           }
         }
       },
+      "localImageUrl": "/equipment/dual_blades.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cb/Dual_Blades_Rank_1.png",
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 3,
-            "ttk": "0.92s"
-          },
-          "medium": {
-            "shots": 5,
-            "ttk": "1.84s"
-          },
-          "heavy": {
-            "shots": 7,
-            "ttk": "2.76s"
-          }
-        },
         "body": {
           "light": {
             "shots": 3,
-            "ttk": "0.92s"
+            "ttk": "1.29s"
           },
           "medium": {
             "shots": 5,
-            "ttk": "1.84s"
+            "ttk": "2.11s"
           },
           "heavy": {
-            "shots": 7,
-            "ttk": "2.76s"
+            "shots": 6,
+            "ttk": "2.37s"
           }
         }
-      },
-      "localImageUrl": "/equipment/dual_blades.png",
-      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cb/Dual_Blades_Rank_1.png"
+      }
     },
     {
       "id": "famas",
@@ -1878,15 +2068,31 @@
       "wtype": "Assault Rifle",
       "stats": {
         "damage": "24",
-        "crit": "36",
-        "dps": "196",
+        "altDamage": "—",
+        "crit": "36 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "220｜1080",
         "magazine": "27",
         "reload": "2.40s",
-        "falloff": "35m - 45m",
-        "destruction": "Low",
+        "tacticalReload": "2.15s",
+        "destruction": "9",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.50",
+        "falloff": "33.5m - 42.5m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -1934,25 +2140,25 @@
           },
           "medium": {
             "shots": 7,
-            "ttk": "0.76s"
+            "ttk": "0.77s"
           },
           "heavy": {
             "shots": 10,
-            "ttk": "1.14s"
+            "ttk": "1.15s"
           }
         },
         "body": {
           "light": {
-            "shots": 7,
-            "ttk": "0.76s"
+            "shots": 8,
+            "ttk": "0.82s"
           },
           "medium": {
             "shots": 11,
-            "ttk": "1.20s"
+            "ttk": "1.21s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "1.64s"
+            "shots": 14,
+            "ttk": "1.59s"
           }
         }
       },
@@ -1973,16 +2179,32 @@
       "unlock": "Free",
       "wtype": "Assault Rifle",
       "stats": {
-        "damage": "23",
-        "crit": "34.5",
+        "damage": "25",
+        "altDamage": "—",
+        "crit": "37.5 (1.5×)",
+        "altCrit": "—",
         "dps": "198",
-        "rpm": "530",
-        "magazine": "25",
+        "rpm": "500",
+        "magazine": "20",
         "reload": "2.10s",
-        "falloff": "35m - 45m",
-        "destruction": "Low",
+        "tacticalReload": "2.10s",
+        "destruction": "11",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.55",
+        "falloff": "35m - 40m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2026,29 +2248,29 @@
         "head": {
           "light": {
             "shots": 5,
-            "ttk": "0.45s"
+            "ttk": "0.48s"
           },
           "medium": {
-            "shots": 8,
-            "ttk": "0.79s"
+            "shots": 7,
+            "ttk": "0.72s"
           },
           "heavy": {
-            "shots": 11,
-            "ttk": "1.13s"
+            "shots": 9,
+            "ttk": "0.96s"
           }
         },
         "body": {
           "light": {
             "shots": 7,
-            "ttk": "0.68s"
+            "ttk": "0.72s"
           },
           "medium": {
-            "shots": 11,
-            "ttk": "1.13s"
+            "shots": 10,
+            "ttk": "1.08s"
           },
           "heavy": {
-            "shots": 16,
-            "ttk": "1.70s"
+            "shots": 13,
+            "ttk": "1.44s"
           }
         }
       },
@@ -2069,16 +2291,32 @@
       "unlock": "Engineer",
       "wtype": "Shotgun",
       "stats": {
-        "damage": "117 (13×9)",
-        "crit": "1.0×",
-        "dps": "147",
-        "rpm": "72 RPM",
+        "damage": "13×9 (Max - 117)",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "72",
         "magazine": "7",
-        "reload": "单发 0.45s (全装 2.7s)",
-        "falloff": "12m~18m",
-        "destruction": "Medium",
+        "reload": "4.4s",
+        "tacticalReload": "Segmented",
+        "destruction": "6×9 (Max - 54)",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.65",
+        "falloff": "20m - 30m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2119,32 +2357,18 @@
         }
       },
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.87s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.74s"
-          },
-          "heavy": {
-            "shots": 3,
-            "ttk": "1.74s"
-          }
-        },
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "0.87s"
+            "ttk": "0.83s"
           },
           "medium": {
             "shots": 3,
-            "ttk": "1.74s"
+            "ttk": "1.67s"
           },
           "heavy": {
             "shots": 3,
-            "ttk": "1.74s"
+            "ttk": "1.67s"
           }
         }
       },
@@ -2165,16 +2389,32 @@
       "unlock": "500",
       "wtype": "SMG",
       "stats": {
-        "damage": "14",
-        "crit": "21",
-        "dps": "210",
+        "damage": "15",
+        "altDamage": "—",
+        "crit": "22.5 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "900",
         "magazine": "50",
         "reload": "2.6",
-        "falloff": "18m - 28m",
-        "destruction": "Low",
+        "tacticalReload": "2.35",
+        "destruction": "6",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.62",
+        "falloff": "18m - 24m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2225,22 +2465,22 @@
             "ttk": "0.73s"
           },
           "heavy": {
-            "shots": 17,
-            "ttk": "1.07s"
+            "shots": 15,
+            "ttk": "1.93s"
           }
         },
         "body": {
           "light": {
-            "shots": 11,
-            "ttk": "0.67s"
+            "shots": 12,
+            "ttk": "0.73s"
           },
           "medium": {
-            "shots": 18,
-            "ttk": "1.13s"
+            "shots": 17,
+            "ttk": "1.07s"
           },
           "heavy": {
-            "shots": 25,
-            "ttk": "1.60s"
+            "shots": 22,
+            "ttk": "1.40s"
           }
         }
       },
@@ -2261,16 +2501,32 @@
       "unlock": "500",
       "wtype": "DMR",
       "stats": {
-        "damage": "49",
-        "crit": "85.75 (1.75×)",
-        "dps": "163",
+        "damage": "50",
+        "altDamage": "—",
+        "crit": "75 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "200",
         "magazine": "12",
         "reload": "3.25s",
-        "falloff": "45m - 65m",
-        "destruction": "Low",
+        "tacticalReload": "2.10s",
+        "destruction": "22",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.8",
+        "falloff": "40m - 50m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2313,12 +2569,12 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 2,
-            "ttk": "0.30s"
-          },
-          "medium": {
             "shots": 3,
             "ttk": "0.60s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "0.90s"
           },
           "heavy": {
             "shots": 5,
@@ -2331,12 +2587,12 @@
             "ttk": "0.90s"
           },
           "medium": {
-            "shots": 6,
-            "ttk": "1.50s"
+            "shots": 5,
+            "ttk": "1.20s"
           },
           "heavy": {
-            "shots": 8,
-            "ttk": "2.10s"
+            "shots": 7,
+            "ttk": "1.80s"
           }
         }
       },
@@ -2357,16 +2613,32 @@
       "unlock": "Free",
       "wtype": "Handgun",
       "stats": {
-        "damage": "74",
-        "crit": "148",
-        "dps": "172",
+        "damage": "76",
+        "altDamage": "—",
+        "crit": "152 (2.0×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "140",
         "magazine": "6",
         "reload": "2.50s",
-        "falloff": "25m - 40m",
-        "destruction": "Low",
+        "tacticalReload": "2.20s",
+        "destruction": "25",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.4",
+        "falloff": "27.5m - 44m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2453,16 +2725,32 @@
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
-        "damage": "86 (盾击)",
-        "crit": "1.0×",
-        "dps": "115",
-        "rpm": "80 RPM",
-        "magazine": "无限",
+        "damage": "Precise - 90 / Glancing blow - 63",
+        "altDamage": "Blocking / Shield Bash - 50",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "近战 (正面防弹)",
-        "destruction": "Low",
+        "tacticalReload": "—",
+        "destruction": "Primary Attack - 50 / Shield Bash - 100",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "5m",
+        "precision": "10°",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2502,38 +2790,24 @@
           }
         }
       },
+      "localImageUrl": "/equipment/riot_shield.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/0c/Riot_Shield_Rank_1.png",
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.75s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.50s"
-          },
-          "heavy": {
-            "shots": 5,
-            "ttk": "3.00s"
-          }
-        },
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "0.75s"
+            "ttk": "1.21s"
           },
           "medium": {
             "shots": 3,
-            "ttk": "1.50s"
+            "ttk": "2.06s"
           },
           "heavy": {
-            "shots": 5,
-            "ttk": "3.00s"
+            "shots": 4,
+            "ttk": "2.83s"
           }
         }
-      },
-      "localImageUrl": "/equipment/riot_shield.png",
-      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/0c/Riot_Shield_Rank_1.png"
+      }
     },
     {
       "id": "50_akimbo",
@@ -2550,15 +2824,31 @@
       "wtype": "Handgun",
       "stats": {
         "damage": "46",
-        "crit": "92",
-        "dps": "180",
+        "altDamage": "—",
+        "crit": "92 (2.0×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "230",
         "magazine": "14",
         "reload": "3.00s",
-        "falloff": "32m - 39m",
+        "tacticalReload": "2.20s",
         "destruction": "18",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "1"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.50",
+        "falloff": "32m - 39m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2567,7 +2857,37 @@
       ],
       "wikiUrl": "https://thefinals.wiki/wiki/.50_Akimbo",
       "localImageUrl": "/equipment/50_akimbo.png",
-      "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/5a/.50_Akimbo_Rank_1.png"
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/5a/.50_Akimbo_Rank_1.png",
+      "damageProfile": {
+        "head": {
+          "light": {
+            "shots": 2,
+            "ttk": "0.26s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "0.52s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "0.78s"
+          }
+        },
+        "body": {
+          "light": {
+            "shots": 4,
+            "ttk": "0.78s"
+          },
+          "medium": {
+            "shots": 6,
+            "ttk": "1.30s"
+          },
+          "heavy": {
+            "shots": 8,
+            "ttk": "1.83s"
+          }
+        }
+      }
     },
     {
       "id": "bfr_titan",
@@ -2583,16 +2903,32 @@
       "unlock": "500",
       "wtype": "Handgun",
       "stats": {
-        "damage": "90",
-        "crit": "135 (1.5×)",
-        "dps": "106",
+        "damage": "95",
+        "altDamage": "—",
+        "crit": "142.5 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "71",
         "magazine": "5",
         "reload": "4.75",
-        "falloff": "35m - 50m",
-        "destruction": "Medium",
+        "tacticalReload": "Segmented",
+        "destruction": "95",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.7",
+        "falloff": "25m - 40m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2636,11 +2972,11 @@
         "head": {
           "light": {
             "shots": 2,
-            "ttk": "0.85s"
+            "ttk": "0.84s"
           },
           "medium": {
             "shots": 2,
-            "ttk": "0.85s"
+            "ttk": "0.84s"
           },
           "heavy": {
             "shots": 3,
@@ -2650,7 +2986,7 @@
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "0.85s"
+            "ttk": "0.84s"
           },
           "medium": {
             "shots": 3,
@@ -2679,16 +3015,32 @@
       "unlock": "500",
       "wtype": "Special",
       "stats": {
-        "damage": "30 (直接) + 15/s (持续灼烧)",
-        "crit": "1.0×",
-        "dps": "165",
-        "rpm": "170 RPM",
-        "magazine": "30 罐",
+        "damage": "Hit - 30 / Burn - 15.75/s",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "170",
+        "magazine": "30",
         "reload": "3.55s",
-        "falloff": "有效射程 12m",
-        "destruction": "Low",
+        "tacticalReload": "3.55s",
+        "destruction": "2",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0",
+        "falloff": "7.4m - 7.4m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2728,36 +3080,6 @@
           }
         }
       },
-      "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 5,
-            "ttk": "0.70s"
-          },
-          "medium": {
-            "shots": 8,
-            "ttk": "1.20s"
-          },
-          "heavy": {
-            "shots": 11,
-            "ttk": "1.75s"
-          }
-        },
-        "body": {
-          "light": {
-            "shots": 5,
-            "ttk": "0.70s"
-          },
-          "medium": {
-            "shots": 8,
-            "ttk": "1.20s"
-          },
-          "heavy": {
-            "shots": 11,
-            "ttk": "1.75s"
-          }
-        }
-      },
       "localImageUrl": "/equipment/flamethrower.png",
       "remoteImageUrl": "https://www.thefinals.wiki/w/images/5/50/Flamethrower_Rank_1.png"
     },
@@ -2775,16 +3097,32 @@
       "unlock": "Strategist",
       "wtype": "Shotgun",
       "stats": {
-        "damage": "104 (独头弹)",
-        "crit": "1.0×",
-        "dps": "135",
-        "rpm": "78 RPM",
-        "magazine": "6 发",
-        "reload": "单发 0.5s (全装 4.36s)",
-        "falloff": "18m~25m (精确破障)",
-        "destruction": "High",
+        "damage": "100",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "78",
+        "magazine": "6",
+        "reload": "4.36s",
+        "tacticalReload": "Segmented",
+        "destruction": "1000",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.58",
+        "falloff": "12m - 22m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2825,20 +3163,6 @@
         }
       },
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.77s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.54s"
-          },
-          "heavy": {
-            "shots": 4,
-            "ttk": "2.31s"
-          }
-        },
         "body": {
           "light": {
             "shots": 2,
@@ -2872,15 +3196,31 @@
       "wtype": "LMG",
       "stats": {
         "damage": "23",
-        "crit": "34.5",
-        "dps": "183",
-        "rpm": "500",
+        "altDamage": "—",
+        "crit": "34.5 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "520",
         "magazine": "47",
         "reload": "3.55s",
-        "falloff": "30m - 45m",
-        "destruction": "Medium",
+        "tacticalReload": "3.25s",
+        "destruction": "12",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.67",
+        "falloff": "35m - 40m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -2923,30 +3263,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 5,
-            "ttk": "0.48s"
+            "shots": 6,
+            "ttk": "0.58s"
           },
           "medium": {
             "shots": 8,
-            "ttk": "0.84s"
+            "ttk": "0.81s"
           },
           "heavy": {
-            "shots": 11,
-            "ttk": "1.20s"
+            "shots": 10,
+            "ttk": "1.04s"
           }
         },
         "body": {
           "light": {
-            "shots": 7,
-            "ttk": "0.72s"
+            "shots": 8,
+            "ttk": "0.81s"
           },
           "medium": {
             "shots": 11,
-            "ttk": "1.20s"
+            "ttk": "1.15s"
           },
           "heavy": {
-            "shots": 16,
-            "ttk": "1.80s"
+            "shots": 15,
+            "ttk": "1.61s"
           }
         }
       },
@@ -2968,15 +3308,31 @@
       "wtype": "LMG",
       "stats": {
         "damage": "11",
-        "crit": "21.3 (1.33×)",
-        "dps": "400 (最高速)",
-        "rpm": "1500 RPM (0.8s预热)",
+        "altDamage": "—",
+        "crit": "14.63 (1.33×)",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "1500",
         "magazine": "300",
-        "reload": "5.25s (过热)",
-        "falloff": "25m~35m",
-        "destruction": "High",
+        "reload": "5.25s",
+        "tacticalReload": "5.00s",
+        "destruction": "35",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.40",
+        "falloff": "30m - 50m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3019,30 +3375,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 11,
-            "ttk": "1.62s (含预热)"
+            "shots": 12,
+            "ttk": "0.44s"
           },
           "medium": {
             "shots": 18,
-            "ttk": "1.91s (含预热)"
+            "ttk": "0.68s"
           },
           "heavy": {
-            "shots": 24,
-            "ttk": "2.15s (含预热)"
+            "shots": 23,
+            "ttk": "0.88s"
           }
         },
         "body": {
           "light": {
-            "shots": 14,
-            "ttk": "1.75s (含预热)"
+            "shots": 16,
+            "ttk": "0.60s"
           },
           "medium": {
             "shots": 23,
-            "ttk": "2.27s (含预热)"
+            "ttk": "0.88s"
           },
           "heavy": {
-            "shots": 32,
-            "ttk": "2.47s (含预热)"
+            "shots": 30,
+            "ttk": "1.16s"
           }
         }
       },
@@ -3064,15 +3420,31 @@
       "wtype": "LMG",
       "stats": {
         "damage": "20",
-        "crit": "30",
-        "dps": "193",
-        "rpm": "580",
+        "altDamage": "—",
+        "crit": "30 (1.5×)",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "600",
         "magazine": "70",
         "reload": "3.55s",
-        "falloff": "30m - 40m",
-        "destruction": "Medium",
+        "tacticalReload": "3.55s",
+        "destruction": "9",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.50",
+        "falloff": "25m - 35m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3115,30 +3487,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 5,
-            "ttk": "0.41s"
+            "shots": 6,
+            "ttk": "0.50s"
           },
           "medium": {
             "shots": 9,
-            "ttk": "0.83s"
+            "ttk": "0.80s"
           },
           "heavy": {
-            "shots": 12,
-            "ttk": "1.14s"
+            "shots": 11,
+            "ttk": "1.00s"
           }
         },
         "body": {
           "light": {
-            "shots": 8,
-            "ttk": "0.72s"
+            "shots": 9,
+            "ttk": "0.80s"
           },
           "medium": {
             "shots": 13,
-            "ttk": "1.24s"
+            "ttk": "1.20s"
           },
           "heavy": {
-            "shots": 18,
-            "ttk": "1.76s"
+            "shots": 17,
+            "ttk": "1.60s"
           }
         }
       },
@@ -3159,16 +3531,32 @@
       "unlock": "500",
       "wtype": "Grenade Launcher",
       "stats": {
-        "damage": "Direct - 83",
-        "crit": "1.0× (无爆头加成)",
-        "dps": "124",
+        "damage": "Direct - 83 / Splash / From (Inner) - 75 (90%) / To (Outer) - 10 (12%)",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "90",
         "magazine": "6",
         "reload": "3.10s",
-        "falloff": "溅射范围 4m",
-        "destruction": "High",
+        "tacticalReload": "2.85s",
+        "destruction": "300",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "Inner - 2m / Outer - 4m",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3208,36 +3596,6 @@
           }
         }
       },
-      "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.67s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.33s"
-          },
-          "heavy": {
-            "shots": 5,
-            "ttk": "2.67s"
-          }
-        },
-        "body": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.67s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.33s"
-          },
-          "heavy": {
-            "shots": 5,
-            "ttk": "2.67s"
-          }
-        }
-      },
       "localImageUrl": "/equipment/mgl32.png",
       "remoteImageUrl": "https://www.thefinals.wiki/w/images/b/b1/MGL32_Rank_1.png"
     },
@@ -3255,16 +3613,32 @@
       "unlock": "Free",
       "wtype": "Shotgun",
       "stats": {
-        "damage": "72 (12×6)",
-        "crit": "1.0×",
-        "dps": "228",
-        "rpm": "190 RPM (4连转轮)",
-        "magazine": "16 发",
-        "reload": "3.0s",
-        "falloff": "10m~15m",
-        "destruction": "Medium",
+        "damage": "6×12 (Max - 72)",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "190",
+        "magazine": "4×4",
+        "reload": "Full Reload - 3.25s Magazine Swap - 0.80s",
+        "tacticalReload": "2.35s",
+        "destruction": "1×12 (Max - 12)",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.67",
+        "falloff": "12.5m - 20m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3305,20 +3679,6 @@
         }
       },
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 3,
-            "ttk": "0.63s"
-          },
-          "medium": {
-            "shots": 4,
-            "ttk": "0.95s"
-          },
-          "heavy": {
-            "shots": 5,
-            "ttk": "1.75s"
-          }
-        },
         "body": {
           "light": {
             "shots": 3,
@@ -3351,16 +3711,32 @@
       "unlock": "Enforcer",
       "wtype": "Battle Rifle",
       "stats": {
-        "damage": "15×2",
-        "crit": "22.5×2",
-        "dps": "210",
+        "damage": "15×2 (Max - 30)",
+        "altDamage": "—",
+        "crit": "22.5(1.5×)×2 (Max - 45)",
+        "altCrit": "—",
+        "dps": "—",
         "rpm": "420",
         "magazine": "20",
         "reload": "3.20s",
-        "falloff": "30m - 45m",
-        "destruction": "Medium",
+        "tacticalReload": "2.40s",
+        "destruction": "7×2 (Max - 14)",
+        "altDestruction": "—",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "0.65",
+        "falloff": "15m - 25m"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3417,16 +3793,16 @@
         },
         "body": {
           "light": {
-            "shots": 5,
-            "ttk": "0.57s"
+            "shots": 6,
+            "ttk": "0.71s"
           },
           "medium": {
             "shots": 9,
             "ttk": "1.14s"
           },
           "heavy": {
-            "shots": 12,
-            "ttk": "1.57s"
+            "shots": 11,
+            "ttk": "1.43s"
           }
         }
       },
@@ -3447,16 +3823,32 @@
       "unlock": "Free",
       "wtype": "Melee",
       "stats": {
-        "damage": "120 / 重砸 200",
-        "crit": "1.0× (无爆头加成)",
-        "dps": "120~200",
-        "rpm": "60 RPM",
-        "magazine": "无限",
+        "damage": "Precise - 120 / Glancing blow - 90",
+        "altDamage": "Precise - 200 / Glancing blow - 150",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "近战 (秒破建筑掩体)",
-        "destruction": "Max (全场景秒拆)",
+        "tacticalReload": "—",
+        "destruction": "685",
+        "altDestruction": "Over 2000",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "4.5m",
+        "precision": "10°",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3496,38 +3888,24 @@
           }
         }
       },
+      "localImageUrl": "/equipment/sledgehammer.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cb/Sledgehammer_Rank_1.png",
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 1,
-            "ttk": "0.00s (重击秒杀)"
-          },
-          "medium": {
-            "shots": 2,
-            "ttk": "0.85s (重击+轻击)"
-          },
-          "heavy": {
-            "shots": 2,
-            "ttk": "1.60s (2次重击)"
-          }
-        },
         "body": {
           "light": {
-            "shots": 1,
-            "ttk": "0.00s (重击秒杀)"
+            "shots": 2,
+            "ttk": "1.39s"
           },
           "medium": {
-            "shots": 2,
-            "ttk": "0.85s (重击+轻击)"
+            "shots": 3,
+            "ttk": "2.26s"
           },
           "heavy": {
-            "shots": 2,
-            "ttk": "1.60s (2次重击)"
+            "shots": 3,
+            "ttk": "2.26s"
           }
         }
-      },
-      "localImageUrl": "/equipment/sledgehammer.png",
-      "remoteImageUrl": "https://www.thefinals.wiki/w/images/c/cb/Sledgehammer_Rank_1.png"
+      }
     },
     {
       "id": "spear",
@@ -3543,16 +3921,32 @@
       "unlock": "500",
       "wtype": "Melee",
       "stats": {
-        "damage": "82 / 旋风 150",
-        "crit": "1.0×",
-        "dps": "130",
-        "rpm": "90 RPM",
-        "magazine": "无限",
+        "damage": "Precise - 82 / Glancing blow - 57",
+        "altDamage": "75 → 125 → 150",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "近战 (3m 攻击距离)",
-        "destruction": "Medium",
+        "tacticalReload": "—",
+        "destruction": "?",
+        "altDestruction": "?",
         "cooldown": "—",
-        "charges": "—"
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "5.75m",
+        "precision": "8°",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3592,38 +3986,24 @@
           }
         }
       },
+      "localImageUrl": "/equipment/spear.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/37/Spear_Rank_1.png",
       "damageProfile": {
-        "head": {
-          "light": {
-            "shots": 2,
-            "ttk": "0.75s"
-          },
-          "medium": {
-            "shots": 3,
-            "ttk": "1.50s"
-          },
-          "heavy": {
-            "shots": 4,
-            "ttk": "2.25s"
-          }
-        },
         "body": {
           "light": {
-            "shots": 2,
-            "ttk": "0.75s"
+            "shots": 3,
+            "ttk": "1.73s"
           },
           "medium": {
-            "shots": 3,
-            "ttk": "1.50s"
+            "shots": 4,
+            "ttk": "2.60s"
           },
           "heavy": {
             "shots": 4,
-            "ttk": "2.25s"
+            "ttk": "2.60s"
           }
         }
-      },
-      "localImageUrl": "/equipment/spear.png",
-      "remoteImageUrl": "https://www.thefinals.wiki/w/images/3/37/Spear_Rank_1.png"
+      }
     },
     {
       "id": "cloaking_device",
@@ -3639,16 +4019,32 @@
       "unlock": "Assassin",
       "wtype": "Specialization",
       "stats": {
-        "damage": "0 (潜行迷彩)",
+        "damage": "—",
+        "altDamage": "—",
         "crit": "—",
-        "dps": "隐身偷袭",
-        "rpm": "按需开关",
-        "magazine": "隐身能量槽 (最长 10s)",
-        "reload": "自动充能",
-        "falloff": "全距离隐匿",
-        "destruction": "None",
-        "cooldown": "起步消耗 15% 能量",
-        "charges": "1"
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Energy-Based",
+        "charges": "—",
+        "duration": "Min - 11s / Max - 29s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "33% of energy",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "开火或受到攻击会瞬间打破隐身，攻击前找好最佳切入角度。",
@@ -3672,16 +4068,32 @@
       "unlock": "Duelist",
       "wtype": "Specialization",
       "stats": {
-        "damage": "0 (纯机动位移)",
+        "damage": "—",
+        "altDamage": "—",
         "crit": "—",
-        "dps": "闪避身法",
-        "rpm": "连环闪烁",
-        "magazine": "3 段充能",
-        "reload": "单段恢复 8s",
-        "falloff": "单次位移 8m",
-        "destruction": "None",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "5s",
-        "charges": "3"
+        "charges": "2",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "可在空中进行二次/三次变向冲刺，躲避火箭筒与霰弹枪致命伤害。",
@@ -3705,16 +4117,32 @@
       "unlock": "Free",
       "wtype": "Specialization",
       "stats": {
-        "damage": "0 (立体机动)",
+        "damage": "—",
+        "altDamage": "—",
         "crit": "—",
-        "dps": "飞索机动",
-        "rpm": "即时拉取",
-        "magazine": "1 次",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "抓钩距离 25m",
-        "destruction": "None",
-        "cooldown": "6s",
-        "charges": "1"
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Minimum 4s / Maximum 7.5s",
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "25m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "在抓钩拉力达到最高点时按跳跃键脱钩，可利用惯性进行超远距离高空滑翔。",
@@ -3738,16 +4166,32 @@
       "unlock": "Hacker",
       "wtype": "Specialization",
       "stats": {
-        "damage": "0 (空间穿透通道)",
+        "damage": "—",
+        "altDamage": "—",
         "crit": "—",
-        "dps": "空间重构",
-        "rpm": "即时激活",
-        "magazine": "3 次充能",
-        "reload": "单次充能恢复 12s",
-        "falloff": "射程 10m",
-        "destruction": "临时解构 (可复原)",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "15s",
-        "charges": "3"
+        "charges": "3",
+        "duration": "15s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "在提现机正下方天花板解构，可直接将上方的现金箱漏到下层安全区域。",
@@ -3771,16 +4215,32 @@
       "unlock": "Engineer",
       "wtype": "Specialization",
       "stats": {
-        "damage": "8 / 发",
-        "crit": "1.0×",
-        "dps": "64 DPS",
-        "rpm": "480 RPM",
-        "magazine": "无限",
+        "damage": "6",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "400",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "锁敌范围 20m (180°扫描)",
-        "destruction": "Low",
-        "cooldown": "30s",
-        "charges": "1"
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Destroyed - 35s / Picked up manually - 3s / Picked up remotely - 10s",
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "300",
+        "range": "20m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "放置在天花板横梁、墙角阴影或提现机高处盲区，形成立体交叉火力。",
@@ -3804,16 +4264,32 @@
       "unlock": "Free",
       "wtype": "Specialization",
       "stats": {
-        "damage": "0 (纯团队治疗)",
+        "damage": "—",
+        "altDamage": "—",
         "crit": "—",
-        "dps": "治疗速率 50 HP/s",
-        "rpm": "持续光束",
-        "magazine": "热量条 (持续约 6s)",
-        "reload": "过热冷却 4s / 自然散热",
-        "falloff": "有效连接距离 15m",
-        "destruction": "None",
-        "cooldown": "过热 5.5s",
-        "charges": "1"
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Charge-Based Cooldown / No overheating - 0.5s → 40 charge per second / Overheating - 7.5s",
+        "charges": "—",
+        "duration": "5.5s",
+        "healing": "50 per second",
+        "health": "253 charge",
+        "range": "10m / 13m while healing",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "保持在掩体后方锁定前排重装队友进行隔空连接治疗。",
@@ -3838,15 +4314,31 @@
       "wtype": "Specialization",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "12s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "Glitch - 2s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3872,15 +4364,31 @@
       "wtype": "Specialization",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "10s",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "2x activation duration",
+        "charges": "—",
+        "duration": "10s",
+        "healing": "—",
+        "health": "—",
+        "range": "30m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "1.5s",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -3905,16 +4413,32 @@
       "unlock": "Demolisher",
       "wtype": "Specialization",
       "stats": {
-        "damage": "冲撞 130 / 重砸 最高200",
-        "crit": "1.0× (无爆头加成)",
-        "dps": "130+ 瞬间爆发",
-        "rpm": "冲撞持续 3.5s",
-        "magazine": "1 次",
+        "damage": "100 Initial / 40 Subsequent / 50-200 Ground Slam",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "重砸溅射 5m",
-        "destruction": "Max (秒破一切墙体楼板)",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "12s",
-        "charges": "1"
+        "charges": "—",
+        "duration": "3s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "4m (Ground Slam)",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "在空中跳下或使用跳板时启动，可触发空中重砸（Slam），伤害随下落高度增加（最高200点）。",
@@ -3939,16 +4463,32 @@
       "unlock": "Strategist",
       "wtype": "Specialization",
       "stats": {
-        "damage": "0 (强力地形创造/定身)",
+        "damage": "—",
+        "altDamage": "—",
         "crit": "—",
-        "dps": "控场/建造",
-        "rpm": "180 RPM",
-        "magazine": "8 发凝胶罐",
-        "reload": "自动充能",
-        "falloff": "射程 20m",
-        "destruction": "None (创造物理凝胶)",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "230",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "Reload - 2.4s",
-        "charges": "8"
+        "charges": "20",
+        "duration": "—",
+        "healing": "—",
+        "health": "240 per Goo Blob",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "直接朝敌人脚下喷射，可将其粘在地面无法移动，配合队友集火。",
@@ -3972,16 +4512,32 @@
       "unlock": "Free",
       "wtype": "Specialization",
       "stats": {
-        "damage": "0 (纯防守盾牌)",
+        "damage": "—",
+        "altDamage": "—",
         "crit": "—",
-        "dps": "750 护盾承伤",
-        "rpm": "随开随关",
-        "magazine": "750 HP",
-        "reload": "关闭后自动充能 (100 HP/s)",
-        "falloff": "单向全屏防护",
-        "destruction": "None",
-        "cooldown": "完全碎盾后 8s 充能",
-        "charges": "1 (按住激活)"
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Energy-Based / Not destroyed - 5s → 10 energy per second / Destroyed - 15s → Restored to 300 energy",
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "850 energy",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "225 energy when shield lowered",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "按住右键/技能键开启，随时松开收盾，避免被打至碎盾导致进入长冷却。",
@@ -4006,16 +4562,32 @@
       "unlock": "Enforcer",
       "wtype": "Specialization",
       "stats": {
-        "damage": "15 (附带硬控眩晕)",
-        "crit": "1.0×",
-        "dps": "先手硬控",
-        "rpm": "17m 射程",
-        "magazine": "1 次",
+        "damage": "5",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
         "reload": "—",
-        "falloff": "最大有效距离 17m",
-        "destruction": "Low (可拉动物体/现金箱)",
-        "cooldown": "14s",
-        "charges": "1"
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Miss - 10s / Low-value Target - 14s / High-value Target - 18s",
+        "charges": "—",
+        "duration": "Stun: / 3m or less - 0.1s / Max range - 0.5s",
+        "healing": "—",
+        "health": "—",
+        "range": "12m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "将正在偷包、开盾或治疗的敌人强行拉断其动作，并使其短暂失去反抗能力。",
@@ -4041,15 +4613,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "80",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "High",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "Over 2000",
+        "altDestruction": "—",
         "cooldown": "20s",
-        "charges": "1"
+        "charges": "3",
+        "duration": "—",
+        "healing": "—",
+        "health": "25",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "2.5m",
+        "maxDeploy": "3",
+        "primeTime": "1s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4075,15 +4663,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "40s",
-        "charges": "2"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "50s",
+        "charges": "2",
+        "duration": "20s",
+        "healing": "—",
+        "health": "—",
+        "range": "60m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4109,15 +4713,31 @@
       "wtype": "Offensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "25s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "5s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "1.5s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4143,15 +4763,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "20s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "Min - 7s / Max - 10s",
+        "healing": "—",
+        "health": "60",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4177,15 +4813,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
-        "rpm": "800}} The '''H+ Infuser''' is a Light class gadget that can be fired at teammates to heal them. {{Infographic",
+        "rpm": "800",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "Starts recharging - 10s",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "1",
+        "altDestruction": "—",
+        "cooldown": "Starts recharging - 10s / Fully recharged - 14s",
+        "charges": "20",
+        "duration": "—",
+        "healing": "Per shot - 10 / Full magazine - 200",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4211,15 +4863,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "18s (装填 1.9s)",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "18s / Reload - 1.9s",
+        "charges": "1",
+        "duration": "3.75s",
+        "healing": "—",
+        "health": "—",
+        "range": "16m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4235,7 +4903,7 @@
       "name": "Sonar Grenade",
       "nameZh": "声呐手雷 (Sonar Grenade)",
       "category": "gadgets",
-      "build": "Light",
+      "build": "Light & Medium",
       "role": "声呐透视",
       "description": "Thrown projectile that emits several pulses, tracking affected contestants through walls",
       "descZh": "脉冲声呐扫描，周期性向全队暴露掩体后敌人的精确位置。",
@@ -4245,15 +4913,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "34s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "5.25s",
+        "healing": "—",
+        "health": "25",
+        "range": "—",
+        "radius": "12m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4279,15 +4963,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "25",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "High",
-        "cooldown": "25s (装填 2.6s)",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "Over 3000",
+        "altDestruction": "—",
+        "cooldown": "25s / Reload - 2.6s",
+        "charges": "2",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "Inner - 2.5m / Outer - 3m",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4313,15 +5013,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "10s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "20s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4347,15 +5063,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "5",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
-        "rpm": "120}} The Tracking Dart is a Light class gadget that can be fired at an opponent from a long distance to reveal their location to teammates for a long duration. {{Infographic",
+        "rpm": "120",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "12s (装填 2.1s)",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "5",
+        "altDestruction": "—",
+        "cooldown": "12s / Reload - 2.1s",
+        "charges": "4",
+        "duration": "13s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4381,15 +5113,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "25s",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "30s",
+        "charges": "1",
+        "duration": "Self - 5s / Teammates - 6.5s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "4m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4415,15 +5163,31 @@
       "wtype": "Defensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "20s",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Destroyed - 30s / Picked up manually - 5s / Picked up remotely - 15s",
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "175",
+        "range": "—",
+        "radius": "3m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4449,15 +5213,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "Over 2000",
+        "altDestruction": "—",
         "cooldown": "15s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4483,15 +5263,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "26s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "21m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4517,15 +5313,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "50",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "45s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "Revive Sickness - 5s",
+        "healing": "50% HP on Revive",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4550,16 +5362,32 @@
       "unlock": "Free",
       "wtype": "Defensive",
       "stats": {
-        "damage": "Trigger - 30 Gas - 30/s→60/s (within 2s)",
+        "damage": "Trigger - 30 / Gas - 30/s→60/s (within 2s)",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "27s",
-        "charges": "2"
+        "charges": "2",
+        "duration": "Gas - 10s",
+        "healing": "—",
+        "health": "25",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "2",
+        "primeTime": "1.6s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4585,15 +5413,31 @@
       "wtype": "Defensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "20s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "25",
+        "range": "5m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "2",
+        "primeTime": "1.6s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4619,15 +5463,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "被毁 11s / 回收 3.5s",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "Destroyed - 11s / Picked up - 3.5s",
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "425",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "1",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4653,15 +5513,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "40s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "250",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "1",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4687,15 +5563,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "30s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "100 (Environmental)",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "1",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4721,15 +5613,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "28s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "20s",
+        "healing": "—",
+        "health": "150",
+        "range": "—",
+        "radius": "High - 7m / Wide - 4m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4755,15 +5663,31 @@
       "wtype": "Defensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "30s",
-        "charges": "2"
+        "charges": "2",
+        "duration": "—",
+        "healing": "—",
+        "health": "800 per panel (environmental)",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "4",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4789,15 +5713,31 @@
       "wtype": "Offensive",
       "stats": {
         "damage": "155",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "High",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "Over 2000",
+        "altDestruction": "—",
         "cooldown": "45s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "25",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "Inner - 1.6m / Outer - 6.5m",
+        "maxDeploy": "2",
+        "primeTime": "1.9s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4823,15 +5763,31 @@
       "wtype": "Defensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "30s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "5.5s",
+        "healing": "—",
+        "health": "Shield - 600 / Projectile - ?",
+        "range": "—",
+        "radius": "4m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4857,15 +5813,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "30s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "—",
+        "healing": "10/s → 20/s (over 2s)",
+        "health": "200",
+        "range": "—",
+        "radius": "4m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4890,16 +5862,32 @@
       "unlock": "Enforcer",
       "wtype": "Utility",
       "stats": {
-        "damage": "—",
+        "damage": "5",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "30s (装填 2.3s)",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "30s / Reload - 2.3s",
+        "charges": "1",
+        "duration": "7s",
+        "healing": "—",
+        "health": "Anchor - 200",
+        "range": "6m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4924,16 +5912,32 @@
       "unlock": "500",
       "wtype": "Defensive",
       "stats": {
-        "damage": "Explosion - 55 Flame - 20/s Burn - 15/s",
+        "damage": "Explosion - 45 / Flame - 20/s / Burn - 15.75/s",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "500",
+        "altDestruction": "—",
         "cooldown": "27s",
-        "charges": "2"
+        "charges": "2",
+        "duration": "10s",
+        "healing": "—",
+        "health": "25",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "2",
+        "primeTime": "1.6s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4959,15 +5963,31 @@
       "wtype": "Offensive",
       "stats": {
         "damage": "110",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "High",
-        "cooldown": "45s (装填 2.15s)",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "Over 2000",
+        "altDestruction": "—",
+        "cooldown": "45s / Reload - 2.15s",
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "Inner - 1.5m / Outer - 5.5m",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -4993,15 +6013,31 @@
       "wtype": "Offensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "18s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "Minimum 2s / Maximum 5s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5026,16 +6062,32 @@
       "unlock": "Free",
       "wtype": "Offensive",
       "stats": {
-        "damage": "140",
+        "damage": "165",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "900",
+        "altDestruction": "—",
         "cooldown": "20s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "Inner - 2.75m / Outer - 5.5m",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5061,15 +6113,31 @@
       "wtype": "Offensive",
       "stats": {
         "damage": "30/s→60/s(over 2s)",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
-        "cooldown": "24s",
-        "charges": "1"
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "20s",
+        "charges": "2",
+        "duration": "8s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "4.5m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "0.5s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5095,15 +6163,31 @@
       "wtype": "Defensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "30s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "—",
+        "healing": "—",
+        "health": "240 per Goo blob",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5128,16 +6212,32 @@
       "unlock": "Free",
       "wtype": "Offensive",
       "stats": {
-        "damage": "Flame - 20/s Burn - 15/s",
+        "damage": "Explosion - 40 / Flame - 20/s / Burn - 15.75/s",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "24s",
-        "charges": "1"
+        "charges": "1",
+        "duration": "12s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5163,15 +6263,31 @@
       "wtype": "Defensive",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "50s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "13s",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "4.5m",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5197,15 +6313,31 @@
       "wtype": "Utility",
       "stats": {
         "damage": "—",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
         "cooldown": "20s",
-        "charges": "1"
+        "charges": "2",
+        "duration": "—",
+        "healing": "—",
+        "health": "25",
+        "range": "—",
+        "radius": "11m",
+        "damageRadius": "—",
+        "maxDeploy": "2",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5230,16 +6362,32 @@
       "unlock": "Demolisher",
       "wtype": "Defensive",
       "stats": {
-        "damage": "120",
+        "damage": "145",
+        "altDamage": "—",
         "crit": "—",
+        "altCrit": "—",
         "dps": "—",
         "rpm": "—",
         "magazine": "—",
-        "reload": "2.5s",
-        "falloff": "—",
-        "destruction": "Low",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "1025",
+        "altDestruction": "—",
         "cooldown": "15s",
-        "charges": "2"
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "25",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "4.25m",
+        "maxDeploy": "2",
+        "primeTime": "1.6s",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
       },
       "tips": [
         "与队友战术协同：可结合体型速度优势进行交叉火力掩护。",
@@ -5249,6 +6397,156 @@
       "wikiUrl": "https://thefinals.wiki/wiki/Explosive_Mine",
       "localImageUrl": "/equipment/explosive_mine.png",
       "remoteImageUrl": "https://www.thefinals.wiki/w/images/2/24/Explosive_Mine_Rank_1.png"
+    },
+    {
+      "id": "true_sight",
+      "name": "True Sight",
+      "nameZh": "真实视界 (True Sight)",
+      "category": "specializations",
+      "build": "Light",
+      "role": "反隐透视 / 侦察",
+      "description": "Reveals opponents through smoke and other visual obstructions, including cloaked and mimicked Contestants",
+      "descZh": "开启真实视界，透视烟雾与视觉遮挡，高亮显示隐身与拟态伪装中的敌方参赛者及可部署物。",
+      "imageFile": "Nama-404_Icon.png",
+      "imageUrl": "/equipment/true_sight.png",
+      "unlock": "Infiltrator",
+      "wtype": "Utility",
+      "stats": {
+        "damage": "—",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "???",
+        "charges": "25",
+        "duration": "???",
+        "healing": "—",
+        "health": "—",
+        "range": "—",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
+      },
+      "tips": [
+        "与队友战术协同：可结合隐身或反隐信息提前锁定烟雾与拟态目标位置。",
+        "真实视界可透视隐身与拟态伪装中的对手，适合针对敌方潜伏型 Light。",
+        "注意切换时机与冷却规划，及时开关以保持充能效率。"
+      ],
+      "wikiUrl": "https://thefinals.wiki/wiki/True_Sight",
+      "localImageUrl": "/equipment/true_sight.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/8/89/Nama-404_Icon.png"
+    },
+    {
+      "id": "mimic_device",
+      "name": "Mimic Device",
+      "nameZh": "拟态装置 (Mimic Device)",
+      "category": "gadgets",
+      "build": "Light",
+      "role": "环境拟态 / 伪装潜伏",
+      "description": "Scans and mimics objects in the environment, allowing the Contestant to hide in plain sight",
+      "descZh": "扫描场地中的可拾取物体并变身为同款物体外观，在敌方视野中隐蔽潜伏或伏击。",
+      "imageFile": "Mimic_Device_Rank_1.png",
+      "imageUrl": "/equipment/mimic_device.png",
+      "unlock": "Infiltrator",
+      "wtype": "Utility",
+      "stats": {
+        "damage": "—",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "3s",
+        "charges": "—",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "6.5m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
+      },
+      "tips": [
+        "拟态前尽量选择符合当前房间与点位环境的常规物件，降低违和感。",
+        "警惕敌方的数据重构器（Data Reshaper），被重构会直接淘汰。",
+        "在提现守点或拖延抢包时利用死角伪装，等待队友汇合再反打。"
+      ],
+      "wikiUrl": "https://thefinals.wiki/wiki/Mimic_Device",
+      "localImageUrl": "/equipment/mimic_device.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/7/7e/Mimic_Device_Rank_1.png"
+    },
+    {
+      "id": "translocator",
+      "name": "Translocator",
+      "nameZh": "换位传送信标 (Translocator)",
+      "category": "gadgets",
+      "build": "Light",
+      "role": "物件换位 / 极限拉扯",
+      "description": "Marks an object in the environment, then swaps the Contestant's position with the object at any time",
+      "descZh": "标记场地内的一个物件（15m 内），随时触发与该物件互换空间位置（最大换位距离 50m）。",
+      "imageFile": "Translocator_Rank_1.png",
+      "imageUrl": "/equipment/translocator.png",
+      "unlock": "Infiltrator",
+      "wtype": "Utility",
+      "stats": {
+        "damage": "—",
+        "altDamage": "—",
+        "crit": "—",
+        "altCrit": "—",
+        "dps": "—",
+        "rpm": "—",
+        "magazine": "—",
+        "reload": "—",
+        "tacticalReload": "—",
+        "destruction": "—",
+        "altDestruction": "—",
+        "cooldown": "25s",
+        "charges": "1",
+        "duration": "—",
+        "healing": "—",
+        "health": "—",
+        "range": "Marking an Object - 15m / Swap - 50m",
+        "radius": "—",
+        "damageRadius": "—",
+        "maxDeploy": "—",
+        "primeTime": "—",
+        "costs": "—",
+        "lunge": "—",
+        "precision": "—",
+        "falloffMultiplier": "—",
+        "falloff": "—"
+      },
+      "tips": [
+        "先标记安全掩体后方或高处的可搬运物件，进点骚扰或偷包后一键安全换位撤离。",
+        "注意 15m 标记距离与 50m 最大换位距离限制，避免超出范围无法触发。",
+        "可与队友搬运物件配合打出出其不意的切入角度。"
+      ],
+      "wikiUrl": "https://thefinals.wiki/wiki/Translocator",
+      "localImageUrl": "/equipment/translocator.png",
+      "remoteImageUrl": "https://www.thefinals.wiki/w/images/0/01/Translocator_Rank_1.png"
     }
   ],
   "offlineReady": true,

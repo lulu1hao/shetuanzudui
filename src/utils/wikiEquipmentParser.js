@@ -1,6 +1,6 @@
 // Only the current infobox and Damage Profile are authoritative; never read patch history.
 import { parseWeaponMechanics } from './weaponWikiMechanics.js'
-export const WIKI_PARSER_VERSION = 2
+export const WIKI_PARSER_VERSION = 3
 export const EQUIPMENT_STAT_LABELS = {
   damage: '基础伤害 / 主攻击', altDamage: '副攻击伤害', crit: '爆头伤害 / 倍率',
   altCrit: '副攻击爆头', dps: 'Wiki 原文 DPS（参考）', rpm: '射速 (RPM)', magazine: '弹药容量',
@@ -75,13 +75,14 @@ export function parseDamageProfile(wikitext) {
   if (!heading) return null
   const section = wikitext.slice(heading.index + heading[0].length).split(/\n\s*={2,}/)[0].replace(/\{\{!\}\}/g, '|')
   const table = section.match(/\{\|[\s\S]*?\|\}/)?.[0]
-  if (!table || !/Light\s*\(150\s*HP\)/i.test(table) || !/Medium\s*\(250\s*HP\)/i.test(table) || !/Heavy\s*\(350\s*HP\)/i.test(table)) return null
+  if (!table || !/Light\s*\(\d+\s*HP\)/i.test(table) || !/Medium\s*\(\d+\s*HP\)/i.test(table) || !/Heavy\s*\(\d+\s*HP\)/i.test(table)) return null
   const profile = {}
   for (const row of table.split(/\n\s*\|-/)) {
     const cells = row.split('\n').filter(line => /^\s*\|(?![}+-])/.test(line))
       .flatMap(line => line.replace(/^\s*\|/, '').split('||'))
       .map(cell => cleanWikiText(cell.replace(/^\s*(?:style|class|rowspan|colspan)\s*=[^|]*\|/i, '')))
-    const part = cells[0]?.toLowerCase()
+    const rawPart = cells[0]?.toLowerCase()
+    const part = rawPart === 'precise' ? 'body' : rawPart
     if (!['head', 'body'].includes(part) || cells.length !== 7) continue
     const result = {}
     for (const [i, build] of ['light', 'medium', 'heavy'].entries()) {

@@ -28,7 +28,8 @@ function harness(ids = ['akm', 'evasive_dash', 'healing_beam'], overrides = {}) 
   return { service: createEquipmentSync(options), cache, calls, pages, options, advance: ms => { clock += ms }, offline: () => { online = false } }
 }
 
-test('real numeric fixtures parse all 86 known items, including cooldownbar, ammo and healing', () => {
+test('real numeric fixtures parse all 89 known items, including cooldownbar, ammo, healing and S12 additions', () => {
+  assert.equal(base.items.length, 89)
   for (const item of base.items) {
     const parsed = parseWikiEquipment(content(fixture(item.name)), item)
     assert.ok(Object.keys(parsed.stats).length > 15, item.name)
@@ -38,8 +39,17 @@ test('real numeric fixtures parse all 86 known items, including cooldownbar, amm
   assert.equal(dash.stats.charges, '2')
   const beam = parseWikiEquipment(content(fixture('Healing Beam')), { category: 'specializations' })
   assert.match(beam.stats.cooldown, /Overheating - 7.5s/)
-  assert.equal(beam.stats.healing, '46 per second')
+  assert.equal(beam.stats.healing, '50 per second')
   assert.equal(beam.stats.health, '253 charge')
+  const mimic = parseWikiEquipment(content(fixture('Mimic Device')), { category: 'gadgets' })
+  assert.equal(mimic.stats.cooldown, '3s')
+  assert.equal(mimic.stats.range, '6.5m')
+  const translocator = parseWikiEquipment(content(fixture('Translocator')), { category: 'gadgets' })
+  assert.equal(translocator.stats.cooldown, '25s')
+  assert.equal(translocator.stats.charges, '1')
+  const sonar = base.items.find(item => item.id === 'sonar_grenade')
+  assert.equal(sonar?.build, 'Light & Medium')
+  assert.ok(base.items.some(item => item.id === 'true_sight' && item.category === 'specializations'))
 })
 
 test('nested templates, link pipes, multiline and same-line fields do not truncate the infobox', () => {
@@ -83,9 +93,11 @@ test('multipliers, alternate attack and numeric text are not replaced by old wea
 
 test('Wiki shot and TTK table refreshes with damage; zero time and unavailable time remain distinct', () => {
   const akm = { category: 'weapons', ...parseWikiEquipment(content(fixture('AKM')), { category: 'weapons' }) }
-  assert.deepEqual(wikiWeaponTTK(akm, 'body', 'heavy'), { shots: 17, ttk: '1.60s' })
+  assert.deepEqual(wikiWeaponTTK(akm, 'body', 'heavy'), { shots: 16, ttk: '1.50s' })
   const dagger = { category: 'weapons', ...parseWikiEquipment(content(fixture('Dagger')), { category: 'weapons' }) }
-  assert.deepEqual(wikiWeaponTTK(dagger, 'body', 'light'), { shots: 3, ttk: '—' })
+  assert.deepEqual(wikiWeaponTTK(dagger, 'body', 'light'), { shots: 3, ttk: '1.50s' })
+  const noTtk = { category: 'weapons', ...parseWikiEquipment(`{{Infobox weapons|bodydamage=50}}\n==Damage Profile==\n{|\n!Part!!Light (175 HP)!!!!Medium (250 HP)!!!!Heavy (325 HP)!!\n|-\n| Body || 4 || - || 5 || - || 7 || -\n|}`, { category: 'weapons' }) }
+  assert.deepEqual(wikiWeaponTTK(noTtk, 'body', 'light'), { shots: 4, ttk: '—' })
   assert.deepEqual(wikiWeaponTTK({ category: 'weapons', damageProfile: { body: { light: { shots: 1, ttk: '0.00s' } } } }, 'body', 'light'), { shots: 1, ttk: '0.00s' })
   assert.deepEqual(wikiWeaponTTK({ category: 'weapons', id: 'sword', stats: { damage: '100' } }), { shots: '—', ttk: '—' })
 })
@@ -105,17 +117,17 @@ test('revision changes update weapons and skills without app/dataVersion changes
   assert.equal(h.calls[0].withContent, false)
   const weapon = h.pages.get('akm')
   weapon.revisions[0].revid++
-  weapon.revisions[0].slots.main.content = content(weapon).replace('|bodydamage=21', '|bodydamage=25').replace('| 17\n| 1.6', '| 14\n| 1.3')
+  weapon.revisions[0].slots.main.content = content(weapon).replace('| bodydamage = 21', '| bodydamage = 25').replace('| 16\n| 1.5', '| 13\n| 1.2')
   const skill = h.pages.get('evasive dash')
   skill.revisions[0].revid++
-  skill.revisions[0].slots.main.content = content(skill).replace('|cooldown=5s', '|cooldown=4s')
+  skill.revisions[0].slots.main.content = content(skill).replace('| cooldown = 5s', '| cooldown = 4s')
   h.advance(EQUIPMENT_CHECK_INTERVAL)
   const changed = await h.service.sync()
   assert.equal(changed.success, true)
   assert.equal(changed.updatedCount, 2)
   const updatedWeapon = h.service.getData().items.find(item => item.id === 'akm')
   assert.equal(updatedWeapon.stats.damage, '25')
-  assert.deepEqual(wikiWeaponTTK(updatedWeapon, 'body', 'heavy'), { shots: 14, ttk: '1.30s' })
+  assert.deepEqual(wikiWeaponTTK(updatedWeapon, 'body', 'heavy'), { shots: 13, ttk: '1.20s' })
   assert.equal(h.service.getData().items.find(item => item.id === 'evasive_dash').stats.cooldown, '4s')
   assert.equal(h.service.getData().dataVersion, originalVersion)
   const restarted = createEquipmentSync(h.options)

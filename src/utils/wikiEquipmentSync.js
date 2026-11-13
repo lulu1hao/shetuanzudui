@@ -1,6 +1,6 @@
 import { normalizeWikiTitle, parseWikiEquipment, WIKI_PARSER_VERSION } from './wikiEquipmentParser.js'
 
-export const EQUIPMENT_CACHE_KEY = 'finals_equipment_wiki_v4'
+export const EQUIPMENT_CACHE_KEY = 'finals_equipment_wiki_v5'
 export const EQUIPMENT_CHECK_INTERVAL = 30 * 60 * 1000
 const FULL_REFRESH_INTERVAL = 24 * 60 * 60 * 1000
 const clone = value => JSON.parse(JSON.stringify(value))

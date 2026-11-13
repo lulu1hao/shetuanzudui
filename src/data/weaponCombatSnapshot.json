@@ -1,12 +1,12 @@
 {
-  "parserVersion": 2,
-  "capturedAt": "2026-09-27T08:49:39.302Z",
+  "parserVersion": 3,
+  "capturedAt": "2026-11-13T07:09:25.212Z",
   "items": [
     {
       "id": "93r",
       "title": "93R",
-      "revisionId": 62947,
-      "revisionAt": "2026-08-09T11:08:01Z",
+      "revisionId": 79655,
+      "revisionAt": "2026-10-23T23:55:14Z",
       "stats": {
         "damage": "24",
         "altDamage": "—",
@@ -40,7 +40,7 @@
         "head": {
           "light": {
             "shots": 5,
-            "ttk": "0.46s"
+            "ttk": "0.47s"
           },
           "medium": {
             "shots": 7,
@@ -48,27 +48,27 @@
           },
           "heavy": {
             "shots": 10,
-            "ttk": "1.21s"
+            "ttk": "1.22s"
           }
         },
         "body": {
           "light": {
-            "shots": 7,
-            "ttk": "0.81s"
+            "shots": 8,
+            "ttk": "0.87s"
           },
           "medium": {
             "shots": 11,
-            "ttk": "1.27s"
+            "ttk": "1.28s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "1.74s"
+            "shots": 14,
+            "ttk": "1.68s"
           }
         }
       },
       "combat": {
         "burstCount": 3,
-        "burstGap": 0.275,
+        "burstGap": 0.286,
         "chargeTime": null,
         "tubePause": null,
         "spinCycle": null,
@@ -82,9 +82,9 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 5,
-                    "seconds": 0.46
+                    "seconds": 0.47
                   },
                   {
                     "hp": 250,
@@ -92,9 +92,9 @@
                     "seconds": 0.81
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 10,
-                    "seconds": 1.21
+                    "seconds": 1.22
                   }
                 ]
               },
@@ -102,19 +102,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 7,
-                    "seconds": 0.81
+                    "hp": 175,
+                    "hits": 8,
+                    "seconds": 0.87
                   },
                   {
                     "hp": 250,
                     "hits": 11,
-                    "seconds": 1.27
+                    "seconds": 1.28
                   },
                   {
-                    "hp": 350,
-                    "hits": 15,
-                    "seconds": 1.74
+                    "hp": 325,
+                    "hits": 14,
+                    "seconds": 1.68
                   }
                 ]
               }
@@ -126,8 +126,8 @@
     {
       "id": "arn_220",
       "title": "ARN-220",
-      "revisionId": 64870,
-      "revisionAt": "2026-08-20T19:02:03Z",
+      "revisionId": 80653,
+      "revisionAt": "2026-11-02T21:17:33Z",
       "stats": {
         "damage": "17",
         "altDamage": "—",
@@ -160,30 +160,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 6,
-            "ttk": "0.40s"
+            "shots": 7,
+            "ttk": "0.48s"
           },
           "medium": {
             "shots": 10,
             "ttk": "0.72s"
           },
           "heavy": {
-            "shots": 14,
-            "ttk": "1.04s"
+            "shots": 13,
+            "ttk": "0.96s"
           }
         },
         "body": {
           "light": {
-            "shots": 9,
-            "ttk": "0.64s"
+            "shots": 11,
+            "ttk": "0.80s"
           },
           "medium": {
             "shots": 15,
             "ttk": "1.12s"
           },
           "heavy": {
-            "shots": 21,
-            "ttk": "1.60s"
+            "shots": 20,
+            "ttk": "1.52s"
           }
         }
       },
@@ -203,9 +203,9 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 6,
-                    "seconds": 0.4
+                    "hp": 175,
+                    "hits": 7,
+                    "seconds": 0.48
                   },
                   {
                     "hp": 250,
@@ -213,9 +213,9 @@
                     "seconds": 0.72
                   },
                   {
-                    "hp": 350,
-                    "hits": 14,
-                    "seconds": 1.04
+                    "hp": 325,
+                    "hits": 13,
+                    "seconds": 0.96
                   }
                 ]
               },
@@ -223,9 +223,9 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 9,
-                    "seconds": 0.64
+                    "hp": 175,
+                    "hits": 11,
+                    "seconds": 0.8
                   },
                   {
                     "hp": 250,
@@ -233,9 +233,9 @@
                     "seconds": 1.12
                   },
                   {
-                    "hp": 350,
-                    "hits": 21,
-                    "seconds": 1.6
+                    "hp": 325,
+                    "hits": 20,
+                    "seconds": 1.52
                   }
                 ]
               }
@@ -247,11 +247,11 @@
     {
       "id": "dagger",
       "title": "Dagger",
-      "revisionId": 65252,
-      "revisionAt": "2026-08-23T11:45:10Z",
+      "revisionId": 80887,
+      "revisionAt": "2026-11-11T00:19:31Z",
       "stats": {
         "damage": "Precise - 70 / Glancing blow - 49",
-        "altDamage": "Precise - 85 / Backstab - 340",
+        "altDamage": "Precise - 90 / Backstab - 315",
         "crit": "—",
         "altCrit": "—",
         "dps": "—",
@@ -272,7 +272,7 @@
         "maxDeploy": "—",
         "primeTime": "—",
         "costs": "—",
-        "lunge": "5m",
+        "lunge": "4.25m",
         "precision": "9°",
         "falloffMultiplier": "—",
         "falloff": "—"
@@ -282,15 +282,15 @@
         "body": {
           "light": {
             "shots": 3,
-            "ttk": "—"
+            "ttk": "1.50s"
           },
           "medium": {
-            "shots": 5,
-            "ttk": "—"
+            "shots": 4,
+            "ttk": "2.08s"
           },
           "heavy": {
-            "shots": 6,
-            "ttk": "—"
+            "shots": 5,
+            "ttk": "2.65s"
           }
         }
       },
@@ -307,62 +307,82 @@
             "variant": "Default",
             "rows": [
               {
-                "label": "Back (Alt-Fire)",
+                "label": "Backstab (Alt-Fire)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 1,
-                    "seconds": null
+                    "seconds": 0.85
                   },
                   {
                     "hp": 250,
                     "hits": 1,
-                    "seconds": null
+                    "seconds": 0.85
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 2,
-                    "seconds": null
+                    "seconds": 1.85
                   }
                 ]
               },
               {
-                "label": "Body (Alt-Fire)",
+                "label": "Precise (Alt-Fire)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": null
+                    "seconds": 1.85
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 3,
+                    "seconds": 2.85
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 4,
+                    "seconds": 3.85
+                  }
+                ]
+              },
+              {
+                "label": "Precise",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 3,
+                    "seconds": 1.5
                   },
                   {
                     "hp": 250,
                     "hits": 4,
-                    "seconds": null
+                    "seconds": 2.08
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 5,
-                    "seconds": null
+                    "seconds": 2.65
                   }
                 ]
               },
               {
-                "label": "Body",
+                "label": "Glancing",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 3,
-                    "seconds": null
+                    "hp": 175,
+                    "hits": 4,
+                    "seconds": 2.08
                   },
                   {
                     "hp": 250,
-                    "hits": 5,
-                    "seconds": null
+                    "hits": 6,
+                    "seconds": 3.23
                   },
                   {
-                    "hp": 350,
-                    "hits": 6,
-                    "seconds": null
+                    "hp": 325,
+                    "hits": 7,
+                    "seconds": 3.8
                   }
                 ]
               }
@@ -374,12 +394,12 @@
     {
       "id": "lh1",
       "title": "LH1",
-      "revisionId": 64649,
-      "revisionAt": "2026-08-19T11:54:07Z",
+      "revisionId": 79352,
+      "revisionAt": "2026-10-22T17:26:10Z",
       "stats": {
-        "damage": "44",
+        "damage": "40",
         "altDamage": "—",
-        "crit": "88 (2.0×)",
+        "crit": "80 (2.0×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "270",
@@ -402,36 +422,36 @@
         "lunge": "—",
         "precision": "—",
         "falloffMultiplier": "0.75",
-        "falloff": "50m - 55m"
+        "falloff": "35m - 45m"
       },
       "summary": "Semi-automatic battle rifle.",
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 2,
-            "ttk": "0.22s"
-          },
-          "medium": {
             "shots": 3,
             "ttk": "0.44s"
           },
-          "heavy": {
+          "medium": {
             "shots": 4,
             "ttk": "0.67s"
+          },
+          "heavy": {
+            "shots": 5,
+            "ttk": "0.89s"
           }
         },
         "body": {
           "light": {
-            "shots": 4,
-            "ttk": "0.67s"
+            "shots": 5,
+            "ttk": "0.89s"
           },
           "medium": {
-            "shots": 6,
-            "ttk": "1.11s"
+            "shots": 7,
+            "ttk": "1.33s"
           },
           "heavy": {
-            "shots": 8,
-            "ttk": "1.56s"
+            "shots": 9,
+            "ttk": "1.78s"
           }
         }
       },
@@ -451,19 +471,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 2,
-                    "seconds": 0.222
-                  },
-                  {
-                    "hp": 250,
+                    "hp": 175,
                     "hits": 3,
                     "seconds": 0.444
                   },
                   {
-                    "hp": 350,
+                    "hp": 250,
                     "hits": 4,
                     "seconds": 0.667
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 5,
+                    "seconds": 0.889
                   }
                 ]
               },
@@ -471,19 +491,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 4,
-                    "seconds": 0.667
+                    "hp": 175,
+                    "hits": 5,
+                    "seconds": 0.889
                   },
                   {
                     "hp": 250,
-                    "hits": 6,
-                    "seconds": 1.111
+                    "hits": 7,
+                    "seconds": 1.333
                   },
                   {
-                    "hp": 350,
-                    "hits": 8,
-                    "seconds": 1.556
+                    "hp": 325,
+                    "hits": 9,
+                    "seconds": 1.778
                   }
                 ]
               }
@@ -495,12 +515,12 @@
     {
       "id": "m11",
       "title": "M11",
-      "revisionId": 65255,
-      "revisionAt": "2026-08-23T11:48:21Z",
+      "revisionId": 78822,
+      "revisionAt": "2026-10-20T23:08:13Z",
       "stats": {
         "damage": "16",
         "altDamage": "—",
-        "crit": "24",
+        "crit": "24 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "1000",
@@ -529,30 +549,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 7,
-            "ttk": "0.36s"
+            "shots": 8,
+            "ttk": "0.42s"
           },
           "medium": {
             "shots": 11,
             "ttk": "0.60s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "0.84s"
+            "shots": 14,
+            "ttk": "0.78s"
           }
         },
         "body": {
           "light": {
-            "shots": 10,
-            "ttk": "0.54s"
+            "shots": 11,
+            "ttk": "0.60s"
           },
           "medium": {
             "shots": 16,
             "ttk": "0.90s"
           },
           "heavy": {
-            "shots": 22,
-            "ttk": "1.26s"
+            "shots": 21,
+            "ttk": "1.20s"
           }
         }
       },
@@ -572,9 +592,9 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 7,
-                    "seconds": 0.36
+                    "hp": 175,
+                    "hits": 8,
+                    "seconds": 0.42
                   },
                   {
                     "hp": 250,
@@ -582,9 +602,9 @@
                     "seconds": 0.6
                   },
                   {
-                    "hp": 350,
-                    "hits": 15,
-                    "seconds": 0.84
+                    "hp": 325,
+                    "hits": 14,
+                    "seconds": 0.78
                   }
                 ]
               },
@@ -592,9 +612,9 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 10,
-                    "seconds": 0.54
+                    "hp": 175,
+                    "hits": 11,
+                    "seconds": 0.6
                   },
                   {
                     "hp": 250,
@@ -602,9 +622,9 @@
                     "seconds": 0.9
                   },
                   {
-                    "hp": 350,
-                    "hits": 22,
-                    "seconds": 1.26
+                    "hp": 325,
+                    "hits": 21,
+                    "seconds": 1.2
                   }
                 ]
               }
@@ -616,8 +636,8 @@
     {
       "id": "m26_matter",
       "title": "M26 Matter",
-      "revisionId": 62953,
-      "revisionAt": "2026-08-09T13:39:32Z",
+      "revisionId": 80652,
+      "revisionAt": "2026-11-02T21:15:28Z",
       "stats": {
         "damage": "11×11 (Max - 121)",
         "altDamage": "—",
@@ -659,7 +679,7 @@
           },
           "heavy": {
             "shots": 3,
-            "ttk": "1.40s"
+            "ttk": "1.43s"
           }
         }
       },
@@ -679,7 +699,7 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
                     "seconds": 0.714
                   },
@@ -689,9 +709,9 @@
                     "seconds": 1.429
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
-                    "seconds": 1.4
+                    "seconds": 1.429
                   }
                 ]
               }
@@ -703,8 +723,8 @@
     {
       "id": "recurve_bow",
       "title": "Recurve Bow",
-      "revisionId": 64872,
-      "revisionAt": "2026-08-20T19:46:49Z",
+      "revisionId": 79659,
+      "revisionAt": "2026-10-24T00:32:46Z",
       "stats": {
         "damage": "60",
         "altDamage": "Max Draw - 126",
@@ -780,7 +800,7 @@
                 "label": "Head (Max Draw)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 1,
                     "seconds": 0
                   },
@@ -790,7 +810,7 @@
                     "seconds": 1.25
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 2,
                     "seconds": 1.25
                   }
@@ -800,7 +820,7 @@
                 "label": "Body (Max Draw)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
                     "seconds": 1.25
                   },
@@ -810,7 +830,7 @@
                     "seconds": 1.25
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
                     "seconds": 2.5
                   }
@@ -820,7 +840,7 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
                     "seconds": 0.769
                   },
@@ -830,7 +850,7 @@
                     "seconds": 1.538
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
                     "seconds": 2.308
                   }
@@ -840,7 +860,7 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 3,
                     "seconds": 1.538
                   },
@@ -850,7 +870,7 @@
                     "seconds": 3.077
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 6,
                     "seconds": 3.846
                   }
@@ -864,8 +884,8 @@
     {
       "id": "sh1900",
       "title": "SH1900",
-      "revisionId": 62956,
-      "revisionAt": "2026-08-09T13:46:05Z",
+      "revisionId": 78823,
+      "revisionAt": "2026-10-20T23:12:03Z",
       "stats": {
         "damage": "12×15 (Max - 180)",
         "altDamage": "—",
@@ -927,7 +947,7 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 1,
                     "seconds": 0
                   },
@@ -937,7 +957,7 @@
                     "seconds": 0.75
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 2,
                     "seconds": 0.75
                   }
@@ -951,12 +971,12 @@
     {
       "id": "sr_84",
       "title": "SR-84",
-      "revisionId": 62958,
-      "revisionAt": "2026-08-09T13:49:00Z",
+      "revisionId": 78591,
+      "revisionAt": "2026-10-20T21:07:28Z",
       "stats": {
-        "damage": "118",
+        "damage": "122",
         "altDamage": "—",
-        "crit": "236",
+        "crit": "244 (2×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "45",
@@ -1028,7 +1048,7 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 1,
                     "seconds": 0
                   },
@@ -1038,7 +1058,7 @@
                     "seconds": 1.333
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 2,
                     "seconds": 1.333
                   }
@@ -1048,7 +1068,7 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
                     "seconds": 1.333
                   },
@@ -1058,7 +1078,7 @@
                     "seconds": 2.667
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
                     "seconds": 2.667
                   }
@@ -1072,10 +1092,10 @@
     {
       "id": "sword",
       "title": "Sword",
-      "revisionId": 63525,
-      "revisionAt": "2026-08-13T11:44:33Z",
+      "revisionId": 80651,
+      "revisionAt": "2026-11-02T21:10:32Z",
       "stats": {
-        "damage": "Precise - 110 / Glancing blow - 71.5",
+        "damage": "Precise - 100 / Glancing blow - 65",
         "altDamage": "Precise - 120 / Glancing blow - 78",
         "crit": "—",
         "altCrit": "—",
@@ -1097,7 +1117,7 @@
         "maxDeploy": "—",
         "primeTime": "—",
         "costs": "—",
-        "lunge": "4.25m",
+        "lunge": "4m",
         "precision": "9°",
         "falloffMultiplier": "—",
         "falloff": "—"
@@ -1107,15 +1127,15 @@
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "—"
+            "ttk": "1.13s"
           },
           "medium": {
             "shots": 3,
-            "ttk": "—"
+            "ttk": "1.85s"
           },
           "heavy": {
             "shots": 4,
-            "ttk": "—"
+            "ttk": "2.58s"
           }
         }
       },
@@ -1132,42 +1152,82 @@
             "variant": "Default",
             "rows": [
               {
-                "label": "Body (Alt-Fire)",
+                "label": "Precise (Alt-Fire)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": null
+                    "seconds": 2.27
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": null
+                    "seconds": 3.37
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
-                    "seconds": null
+                    "seconds": 3.37
                   }
                 ]
               },
               {
-                "label": "Body",
+                "label": "Glancing (Alt-Fire)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
+                    "hits": 3,
+                    "seconds": 3.37
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 4,
+                    "seconds": 5.07
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 5,
+                    "seconds": 6.47
+                  }
+                ]
+              },
+              {
+                "label": "Precise",
+                "targets": [
+                  {
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": null
+                    "seconds": 1.13
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": null
+                    "seconds": 1.85
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
-                    "seconds": null
+                    "seconds": 2.58
+                  }
+                ]
+              },
+              {
+                "label": "Glancing",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 3,
+                    "seconds": 1.85
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 4,
+                    "seconds": 2.58
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 5,
+                    "seconds": 3.3
                   }
                 ]
               }
@@ -1179,13 +1239,13 @@
     {
       "id": "throwing_knives",
       "title": "Throwing Knives",
-      "revisionId": 65315,
-      "revisionAt": "2026-08-23T22:43:57Z",
+      "revisionId": 80650,
+      "revisionAt": "2026-11-02T20:36:41Z",
       "stats": {
         "damage": "60",
         "altDamage": "140",
-        "crit": "90",
-        "altCrit": "210",
+        "crit": "90 (1.5×)",
+        "altCrit": "210 (1.5×)",
         "dps": "—",
         "rpm": "89丨545.45丨27.7",
         "magazine": "∞",
@@ -1256,7 +1316,7 @@
                 "label": "Head (Alt-Fire)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 1,
                     "seconds": 0
                   },
@@ -1266,7 +1326,7 @@
                     "seconds": 2.166
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 2,
                     "seconds": 2.166
                   }
@@ -1276,7 +1336,7 @@
                 "label": "Body (Alt-Fire)",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
                     "seconds": 2.166
                   },
@@ -1286,7 +1346,7 @@
                     "seconds": 2.166
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
                     "seconds": 4.332
                   }
@@ -1296,7 +1356,7 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
                     "seconds": 0.11
                   },
@@ -1306,7 +1366,7 @@
                     "seconds": 0.784
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
                     "seconds": 0.894
                   }
@@ -1316,7 +1376,7 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 3,
                     "seconds": 0.784
                   },
@@ -1326,7 +1386,7 @@
                     "seconds": 1.568
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 6,
                     "seconds": 1.678
                   }
@@ -1340,12 +1400,12 @@
     {
       "id": "v9s",
       "title": "V9S",
-      "revisionId": 62961,
-      "revisionAt": "2026-08-09T13:54:59Z",
+      "revisionId": 78824,
+      "revisionAt": "2026-10-20T23:14:52Z",
       "stats": {
         "damage": "38",
         "altDamage": "—",
-        "crit": "57",
+        "crit": "57 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "360",
@@ -1374,30 +1434,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 3,
-            "ttk": "0.33s"
+            "shots": 4,
+            "ttk": "0.50s"
           },
           "medium": {
             "shots": 5,
             "ttk": "0.67s"
           },
           "heavy": {
-            "shots": 7,
-            "ttk": "1.00s"
+            "shots": 6,
+            "ttk": "0.83s"
           }
         },
         "body": {
           "light": {
-            "shots": 4,
-            "ttk": "0.50s"
+            "shots": 5,
+            "ttk": "0.67s"
           },
           "medium": {
             "shots": 7,
             "ttk": "1.00s"
           },
           "heavy": {
-            "shots": 10,
-            "ttk": "1.50s"
+            "shots": 9,
+            "ttk": "1.33s"
           }
         }
       },
@@ -1417,9 +1477,9 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 3,
-                    "seconds": 0.333
+                    "hp": 175,
+                    "hits": 4,
+                    "seconds": 0.5
                   },
                   {
                     "hp": 250,
@@ -1427,9 +1487,9 @@
                     "seconds": 0.667
                   },
                   {
-                    "hp": 350,
-                    "hits": 7,
-                    "seconds": 1
+                    "hp": 325,
+                    "hits": 6,
+                    "seconds": 0.833
                   }
                 ]
               },
@@ -1437,9 +1497,9 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 4,
-                    "seconds": 0.5
+                    "hp": 175,
+                    "hits": 5,
+                    "seconds": 0.667
                   },
                   {
                     "hp": 250,
@@ -1447,9 +1507,9 @@
                     "seconds": 1
                   },
                   {
-                    "hp": 350,
-                    "hits": 10,
-                    "seconds": 1.5
+                    "hp": 325,
+                    "hits": 9,
+                    "seconds": 1.333
                   }
                 ]
               }
@@ -1461,16 +1521,16 @@
     {
       "id": "xp_54",
       "title": "XP-54",
-      "revisionId": 65258,
-      "revisionAt": "2026-08-23T11:55:26Z",
+      "revisionId": 79673,
+      "revisionAt": "2026-10-24T01:14:13Z",
       "stats": {
         "damage": "16",
         "altDamage": "—",
-        "crit": "24",
+        "crit": "24 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "880",
-        "magazine": "36",
+        "magazine": "34",
         "reload": "2.50s",
         "tacticalReload": "2.25s",
         "destruction": "8",
@@ -1495,30 +1555,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 7,
-            "ttk": "0.41s"
+            "shots": 8,
+            "ttk": "0.48s"
           },
           "medium": {
             "shots": 11,
             "ttk": "0.68s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "0.95s"
+            "shots": 14,
+            "ttk": "0.89s"
           }
         },
         "body": {
           "light": {
-            "shots": 10,
-            "ttk": "0.61s"
+            "shots": 11,
+            "ttk": "0.68s"
           },
           "medium": {
             "shots": 16,
             "ttk": "1.02s"
           },
           "heavy": {
-            "shots": 22,
-            "ttk": "1.43s"
+            "shots": 21,
+            "ttk": "1.36s"
           }
         }
       },
@@ -1538,9 +1598,9 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 7,
-                    "seconds": 0.409
+                    "hp": 175,
+                    "hits": 8,
+                    "seconds": 0.477
                   },
                   {
                     "hp": 250,
@@ -1548,9 +1608,9 @@
                     "seconds": 0.682
                   },
                   {
-                    "hp": 350,
-                    "hits": 15,
-                    "seconds": 0.955
+                    "hp": 325,
+                    "hits": 14,
+                    "seconds": 0.886
                   }
                 ]
               },
@@ -1558,9 +1618,9 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 10,
-                    "seconds": 0.614
+                    "hp": 175,
+                    "hits": 11,
+                    "seconds": 0.682
                   },
                   {
                     "hp": 250,
@@ -1568,9 +1628,9 @@
                     "seconds": 1.023
                   },
                   {
-                    "hp": 350,
-                    "hits": 22,
-                    "seconds": 1.432
+                    "hp": 325,
+                    "hits": 21,
+                    "seconds": 1.364
                   }
                 ]
               }
@@ -1582,8 +1642,8 @@
     {
       "id": "akm",
       "title": "AKM",
-      "revisionId": 64863,
-      "revisionAt": "2026-08-20T18:48:46Z",
+      "revisionId": 80721,
+      "revisionAt": "2026-11-05T12:04:37Z",
       "stats": {
         "damage": "21",
         "altDamage": "—",
@@ -1591,7 +1651,7 @@
         "altCrit": "—",
         "dps": "200",
         "rpm": "600",
-        "magazine": "34",
+        "magazine": "36",
         "reload": "2.35s",
         "tacticalReload": "2.35s",
         "destruction": "10",
@@ -1616,30 +1676,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 5,
-            "ttk": "0.40s"
+            "shots": 6,
+            "ttk": "0.50s"
           },
           "medium": {
             "shots": 8,
             "ttk": "0.70s"
           },
           "heavy": {
-            "shots": 12,
-            "ttk": "1.10s"
+            "shots": 11,
+            "ttk": "1.00s"
           }
         },
         "body": {
           "light": {
-            "shots": 8,
-            "ttk": "0.70s"
+            "shots": 9,
+            "ttk": "0.80s"
           },
           "medium": {
             "shots": 12,
             "ttk": "1.10s"
           },
           "heavy": {
-            "shots": 17,
-            "ttk": "1.60s"
+            "shots": 16,
+            "ttk": "1.50s"
           }
         }
       },
@@ -1659,9 +1719,9 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 5,
-                    "seconds": 0.4
+                    "hp": 175,
+                    "hits": 6,
+                    "seconds": 0.5
                   },
                   {
                     "hp": 250,
@@ -1669,9 +1729,9 @@
                     "seconds": 0.7
                   },
                   {
-                    "hp": 350,
-                    "hits": 12,
-                    "seconds": 1.1
+                    "hp": 325,
+                    "hits": 11,
+                    "seconds": 1
                   }
                 ]
               },
@@ -1679,9 +1739,9 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 8,
-                    "seconds": 0.7
+                    "hp": 175,
+                    "hits": 9,
+                    "seconds": 0.8
                   },
                   {
                     "hp": 250,
@@ -1689,9 +1749,9 @@
                     "seconds": 1.1
                   },
                   {
-                    "hp": 350,
-                    "hits": 17,
-                    "seconds": 1.6
+                    "hp": 325,
+                    "hits": 16,
+                    "seconds": 1.5
                   }
                 ]
               }
@@ -1703,12 +1763,12 @@
     {
       "id": "cb_01_repeater",
       "title": "CB-01 Repeater",
-      "revisionId": 63082,
-      "revisionAt": "2026-08-10T16:53:14Z",
+      "revisionId": 80429,
+      "revisionAt": "2026-10-29T23:16:38Z",
       "stats": {
-        "damage": "84",
+        "damage": "85",
         "altDamage": "—",
-        "crit": "126 (1.5×)",
+        "crit": "132 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "78",
@@ -1730,7 +1790,7 @@
         "costs": "—",
         "lunge": "—",
         "precision": "—",
-        "falloffMultiplier": "0.64",
+        "falloffMultiplier": "0.66",
         "falloff": "35m - 40m"
       },
       "summary": "A powerful lever-action marksman's rifle with a speed loader for quick empty reloads.",
@@ -1759,8 +1819,8 @@
             "ttk": "1.54s"
           },
           "heavy": {
-            "shots": 5,
-            "ttk": "3.08s"
+            "shots": 4,
+            "ttk": "2.31s"
           }
         }
       },
@@ -1780,19 +1840,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.77
+                    "seconds": 0.769
                   },
                   {
                     "hp": 250,
                     "hits": 2,
-                    "seconds": 0.77
+                    "seconds": 0.769
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
-                    "seconds": 1.54
+                    "seconds": 1.538
                   }
                 ]
               },
@@ -1800,19 +1860,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.77
+                    "seconds": 0.769
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": 1.54
+                    "seconds": 1.538
                   },
                   {
-                    "hp": 350,
-                    "hits": 5,
-                    "seconds": 3.08
+                    "hp": 325,
+                    "hits": 4,
+                    "seconds": 2.308
                   }
                 ]
               }
@@ -1824,10 +1884,10 @@
     {
       "id": "cerberus_12ga",
       "title": "Cerberus 12GA",
-      "revisionId": 64871,
-      "revisionAt": "2026-08-20T19:28:08Z",
+      "revisionId": 79680,
+      "revisionAt": "2026-10-24T05:25:02Z",
       "stats": {
-        "damage": "9×13 (Max - 117) / Burn - 15/s",
+        "damage": "9×13 (Max - 117) / Burn - 15.75/s",
         "altDamage": "—",
         "crit": "—",
         "altCrit": "—",
@@ -1887,7 +1947,7 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
                     "seconds": 0.6
                   },
@@ -1897,7 +1957,7 @@
                     "seconds": 1.2
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
                     "seconds": 1.2
                   }
@@ -1911,15 +1971,15 @@
     {
       "id": "chimera_xb",
       "title": "Chimera-XB",
-      "revisionId": 67239,
-      "revisionAt": "2026-09-23T06:44:28Z",
+      "revisionId": 80720,
+      "revisionAt": "2026-11-05T12:04:01Z",
       "stats": {
-        "damage": "45",
+        "damage": "48",
         "altDamage": "—",
-        "crit": "67.5 (1.5×)",
+        "crit": "72 (1.5×)",
         "altCrit": "—",
         "dps": "—",
-        "rpm": "260",
+        "rpm": "280",
         "magazine": "15",
         "reload": "2.15s",
         "tacticalReload": "2.15s",
@@ -1946,29 +2006,29 @@
         "head": {
           "light": {
             "shots": 3,
-            "ttk": "0.46s"
+            "ttk": "0.42s"
           },
           "medium": {
             "shots": 4,
-            "ttk": "0.69s"
+            "ttk": "0.63s"
           },
           "heavy": {
-            "shots": 6,
-            "ttk": "1.15s"
+            "shots": 5,
+            "ttk": "0.84s"
           }
         },
         "body": {
           "light": {
             "shots": 4,
-            "ttk": "0.69s"
+            "ttk": "0.63s"
           },
           "medium": {
             "shots": 6,
-            "ttk": "1.15s"
+            "ttk": "1.05s"
           },
           "heavy": {
-            "shots": 8,
-            "ttk": "1.61s"
+            "shots": 7,
+            "ttk": "1.26s"
           }
         }
       },
@@ -1988,19 +2048,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 3,
-                    "seconds": 0.462
+                    "seconds": 0.42
                   },
                   {
                     "hp": 250,
                     "hits": 4,
-                    "seconds": 0.692
+                    "seconds": 0.63
                   },
                   {
-                    "hp": 350,
-                    "hits": 6,
-                    "seconds": 1.154
+                    "hp": 325,
+                    "hits": 5,
+                    "seconds": 0.84
                   }
                 ]
               },
@@ -2008,19 +2068,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 4,
-                    "seconds": 0.692
+                    "seconds": 0.63
                   },
                   {
                     "hp": 250,
                     "hits": 6,
-                    "seconds": 1.154
+                    "seconds": 1.05
                   },
                   {
-                    "hp": 350,
-                    "hits": 8,
-                    "seconds": 1.615
+                    "hp": 325,
+                    "hits": 7,
+                    "seconds": 1.26
                   }
                 ]
               }
@@ -2032,8 +2092,8 @@
     {
       "id": "cl_40",
       "title": "CL-40",
-      "revisionId": 63094,
-      "revisionAt": "2026-08-10T17:56:58Z",
+      "revisionId": 78829,
+      "revisionAt": "2026-10-20T23:27:32Z",
       "stats": {
         "damage": "Direct - 105 / Splash- from 79 to 11",
         "altDamage": "—",
@@ -2080,19 +2140,19 @@
                 "label": "Direct",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.8
+                    "seconds": 0.822
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": 1.6
+                    "seconds": 1.644
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
-                    "seconds": 2.4
+                    "seconds": 2.466
                   }
                 ]
               },
@@ -2100,19 +2160,19 @@
                 "label": "Splash",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 2,
-                    "seconds": 0.8
+                    "hp": 175,
+                    "hits": 3,
+                    "seconds": 1.644
                   },
                   {
                     "hp": 250,
-                    "hits": 3,
-                    "seconds": 1.6
+                    "hits": 4,
+                    "seconds": 2.466
                   },
                   {
-                    "hp": 350,
-                    "hits": 4,
-                    "seconds": 2.4
+                    "hp": 325,
+                    "hits": 5,
+                    "seconds": 3.288
                   }
                 ]
               }
@@ -2124,11 +2184,11 @@
     {
       "id": "dual_blades",
       "title": "Dual Blades",
-      "revisionId": 65611,
-      "revisionAt": "2026-08-30T17:25:30Z",
+      "revisionId": 80596,
+      "revisionAt": "2026-11-01T23:54:19Z",
       "stats": {
-        "damage": "Precise - 57×2 / Glancing blow - 37×2",
-        "altDamage": "Deflect",
+        "damage": "Precise - 60×2 / Glancing blow - 39×2",
+        "altDamage": "Precise - 155 / Glancing blow - 100 / Deflect",
         "crit": "—",
         "altCrit": "—",
         "dps": "—",
@@ -2136,7 +2196,7 @@
         "magazine": "—",
         "reload": "—",
         "tacticalReload": "—",
-        "destruction": "20×2 → 25×2 → 30",
+        "destruction": "?",
         "altDestruction": "—",
         "cooldown": "—",
         "charges": "—",
@@ -2150,12 +2210,27 @@
         "primeTime": "—",
         "costs": "—",
         "lunge": "5m",
-        "precision": "12°",
+        "precision": "14°",
         "falloffMultiplier": "—",
         "falloff": "—"
       },
       "summary": "Melee weapon balancing offense and defense. Delivers rapid strikes and can enter a defensive stance to deflect incoming bullets back at attackers.",
-      "damageProfile": null,
+      "damageProfile": {
+        "body": {
+          "light": {
+            "shots": 3,
+            "ttk": "1.29s"
+          },
+          "medium": {
+            "shots": 5,
+            "ttk": "2.11s"
+          },
+          "heavy": {
+            "shots": 6,
+            "ttk": "2.37s"
+          }
+        }
+      },
       "combat": {
         "burstCount": null,
         "burstGap": null,
@@ -2164,18 +2239,104 @@
         "spinCycle": null,
         "spinOffsets": null,
         "burnDuration": null,
-        "tables": []
+        "tables": [
+          {
+            "variant": "Default",
+            "rows": [
+              {
+                "label": "Precise (Alt-Fire)",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 2,
+                    "seconds": 1.75
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 2,
+                    "seconds": 1.75
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 3,
+                    "seconds": 2.75
+                  }
+                ]
+              },
+              {
+                "label": "Glancing (Alt-Fire)",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 2,
+                    "seconds": 1.75
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 3,
+                    "seconds": 2.75
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 4,
+                    "seconds": 3.75
+                  }
+                ]
+              },
+              {
+                "label": "Precise",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 3,
+                    "seconds": 1.29
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 5,
+                    "seconds": 2.11
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 6,
+                    "seconds": 2.37
+                  }
+                ]
+              },
+              {
+                "label": "Glancing",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 5,
+                    "seconds": 2.11
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 7,
+                    "seconds": 2.93
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 9,
+                    "seconds": 3.75
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     },
     {
       "id": "famas",
       "title": "FAMAS",
-      "revisionId": 63096,
-      "revisionAt": "2026-08-10T18:07:43Z",
+      "revisionId": 79650,
+      "revisionAt": "2026-10-23T23:19:11Z",
       "stats": {
         "damage": "24",
         "altDamage": "—",
-        "crit": "36",
+        "crit": "36 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "220｜1080",
@@ -2209,31 +2370,31 @@
           },
           "medium": {
             "shots": 7,
-            "ttk": "0.76s"
+            "ttk": "0.77s"
           },
           "heavy": {
             "shots": 10,
-            "ttk": "1.14s"
+            "ttk": "1.15s"
           }
         },
         "body": {
           "light": {
-            "shots": 7,
-            "ttk": "0.76s"
+            "shots": 8,
+            "ttk": "0.82s"
           },
           "medium": {
             "shots": 11,
-            "ttk": "1.20s"
+            "ttk": "1.21s"
           },
           "heavy": {
-            "shots": 15,
-            "ttk": "1.64s"
+            "shots": 14,
+            "ttk": "1.59s"
           }
         }
       },
       "combat": {
         "burstCount": 3,
-        "burstGap": 0.27,
+        "burstGap": 0.273,
         "chargeTime": null,
         "tubePause": null,
         "spinCycle": null,
@@ -2247,19 +2408,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 5,
                     "seconds": 0.44
                   },
                   {
                     "hp": 250,
                     "hits": 7,
-                    "seconds": 0.76
+                    "seconds": 0.77
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 10,
-                    "seconds": 1.14
+                    "seconds": 1.15
                   }
                 ]
               },
@@ -2267,19 +2428,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 7,
-                    "seconds": 0.76
+                    "hp": 175,
+                    "hits": 8,
+                    "seconds": 0.82
                   },
                   {
                     "hp": 250,
                     "hits": 11,
-                    "seconds": 1.2
+                    "seconds": 1.21
                   },
                   {
-                    "hp": 350,
-                    "hits": 15,
-                    "seconds": 1.64
+                    "hp": 325,
+                    "hits": 14,
+                    "seconds": 1.59
                   }
                 ]
               }
@@ -2291,16 +2452,16 @@
     {
       "id": "fcar",
       "title": "FCAR",
-      "revisionId": 63097,
-      "revisionAt": "2026-08-10T18:09:24Z",
+      "revisionId": 80719,
+      "revisionAt": "2026-11-05T12:03:24Z",
       "stats": {
-        "damage": "23",
+        "damage": "25",
         "altDamage": "—",
-        "crit": "34.5",
+        "crit": "37.5 (1.5×)",
         "altCrit": "—",
         "dps": "198",
-        "rpm": "530",
-        "magazine": "25",
+        "rpm": "500",
+        "magazine": "20",
         "reload": "2.10s",
         "tacticalReload": "2.10s",
         "destruction": "11",
@@ -2326,29 +2487,29 @@
         "head": {
           "light": {
             "shots": 5,
-            "ttk": "0.45s"
+            "ttk": "0.48s"
           },
           "medium": {
-            "shots": 8,
-            "ttk": "0.79s"
+            "shots": 7,
+            "ttk": "0.72s"
           },
           "heavy": {
-            "shots": 11,
-            "ttk": "1.13s"
+            "shots": 9,
+            "ttk": "0.96s"
           }
         },
         "body": {
           "light": {
             "shots": 7,
-            "ttk": "0.68s"
+            "ttk": "0.72s"
           },
           "medium": {
-            "shots": 11,
-            "ttk": "1.13s"
+            "shots": 10,
+            "ttk": "1.08s"
           },
           "heavy": {
-            "shots": 16,
-            "ttk": "1.70s"
+            "shots": 13,
+            "ttk": "1.44s"
           }
         }
       },
@@ -2368,19 +2529,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 5,
-                    "seconds": 0.45
+                    "seconds": 0.48
                   },
                   {
                     "hp": 250,
-                    "hits": 8,
-                    "seconds": 0.79
+                    "hits": 7,
+                    "seconds": 0.72
                   },
                   {
-                    "hp": 350,
-                    "hits": 11,
-                    "seconds": 1.13
+                    "hp": 325,
+                    "hits": 9,
+                    "seconds": 0.96
                   }
                 ]
               },
@@ -2388,19 +2549,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 7,
-                    "seconds": 0.68
+                    "seconds": 0.72
                   },
                   {
                     "hp": 250,
-                    "hits": 11,
-                    "seconds": 1.13
+                    "hits": 10,
+                    "seconds": 1.08
                   },
                   {
-                    "hp": 350,
-                    "hits": 16,
-                    "seconds": 1.7
+                    "hp": 325,
+                    "hits": 13,
+                    "seconds": 1.44
                   }
                 ]
               }
@@ -2412,10 +2573,10 @@
     {
       "id": "model_1887",
       "title": "Model 1887",
-      "revisionId": 63098,
-      "revisionAt": "2026-08-10T18:13:57Z",
+      "revisionId": 78831,
+      "revisionAt": "2026-10-20T23:38:38Z",
       "stats": {
-        "damage": "13×9",
+        "damage": "13×9 (Max - 117)",
         "altDamage": "—",
         "crit": "—",
         "altCrit": "—",
@@ -2424,7 +2585,7 @@
         "magazine": "7",
         "reload": "4.4s",
         "tacticalReload": "Segmented",
-        "destruction": "6×9",
+        "destruction": "6×9 (Max - 54)",
         "altDestruction": "—",
         "cooldown": "—",
         "charges": "—",
@@ -2447,15 +2608,15 @@
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "0.87s"
+            "ttk": "0.83s"
           },
           "medium": {
             "shots": 3,
-            "ttk": "1.74s"
+            "ttk": "1.67s"
           },
           "heavy": {
             "shots": 3,
-            "ttk": "1.74s"
+            "ttk": "1.67s"
           }
         }
       },
@@ -2475,19 +2636,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.87
+                    "seconds": 0.833
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": 1.74
+                    "seconds": 1.667
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
-                    "seconds": 1.74
+                    "seconds": 1.667
                   }
                 ]
               }
@@ -2499,12 +2660,12 @@
     {
       "id": "p90",
       "title": "P90",
-      "revisionId": 63100,
-      "revisionAt": "2026-08-10T18:17:50Z",
+      "revisionId": 79669,
+      "revisionAt": "2026-10-24T01:09:52Z",
       "stats": {
-        "damage": "14",
+        "damage": "15",
         "altDamage": "—",
-        "crit": "21",
+        "crit": "22.5 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "900",
@@ -2541,22 +2702,22 @@
             "ttk": "0.73s"
           },
           "heavy": {
-            "shots": 17,
-            "ttk": "1.07s"
+            "shots": 15,
+            "ttk": "1.93s"
           }
         },
         "body": {
           "light": {
-            "shots": 11,
-            "ttk": "0.67s"
+            "shots": 12,
+            "ttk": "0.73s"
           },
           "medium": {
-            "shots": 18,
-            "ttk": "1.13s"
+            "shots": 17,
+            "ttk": "1.07s"
           },
           "heavy": {
-            "shots": 25,
-            "ttk": "1.60s"
+            "shots": 22,
+            "ttk": "1.40s"
           }
         }
       },
@@ -2576,19 +2737,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 8,
-                    "seconds": 0.47
+                    "seconds": 0.467
                   },
                   {
                     "hp": 250,
                     "hits": 12,
-                    "seconds": 0.73
+                    "seconds": 0.733
                   },
                   {
-                    "hp": 350,
-                    "hits": 17,
-                    "seconds": 1.07
+                    "hp": 325,
+                    "hits": 15,
+                    "seconds": 1.933
                   }
                 ]
               },
@@ -2596,19 +2757,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 11,
-                    "seconds": 0.67
+                    "hp": 175,
+                    "hits": 12,
+                    "seconds": 0.733
                   },
                   {
                     "hp": 250,
-                    "hits": 18,
-                    "seconds": 1.13
+                    "hits": 17,
+                    "seconds": 1.067
                   },
                   {
-                    "hp": 350,
-                    "hits": 25,
-                    "seconds": 1.6
+                    "hp": 325,
+                    "hits": 22,
+                    "seconds": 1.4
                   }
                 ]
               }
@@ -2620,12 +2781,12 @@
     {
       "id": "pike_556",
       "title": "Pike-556",
-      "revisionId": 63101,
-      "revisionAt": "2026-08-10T18:21:01Z",
+      "revisionId": 80776,
+      "revisionAt": "2026-11-06T12:55:08Z",
       "stats": {
-        "damage": "49",
+        "damage": "50",
         "altDamage": "—",
-        "crit": "85.75 (1.75×)",
+        "crit": "75 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "200",
@@ -2654,12 +2815,12 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 2,
-            "ttk": "0.30s"
-          },
-          "medium": {
             "shots": 3,
             "ttk": "0.60s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "0.90s"
           },
           "heavy": {
             "shots": 5,
@@ -2672,12 +2833,12 @@
             "ttk": "0.90s"
           },
           "medium": {
-            "shots": 6,
-            "ttk": "1.50s"
+            "shots": 5,
+            "ttk": "1.20s"
           },
           "heavy": {
-            "shots": 8,
-            "ttk": "2.10s"
+            "shots": 7,
+            "ttk": "1.80s"
           }
         }
       },
@@ -2697,17 +2858,17 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 2,
-                    "seconds": 0.3
-                  },
-                  {
-                    "hp": 250,
+                    "hp": 175,
                     "hits": 3,
                     "seconds": 0.6
                   },
                   {
-                    "hp": 350,
+                    "hp": 250,
+                    "hits": 4,
+                    "seconds": 0.9
+                  },
+                  {
+                    "hp": 325,
                     "hits": 5,
                     "seconds": 1.2
                   }
@@ -2717,19 +2878,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 4,
                     "seconds": 0.9
                   },
                   {
                     "hp": 250,
-                    "hits": 6,
-                    "seconds": 1.5
+                    "hits": 5,
+                    "seconds": 1.2
                   },
                   {
-                    "hp": 350,
-                    "hits": 8,
-                    "seconds": 2.1
+                    "hp": 325,
+                    "hits": 7,
+                    "seconds": 1.8
                   }
                 ]
               }
@@ -2741,12 +2902,12 @@
     {
       "id": "r_357",
       "title": "R .357",
-      "revisionId": 63102,
-      "revisionAt": "2026-08-10T18:23:04Z",
+      "revisionId": 80891,
+      "revisionAt": "2026-11-11T05:11:22Z",
       "stats": {
-        "damage": "74",
+        "damage": "76",
         "altDamage": "—",
-        "crit": "148",
+        "crit": "152 (2.0×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "140",
@@ -2818,19 +2979,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.43
+                    "seconds": 0.429
                   },
                   {
                     "hp": 250,
                     "hits": 2,
-                    "seconds": 0.43
+                    "seconds": 0.429
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
-                    "seconds": 0.86
+                    "seconds": 0.857
                   }
                 ]
               },
@@ -2838,19 +2999,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 3,
-                    "seconds": 0.86
+                    "seconds": 0.857
                   },
                   {
                     "hp": 250,
                     "hits": 4,
-                    "seconds": 1.29
+                    "seconds": 1.286
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 5,
-                    "seconds": 1.71
+                    "seconds": 1.714
                   }
                 ]
               }
@@ -2862,10 +3023,10 @@
     {
       "id": "riot_shield",
       "title": "Riot Shield",
-      "revisionId": 65256,
-      "revisionAt": "2026-08-23T11:51:30Z",
+      "revisionId": 80196,
+      "revisionAt": "2026-10-27T05:26:25Z",
       "stats": {
-        "damage": "Precise - 86 / Glancing blow - 60",
+        "damage": "Precise - 90 / Glancing blow - 63",
         "altDamage": "Blocking / Shield Bash - 50",
         "crit": "—",
         "altCrit": "—",
@@ -2897,15 +3058,15 @@
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "—"
+            "ttk": "1.21s"
           },
           "medium": {
             "shots": 3,
-            "ttk": "—"
+            "ttk": "2.06s"
           },
           "heavy": {
             "shots": 4,
-            "ttk": "—"
+            "ttk": "2.83s"
           }
         }
       },
@@ -2922,22 +3083,62 @@
             "variant": "Default",
             "rows": [
               {
-                "label": "Body",
+                "label": "Alt-Fire",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
+                    "hits": 4,
+                    "seconds": 3.15
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 5,
+                    "seconds": 4.05
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 7,
+                    "seconds": 5.85
+                  }
+                ]
+              },
+              {
+                "label": "Precise",
+                "targets": [
+                  {
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": null
+                    "seconds": 1.21
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": null
+                    "seconds": 2.06
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
-                    "seconds": null
+                    "seconds": 2.83
+                  }
+                ]
+              },
+              {
+                "label": "Glancing",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 3,
+                    "seconds": 2.06
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 4,
+                    "seconds": 2.83
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 6,
+                    "seconds": 4.45
                   }
                 ]
               }
@@ -2949,12 +3150,12 @@
     {
       "id": "50_akimbo",
       "title": ".50 Akimbo",
-      "revisionId": 63104,
-      "revisionAt": "2026-08-10T18:31:31Z",
+      "revisionId": 80892,
+      "revisionAt": "2026-11-11T14:20:58Z",
       "stats": {
         "damage": "46",
         "altDamage": "—",
-        "crit": "92",
+        "crit": "92 (2.0×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "230",
@@ -3006,7 +3207,7 @@
           },
           "heavy": {
             "shots": 8,
-            "ttk": "1.82s"
+            "ttk": "1.83s"
           }
         }
       },
@@ -3026,19 +3227,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.26
+                    "seconds": 0.261
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": 0.52
+                    "seconds": 0.522
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
-                    "seconds": 0.78
+                    "seconds": 0.783
                   }
                 ]
               },
@@ -3046,19 +3247,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 4,
-                    "seconds": 0.78
+                    "seconds": 0.783
                   },
                   {
                     "hp": 250,
                     "hits": 6,
-                    "seconds": 1.3
+                    "seconds": 1.304
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 8,
-                    "seconds": 1.82
+                    "seconds": 1.826
                   }
                 ]
               }
@@ -3070,12 +3271,12 @@
     {
       "id": "bfr_titan",
       "title": "BFR Titan",
-      "revisionId": 65314,
-      "revisionAt": "2026-08-23T22:37:57Z",
+      "revisionId": 80223,
+      "revisionAt": "2026-10-27T12:35:52Z",
       "stats": {
-        "damage": "90",
+        "damage": "95",
         "altDamage": "—",
-        "crit": "135 (1.5×)",
+        "crit": "142.5 (1.5×)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "71",
@@ -3105,29 +3306,29 @@
         "head": {
           "light": {
             "shots": 2,
-            "ttk": "0.81s"
+            "ttk": "0.84s"
           },
           "medium": {
             "shots": 2,
-            "ttk": "0.81s"
+            "ttk": "0.84s"
           },
           "heavy": {
             "shots": 3,
-            "ttk": "1.62s"
+            "ttk": "1.69s"
           }
         },
         "body": {
           "light": {
             "shots": 2,
-            "ttk": "0.81s"
+            "ttk": "0.84s"
           },
           "medium": {
             "shots": 3,
-            "ttk": "1.62s"
+            "ttk": "1.69s"
           },
           "heavy": {
             "shots": 4,
-            "ttk": "2.43s"
+            "ttk": "2.54s"
           }
         }
       },
@@ -3147,19 +3348,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.81
+                    "seconds": 0.845
                   },
                   {
                     "hp": 250,
                     "hits": 2,
-                    "seconds": 0.81
+                    "seconds": 0.845
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 3,
-                    "seconds": 1.62
+                    "seconds": 1.69
                   }
                 ]
               },
@@ -3167,19 +3368,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.81
+                    "seconds": 0.845
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": 1.62
+                    "seconds": 1.69
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
-                    "seconds": 2.43
+                    "seconds": 2.535
                   }
                 ]
               }
@@ -3191,10 +3392,10 @@
     {
       "id": "flamethrower",
       "title": "Flamethrower",
-      "revisionId": 63106,
-      "revisionAt": "2026-08-10T18:42:57Z",
+      "revisionId": 79662,
+      "revisionAt": "2026-10-24T00:52:06Z",
       "stats": {
-        "damage": "Hit - 30 / Burn - 15/s",
+        "damage": "Hit - 30 / Burn - 15.75/s",
         "altDamage": "—",
         "crit": "—",
         "altCrit": "—",
@@ -3239,9 +3440,9 @@
                 "label": "Splash",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 5,
-                    "seconds": 1.41
+                    "hp": 175,
+                    "hits": 6,
+                    "seconds": 1.77
                   },
                   {
                     "hp": 250,
@@ -3249,9 +3450,9 @@
                     "seconds": 2.82
                   },
                   {
-                    "hp": 350,
-                    "hits": 12,
-                    "seconds": 3.88
+                    "hp": 325,
+                    "hits": 11,
+                    "seconds": 3.53
                   }
                 ]
               }
@@ -3263,10 +3464,10 @@
     {
       "id": "ks_23",
       "title": "KS-23",
-      "revisionId": 65254,
-      "revisionAt": "2026-08-23T11:47:40Z",
+      "revisionId": 80105,
+      "revisionAt": "2026-10-26T11:39:08Z",
       "stats": {
-        "damage": "104",
+        "damage": "100",
         "altDamage": "—",
         "crit": "—",
         "altCrit": "—",
@@ -3326,19 +3527,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 2,
-                    "seconds": 0.77
+                    "seconds": 0.769
                   },
                   {
                     "hp": 250,
                     "hits": 3,
-                    "seconds": 1.54
+                    "seconds": 1.538
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 4,
-                    "seconds": 2.31
+                    "seconds": 2.308
                   }
                 ]
               }
@@ -3350,15 +3551,15 @@
     {
       "id": "lewis_gun",
       "title": "Lewis Gun",
-      "revisionId": 63108,
-      "revisionAt": "2026-08-10T18:50:21Z",
+      "revisionId": 79666,
+      "revisionAt": "2026-10-24T01:06:33Z",
       "stats": {
         "damage": "23",
         "altDamage": "—",
-        "crit": "34.5",
+        "crit": "34.5 (1.5×)",
         "altCrit": "—",
         "dps": "—",
-        "rpm": "500",
+        "rpm": "520",
         "magazine": "47",
         "reload": "3.55s",
         "tacticalReload": "3.25s",
@@ -3384,30 +3585,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 5,
-            "ttk": "0.48s"
+            "shots": 6,
+            "ttk": "0.58s"
           },
           "medium": {
             "shots": 8,
-            "ttk": "0.84s"
+            "ttk": "0.81s"
           },
           "heavy": {
-            "shots": 11,
-            "ttk": "1.20s"
+            "shots": 10,
+            "ttk": "1.04s"
           }
         },
         "body": {
           "light": {
-            "shots": 7,
-            "ttk": "0.72s"
+            "shots": 8,
+            "ttk": "0.81s"
           },
           "medium": {
             "shots": 11,
-            "ttk": "1.20s"
+            "ttk": "1.15s"
           },
           "heavy": {
-            "shots": 16,
-            "ttk": "1.80s"
+            "shots": 15,
+            "ttk": "1.61s"
           }
         }
       },
@@ -3427,19 +3628,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 5,
-                    "seconds": 0.48
+                    "hp": 175,
+                    "hits": 6,
+                    "seconds": 0.577
                   },
                   {
                     "hp": 250,
                     "hits": 8,
-                    "seconds": 0.84
+                    "seconds": 0.808
                   },
                   {
-                    "hp": 350,
-                    "hits": 11,
-                    "seconds": 1.2
+                    "hp": 325,
+                    "hits": 10,
+                    "seconds": 1.038
                   }
                 ]
               },
@@ -3447,19 +3648,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 7,
-                    "seconds": 0.72
+                    "hp": 175,
+                    "hits": 8,
+                    "seconds": 0.808
                   },
                   {
                     "hp": 250,
                     "hits": 11,
-                    "seconds": 1.2
+                    "seconds": 1.154
                   },
                   {
-                    "hp": 350,
-                    "hits": 16,
-                    "seconds": 1.8
+                    "hp": 325,
+                    "hits": 15,
+                    "seconds": 1.615
                   }
                 ]
               }
@@ -3471,8 +3672,8 @@
     {
       "id": "m134_minigun",
       "title": "M134 Minigun",
-      "revisionId": 63109,
-      "revisionAt": "2026-08-10T18:51:59Z",
+      "revisionId": 79658,
+      "revisionAt": "2026-10-24T00:20:42Z",
       "stats": {
         "damage": "11",
         "altDamage": "—",
@@ -3505,30 +3706,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 11,
-            "ttk": "0.40s"
+            "shots": 12,
+            "ttk": "0.44s"
           },
           "medium": {
             "shots": 18,
             "ttk": "0.68s"
           },
           "heavy": {
-            "shots": 24,
-            "ttk": "0.92s"
+            "shots": 23,
+            "ttk": "0.88s"
           }
         },
         "body": {
           "light": {
-            "shots": 14,
-            "ttk": "0.52s"
+            "shots": 16,
+            "ttk": "0.60s"
           },
           "medium": {
             "shots": 23,
             "ttk": "0.88s"
           },
           "heavy": {
-            "shots": 32,
-            "ttk": "1.24s"
+            "shots": 30,
+            "ttk": "1.16s"
           }
         }
       },
@@ -3548,9 +3749,9 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 11,
-                    "seconds": 0.4
+                    "hp": 175,
+                    "hits": 12,
+                    "seconds": 0.44
                   },
                   {
                     "hp": 250,
@@ -3558,9 +3759,9 @@
                     "seconds": 0.68
                   },
                   {
-                    "hp": 350,
-                    "hits": 24,
-                    "seconds": 0.92
+                    "hp": 325,
+                    "hits": 23,
+                    "seconds": 0.88
                   }
                 ]
               },
@@ -3568,9 +3769,9 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 14,
-                    "seconds": 0.52
+                    "hp": 175,
+                    "hits": 16,
+                    "seconds": 0.6
                   },
                   {
                     "hp": 250,
@@ -3578,9 +3779,9 @@
                     "seconds": 0.88
                   },
                   {
-                    "hp": 350,
-                    "hits": 32,
-                    "seconds": 1.24
+                    "hp": 325,
+                    "hits": 30,
+                    "seconds": 1.16
                   }
                 ]
               }
@@ -3637,15 +3838,15 @@
     {
       "id": "m60",
       "title": "M60",
-      "revisionId": 63110,
-      "revisionAt": "2026-08-10T18:54:51Z",
+      "revisionId": 79667,
+      "revisionAt": "2026-10-24T01:07:50Z",
       "stats": {
         "damage": "20",
         "altDamage": "—",
-        "crit": "30",
+        "crit": "30 (1.5×)",
         "altCrit": "—",
         "dps": "—",
-        "rpm": "580",
+        "rpm": "600",
         "magazine": "70",
         "reload": "3.55s",
         "tacticalReload": "3.55s",
@@ -3671,30 +3872,30 @@
       "damageProfile": {
         "head": {
           "light": {
-            "shots": 5,
-            "ttk": "0.41s"
+            "shots": 6,
+            "ttk": "0.50s"
           },
           "medium": {
             "shots": 9,
-            "ttk": "0.83s"
+            "ttk": "0.80s"
           },
           "heavy": {
-            "shots": 12,
-            "ttk": "1.14s"
+            "shots": 11,
+            "ttk": "1.00s"
           }
         },
         "body": {
           "light": {
-            "shots": 8,
-            "ttk": "0.72s"
+            "shots": 9,
+            "ttk": "0.80s"
           },
           "medium": {
             "shots": 13,
-            "ttk": "1.24s"
+            "ttk": "1.20s"
           },
           "heavy": {
-            "shots": 18,
-            "ttk": "1.76s"
+            "shots": 17,
+            "ttk": "1.60s"
           }
         }
       },
@@ -3714,19 +3915,19 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 5,
-                    "seconds": 0.414
+                    "hp": 175,
+                    "hits": 6,
+                    "seconds": 0.5
                   },
                   {
                     "hp": 250,
                     "hits": 9,
-                    "seconds": 0.828
+                    "seconds": 0.8
                   },
                   {
-                    "hp": 350,
-                    "hits": 12,
-                    "seconds": 1.138
+                    "hp": 325,
+                    "hits": 11,
+                    "seconds": 1
                   }
                 ]
               },
@@ -3734,19 +3935,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 8,
-                    "seconds": 0.724
+                    "hp": 175,
+                    "hits": 9,
+                    "seconds": 0.8
                   },
                   {
                     "hp": 250,
                     "hits": 13,
-                    "seconds": 1.241
+                    "seconds": 1.2
                   },
                   {
-                    "hp": 350,
-                    "hits": 18,
-                    "seconds": 1.759
+                    "hp": 325,
+                    "hits": 17,
+                    "seconds": 1.6
                   }
                 ]
               }
@@ -3758,8 +3959,8 @@
     {
       "id": "mgl32",
       "title": "MGL32",
-      "revisionId": 63111,
-      "revisionAt": "2026-08-10T18:57:39Z",
+      "revisionId": 79668,
+      "revisionAt": "2026-10-24T01:08:37Z",
       "stats": {
         "damage": "Direct - 83 / Splash / From (Inner) - 75 (90%) / To (Outer) - 10 (12%)",
         "altDamage": "—",
@@ -3830,19 +4031,19 @@
     {
       "id": "sa1216",
       "title": "SA1216",
-      "revisionId": 63113,
-      "revisionAt": "2026-08-10T19:00:35Z",
+      "revisionId": 79672,
+      "revisionAt": "2026-10-24T01:13:07Z",
       "stats": {
-        "damage": "6×12",
+        "damage": "6×12 (Max - 72)",
         "altDamage": "—",
         "crit": "—",
         "altCrit": "—",
         "dps": "—",
         "rpm": "190",
         "magazine": "4×4",
-        "reload": "3.25s",
+        "reload": "Full Reload - 3.25s Magazine Swap - 0.80s",
         "tacticalReload": "2.35s",
-        "destruction": "1×12",
+        "destruction": "1×12 (Max - 12)",
         "altDestruction": "—",
         "cooldown": "—",
         "charges": "—",
@@ -3857,7 +4058,7 @@
         "costs": "—",
         "lunge": "—",
         "precision": "—",
-        "falloffMultiplier": "0.62",
+        "falloffMultiplier": "0.67",
         "falloff": "12.5m - 20m"
       },
       "summary": "Rapid-fire, semi-automatic shotgun with a quad-tube magazine",
@@ -3893,7 +4094,7 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 3,
                     "seconds": 0.63
                   },
@@ -3903,7 +4104,7 @@
                     "seconds": 0.95
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 5,
                     "seconds": 1.75
                   }
@@ -3917,19 +4118,19 @@
     {
       "id": "shak_50",
       "title": "ShAK-50",
-      "revisionId": 65598,
-      "revisionAt": "2026-08-29T08:28:42Z",
+      "revisionId": 78840,
+      "revisionAt": "2026-10-21T00:07:31Z",
       "stats": {
-        "damage": "15×2",
+        "damage": "15×2 (Max - 30)",
         "altDamage": "—",
-        "crit": "22.5×2",
+        "crit": "22.5(1.5×)×2 (Max - 45)",
         "altCrit": "—",
         "dps": "—",
         "rpm": "420",
         "magazine": "20",
         "reload": "3.20s",
         "tacticalReload": "2.40s",
-        "destruction": "7×2",
+        "destruction": "7×2 (Max - 14)",
         "altDestruction": "—",
         "cooldown": "—",
         "charges": "—",
@@ -3965,16 +4166,16 @@
         },
         "body": {
           "light": {
-            "shots": 5,
-            "ttk": "0.57s"
+            "shots": 6,
+            "ttk": "0.71s"
           },
           "medium": {
             "shots": 9,
             "ttk": "1.14s"
           },
           "heavy": {
-            "shots": 12,
-            "ttk": "1.57s"
+            "shots": 11,
+            "ttk": "1.43s"
           }
         }
       },
@@ -3994,17 +4195,17 @@
                 "label": "Head",
                 "targets": [
                   {
-                    "hp": 150,
+                    "hp": 175,
                     "hits": 4,
-                    "seconds": 0.43
+                    "seconds": 0.429
                   },
                   {
                     "hp": 250,
                     "hits": 6,
-                    "seconds": 0.71
+                    "seconds": 0.714
                   },
                   {
-                    "hp": 350,
+                    "hp": 325,
                     "hits": 8,
                     "seconds": 1
                   }
@@ -4014,19 +4215,19 @@
                 "label": "Body",
                 "targets": [
                   {
-                    "hp": 150,
-                    "hits": 5,
-                    "seconds": 0.57
+                    "hp": 175,
+                    "hits": 6,
+                    "seconds": 0.714
                   },
                   {
                     "hp": 250,
                     "hits": 9,
-                    "seconds": 1.14
+                    "seconds": 1.143
                   },
                   {
-                    "hp": 350,
-                    "hits": 12,
-                    "seconds": 1.57
+                    "hp": 325,
+                    "hits": 11,
+                    "seconds": 1.429
                   }
                 ]
               }
@@ -4038,8 +4239,8 @@
     {
       "id": "sledgehammer",
       "title": "Sledgehammer",
-      "revisionId": 65618,
-      "revisionAt": "2026-09-01T09:16:47Z",
+      "revisionId": 80071,
+      "revisionAt": "2026-10-25T21:12:20Z",
       "stats": {
         "damage": "Precise - 120 / Glancing blow - 90",
         "altDamage": "Precise - 200 / Glancing blow - 150",
@@ -4063,13 +4264,28 @@
         "maxDeploy": "—",
         "primeTime": "—",
         "costs": "—",
-        "lunge": "5m",
+        "lunge": "4.5m",
         "precision": "10°",
         "falloffMultiplier": "—",
         "falloff": "—"
       },
       "summary": "Powerful melee weapon built for destruction. Can perform wide sweeping attacks and a concentrated overhead attack.",
-      "damageProfile": null,
+      "damageProfile": {
+        "body": {
+          "light": {
+            "shots": 2,
+            "ttk": "1.39s"
+          },
+          "medium": {
+            "shots": 3,
+            "ttk": "2.26s"
+          },
+          "heavy": {
+            "shots": 3,
+            "ttk": "2.26s"
+          }
+        }
+      },
       "combat": {
         "burstCount": null,
         "burstGap": null,
@@ -4078,14 +4294,100 @@
         "spinCycle": null,
         "spinOffsets": null,
         "burnDuration": null,
-        "tables": []
+        "tables": [
+          {
+            "variant": "Default",
+            "rows": [
+              {
+                "label": "Precise (Alt-Fire)",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 1,
+                    "seconds": 1.05
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 2,
+                    "seconds": 2.46
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 2,
+                    "seconds": 2.46
+                  }
+                ]
+              },
+              {
+                "label": "Glancing (Alt-Fire)",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 2,
+                    "seconds": 2.46
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 2,
+                    "seconds": 2.46
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 3,
+                    "seconds": 3.87
+                  }
+                ]
+              },
+              {
+                "label": "Precise",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 2,
+                    "seconds": 1.39
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 3,
+                    "seconds": 2.26
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 3,
+                    "seconds": 2.26
+                  }
+                ]
+              },
+              {
+                "label": "Glancing",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 2,
+                    "seconds": 1.39
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 3,
+                    "seconds": 2.26
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 4,
+                    "seconds": 3.1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     },
     {
       "id": "spear",
       "title": "Spear",
-      "revisionId": 66971,
-      "revisionAt": "2026-09-17T08:11:07Z",
+      "revisionId": 79848,
+      "revisionAt": "2026-10-25T01:31:05Z",
       "stats": {
         "damage": "Precise - 82 / Glancing blow - 57",
         "altDamage": "75 → 125 → 150",
@@ -4109,13 +4411,28 @@
         "maxDeploy": "—",
         "primeTime": "—",
         "costs": "—",
-        "lunge": "6.5m",
+        "lunge": "5.75m",
         "precision": "8°",
         "falloffMultiplier": "—",
         "falloff": "—"
       },
       "summary": "Long-reach melee weapon built for stabbing attacks. Spin to perform a sweeping strike that covers a wider arc, dealing increased damage with each spin.",
-      "damageProfile": null,
+      "damageProfile": {
+        "body": {
+          "light": {
+            "shots": 3,
+            "ttk": "1.73s"
+          },
+          "medium": {
+            "shots": 4,
+            "ttk": "2.60s"
+          },
+          "heavy": {
+            "shots": 4,
+            "ttk": "2.60s"
+          }
+        }
+      },
       "combat": {
         "burstCount": null,
         "burstGap": null,
@@ -4128,7 +4445,73 @@
           2.55
         ],
         "burnDuration": null,
-        "tables": []
+        "tables": [
+          {
+            "variant": "Default",
+            "rows": [
+              {
+                "label": "Alt-Fire",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 2,
+                    "seconds": 1.2
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 3,
+                    "seconds": 2.55
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 3,
+                    "seconds": 2.55
+                  }
+                ]
+              },
+              {
+                "label": "Precise",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 3,
+                    "seconds": 1.73
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 4,
+                    "seconds": 2.6
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 4,
+                    "seconds": 2.6
+                  }
+                ]
+              },
+              {
+                "label": "Glancing",
+                "targets": [
+                  {
+                    "hp": 175,
+                    "hits": 4,
+                    "seconds": 2.6
+                  },
+                  {
+                    "hp": 250,
+                    "hits": 5,
+                    "seconds": 3.1
+                  },
+                  {
+                    "hp": 325,
+                    "hits": 6,
+                    "seconds": 3.98
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     }
   ]

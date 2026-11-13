@@ -436,6 +436,7 @@ export default {
       })
     }
 
+
     const selectLobbyTab = (idx) => {
       if (idx === 1) {
         goToLeaderboard()
@@ -1052,7 +1053,8 @@ export default {
 .lobby-tabs {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 22px;
+  overflow-x: auto;
   height: 44px;
   min-height: 44px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.12);
@@ -1061,6 +1063,8 @@ export default {
 }
 
 .lobby-tab {
+  flex-shrink: 0;
+  white-space: nowrap;
   height: 32px;
   min-height: 32px;
   padding: 0 0 0 10px;

@@ -35,12 +35,12 @@ test('standard DPS and hit thresholds are recomputed from damage and RPM, ignori
   akm.stats.dps = '1'
   const a = analyzeWeapon(akm)
   near(a.dps, 210)
-  assert.deepEqual(a.targets.map(target => target.hits), [8, 12, 17])
-  near(a.targets[2].total, 1.6)
+  assert.deepEqual(a.targets.map(target => target.hits), [9, 12, 16])
+  near(a.targets[2].total, 1.5)
   akm.stats.damage = '25'; akm.stats.rpm = '720'
   const b = analyzeWeapon(akm)
   near(b.dps, 300)
-  assert.deepEqual(b.targets.map(target => target.hits), [6, 10, 14])
+  assert.deepEqual(b.targets.map(target => target.hits), [7, 10, 13])
   assert.equal(getWeaponDpsSummary(akm).value, b.dps)
 })
 
@@ -52,7 +52,7 @@ test('shotguns multiply pellets once, support partial hits and do not invent hea
   assert.equal(analyzeWeapon(gun, { hit: 'head' }).dps, analyzeWeapon(gun).dps)
   const partial = analyzeWeapon(gun, { pellets: 3 })
   near(partial.damage, 39)
-  assert.deepEqual(partial.targets.map(target => target.hits), [4, 7, 9])
+  assert.deepEqual(partial.targets.map(target => target.hits), [5, 7, 9])
   assert.equal(partial.targets[2].reloads, 1)
 })
 
@@ -72,11 +72,11 @@ test('bow has independent light/full draw damage and cadence; first charge is co
 
 test('FAMAS and 93R account for intra-burst timing and post-burst gap', () => {
   const a = analyzeWeapon(weapon('famas'))
-  near(a.dps, 72 / (2 * 60 / 1080 + 0.27))
-  near(a.targets[0].total, 2 * (2 * 60 / 1080 + 0.27))
+  near(a.dps, 72 / (2 * 60 / 1080 + 0.273))
+  near(a.targets[0].total, 2 * (2 * 60 / 1080 + 0.273) + 60 / 1080)
   const b = analyzeWeapon(weapon('93r'))
-  near(b.targets[0].total, 0.79)
-  assert.equal(b.targets[0].hits, 7)
+  near(b.targets[0].total, 0.872)
+  assert.equal(b.targets[0].hits, 8)
   assert.equal(b.targets[0].actions, 3)
   assert.ok(b.sustainedDps < b.dps)
 })
@@ -106,20 +106,20 @@ test('coupled ARN magazines quick-swap after 30 and fully reload after 60', () =
   const arn = weapon('arn_220')
   arn.stats.damage = '5'
   const a = analyzeWeapon(arn)
-  assert.equal(a.targets[0].hits, 30)
-  near(a.targets[0].total, 29 * 0.08)
+  assert.equal(a.targets[0].hits, 35)
+  near(a.targets[0].total, 29 * 0.08 + 0.66 + 4 * 0.08)
   assert.equal(a.targets[1].hits, 50)
   near(a.targets[1].total, 29 * 0.08 + 0.66 + 19 * 0.08)
-  assert.equal(a.targets[2].hits, 70)
-  near(a.targets[2].total, 29 * 0.08 + 0.66 + 29 * 0.08 + 2.7 + 9 * 0.08)
+  assert.equal(a.targets[2].hits, 65)
+  near(a.targets[2].total, 29 * 0.08 + 0.66 + 29 * 0.08 + 2.7 + 4 * 0.08)
 })
 
 test('ShAK fires two rounds per trigger and uses ten triggers per 20-round magazine; akimbo alternates', () => {
   const a = analyzeWeapon(weapon('shak_50'))
   near(a.damage, 30); near(a.dps, 210)
-  assert.equal(a.targets[2].hits, 12)
+  assert.equal(a.targets[2].hits, 11)
   assert.equal(a.targets[2].reloads, 1)
-  near(a.targets[2].total, 9 * 60 / 420 + 3.2 + 60 / 420)
+  near(a.targets[2].total, 9 * 60 / 420 + 3.2)
   near(analyzeWeapon(weapon('50_akimbo')).damage, 46)
 })
 
@@ -132,50 +132,52 @@ test('explosive direct/inner/outer modes never add impact and explosion together
 
 test('single-layer burn can kill between shots and does not stack its per-second rate per pellet', () => {
   const a = analyzeWeapon(weapon('cerberus_12ga'))
-  near(a.dps, 210)
+  near(a.dps, 210.75)
   // Three impacts at 0/0.6/1.2; one refreshed burn lasts to 3.2s, not three stacked burns.
   const cerberusReload = parseFloat(weapon('cerberus_12ga').stats.reload)
-  near(a.sustainedDps, (351 + 15 * Math.min(3.2, 1.2 + cerberusReload)) / (1.2 + cerberusReload))
+  near(a.sustainedDps, (351 + 15.75 * Math.min(3.2, 1.2 + cerberusReload)) / (1.2 + cerberusReload))
   assert.equal(a.targets[1].hits, 2)
   assert.equal(a.targets[1].burnKill, true)
-  near(a.targets[1].fromFirst, 0.6 + (250 - 234 - 9) / 15)
+  near(a.targets[1].fromFirst, 0.6 + (250 - 234 - 0.6 * 15.75) / 15.75)
   const without = analyzeWeapon(weapon('cerberus_12ga'), { includeBurn: false })
   near(without.dps, 195)
   assert.equal(without.targets[1].hits, 3)
   const flame = analyzeWeapon(weapon('flamethrower'), { modeId: 'burning', timing: { burnDuration: 2 } })
-  near(flame.dps, 100)
+  near(flame.dps, 100.75)
   near(analyzeWeapon(weapon('flamethrower')).dps, 85)
 })
 
 test('minigun keeps ready and cold timing distinct and rejects reference timing after RPM/damage changes', () => {
   const gun = weapon('m134_minigun')
-  near(analyzeWeapon(gun).targets[0].total, 0.52)
-  near(analyzeWeapon(gun, { modeId: 'cold' }).targets[0].total, 1.75)
-  near(analyzeWeapon(gun, { modeId: 'cold', timing: { initialDelay: 1.2 } }).targets[0].total, 1.72)
+  near(analyzeWeapon(gun).targets[0].total, 0.6)
+  assert.equal(analyzeWeapon(gun, { modeId: 'cold' }).targets[0].total, null)
+  near(analyzeWeapon(gun, { modeId: 'cold' }).targets[1].total, 2.27)
+  near(analyzeWeapon(gun, { modeId: 'cold', timing: { initialDelay: 1.2 } }).targets[0].total, 1.8)
   gun.stats.rpm = '1000'
-  assert.equal(analyzeWeapon(gun, { modeId: 'cold' }).targets[0].total, null)
+  assert.equal(analyzeWeapon(gun, { modeId: 'cold' }).targets[1].total, null)
   gun.stats.damage = '20'
-  assert.equal(analyzeWeapon(gun, { modeId: 'cold' }).targets[0].total, null)
+  assert.equal(analyzeWeapon(gun, { modeId: 'cold' }).targets[1].total, null)
 })
 
-test('riot shield recalculates 350 HP to five hits, exposes stale Wiki table, and accepts measured cadence', () => {
+test('riot shield recalculates heavy hits against modified damage, exposes stale Wiki table, and accepts measured cadence', () => {
   const shield = weapon('riot_shield')
+  shield.stats.damage = 'Precise - 75 / Glancing blow - 50'
   const a = analyzeWeapon(shield)
-  assert.deepEqual(a.targets.map(target => target.hits), [2, 3, 5])
+  assert.deepEqual(a.targets.map(target => target.hits), [3, 4, 5])
   assert.equal(a.targets[2].referenceConflict, true)
   assert.equal(a.dps, null)
   assert.equal(a.hasHead, false)
-  const b = analyzeWeapon(shield, { timing: { cycle: 0.6, initialDelay: 0.2 } })
-  near(b.dps, 86 / 0.6)
-  near(b.targets[2].total, 2.6)
+  const b = analyzeWeapon(weapon('riot_shield'), { timing: { cycle: 0.6, initialDelay: 0.2 } })
+  near(b.dps, 90 / 0.6)
+  near(b.targets[2].total, 2.0)
   near(analyzeWeapon(shield, { modeId: 'alternate' }).damage, 50)
 })
 
 test('melee alternates read current synchronized values instead of historical constants', () => {
   const sword = weapon('sword')
-  near(analyzeWeapon(sword).damage, 110)
+  near(analyzeWeapon(sword).damage, 100)
   near(analyzeWeapon(sword, { modeId: 'alternate' }).damage, 120)
-  near(analyzeWeapon(sword, { glancing: true }).damage, 71.5)
+  near(analyzeWeapon(sword, { glancing: true }).damage, 65)
   near(analyzeWeapon(weapon('sledgehammer'), { modeId: 'alternate' }).damage, 200)
   const dagger = analyzeWeapon(weapon('dagger'), { modeId: 'backstab' })
   assert.deepEqual(dagger.targets.map(target => target.hits), [1, 1, 2])
@@ -190,9 +192,12 @@ test('spear spins hit at 0.6/1.25/2.55 seconds with increasing damage; dual blad
   near(a.targets[2].total, 2.55)
   assert.equal(a.targets[2].hits, 3)
   const blades = analyzeWeapon(weapon('dual_blades'), { timing: { cycle: 0.7, intra: 0.2, initialDelay: 0.15 } })
-  near(blades.damage, 114)
+  near(blades.damage, 120)
   assert.equal(blades.targets[0].hits, 3)
   near(blades.targets[0].total, 0.85)
+  const cross = analyzeWeapon(weapon('dual_blades'), { modeId: 'alternate' })
+  near(cross.damage, 155)
+  assert.deepEqual(cross.targets.map(target => target.hits), [2, 2, 3])
   assert.equal(analyzeWeapon(weapon('dual_blades'), { modeId: 'deflect' }).dps, null)
 })
 

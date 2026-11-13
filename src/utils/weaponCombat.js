@@ -1,4 +1,4 @@
-export const TARGETS = [{ key: 'light', label: '轻型', hp: 150 }, { key: 'medium', label: '中型', hp: 250 }, { key: 'heavy', label: '重型', hp: 350 }]
+export const TARGETS = [{ key: 'light', label: '轻型', hp: 175 }, { key: 'medium', label: '中型', hp: 250 }, { key: 'heavy', label: '重型', hp: 325 }]
 export const WEAPON_MODELS = Object.freeze({
   '93r': 'burst', arn_220: 'coupled', dagger: 'dagger', lh1: 'single', m11: 'single',
   m26_matter: 'shotgun', recurve_bow: 'bow', sh1900: 'shotgun', sr_84: 'single', sword: 'sword',
@@ -54,6 +54,7 @@ export function getWeaponModes(weapon) {
     unit: '次', body: damage, head: null, damages: [damage], headDamages: null, cycle: null,
     initialDelay: null, capacity: null, reload: null,
     glancing: labelNumber(id === 'primary' ? s.damage : s.altDamage, 'Glancing blow'),
+    referenceFallbacks: ['Precise'], glancingReferenceRow: 'Glancing',
     note: '近战按实际命中次数计算，不提供爆头加成。时序缺失时仍计算所需命中数，可填入训练场实测时间。',
     formula: 'DPS = 本轮总伤害 ÷ 循环时长；击杀时刻按每次命中依次累加。',
     timingFields: [timingField('cycle', '连续两次攻击的循环间隔 / 秒', null, true), timingField('initialDelay', '按下攻击到首击命中 / 秒', null, true)],
@@ -112,11 +113,21 @@ export function getWeaponModes(weapon) {
       const slash = product(s.damage)
       if (slash) { first.damages = Array(slash.count).fill(slash.each); first.offsets = Array(slash.count).fill(null); first.offsets[0] = 0; first.unit = '组' }
       first.timingFields.push(timingField('intra', '两刀之间的命中间隔 / 秒', null, true))
-      return [first, melee('deflect', '格挡 / 反弹', null, { defensive: true, timingFields: [], note: '格挡本身无固定伤害；反弹伤害取决于敌方来弹，不能给出独立 DPS 或固定击杀次数。' })]
+      const modes = [first]
+      const altPrecise = primary(s.altDamage)
+      if (positive(altPrecise)) {
+        modes.push(melee('alternate', '交叉斩击', altPrecise, {
+          referenceRow: 'Cross Slash (Precise)', referenceFallbacks: ['Precise (Alt-Fire)', 'Alt-Fire'],
+          glancingReferenceRow: 'Glancing (Alt-Fire)',
+          note: '交叉斩击按完整命中计算；偏斜命中可切换「偏斜擦伤」查看。'
+        }))
+      }
+      modes.push(melee('deflect', '格挡 / 反弹', null, { defensive: true, timingFields: [], note: '格挡本身无固定伤害；反弹伤害取决于敌方来弹，不能给出独立 DPS 或固定击杀次数。' }))
+      return modes
     }
     if (family === 'dagger') return [first,
-      melee('frontStab', '蓄力正面刺击', labelNumber(s.altDamage, 'Precise'), { initialDelay: m.chargeTime, chargeable: true, referenceRow: 'Body (Alt-Fire)' }),
-      melee('backstab', '蓄力背刺', labelNumber(s.altDamage, 'Backstab') ?? labelNumber(s.damage, '背刺'), { initialDelay: m.chargeTime, chargeable: true, glancing: null, referenceRow: 'Back (Alt-Fire)', note: '仅从背后命中才使用背刺伤害；未击杀时需再次蓄力，不能把正面普攻当作第二次背刺。' })
+      melee('frontStab', '蓄力正面刺击', labelNumber(s.altDamage, 'Precise'), { initialDelay: m.chargeTime, chargeable: true, referenceRow: 'Body (Alt-Fire)', referenceFallbacks: ['Precise (Alt-Fire)', 'Alt-Fire'], glancingReferenceRow: 'Glancing (Alt-Fire)' }),
+      melee('backstab', '蓄力背刺', labelNumber(s.altDamage, 'Backstab') ?? labelNumber(s.damage, '背刺'), { initialDelay: m.chargeTime, chargeable: true, glancing: null, referenceRow: 'Back (Alt-Fire)', referenceFallbacks: ['Backstab (Alt-Fire)'], glancingReferenceRow: null, note: '仅从背后命中才使用背刺伤害；未击杀时需再次蓄力，不能把正面普攻当作第二次背刺。' })
     ].map(mode => ({ ...mode, timingFields: mode.timingFields.map(field => field.key === 'initialDelay' ? { ...field, value: mode.initialDelay } : field) }))
     if (family === 'spear') {
       const damageSteps = String(s.altDamage || '').split('→').map(n)
@@ -128,7 +139,11 @@ export function getWeaponModes(weapon) {
       })]
     }
     const altLabel = { sword: '蓄力突刺', hammer: '蓄力重砸', shield: '举盾冲撞' }[family]
-    return [first, melee('alternate', altLabel, family === 'shield' ? labelNumber(s.altDamage, 'Shield Bash') : primary(s.altDamage), { chargeable: family === 'sword', referenceRow: 'Body (Alt-Fire)' })]
+    return [first, melee('alternate', altLabel, family === 'shield' ? labelNumber(s.altDamage, 'Shield Bash') : primary(s.altDamage), {
+      chargeable: family === 'sword', referenceRow: 'Body (Alt-Fire)',
+      referenceFallbacks: family === 'shield' ? ['Shield Bash', 'Alt-Fire', 'Precise (Alt-Fire)'] : ['Precise (Alt-Fire)', 'Alt-Fire'],
+      glancingReferenceRow: 'Glancing (Alt-Fire)'
+    })]
   }
   if (family === 'explosive') {
     const inner = labelNumber(s.damage, 'from|From \\(Inner\\)'), outer = labelNumber(s.damage, 'to|To \\(Outer\\)')
@@ -175,7 +190,8 @@ export function analyzeWeapon(weapon, options = {}) {
     else mode[field.key] = value
   }
   if (options.prepared && mode.chargeable) mode.initialDelay = 0
-  if (options.glancing && positive(mode.glancing)) { mode.damages = mode.damages.map(() => mode.glancing); mode.body = mode.glancing * mode.damages.length }
+  const useGlancing = Boolean(options.glancing && positive(mode.glancing))
+  if (useGlancing) { mode.damages = mode.damages.map(() => mode.glancing); mode.body = mode.glancing * mode.damages.length }
   if (mode.pelletCount) {
     const pellets = Math.max(1, Math.min(mode.pelletCount, Math.floor(Number(options.pellets) || mode.pelletCount)))
     mode.damages = [mode.pelletDamage * pellets]; mode.body = mode.damages[0]; mode.pelletsHit = pellets
@@ -198,7 +214,7 @@ export function analyzeWeapon(weapon, options = {}) {
   const adjustedDps = mode.groupSize ? (positive(internalPeriod) ? damage * clipActions / internalPeriod : null) : cadenceDps
   const outputDps = adjustedDps === null ? null : adjustedDps + (burnEnabled && burnKnown ? mode.burnRate * Math.min(1, mode.burnDuration / mode.cycle) : 0)
   const targets = TARGETS.map(target => ({ ...target, ...simulateKill(mode, target.hp, schedule, burnEnabled && burnKnown) }))
-  const referenceRows = referenceFor(weapon, mode, useHead)
+  const referenceRows = referenceFor(weapon, mode, useHead, useGlancing)
   for (const target of targets) {
     const reference = referenceRows?.targets.find(entry => entry.hp === target.hp)
     target.reference = reference || null
@@ -294,11 +310,17 @@ function simulateKill(mode, hp, schedule, burn) {
     totalSource: '当前数值推算', damageDealt: hp - Math.min(remaining, 0) }
 }
 
-function referenceFor(weapon, mode, head) {
+function referenceFor(weapon, mode, head, glancing = false) {
   const variant = mode.referenceVariant === 'Default' && mode.family === 'minigun' ? 'Full spin up' : mode.referenceVariant
   const table = weapon.combat?.tables?.find(table => table.variant.toLowerCase() === String(variant).toLowerCase())
-  const label = head ? mode.referenceRow?.replace(/^Body/i, 'Head') : mode.referenceRow
-  return table?.rows.find(row => row.label.toLowerCase() === label?.toLowerCase()) || null
+  const candidates = glancing
+    ? [mode.glancingReferenceRow].filter(Boolean)
+    : [mode.referenceRow, ...(mode.referenceFallbacks || [])].filter(Boolean).map(row => head ? row.replace(/^Body/i, 'Head') : row)
+  for (const label of candidates) {
+    const match = table?.rows.find(row => row.label.toLowerCase() === label.toLowerCase())
+    if (match) return match
+  }
+  return null
 }
 
 export function getWeaponDpsSummary(weapon) {

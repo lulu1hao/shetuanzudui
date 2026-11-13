@@ -20,13 +20,13 @@ export const PRESET_LOADOUTS = [
   {
     id: 'light_ghost_assassin',
     build: 'Light',
-    title: 'S11 幽灵刺客流',
+    title: 'S12 幽灵刺客流',
     author: '天梯 Top 100 标配',
-    desc: '极致隐身机动，配合消音手枪/战术冲锋枪实施精准背刺与收割。',
+    desc: '极致隐身机动，配合传送信标与声呐侦察实施精准背刺与拉扯收割。',
     specialization: 'cloaking_device',
     weapon: 'xp_54',
     gadgets: ['vanishing_bomb', 'glitch_grenade', 'gateway'],
-    reserve: ['thermal_bore', 'sonar_grenade', 'stun_gun', 'dagger'],
+    reserve: ['thermal_bore', 'sonar_grenade', 'translocator', 'dagger'],
     synergy: { mobility: 98, firepower: 88, support: 65, defense: 30 }
   },
   {
@@ -38,7 +38,7 @@ export const PRESET_LOADOUTS = [
     specialization: 'evasive_dash',
     weapon: 'sword',
     gadgets: ['vanishing_bomb', 'breach_charge', 'gateway'],
-    reserve: ['throwing_knives', 'sonar_grenade', 'thermal_vision', 'nullifier'],
+    reserve: ['throwing_knives', 'sonar_grenade', 'mimic_device', 'nullifier'],
     synergy: { mobility: 100, firepower: 92, support: 50, defense: 40 }
   },
   {
@@ -149,8 +149,7 @@ export function filterEquipment({ build = 'all', category = 'all', search = '', 
   if (build && build !== 'all') {
     list = list.filter(item => {
       if (item.build === 'All') return true
-      if (item.build === 'Medium & Heavy' && (build === 'Medium' || build === 'Heavy')) return true
-      return item.build.toLowerCase() === build.toLowerCase()
+      return item.build.toLowerCase().includes(build.toLowerCase())
     })
   }
 

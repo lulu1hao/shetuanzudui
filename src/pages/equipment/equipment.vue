@@ -8,7 +8,7 @@
           <div class="header-title-badge">
             <h1 class="header-page-title">装备</h1>
           </div>
-          <span class="badge-cashout-hud">THE FINALS · 军械库 & 配装中心 · S11 LIVE</span>
+          <span class="badge-cashout-hud">THE FINALS · 军械库 & 配装中心 · S12 PRIME TIME</span>
         </div>
       </div>
 
@@ -552,9 +552,9 @@ export default {
 
     const buildFilterOptions = [
       { key: 'all', label: '全部职业', hp: '' },
-      { key: 'Light', label: '轻型 (LIGHT)', hp: '150 HP' },
+      { key: 'Light', label: '轻型 (LIGHT)', hp: '175 HP' },
       { key: 'Medium', label: '中型 (MEDIUM)', hp: '250 HP' },
-      { key: 'Heavy', label: '重型 (HEAVY)', hp: '350 HP' }
+      { key: 'Heavy', label: '重型 (HEAVY)', hp: '325 HP' }
     ]
 
     const categoryFilterOptions = [
@@ -608,7 +608,7 @@ export default {
 
     // 计算属性
     const rawEquipmentData = computed(() => getEquipmentData())
-    const totalEquipmentCount = computed(() => rawEquipmentData.value?.items?.length || 86)
+    const totalEquipmentCount = computed(() => rawEquipmentData.value?.items?.length || 89)
 
     const filteredEquipmentList = computed(() => {
       return filterEquipment({
@@ -723,6 +723,8 @@ export default {
       if (build === 'Light') return '轻型 (LIGHT)'
       if (build === 'Medium') return '中型 (MEDIUM)'
       if (build === 'Heavy') return '重型 (HEAVY)'
+      if (build === 'Light & Medium') return '轻/中型 (L/M)'
+      if (build === 'Medium & Heavy') return '中/重型 (M/H)'
       return '通用 (ALL)'
     }
 
@@ -783,7 +785,7 @@ export default {
       }
       activeBuilderGadgets.value = activeBuilderGadgets.value.map(g => {
         if (!g) return null
-        if (g.build !== 'All' && g.build !== b && !(g.build === 'Medium & Heavy' && (b === 'Medium' || b === 'Heavy'))) {
+        if (g.build !== 'All' && !g.build.toLowerCase().includes(b.toLowerCase())) {
           return null
         }
         return g
@@ -1528,6 +1530,18 @@ export default {
   background: rgba(248, 113, 113, 0.2);
   color: #f87171;
   border-left: 2px solid #f87171;
+}
+
+.build-tag.tag-lightmedium {
+  background: rgba(52, 211, 153, 0.2);
+  color: #34d399;
+  border-left: 2px solid #34d399;
+}
+
+.build-tag.tag-mediumheavy {
+  background: rgba(251, 146, 60, 0.2);
+  color: #fb923c;
+  border-left: 2px solid #fb923c;
 }
 
 .category-tag {

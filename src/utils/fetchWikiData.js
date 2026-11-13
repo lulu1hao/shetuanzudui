@@ -104,6 +104,7 @@ const CHINESE_NAMES = {
   'Cloaking Device': { nameZh: '隐身装置 (Cloaking Device)', role: '光学隐身', descZh: '静止或移动时进入隐形状态，打破敌方视觉侦测。' },
   'Evasive Dash': { nameZh: '闪烁冲刺 (Evasive Dash)', role: '三段瞬移', descZh: '支持充能3次的多向快速突进，极速改变交火身位。' },
   'Grappling Hook': { nameZh: '抓钩 (Grappling Hook)', role: '立体机动', descZh: '发射抓钩高速牵引自身，快速飞跃楼宇与垂直制高点。' },
+  'True Sight': { nameZh: '真实视界 (True Sight)', role: '反隐透视 / 侦察', descZh: '开启真实视界，透视烟雾与视觉遮挡，高亮显示隐身与拟态伪装中的敌方参赛者及可部署物。' },
   'Dematerializer': { nameZh: '物质解构仪 (Dematerializer)', role: '虚空穿墙', descZh: '暂时抹除墙面或天花板物理碰撞，开辟奇袭通道。' },
   'Guardian Turret': { nameZh: '哨戒炮塔 (Guardian Turret)', role: '自动防守', descZh: '部署全自动防守炮塔，自动搜寻射击进入范围的敌人。' },
   'Healing Beam': { nameZh: '治疗光束 (Healing Beam)', role: '团队续航', descZh: '持续发射纳米医疗光束，为队友快速恢复生命值。' },
@@ -126,6 +127,8 @@ const CHINESE_NAMES = {
   'Thermal Vision': { nameZh: '热成像目镜 (Thermal Vision)', role: '透烟热显', descZh: '开启热成像视觉，无视烟雾并高亮突出所有热源目标。' },
   'Tracking Dart': { nameZh: '追踪镖 (Tracking Dart)', role: '锁定标记', descZh: '击中目标后在全队视野中长时间实时追踪其行动轨迹。' },
   'Vanishing Bomb': { nameZh: '隐身炸弹 (Vanishing Bomb)', role: '范围隐身', descZh: '掷出烟雾使自己和接触到的队友立即获得群体隐身。' },
+  'Mimic Device': { nameZh: '拟态装置 (Mimic Device)', role: '环境拟态 / 伪装潜伏', descZh: '扫描场地中的可拾取物体并变身为同款物体外观，在敌方视野中隐蔽潜伏。' },
+  'Translocator': { nameZh: '换位传送信标 (Translocator)', role: '物件换位 / 极限拉扯', descZh: '标记场地内的一个物件（15m 内），随时触发与该物件互换空间位置（50m 内）。' },
   'APS Turret': { nameZh: 'APS 防空拦截炮 (APS Turret)', role: '投掷拦截', descZh: '部署主动防御系统，自动击落射入范围内的所有敌方榴弹手雷。' },
   'Breach Drill': { nameZh: '破障钻 (Breach Drill)', role: '强力破障', descZh: '吸附式高转速破障钻头，迅速在坚固墙体上开出通孔。' },
   'Data Reshaper': { nameZh: '数据重构器 (Data Reshaper)', role: '战术重构', descZh: '将敌方地雷、炮塔等危险设施瞬间重构成椅子、花盆等无害物品。' },
@@ -160,9 +163,9 @@ async function buildEquipmentDatabase() {
     'AKM', 'CB-01 Repeater', 'Cerberus 12GA', 'Chimera-XB', 'CL-40', 'Dual Blades', 'FAMAS', 'FCAR', 'Model 1887', 'P90', 'Pike-556', 'R .357', 'Riot Shield',
     '.50 Akimbo', 'BFR Titan', 'Flamethrower', 'KS-23', 'Lewis Gun', 'M134 Minigun', 'M60', 'MGL32', 'SA1216', 'ShAK-50', 'Sledgehammer', 'Spear',
     // Specializations
-    'Cloaking Device', 'Evasive Dash', 'Grappling Hook', 'Dematerializer', 'Guardian Turret', 'Healing Beam', 'Shockwave', 'Recon Senses', "Charge 'N' Slam", 'Goo Gun', 'Mesh Shield', 'Winch Claw',
+    'Cloaking Device', 'Evasive Dash', 'Grappling Hook', 'True Sight', 'Dematerializer', 'Guardian Turret', 'Healing Beam', 'Shockwave', 'Recon Senses', "Charge 'N' Slam", 'Goo Gun', 'Mesh Shield', 'Winch Claw',
     // Gadgets
-    'Breach Charge', 'Gateway', 'Glitch Grenade', 'Gravity Vortex', 'Infuser', 'Nullifier', 'Sonar Grenade', 'Thermal Bore', 'Thermal Vision', 'Tracking Dart', 'Vanishing Bomb',
+    'Breach Charge', 'Gateway', 'Glitch Grenade', 'Gravity Vortex', 'Infuser', 'Mimic Device', 'Nullifier', 'Sonar Grenade', 'Thermal Bore', 'Thermal Vision', 'Tracking Dart', 'Translocator', 'Vanishing Bomb',
     'APS Turret', 'Breach Drill', 'Data Reshaper', 'Defibrillator', 'Gas Mine', 'Glitch Trap', 'Hover Pad', 'Jump Pad', 'Zipline',
     'Anti-Gravity Cube', 'Barricade', 'C4', 'Dome Shield', 'Healing Emitter', 'Lockbolt', 'Pyro Mine', 'RPG-7',
     'Flashbang', 'Frag Grenade', 'Gas Grenade', 'Goo Grenade', 'Pyro Grenade', 'Smoke Grenade', 'Proximity Sensor', 'Explosive Mine'
@@ -198,15 +201,16 @@ async function buildEquipmentDatabase() {
     const zh = CHINESE_NAMES[title] || { nameZh: title, role: '装备', descZh: '' };
 
     let category = 'weapons';
-    if (['Cloaking Device', 'Evasive Dash', 'Grappling Hook', 'Dematerializer', 'Guardian Turret', 'Healing Beam', 'Shockwave', 'Recon Senses', "Charge 'N' Slam", 'Goo Gun', 'Mesh Shield', 'Winch Claw'].includes(title)) {
+    if (['Cloaking Device', 'Evasive Dash', 'Grappling Hook', 'True Sight', 'Dematerializer', 'Guardian Turret', 'Healing Beam', 'Shockwave', 'Recon Senses', "Charge 'N' Slam", 'Goo Gun', 'Mesh Shield', 'Winch Claw'].includes(title)) {
       category = 'specializations';
     } else if (!['93R', 'ARN-220', 'Dagger', 'LH1', 'M11', 'M26 Matter', 'Recurve Bow', 'SH1900', 'SR-84', 'Sword', 'Throwing Knives', 'V9S', 'XP-54', 'AKM', 'CB-01 Repeater', 'Cerberus 12GA', 'Chimera-XB', 'CL-40', 'Dual Blades', 'FAMAS', 'FCAR', 'Model 1887', 'P90', 'Pike-556', 'R .357', 'Riot Shield', '.50 Akimbo', 'BFR Titan', 'Flamethrower', 'KS-23', 'Lewis Gun', 'M134 Minigun', 'M60', 'MGL32', 'SA1216', 'ShAK-50', 'Sledgehammer', 'Spear'].includes(title)) {
       category = 'gadgets';
     }
 
     let build = info.build || 'All';
-    if (build.toLowerCase().includes('light')) build = 'Light';
+    if (build.toLowerCase().includes('light') && build.toLowerCase().includes('medium')) build = 'Light & Medium';
     else if (build.toLowerCase().includes('medium') && build.toLowerCase().includes('heavy')) build = 'Medium & Heavy';
+    else if (build.toLowerCase().includes('light')) build = 'Light';
     else if (build.toLowerCase().includes('medium')) build = 'Medium';
     else if (build.toLowerCase().includes('heavy')) build = 'Heavy';
     else if (['Flashbang', 'Frag Grenade', 'Gas Grenade', 'Goo Grenade', 'Pyro Grenade', 'Smoke Grenade', 'Explosive Mine'].includes(title)) build = 'All';
@@ -283,14 +287,14 @@ async function buildEquipmentDatabase() {
   }
 
   const outputPayload = {
-    version: 'Season 11 Live (Wiki Sync)',
+    version: 'Season 12 Live (PRIME TIME)',
     lastUpdated: new Date().toISOString(),
     itemCount: parsedItems.length,
     builds: [
       { key: 'all', name: '全职业通用 (All Builds)', health: '—', speed: '—' },
-      { key: 'Light', name: '轻型 (Light)', health: '150 HP', speed: '极速 (100%)', desc: '高机动、刺客与突袭' },
+      { key: 'Light', name: '轻型 (Light)', health: '175 HP', speed: '极速 (100%)', desc: '高机动、刺客与突袭' },
       { key: 'Medium', name: '中型 (Medium)', health: '250 HP', speed: '标准 (90%)', desc: '团队中坚、医疗与战场支援' },
-      { key: 'Heavy', name: '重型 (Heavy)', health: '350 HP', speed: '坚毅 (80%)', desc: '重火力、阵地防御与物理破拆' }
+      { key: 'Heavy', name: '重型 (Heavy)', health: '325 HP', speed: '坚毅 (80%)', desc: '重火力、阵地防御与物理破拆' }
     ],
     categories: [
       { key: 'all', name: '全部装备', icon: '✦' },

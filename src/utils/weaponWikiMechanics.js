@@ -14,7 +14,11 @@ export function parseWeaponMechanics(wikitext) {
   if (profileHeading) {
     const section = current.slice(profileHeading.index + profileHeading[0].length).split(/\n\s*={2,}/)[0].replace(/\{\{!\}\}/g, '|')
     for (const match of section.matchAll(/\{\|[\s\S]*?\|\}/g)) {
-      if (!/Light\s*\(150\s*HP\)/i.test(match[0]) || !/Heavy\s*\(350\s*HP\)/i.test(match[0])) continue
+      const lHp = match[0].match(/Light\s*\((\d+)\s*HP\)/i)?.[1]
+      const mHp = match[0].match(/Medium\s*\((\d+)\s*HP\)/i)?.[1]
+      const hHp = match[0].match(/Heavy\s*\((\d+)\s*HP\)/i)?.[1]
+      if (!lHp || !mHp || !hHp) continue
+      const hps = [Number(lHp), Number(mHp), Number(hHp)]
       const before = section.slice(0, match.index)
       const variant = [...before.matchAll(/\|-\|\s*([^=\n]+)\s*=/g)].at(-1)?.[1]?.trim() || 'Default'
       const rows = []
@@ -23,7 +27,7 @@ export function parseWeaponMechanics(wikitext) {
           .flatMap(line => line.replace(/^\s*\|/, '').split('||'))
           .map(cell => plain(cell.replace(/^\s*(?:style|class|rowspan|colspan)\s*=[^|]*\|/i, '')))
         if (cells.length !== 7 || !cells[0]) continue
-        const targets = [150, 250, 350].map((hp, index) => ({
+        const targets = hps.map((hp, index) => ({
           hp, hits: /^\d+$/.test(cells[index * 2 + 1]) ? Number(cells[index * 2 + 1]) : null,
           seconds: /^\d+(?:\.\d+)?s?$/.test(cells[index * 2 + 2]) ? parseFloat(cells[index * 2 + 2]) : null
         }))
