@@ -1,11 +1,11 @@
 {
-  "version": "4.0.6",
-  "notes": "1. 【装备 Wiki 自动同步】86 件武器、技能与道具支持启动、定时及恢复联网后的差量同步，离线继续使用最近有效快照；\n2. 【38 把武器独立计算】蓄力、连发、霰弹、转管、双弹匣、燃烧与多段近战按各自攻击时序计算 DPS、含换弹 DPS 和击杀档案；\n3. 【数值档案纠正】卡片、排序、详情与枪械对比统一使用当前 Wiki 数值推算，保留原击杀表作对照，缺失时序支持训练场实测试算；\n4. 【天梯体验优化】完善榜单同步失败提示、重新同步与关注管理，移除虚构回退榜单并修复请求超时清理。",
-  "pub_date": "2026-09-27T09:31:09.913Z",
+  "version": "4.0.7",
+  "notes": "1. 【Season 12 PRIME TIME 同步】依据 THE FINALS Wiki 最新 89 件装备数据更新快照，新增 True Sight（真实视界）、Mimic Device（拟态装置）、Translocator（换位传送信标）及图标；\n2. 【S12 血量与武器模型升级】同步轻型 175 HP / 中型 250 HP / 重型 325 HP 血量标准，适配新版近战损伤表、Dual Blades 交叉斩击模式及 FAMAS/Cerberus 等最新数值；\n3. 【跨职业装备与配装兼容】Sonar Grenade 更新为 Light & Medium 双职业可用，升级本地 Wiki 同步缓存至 v5/parser v3；\n4. 【功能精简】移除游戏音乐台（游戏音效台）前后端模块及相关音频/快捷键依赖。",
+  "pub_date": "2026-11-13T08:19:19.372Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU1JLbk1GLzB0ZDZQYkhJWk9DUE9PRStlRzQxdktiWWUwekFDOUlKbUlZVWR5bGdKeEtCQlpvUWlUNzJ3SDA1Uk5UWVE1SGtUUkFpK0M4RENINDVKTlFnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkwNTAxNDU3CWZpbGU6bHVsdV80LjAuNl94NjQtc2V0dXAuZXhlCjZBSlNnY2xKcVhmclhQVFVGMnBwM1htNWR3ZlhKM1JVNVBEN25QdlI5bHZkU0JxL28rS3JaZm5ZZGR2SXZwVVJYeHk5WjVOUE5HR1BuMmUrbUMxSERBPT0K",
-      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.6/lulu_4.0.6_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSNmI2cTVibTFqU2VUM2JtMlNBdDQxZWVTSzVMSzNrMWs5RDBoTVdkZ2NDbUgwVDJRcUtFbTNvdk5teFBMNjFIU2pTc0pIdEp0K1RBendQcEZOMXlxUXExN3J2UzJNR2drPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTU3OTQ5CWZpbGU6bHVsdV80LjAuN194NjQtc2V0dXAuZXhlClFPMEk2MWRJc2dRWnpvVzNISUh4cW1GbFpvNGN6Ym5OWFp3Y0UyNjFFNEYyUE16Q3ZKTDJzb2ZtYUd5L1dZeVZJSmdkdVk4cE95UkNHZE53Q2pyQkRBPT0K",
+      "url": "https://github.com/lulu1hao/shetuanzudui/releases/download/v4.0.7/lulu_4.0.7_x64-setup.exe"
     }
   }
 }
